@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>scout-desktop</string>
+	<key>CFBundleGetInfoString</key>
+	<string>Scout-desktop version 2.2b2, Copyright 2002-2006 Sauce Labs, 2012</string>
+	<key>CFBundleIconFile</key>
+	<string>icon.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.saucelabs.scout-desktop</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>ScoutDesktop</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.2b2</string>
+	<key>CFBundleSignature</key>
+	<string>SLSD</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>VNC URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>vnc</string>
+				<string>rfb</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>2.2b2</string>
+	<key>NSAppleScriptEnabled</key>
+	<string>YES</string>
+	<key>NSMainNibFile</key>
+	<string>OSX_RFBViewer</string>
+	<key>NSPrincipalClass</key>
+	<string>MyApp</string>
+	<key>SUFeedURL</key>
+	<string>http://saucelabs.com/scoutdesktop.xml</string>
+	<key>SUPublicDSAKeyFile</key>
+	<string>dsa_pub.pem</string>
+</dict>
+</plist>
