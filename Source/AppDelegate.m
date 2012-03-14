@@ -12,6 +12,15 @@
 #import "ProfileManager.h"
 #import "RFBConnectionManager.h"
 #import "ListenerController.h"
+#import "saucepreconnect.h"
+
+// for initial testing with fixed values
+NSString *user=@"obowah";
+NSString *ukey=@"e803c27d-5355-4646-b298-4d2f54259ab5";
+NSString *uos=@"Windows";
+NSString *ubrowser=@"Firefox";
+NSString *ubrowserVersion=@"7";
+NSString *uurl=@"http://google.com";
 
 
 @implementation AppDelegate
@@ -29,6 +38,9 @@
 
 //[rda]	if ( ! [cm runFromCommandLine] && ! [cm launchedByURL] )
 		[cm runNormally];
+    
+    SaucePreconnect *precon = [[SaucePreconnect alloc] init];
+    [precon preAuthorize:user key:ukey os:uos browser:ubrowser browserVersion:ubrowserVersion url:uurl];
 	
 	[mRendezvousMenuItem setState: [[PrefController sharedController] usesRendezvous] ? NSOnState : NSOffState];
 	[mInfoVersionNumber setStringValue: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleVersion"]];
