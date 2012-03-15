@@ -34,6 +34,8 @@
 		0F67590515103B86008DBBEE /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6758EC15103B86008DBBEE /* SBJsonWriter.m */; };
 		0FDB429E1511459A00841EE9 /* SaucePreconnect.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FDB429C1511459A00841EE9 /* SaucePreconnect.h */; };
 		0FDB429F1511459A00841EE9 /* SaucePreconnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FDB429D1511459A00841EE9 /* SaucePreconnect.m */; };
+		0FDB42A415116CDE00841EE9 /* NSData-Base64Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FDB42A215116CDE00841EE9 /* NSData-Base64Extensions.h */; };
+		0FDB42A515116CDE00841EE9 /* NSData-Base64Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FDB42A315116CDE00841EE9 /* NSData-Base64Extensions.m */; };
 		7F7A93E505E71B5C00E20416 /* ByteBlockReader.h in Headers */ = {isa = PBXBuildFile; fileRef = F5DC719B033DB4A801A8010C /* ByteBlockReader.h */; };
 		7F7A93E605E71B5C00E20416 /* ByteReader.h in Headers */ = {isa = PBXBuildFile; fileRef = F5DC719D033DB4A801A8010C /* ByteReader.h */; };
 		7F7A93E705E71B5C00E20416 /* CARD16Reader.h in Headers */ = {isa = PBXBuildFile; fileRef = F5DC719F033DB4A801A8010C /* CARD16Reader.h */; };
@@ -330,6 +332,8 @@
 		0F6758EC15103B86008DBBEE /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		0FDB429C1511459A00841EE9 /* SaucePreconnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaucePreconnect.h; sourceTree = "<group>"; };
 		0FDB429D1511459A00841EE9 /* SaucePreconnect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaucePreconnect.m; sourceTree = "<group>"; };
+		0FDB42A215116CDE00841EE9 /* NSData-Base64Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData-Base64Extensions.h"; path = "../../../Downloads/base64/NSData-Base64Extensions.h"; sourceTree = "<group>"; };
+		0FDB42A315116CDE00841EE9 /* NSData-Base64Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData-Base64Extensions.m"; path = "../../../Downloads/base64/NSData-Base64Extensions.m"; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		7F088F2405E1D81100336456 /* ServerDataManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ServerDataManager.h; sourceTree = "<group>"; };
 		7F088F2505E1D81100336456 /* ServerDataManager.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ServerDataManager.m; sourceTree = "<group>"; };
@@ -997,6 +1001,8 @@
 				0F6758A015103868008DBBEE /* sbjson */,
 				0FDB429C1511459A00841EE9 /* SaucePreconnect.h */,
 				0FDB429D1511459A00841EE9 /* SaucePreconnect.m */,
+				0FDB42A215116CDE00841EE9 /* NSData-Base64Extensions.h */,
+				0FDB42A315116CDE00841EE9 /* NSData-Base64Extensions.m */,
 				DA78379712DE159800F1893E /* SshWaiter.h */,
 				DA78379812DE159800F1893E /* SshWaiter.m */,
 				DAD6DEFC12DCF583001FD9D6 /* SshTunnel.h */,
@@ -1227,6 +1233,7 @@
 				0F67590215103B86008DBBEE /* SBJsonUTF8Stream.h in Headers */,
 				0F67590415103B86008DBBEE /* SBJsonWriter.h in Headers */,
 				0FDB429E1511459A00841EE9 /* SaucePreconnect.h in Headers */,
+				0FDB42A415116CDE00841EE9 /* NSData-Base64Extensions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1466,6 +1473,7 @@
 				0F67590315103B86008DBBEE /* SBJsonUTF8Stream.m in Sources */,
 				0F67590515103B86008DBBEE /* SBJsonWriter.m in Sources */,
 				0FDB429F1511459A00841EE9 /* SaucePreconnect.m in Sources */,
+				0FDB42A515116CDE00841EE9 /* NSData-Base64Extensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1608,6 +1616,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
+				"OTHER_LDFLAGS[arch=*]" = "-lcrypto";
 				PRODUCT_NAME = "scout-desktop";
 				SDKROOT = macosx;
 				SECTORDER_FLAGS = "";

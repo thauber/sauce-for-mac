@@ -10,12 +10,17 @@
 
 @interface SaucePreconnect : NSObject
 {
+    BOOL getLiveId;         // YES->first pass getting live-id; NO->using live-id to get job-id and secret
+    NSString *user;
+    NSString *ukey;
     NSString *secret;       // from saucelabs server
-    NSString *jobId;       // from saucelabs server
+    NSString *jobId;        // from saucelabs server
     NSString *liveId;
     NSMutableData *receivedData;
 }
 
+@property(nonatomic,copy) NSString *user;
+@property(nonatomic,copy) NSString *ukey;
 @property(nonatomic,copy) NSString *secret;
 @property(nonatomic,copy) NSString *jobId;
 @property(nonatomic,copy) NSString *liveId;
