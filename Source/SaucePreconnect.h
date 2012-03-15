@@ -28,7 +28,7 @@
 
 // use user/password to get live_id from server using
 // use live_id to get secret and job-id 
-- (BOOL)preAuthorize:(NSString*)user key:(NSString*)key  
+- (void)preAuthorize:(NSString*)user key:(NSString*)key  
                   os:(NSString*)os browser:(NSString*)browser browserVersion:(NSString*)version url:(NSString*)url;
 
 // return json with secret/job_id for server connection

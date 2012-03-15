@@ -21,19 +21,18 @@
 
 // use user/password to get live_id from server using
 // use live_id to get secret and job-id 
-- (BOOL)preAuthorize:(NSString*)user key:(NSString*)key  
-                  os:(NSString*)os browser:(NSString*)browser browserVersion:(NSString*)browserVersion url:(NSString*)url
-{
-    BOOL success = NO;
-    
-    self.user = user;
+- (void)preAuthorize:(NSString*)uuser key:(NSString*)key os:(NSString*)os 
+             browser:(NSString*)browser browserVersion:(NSString*)browserVersion url:(NSString*)url
+{    
+    self.user = uuser;
     self.ukey = key;
     getLiveId = YES;
     
+    NSMutableURLRequest *request;
+    
     NSString *theURL=[NSString stringWithFormat:@"https://%@:%@@saucelabs.com/rest/v1/users/%@/scout",user,key,user];
     
-    NSMutableURLRequest *request = 
-        [NSMutableURLRequest requestWithURL:[NSURL URLWithString:theURL]
+    request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:theURL]
                 cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                 timeoutInterval:10.0];
 
@@ -49,18 +48,16 @@
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:[NSString stringWithFormat:@"%d", [requestData length]] forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody: requestData];    
-    
+
     NSURLConnection *connection = [[NSURLConnection alloc]initWithRequest:request delegate:self];
     
     if(connection) {
         self.receivedData = [NSMutableData data];
-        success = YES;
     }
     else {
         NSLog(@"connection Failed");
     }
     
-    return success;   // caller if we made connection ok
 }
 
 // return json object for vnc connection
@@ -105,21 +102,17 @@
     {
         getLiveId = NO;
         
-        self.liveId = [jsonDict objectForKey:@"live-id"];        
-        
-/* doesn't work - returns saucelabs.com home page
+        self.liveId = [jsonDict objectForKey:@"live-id"];
+                
+// doesn't work - returns saucelabs.com home page
+/*
         NSString *theURL=[NSString stringWithFormat:@"https://%@:%@@saucelabs.com/scout/live/%@/status?secret&",
-                          self.user,self.ukey,self.liveId];
-        
+                          self.user, self.ukey, self.liveId ];
         NSMutableURLRequest *request = 
                     [NSMutableURLRequest requestWithURL:[NSURL URLWithString:theURL]
                                 cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                             timeoutInterval:10.0];
-        NSString *authStr = [NSString stringWithFormat:@"%@:%@", self.user, self.ukey];
-        NSData *authData = [authStr dataUsingEncoding:NSASCIIStringEncoding];
-        NSString *authValue = [NSString stringWithFormat:@"Basic %@", [authData encodeBase64]];
-        [request setValue:authValue forHTTPHeaderField:@"Authorization"];
-        
+
         NSURLConnection *connection = [[NSURLConnection alloc]initWithRequest:request delegate:self];
         
         if(connection) {
@@ -129,7 +122,7 @@
             NSLog(@"connection Failed");
         }
 */
-        [self curlGetauth];
+        [self curlGetauth];   // doesn't work - returns json with 'error'
 
     }
     else // get job-id and secret
@@ -141,33 +134,38 @@
     }
 }
 
-// not working - returns json with 'error'
+// poll til we get secret/jobid
 -(void)curlGetauth
 {
-	NSString *farg = [NSString stringWithFormat:@"curl \"https://%@:%@@saucelabs.com/scout/live/%@/status?secret&\"",
+	NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/scout/live/%@/status?secret&'",
                        self.user,self.ukey,self.liveId];
-                      
-	NSTask *ftask = [[NSTask alloc] init];
-	NSPipe *fpipe = [NSPipe pipe];
-	[ftask setStandardOutput:fpipe];
-	[ftask setLaunchPath:@"/bin/bash"];
-	[ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-	[ftask launch];		// fetch job-id and secret server
-	[ftask waitUntilExit];
-	if([ftask terminationStatus])
-	{
-		NSLog(@"failed NSTask");
-	}
-	else
-	{
-		NSFileHandle *fhand = [fpipe fileHandleForReading];
-		
-		NSData *data = [fhand readDataToEndOfFile];		 
-        NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSDictionary *jsonDict = [jsonString JSONValue];
-        self.secret = [jsonDict objectForKey:@"video-secret"];
-        self.jobId  = [jsonDict objectForKey:@"job-id"];
-	}	    
+
+    while(1)
+    {
+        NSTask *ftask = [[NSTask alloc] init];
+        NSPipe *fpipe = [NSPipe pipe];
+        [ftask setStandardOutput:fpipe];
+        [ftask setLaunchPath:@"/bin/bash"];
+        [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+        [ftask launch];		// fetch job-id and secret server
+        [ftask waitUntilExit];
+        if([ftask terminationStatus])
+        {
+            NSLog(@"failed NSTask");
+        }
+        else
+        {
+            NSFileHandle *fhand = [fpipe fileHandleForReading];
+            
+            NSData *data = [fhand readDataToEndOfFile];		 
+            NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSDictionary *jsonDict = [jsonString JSONValue];
+            self.secret = [jsonDict objectForKey:@"video-secret"];
+            self.jobId  = [jsonDict objectForKey:@"job-id"];
+            if(secret.length)
+                break;
+        }
+    }
 }
 
 @end
