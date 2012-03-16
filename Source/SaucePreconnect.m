@@ -63,7 +63,9 @@
 // return json object for vnc connection
 - (NSString *)json_arg
 {
-    return [NSString stringWithFormat:@"{\"job-id\":\"%@\", \"secret\":\"%@\"}",jobId,secret];
+    NSArray *jsArr = [NSArray arrayWithObjects:@"job-id",self.jobId,@"secret",self.secret,nil];
+    NSString *jsonString = [[jsArr JSONRepresentation] retain];;
+    return jsonString;
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
@@ -97,6 +99,8 @@
     // parse json data
     NSString *jsonString = [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding];
     NSDictionary *jsonDict = [jsonString JSONValue];
+    self.receivedData=nil;      
+    
 
     if(getLiveId)   // get live-id and setup connection to get job-id and secret
     {
@@ -104,41 +108,57 @@
         
         self.liveId = [jsonDict objectForKey:@"live-id"];
                 
-// doesn't work - returns saucelabs.com home page
-/*
-        NSString *theURL=[NSString stringWithFormat:@"https://%@:%@@saucelabs.com/scout/live/%@/status?secret&",
-                          self.user, self.ukey, self.liveId ];
-        NSMutableURLRequest *request = 
-                    [NSMutableURLRequest requestWithURL:[NSURL URLWithString:theURL]
-                                cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-                            timeoutInterval:10.0];
+// doesn't work - returns saucelabs home page       
+//      [self doConnect];
 
-        NSURLConnection *connection = [[NSURLConnection alloc]initWithRequest:request delegate:self];
-        
-        if(connection) {
-            self.receivedData = [NSMutableData data];
-        }
-        else {
-            NSLog(@"connection Failed");
-        }
-*/
-        [self curlGetauth];   // doesn't work - returns json with 'error'
+        [self curlGetauth];
 
     }
     else // get job-id and secret
     {
         self.secret = [jsonDict objectForKey:@"video-secret"];
         self.jobId  = [jsonDict objectForKey:@"job-id"];
-        
-        self.receivedData=nil;      // done
+        if(![secret length])
+            [self doConnect];        
     }
+}
+
+// doesn't work with or w/o basic auth - returns saucelabs home page
+-(void)doConnect
+{
+    // doesn't work - returns saucelabs.com home page
+            NSString *theURL=[NSString stringWithFormat:@"https://%@:%@@saucelabs.com/scout/live/%@/status?secret&",
+                              self.user, self.ukey, self.liveId ];
+// basic authorization header doesn't help
+//    NSString *theURL=[NSString stringWithFormat:@"https://saucelabs.com/scout/live/%@/status?secret&",
+//                      self.liveId ];
+    
+    NSMutableURLRequest *request = 
+                [NSMutableURLRequest requestWithURL:[NSURL URLWithString:theURL]
+                            cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                        timeoutInterval:10.0];
+/*    
+    NSString *authStr = [NSString stringWithFormat:@"%@:%@", self.user, self.ukey];
+    NSData *authData = [authStr dataUsingEncoding:NSASCIIStringEncoding];
+    NSString *authValue = [NSString stringWithFormat:@"Basic %@", [authData encodeBase64]];
+    [request setValue:authValue forHTTPHeaderField:@"Authorization"];        
+*/   
+    NSURLConnection *connection = [[NSURLConnection alloc]initWithRequest:request delegate:self];
+    
+    if(connection) {
+        self.receivedData = [NSMutableData data];
+    }
+    else {
+        NSLog(@"connection Failed");
+    }
+
 }
 
 // poll til we get secret/jobid
 -(void)curlGetauth
 {
 	NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/scout/live/%@/status?secret&'",
-                       self.user,self.ukey,self.liveId];
+                       self.user, self.ukey, self.liveId ];
 
     while(1)
     {
