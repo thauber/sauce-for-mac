@@ -61,6 +61,8 @@
     RFBConnectionManager *superController;
 }
 
+@property(nonatomic,copy) NSString *cred;
+
 - (id)initWithReleaseOnCloseOrConnect;
 
 - (void)setServer:(id<IServerData>)server;
@@ -81,6 +83,8 @@
 
 - (IBAction)connectToServer:(id)sender;
 - (IBAction)cancelConnect: (id)sender;
+
+-(void)cred:(NSString *)json;
 
 - (void)connectionSucceeded: (RFBConnection *)theConnection;
 - (void)connectionFailed;

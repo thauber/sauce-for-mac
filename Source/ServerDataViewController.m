@@ -33,9 +33,22 @@
 #import "ServerFromPrefs.h"
 #import "SshWaiter.h"
 
+#import "SaucePreconnect.h"
+
 #define DISPLAY_MAX 50 // numbers >= this are interpreted as a port
 
+// for initial testing with fixed values
+NSString *user=@"obowah";
+NSString *ukey=@"e803c27d-5355-4646-b298-4d2f54259ab5";
+NSString *uos=@"Windows 2003";
+NSString *ubrowser=@"Firefox";
+NSString *ubrowserVersion=@"7";
+NSString *uurl=@"http://google.com";
+
+
 @implementation ServerDataViewController
+
+@synthesize cred;
 
 - (id)init
 {
@@ -456,8 +469,7 @@
 
 - (IBAction)connectToServer:(id)sender
 {
-    NSWindow *window;
-    ServerBase  *server;
+    NSWindow *window;    
 
     window = superController ? [superController window] : [self window];
 
@@ -475,6 +487,22 @@
     [connectBtn setAction: @selector(cancelConnect:)];
     [connectBtn setKeyEquivalent:@"."];
     [connectBtn setKeyEquivalentModifierMask:NSCommandKeyMask];
+	    
+    SaucePreconnect *precon = [[SaucePreconnect alloc] init];
+    [precon preAuthorize:self username:user key:ukey os:uos browser:ubrowser browserVersion:ubrowserVersion url:uurl];
+}
+
+-(void)cred:(NSString *)json
+{
+    self.cred = json;
+    
+    // go on to connect
+    // Asynchronously creates a connection to the server
+    NSWindow *window;
+    
+    window = superController ? [superController window] : [self window];
+
+    ServerBase *server;
 
     if( [save state] )
     {
@@ -483,8 +511,7 @@
         server = s;
     } else
         server = mServer;
-	
-    // Asynchronously creates a connection to the server
+
     connectionWaiter = [[ConnectionWaiter waiterForServer:server
                                                  delegate:self
                                                    window:window] retain];
@@ -492,6 +519,7 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     if (connectionWaiter == nil)
         [self connectionFailed];
+    
 }
 
 - (IBAction)cancelConnect: (id)sender
