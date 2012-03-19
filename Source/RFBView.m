@@ -134,7 +134,7 @@
 {
     NSRect          b = [self bounds];
     const NSRect    *rects;
-    int             numRects;
+    long             numRects;
     int             i;
 
     if (drawTint)
