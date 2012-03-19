@@ -12,6 +12,7 @@
 
 @implementation SaucePreconnect
 
+@synthesize caller;
 @synthesize user;
 @synthesize ukey;
 @synthesize secret;
@@ -21,13 +22,16 @@
 
 // use user/password to get live_id from server using
 // use live_id to get secret and job-id 
-- (void)preAuthorize:(NSString*)uuser key:(NSString*)key os:(NSString*)os 
+- (void)preAuthorize:(id)ucaller username:(NSString*)uuser key:(NSString*)key os:(NSString*)os 
              browser:(NSString*)browser browserVersion:(NSString*)browserVersion url:(NSString*)url
 {    
+    self.caller = ucaller;
     self.user = uuser;
     self.ukey = key;
     getLiveId = YES;
     
+// worked for a few days - then it didn't?
+/*
     NSMutableURLRequest *request;
     
     NSString *theURL=[NSString stringWithFormat:@"https://%@:%@@saucelabs.com/rest/v1/users/%@/scout",user,key,user];
@@ -57,14 +61,47 @@
     else {
         NSLog(@"connection Failed");
     }
+*/
+    NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@saucelabs.com/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\"}'", self.user, self.ukey, self.user, os, browser, browserVersion, url];
     
+    while(1)    // TODO: progress display with cancel button
+    {
+        NSTask *ftask = [[NSTask alloc] init];
+        NSPipe *fpipe = [NSPipe pipe];
+        [ftask setStandardOutput:fpipe];
+        [ftask setLaunchPath:@"/bin/bash"];
+        [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+        [ftask launch];		// fetch live id
+        [ftask waitUntilExit];
+        if([ftask terminationStatus])
+        {
+            NSLog(@"failed NSTask");
+        }
+        else
+        {
+            NSFileHandle *fhand = [fpipe fileHandleForReading];
+            
+            NSData *data = [fhand readDataToEndOfFile];		 
+            NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSDictionary *jsonDict = [jsonString JSONValue];
+            self.liveId = [jsonDict objectForKey:@"live-id"];
+            if(self.liveId.length)
+            {
+                break;
+            }
+        }
+    }
+    [self curlGetauth];
+ 
 }
+
+
 
 // return json object for vnc connection
 - (NSString *)json_arg
 {
     NSArray *jsArr = [NSArray arrayWithObjects:@"job-id",self.jobId,@"secret",self.secret,nil];
-    NSString *jsonString = [[jsArr JSONRepresentation] retain];;
+    NSString *jsonString = [[jsArr JSONRepresentation] retain];
     return jsonString;
 }
 
@@ -79,14 +116,9 @@
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     
     [connection release];
-    self.receivedData=nil;
-    
-    // inform the user
-    /*UIAlertView *didFailWithErrorMessage = [[UIAlertView alloc] initWithTitle: @"NSURLConnection " message: @"/didFailWithError"  delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
-    [didFailWithErrorMessage show];
-    [didFailWithErrorMessage release];*/
+    self.receivedData=nil;    
 	
-    //inform the user
+    //TODO: inform the user
     NSLog(@"Connection failed! Error - %@ %@",
           [error localizedDescription],
           [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);
@@ -110,8 +142,13 @@
                 
 // doesn't work - returns saucelabs home page       
 //      [self doConnect];
-
-        [self curlGetauth];
+        if(self.liveId)
+            [self curlGetauth];
+        else
+        {
+            NSString *err = @"failed to get live id";
+            [self performSelectorOnMainThread:@selector(connectError:) withObject:err waitUntilDone:NO];
+        }
 
     }
     else // get job-id and secret
@@ -123,12 +160,17 @@
     }
 }
 
+-(void)connectError:(NSString*)err
+{
+    NSLog(@"err:%@",err);
+}
+
+
 // doesn't work with or w/o basic auth - returns saucelabs home page
 -(void)doConnect
 {
     // doesn't work - returns saucelabs.com home page
-            NSString *theURL=[NSString stringWithFormat:@"https://%@:%@@saucelabs.com/scout/live/%@/status?secret&",
-                              self.user, self.ukey, self.liveId ];
+            NSString *theURL=[NSString stringWithFormat:@"https://%@:%@@saucelabs.com/scout/live/%@/status?secret&", self.user, self.ukey, self.liveId ];
 // basic authorization header doesn't help
 //    NSString *theURL=[NSString stringWithFormat:@"https://saucelabs.com/scout/live/%@/status?secret&",
 //                      self.liveId ];
@@ -160,7 +202,7 @@
 	NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/scout/live/%@/status?secret&'",
                        self.user, self.ukey, self.liveId ];
 
-    while(1)
+    while(1)    // TODO: progress display with cancel button
     {
         NSTask *ftask = [[NSTask alloc] init];
         NSPipe *fpipe = [NSPipe pipe];
@@ -183,7 +225,11 @@
             self.secret = [jsonDict objectForKey:@"video-secret"];
             self.jobId  = [jsonDict objectForKey:@"job-id"];
             if(secret.length)
+            {
+                NSString *parms = [self json_arg];
+                [self.caller performSelectorOnMainThread:@selector(cred:) withObject:parms waitUntilDone:NO];
                 break;
+            }
         }
     }
 }
