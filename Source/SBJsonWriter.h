@@ -38,7 +38,13 @@
  */
 
 @interface SBJsonWriter : NSObject
-
+{
+    NSUInteger maxDepth;
+    NSString *error;
+    BOOL humanReadable;
+    BOOL sortKeys;
+    NSComparator sortKeysComparator;
+}
 /**
  @brief The maximum recursing depth.
  
