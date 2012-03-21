@@ -100,9 +100,8 @@
 // return json object for vnc connection
 - (NSString *)json_arg
 {
-    NSArray *jsArr = [NSArray arrayWithObjects:@"job-id",self.jobId,@"secret",self.secret,nil];
-    NSString *jsonString = [[jsArr JSONRepresentation] retain];
-    return jsonString;
+    NSString *js = [[NSString stringWithFormat:@"{\"job-id\":\"%@\",\"secret\":\"%@\"}\n",self.jobId,self.secret]retain];
+    return js;
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
