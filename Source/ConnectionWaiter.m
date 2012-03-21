@@ -150,6 +150,16 @@
 
         if (connect(sock, res->ai_addr, res->ai_addrlen) == 0) {
             freeaddrinfo(res0);
+            
+            // first send secret+jobID to server
+            NSString *cred = [delegate cred];
+            NSString *arg = [NSString stringWithFormat:@"%@\n",cred];
+            int len = [arg length];
+            // TODO: write cred string as bytes to sock
+            int wlen = sendto(sock,[arg UTF8String],len,0,0,0);
+            if(wlen != len)
+                NSLog(@"failed to send credentials");
+            
             [self waitForDataOn:sock];
             return; 
         } else {

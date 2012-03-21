@@ -38,6 +38,7 @@
 @optional
 - (void)connectionPrepareForSheet;
 - (void)connectionSheetOver;
+- (NSString*)cred;
 
 @end
 
