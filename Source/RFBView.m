@@ -134,7 +134,7 @@
 {
     NSRect          b = [self bounds];
     const NSRect    *rects;
-    long             numRects;
+    int             numRects;   //[rda] needs to be int or long for 32bit; long for 64bit
     int             i;
 
     if (drawTint)
