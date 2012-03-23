@@ -8,7 +8,6 @@
 
 #import "SaucePreconnect.h"
 #import "SBJson.h"
-#import "NSData-Base64Extensions.h"
 
 @implementation SaucePreconnect
 
