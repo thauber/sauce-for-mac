@@ -59,6 +59,8 @@
     ConnectionWaiter    *connectionWaiter;
     BOOL saveCheckboxWasVisible;
     RFBConnectionManager *superController;
+    
+    NSString *cred;
 }
 
 @property(nonatomic,copy) NSString *cred;
