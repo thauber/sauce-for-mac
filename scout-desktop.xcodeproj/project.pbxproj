@@ -34,8 +34,6 @@
 		0F67590515103B86008DBBEE /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6758EC15103B86008DBBEE /* SBJsonWriter.m */; };
 		0FDB429E1511459A00841EE9 /* SaucePreconnect.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FDB429C1511459A00841EE9 /* SaucePreconnect.h */; };
 		0FDB429F1511459A00841EE9 /* SaucePreconnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FDB429D1511459A00841EE9 /* SaucePreconnect.m */; };
-		0FDB42A415116CDE00841EE9 /* NSData-Base64Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FDB42A215116CDE00841EE9 /* NSData-Base64Extensions.h */; };
-		0FDB42A515116CDE00841EE9 /* NSData-Base64Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FDB42A315116CDE00841EE9 /* NSData-Base64Extensions.m */; };
 		7F7A93E505E71B5C00E20416 /* ByteBlockReader.h in Headers */ = {isa = PBXBuildFile; fileRef = F5DC719B033DB4A801A8010C /* ByteBlockReader.h */; };
 		7F7A93E605E71B5C00E20416 /* ByteReader.h in Headers */ = {isa = PBXBuildFile; fileRef = F5DC719D033DB4A801A8010C /* ByteReader.h */; };
 		7F7A93E705E71B5C00E20416 /* CARD16Reader.h in Headers */ = {isa = PBXBuildFile; fileRef = F5DC719F033DB4A801A8010C /* CARD16Reader.h */; };
@@ -332,8 +330,6 @@
 		0F6758EC15103B86008DBBEE /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		0FDB429C1511459A00841EE9 /* SaucePreconnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaucePreconnect.h; sourceTree = "<group>"; };
 		0FDB429D1511459A00841EE9 /* SaucePreconnect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaucePreconnect.m; sourceTree = "<group>"; };
-		0FDB42A215116CDE00841EE9 /* NSData-Base64Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData-Base64Extensions.h"; path = "../../../Downloads/base64/NSData-Base64Extensions.h"; sourceTree = "<group>"; };
-		0FDB42A315116CDE00841EE9 /* NSData-Base64Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData-Base64Extensions.m"; path = "../../../Downloads/base64/NSData-Base64Extensions.m"; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		7F088F2405E1D81100336456 /* ServerDataManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ServerDataManager.h; sourceTree = "<group>"; };
 		7F088F2505E1D81100336456 /* ServerDataManager.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ServerDataManager.m; sourceTree = "<group>"; };
@@ -743,9 +739,9 @@
 				F5DC7178033DB40D01A8010C /* rfbCursor3.tiff */,
 				DAD6DEE812DCF4A3001FD9D6 /* AuthPrompt.nib */,
 				E2F3A7E606D4A687005EB917 /* ConnectionDialog.nib */,
-				E2B083F70763AAC200CE24C1 /* ListenDialog.nib */,
 				E2F3A33E06D44E0E005EB917 /* Preferences.nib */,
 				E2F3A99C06D4BFD8005EB917 /* ProfileManager.nib */,
+				E2B083F70763AAC200CE24C1 /* ListenDialog.nib */,
 				F5DC7187033DB44301A8010C /* OSX_RFBViewer.nib */,
 				F5DC7185033DB44301A8010C /* RFBConnection.nib */,
 				7FFA903B062BA74F0008D381 /* ServerDisplay.nib */,
@@ -1001,8 +997,6 @@
 				0F6758A015103868008DBBEE /* sbjson */,
 				0FDB429C1511459A00841EE9 /* SaucePreconnect.h */,
 				0FDB429D1511459A00841EE9 /* SaucePreconnect.m */,
-				0FDB42A215116CDE00841EE9 /* NSData-Base64Extensions.h */,
-				0FDB42A315116CDE00841EE9 /* NSData-Base64Extensions.m */,
 				DA78379712DE159800F1893E /* SshWaiter.h */,
 				DA78379812DE159800F1893E /* SshWaiter.m */,
 				DAD6DEFC12DCF583001FD9D6 /* SshTunnel.h */,
@@ -1029,13 +1023,13 @@
 				F5DC719D033DB4A801A8010C /* ByteReader.h */,
 				F5DC719E033DB4A801A8010C /* ByteReader.m */,
 				F5DC719F033DB4A801A8010C /* CARD16Reader.h */,
-				F5DC71A0033DB4A801A8010C /* CARD16Reader.m */,
 				F5DC71A1033DB4A801A8010C /* CARD32Reader.h */,
 				F5DC71A2033DB4A801A8010C /* CARD32Reader.m */,
-				F5DC71A3033DB4A801A8010C /* CARD8Reader.h */,
+				F5DC71A0033DB4A801A8010C /* CARD16Reader.m */,
 				F5DC71A4033DB4A801A8010C /* CARD8Reader.m */,
 				F5DC71A7033DB4A801A8010C /* CopyRectangleEncodingReader.h */,
 				F5DC71A8033DB4A801A8010C /* CopyRectangleEncodingReader.m */,
+				F5DC71A3033DB4A801A8010C /* CARD8Reader.h */,
 				F5DC71A9033DB4A801A8010C /* CoRREEncodingReader.h */,
 				F5DC71AA033DB4A801A8010C /* CoRREEncodingReader.m */,
 				DA68E53011E7867500F23347 /* ConnectionWaiter.h */,
@@ -1069,9 +1063,9 @@
 				F5DC71BF033DB4A801A8010C /* HighColorFrameBuffer.h */,
 				F5DC71C0033DB4A801A8010C /* HighColorFrameBuffer.m */,
 				E2F48D74040EDD2200BD55BA /* KeyChain.h */,
-				E2F48D75040EDD2200BD55BA /* KeyChain.m */,
 				F5DC71CE033DB4A801A8010C /* LowColorFrameBuffer.h */,
 				F5DC71CF033DB4A801A8010C /* LowColorFrameBuffer.m */,
+				E2F48D75040EDD2200BD55BA /* KeyChain.m */,
 				E2929DD307675DE800190669 /* MyApp.h */,
 				E2929DD407675DE800190669 /* MyApp.m */,
 				E2F3AD6F06D5E11D005EB917 /* NSObject_Chicken.h */,
@@ -1233,7 +1227,6 @@
 				0F67590215103B86008DBBEE /* SBJsonUTF8Stream.h in Headers */,
 				0F67590415103B86008DBBEE /* SBJsonWriter.h in Headers */,
 				0FDB429E1511459A00841EE9 /* SaucePreconnect.h in Headers */,
-				0FDB42A415116CDE00841EE9 /* NSData-Base64Extensions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1473,7 +1466,6 @@
 				0F67590315103B86008DBBEE /* SBJsonUTF8Stream.m in Sources */,
 				0F67590515103B86008DBBEE /* SBJsonWriter.m in Sources */,
 				0FDB429F1511459A00841EE9 /* SaucePreconnect.m in Sources */,
-				0FDB42A515116CDE00841EE9 /* NSData-Base64Extensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1593,7 +1585,7 @@
 		E20426E7087531990026AA26 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_LOCATION = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1634,7 +1626,7 @@
 		E20426E8087531990026AA26 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DEPLOYMENT_LOCATION = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
@@ -1673,7 +1665,7 @@
 		E20426E9087531990026AA26 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				DEPLOYMENT_LOCATION = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
