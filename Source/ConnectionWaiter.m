@@ -152,10 +152,8 @@
             freeaddrinfo(res0);
             
             // first send secret+jobID to server
-            NSString *cred = [delegate cred];
-            NSString *arg = [NSString stringWithFormat:@"%@\n",cred];
+            NSString *arg = [delegate cred];        //TODO: doesn't reconnect; only good when called from ServerDataManager.
             int len = [arg length];
-            // TODO: write cred string as bytes to sock
             int wlen = sendto(sock,[arg UTF8String],len,0,0,0);
             if(wlen != len)
                 NSLog(@"failed to send credentials");

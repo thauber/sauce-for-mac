@@ -65,7 +65,7 @@
 
     id<ConnectionWaiterDelegate>    delegate;
     NSString            *errorStr; // error header, if not the default
-};
+}
 
 + (ConnectionWaiter *)waiterForServer:(id<IServerData>)aServer
                              delegate:(id<ConnectionWaiterDelegate>)aDelegate
