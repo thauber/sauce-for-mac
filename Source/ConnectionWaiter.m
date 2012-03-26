@@ -23,6 +23,8 @@
 #import "RFBConnectionManager.h"
 #import "SshWaiter.h"
 
+#import "SaucePreconnect.h"
+
 #import <poll.h>
 #import <unistd.h>
 
@@ -152,7 +154,7 @@
             freeaddrinfo(res0);
             
             // first send secret+jobID to server
-            NSString *arg = [delegate cred];        //TODO: doesn't reconnect; only good when called from ServerDataManager.
+            NSString *arg = [[SaucePreconnect sharedPreconnect] credStr];        
             int len = [arg length];
             int wlen = sendto(sock,[arg UTF8String],len,0,0,0);
             if(wlen != len)
