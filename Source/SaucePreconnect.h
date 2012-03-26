@@ -18,6 +18,8 @@
     NSString *jobId;        // from saucelabs server
     NSString *liveId;
     NSMutableData *receivedData;
+    NSString *remaining;
+    NSTimer *timer;
 }
 
 @property(nonatomic,assign) id caller;
@@ -27,6 +29,11 @@
 @property(nonatomic,copy) NSString *jobId;
 @property(nonatomic,copy) NSString *liveId;
 @property(nonatomic,retain) NSMutableData *receivedData;
+@property(nonatomic,copy) NSString *remaining;
+@property(nonatomic,assign) NSTimer *timer;
+
+
++(SaucePreconnect*)sharedPreconnect;
 
 // use user/password to get live_id from server using
 // use live_id to get secret and job-id 
@@ -34,5 +41,8 @@
              browser:(NSString*)browser browserVersion:(NSString*)version url:(NSString*)url;
 
 // return json with secret/job_id for server connection
-- (NSString *)json_arg;
+- (NSString *)credStr;
+-(void)startHeartbeat;
+-(void)cancelHeartbeat;
+
 @end

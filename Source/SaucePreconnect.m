@@ -18,6 +18,35 @@
 @synthesize jobId;
 @synthesize liveId;
 @synthesize receivedData;
+@synthesize remaining;
+@synthesize timer;
+
+static SaucePreconnect* _sharedPreconnect = nil;
+
++(SaucePreconnect*)sharedPreconnect
+{
+	@synchronized([SaucePreconnect class])
+	{
+		if (!_sharedPreconnect)
+			[[self alloc] init];
+        
+		return _sharedPreconnect;
+	}
+    
+	return nil;
+}
+
++(id)alloc
+{
+	@synchronized([SaucePreconnect class])
+	{
+		NSAssert(_sharedPreconnect == nil, @"Attempted to allocate a second instance of a singleton.");
+		_sharedPreconnect = [super alloc];
+		return _sharedPreconnect;
+	}
+    
+	return nil;
+}
 
 // use user/password to get live_id from server using
 // use live_id to get secret and job-id 
@@ -97,7 +126,7 @@
 
 
 // return json object for vnc connection
-- (NSString *)json_arg
+- (NSString *)credStr
 {
     NSString *js = [[NSString stringWithFormat:@"{\"job-id\":\"%@\",\"secret\":\"%@\"}\n",self.jobId,self.secret]retain];
     return js;
@@ -224,12 +253,64 @@
             self.jobId  = [jsonDict objectForKey:@"job-id"];
             if(secret.length)
             {
-                NSString *parms = [self json_arg];
+                NSString *parms = [self credStr];
                 [self.caller performSelectorOnMainThread:@selector(cred:) withObject:parms waitUntilDone:NO];
+                [self startHeartbeat];      // TESTING: don't call here; call after connection succeeds
                 break;
             }
         }
     }
+}
+
+-(void)startHeartbeat       // 1 minute is ok; at 2 minutes, server times out
+{
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(heartbeat:) userInfo:nil repeats:YES];
+}
+
+-(void)cancelHeartbeat
+{
+    self.timer = nil;
+}
+
+- (void)heartbeat:(NSTimer*)tm
+{    
+	NSString *farg = [NSString stringWithFormat:@"curl 'https://saucelabs.com/scout/live/%@/status?auth_username=%@&auth_access_key=%@'", self.liveId, self.user, self.ukey];
+    
+    while(1)    
+    {
+        NSTask *ftask = [[NSTask alloc] init];
+        NSPipe *fpipe = [NSPipe pipe];
+        [ftask setStandardOutput:fpipe];
+        [ftask setLaunchPath:@"/bin/bash"];
+        [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+        [ftask launch];		// fetch job-id and secret server
+        [ftask waitUntilExit];
+        if([ftask terminationStatus])
+        {
+            NSLog(@"failed NSTask");    // TODO: tell user
+        }
+        else
+        {
+            NSFileHandle *fhand = [fpipe fileHandleForReading];
+            
+            NSData *data = [fhand readDataToEndOfFile];		 
+            NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSDictionary *jsonDict = [jsonString JSONValue];
+            NSString *status = [jsonDict objectForKey:@"status"];
+            int val = [[jsonDict valueForKey:@"remaining-time"] intValue];  // doesn't work just asking for NSString?
+            if([status isEqualToString:@"in progress"])
+            {
+                self.remaining  = [NSString stringWithFormat:@"%d",val];                
+                break;                
+            }
+            else
+            {
+                [self cancelHeartbeat]; // TODO: tell user
+                break;
+            }
+        }
+    }
+
 }
 
 @end
