@@ -488,8 +488,7 @@ NSString *uurl=@"http://google.com";
     [connectBtn setKeyEquivalent:@"."];
     [connectBtn setKeyEquivalentModifierMask:NSCommandKeyMask];
 	    
-    SaucePreconnect *precon = [[SaucePreconnect alloc] init];
-    [precon preAuthorize:self username:user key:ukey os:uos browser:ubrowser browserVersion:ubrowserVersion url:uurl];
+    [[SaucePreconnect sharedPreconnect] preAuthorize:self username:user key:ukey os:uos browser:ubrowser browserVersion:ubrowserVersion url:uurl];
 }
 
 -(void)cred:(NSString *)json
