@@ -33,6 +33,8 @@
 #import "ServerDataManager.h"
 #import "Session.h"
 
+#import "LoginController.h"
+
 static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
 
 @implementation RFBConnectionManager
@@ -45,7 +47,9 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
 		sInstance = [[self alloc] initWithWindowNibName: @"ConnectionDialog"];
 		NSParameterAssert( sInstance != nil );
 		
-		[sInstance wakeup];
+        [sInstance wakeup];
+
+        [[[LoginController alloc] init] retain];
 		
 		[[NSNotificationCenter defaultCenter] addObserver:sInstance
 												 selector:@selector(applicationWillTerminate:)
@@ -136,6 +140,8 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
 
     connectionWaiter = nil;
     lockedSelection = -1;
+    [[self window] orderOut:self];      // [rda] don't need user interaction
+
 }
 
 - (BOOL)runFromCommandLine
@@ -271,7 +277,7 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
 			   name: NSControlTextDidBeginEditingNotification 
 			 object: serverList];
 
-	[self showConnectionDialog: nil];
+//	[self showConnectionDialog: nil];   
 }
 
 - (void)cmdlineUsage
