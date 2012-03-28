@@ -64,13 +64,15 @@ NSString *uurl=@"http://google.com";
 
         connectionWaiter = nil;
 		
-		[self loadProfileIntoView];
+/*		[self loadProfileIntoView];
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(updateProfileView:)
 													 name:ProfileListChangeMsg
 												   object:(id)[ProfileDataManager sharedInstance]];
-	}
+*/	
+//        [self connectToServer:nil];     // [rda] not showing dialog, just go and connect
+    }
 	
 	return self;
 }
