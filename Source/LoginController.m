@@ -23,6 +23,7 @@
 #import "AppDelegate.h"
 #import "LoginController.h"
 #import "SaucePreconnect.h"
+#import "RFBConnectionManager.h"
 
 
 @implementation LoginController
@@ -33,23 +34,14 @@
 @synthesize aNewEmail;
 
 
+/*
 - (id)init
 {
-	if (self = [super init])
-	{
-		[NSBundle loadNibNamed:@"LoginController" owner:self];	
-    }
-	
-	return self;
+    self = [super initWithWindowNibName:@"LoginController"];
+    return self;
 }
+*/
 
-
-- (void)dealloc
-{	
-	[super dealloc];
-		
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-}	
 
 - (IBAction)login:(id)sender
 {
@@ -62,6 +54,9 @@
         {
             [defaults setObject:uname  forKey:@"username"];
             [defaults setObject:uname  forKey:@"accountkey"];
+            [[RFBConnectionManager sharedManager] preconnect:self];  // TESTING
+            [[RFBConnectionManager sharedManager] connectToServer];
+            [self close];
         }
         else 
         {
