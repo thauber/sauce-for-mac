@@ -86,8 +86,6 @@
 - (IBAction)connectToServer:(id)sender;
 - (IBAction)cancelConnect: (id)sender;
 
--(void)cred:(NSString *)json;
-
 - (void)connectionSucceeded: (RFBConnection *)theConnection;
 - (void)connectionFailed;
 - (void)connectionAttemptEnded;

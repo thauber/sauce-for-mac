@@ -37,15 +37,6 @@
 
 #define DISPLAY_MAX 50 // numbers >= this are interpreted as a port
 
-// for initial testing with fixed values
-NSString *user=@"obowah";
-NSString *ukey=@"e803c27d-5355-4646-b298-4d2f54259ab5";
-NSString *uos=@"Windows 2003";
-NSString *ubrowser=@"Firefox";
-NSString *ubrowserVersion=@"7";
-NSString *uurl=@"http://google.com";
-
-
 @implementation ServerDataViewController
 
 @synthesize cred;
@@ -71,7 +62,6 @@ NSString *uurl=@"http://google.com";
 													 name:ProfileListChangeMsg
 												   object:(id)[ProfileDataManager sharedInstance]];
 */	
-//        [self connectToServer:nil];     // [rda] not showing dialog, just go and connect
     }
 	
 	return self;
@@ -488,21 +478,10 @@ NSString *uurl=@"http://google.com";
     [connectBtn setTitle: NSLocalizedString(@"Cancel", nil)];
     [connectBtn setAction: @selector(cancelConnect:)];
     [connectBtn setKeyEquivalent:@"."];
-    [connectBtn setKeyEquivalentModifierMask:NSCommandKeyMask];
-	    
-    [[SaucePreconnect sharedPreconnect] preAuthorize:self username:user key:ukey os:uos browser:ubrowser browserVersion:ubrowserVersion url:uurl];
-}
-
--(void)cred:(NSString *)json
-{
-    self.cred = json;
+    [connectBtn setKeyEquivalentModifierMask:NSCommandKeyMask];	    
     
     // go on to connect
     // Asynchronously creates a connection to the server
-    NSWindow *window;
-    
-    window = superController ? [superController window] : [self window];
-
     ServerBase *server;
 
     if( [save state] )
