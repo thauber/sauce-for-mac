@@ -44,5 +44,6 @@
 - (NSString *)credStr;
 -(void)startHeartbeat;
 -(void)cancelHeartbeat;
+- (BOOL)checkUserLogin:(NSString *)uuser  key:(NSString*)kkey;
 
 @end
