@@ -26,9 +26,6 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 
-    //  gets live-id then uses it to get secret/jobid - 
-    // TODO: move to post dialog to get user entered info; callback when credentials received
-
 	RFBConnectionManager *cm = [RFBConnectionManager sharedManager];
 
     //[rda]	if ( ! [cm runFromCommandLine] && ! [cm launchedByURL] )
