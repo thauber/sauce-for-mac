@@ -12,7 +12,7 @@
 @interface AppDelegate : NSObject {
 	IBOutlet NSMenuItem *mRendezvousMenuItem;
 	IBOutlet NSTextField *mInfoVersionNumber;
-    IBOutlet NSMenuItem *fullScreenMenuItem;
+    IBOutlet NSMenuItem *fullScreenMenuItem;    
 }
 
 - (IBAction)showPreferences: (id)sender;

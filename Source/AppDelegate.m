@@ -12,10 +12,11 @@
 #import "ProfileManager.h"
 #import "RFBConnectionManager.h"
 #import "ListenerController.h"
-#import "SaucePreconnect.h"
+#import "LoginController.h"
 
 
 @implementation AppDelegate
+
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification
 {
@@ -25,17 +26,22 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    LoginController *lc = [[LoginController alloc] initWithWindowNibName:@"LoginController"];
+    [[lc window] makeKeyAndOrderFront:nil];
+    [[NSApplication sharedApplication] arrangeInFront:nil];
+    
 
-	RFBConnectionManager *cm = [RFBConnectionManager sharedManager];
-
-    //[rda]	if ( ! [cm runFromCommandLine] && ! [cm launchedByURL] )
+/*		
+    RFBConnectionManager *cm = [RFBConnectionManager sharedManager];
+    if ( ! [cm runFromCommandLine] && ! [cm launchedByURL] )
 		[cm runNormally];
     
-	
-	[mRendezvousMenuItem setState: [[PrefController sharedController] usesRendezvous] ? NSOnState : NSOffState];
-	[mInfoVersionNumber setStringValue: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleVersion"]];
-}
 
+	[mRendezvousMenuItem setState: [[PrefController sharedController] usesRendezvous] ? NSOnState : NSOffState];
+*/	
+    [mInfoVersionNumber setStringValue: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleVersion"]];
+
+}
 
 - (IBAction)showPreferences: (id)sender
 {
