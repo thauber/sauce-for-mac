@@ -34,15 +34,6 @@
 @synthesize aNewEmail;
 
 
-/*
-- (id)init
-{
-    self = [super initWithWindowNibName:@"LoginController"];
-    return self;
-}
-*/
-
-
 - (IBAction)login:(id)sender
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
