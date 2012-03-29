@@ -27,7 +27,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     LoginController *lc = [[LoginController alloc] initWithWindowNibName:@"LoginController"];
-    [[lc window] makeKeyAndOrderFront:nil];
+    [lc window];        // need this to get window shown
 
 /*		
     RFBConnectionManager *cm = [RFBConnectionManager sharedManager];
