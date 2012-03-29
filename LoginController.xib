@@ -49,7 +49,7 @@
 				<int key="NSWindowStyleMask">4111</int>
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{196, 240}, {691, 426}}</string>
-				<int key="NSWTFlags">544735232</int>
+				<int key="NSWTFlags">544745472</int>
 				<string key="NSWindowTitle">Sauce Labs Scout</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<object class="NSToolbar" key="NSViewClass" id="21416026">
@@ -2705,27 +2705,27 @@
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="aNewEmail">NSTextField</string>
+						<string key="aNewPassword">NSSecureTextField</string>
+						<string key="aNewUsername">NSTextField</string>
 						<string key="accountKey">NSTextField</string>
-						<string key="newEmail">NSTextField</string>
-						<string key="newPassword">NSSecureTextField</string>
-						<string key="newUsername">NSTextField</string>
 						<string key="user">NSTextField</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="accountKey">
-							<string key="name">accountKey</string>
+						<object class="IBToOneOutletInfo" key="aNewEmail">
+							<string key="name">aNewEmail</string>
 							<string key="candidateClassName">NSTextField</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="newEmail">
-							<string key="name">newEmail</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="newPassword">
-							<string key="name">newPassword</string>
+						<object class="IBToOneOutletInfo" key="aNewPassword">
+							<string key="name">aNewPassword</string>
 							<string key="candidateClassName">NSSecureTextField</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="newUsername">
-							<string key="name">newUsername</string>
+						<object class="IBToOneOutletInfo" key="aNewUsername">
+							<string key="name">aNewUsername</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="accountKey">
+							<string key="name">accountKey</string>
 							<string key="candidateClassName">NSTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="user">
@@ -2736,6 +2736,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/LoginController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSLayoutConstraint</string>
+					<string key="superclassName">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NSLayoutConstraint.h</string>
 					</object>
 				</object>
 			</array>
@@ -2750,7 +2758,7 @@
 			<string key="NSToolbarPrint">{32, 32}</string>
 			<string key="NSToolbarShowColors">{32, 32}</string>
 			<string key="NSToolbarShowFonts">{32, 32}</string>
-			<string key="icon">{512, 512}</string>
+			<string key="icon">{128, 128}</string>
 		</dictionary>
 		<bool key="IBDocument.UseAutolayout">YES</bool>
 	</data>
