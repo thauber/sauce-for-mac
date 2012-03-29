@@ -8,16 +8,15 @@
 
 #import "SaucePreconnect.h"
 #import "SBJson.h"
+#import "RFBConnectionManager.h"
 
 @implementation SaucePreconnect
 
-@synthesize caller;
 @synthesize user;
 @synthesize ukey;
 @synthesize secret;
 @synthesize jobId;
 @synthesize liveId;
-@synthesize receivedData;
 @synthesize remaining;
 @synthesize timer;
 
@@ -48,16 +47,10 @@ static SaucePreconnect* _sharedPreconnect = nil;
 	return nil;
 }
 
-// use user/password to get live_id from server using
-// use live_id to get secret and job-id 
-- (void)preAuthorize:(id)ucaller username:(NSString*)uuser key:(NSString*)key os:(NSString*)os 
-             browser:(NSString*)browser browserVersion:(NSString*)browserVersion url:(NSString*)url
+// use user/password and users selections to get live_id from server
+- (void)preAuthorize:(NSString*)os browser:(NSString*)browser 
+                    browserVersion:(NSString*)browserVersion url:(NSString*)url
 {    
-    self.caller = ucaller;
-    self.user = uuser;
-    self.ukey = key;
-    getLiveId = YES;
-    
     NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@saucelabs.com/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\"}'", self.user, self.ukey, self.user, os, browser, browserVersion, url];
     
     while(1)    // TODO: progress display with cancel button
@@ -131,8 +124,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
             self.jobId  = [jsonDict objectForKey:@"job-id"];
             if(secret.length)
             {
-                NSString *parms = [self credStr];
-                [self.caller performSelectorOnMainThread:@selector(cred:) withObject:parms waitUntilDone:NO];
+                // TESTING: don't call here; call after user options dialog                
                 [self startHeartbeat];      // TESTING: don't call here; call after connection succeeds
                 break;
             }
@@ -166,6 +158,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if([ftask terminationStatus])
         {
             NSLog(@"failed NSTask");    // TODO: tell user
+            break;
         }
         else
         {
@@ -211,10 +204,13 @@ static SaucePreconnect* _sharedPreconnect = nil;
         
         NSData *data = [fhand readDataToEndOfFile];		 
         NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSDictionary *jsonDict = [jsonString JSONValue];
-        NSString *res = [jsonDict objectForKey:@"error"];
-        if([res length])
+        NSRange range = [jsonString rangeOfString:@"error"];
+        if(!range.length)
+        {
+            self.user = uuser;
+            self.ukey = kkey;
             return YES;
+        }
     }
     return NO;
 }
