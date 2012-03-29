@@ -47,7 +47,7 @@
             [defaults setObject:uname  forKey:@"accountkey"];
             [[RFBConnectionManager sharedManager] preconnect:self];  // TESTING
             [[RFBConnectionManager sharedManager] connectToServer];
-            [self close];
+            [self dealloc];     // get rid of the login dialog
         }
         else 
         {
