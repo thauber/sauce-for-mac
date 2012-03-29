@@ -28,8 +28,6 @@
 {
     LoginController *lc = [[LoginController alloc] initWithWindowNibName:@"LoginController"];
     [[lc window] makeKeyAndOrderFront:nil];
-    [[NSApplication sharedApplication] arrangeInFront:nil];
-    
 
 /*		
     RFBConnectionManager *cm = [RFBConnectionManager sharedManager];
