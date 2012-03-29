@@ -32,6 +32,9 @@
 		0F67590315103B86008DBBEE /* SBJsonUTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6758EA15103B86008DBBEE /* SBJsonUTF8Stream.m */; };
 		0F67590415103B86008DBBEE /* SBJsonWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F6758EB15103B86008DBBEE /* SBJsonWriter.h */; };
 		0F67590515103B86008DBBEE /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6758EC15103B86008DBBEE /* SBJsonWriter.m */; };
+		0F7BE39E1522183800B64686 /* LoginController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F7BE39C1522183800B64686 /* LoginController.h */; };
+		0F7BE39F1522183800B64686 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7BE39D1522183800B64686 /* LoginController.m */; };
+		0F7BF6F11523FEF400F1A478 /* LoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7BF6F01523FEF400F1A478 /* LoginController.xib */; };
 		0FDB429E1511459A00841EE9 /* SaucePreconnect.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FDB429C1511459A00841EE9 /* SaucePreconnect.h */; };
 		0FDB429F1511459A00841EE9 /* SaucePreconnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FDB429D1511459A00841EE9 /* SaucePreconnect.m */; };
 		7F7A93E505E71B5C00E20416 /* ByteBlockReader.h in Headers */ = {isa = PBXBuildFile; fileRef = F5DC719B033DB4A801A8010C /* ByteBlockReader.h */; };
@@ -328,6 +331,9 @@
 		0F6758EA15103B86008DBBEE /* SBJsonUTF8Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonUTF8Stream.m; sourceTree = "<group>"; };
 		0F6758EB15103B86008DBBEE /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		0F6758EC15103B86008DBBEE /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		0F7BE39C1522183800B64686 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
+		0F7BE39D1522183800B64686 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
+		0F7BF6F01523FEF400F1A478 /* LoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginController.xib; path = Resources/LoginController.xib; sourceTree = "<group>"; };
 		0FDB429C1511459A00841EE9 /* SaucePreconnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaucePreconnect.h; sourceTree = "<group>"; };
 		0FDB429D1511459A00841EE9 /* SaucePreconnect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaucePreconnect.m; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -726,19 +732,20 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0F7BF6F01523FEF400F1A478 /* LoginController.xib */,
 				DAC8077D12FEC38400C4ADB6 /* ssh-helper.sh */,
 				DAFB492112944331008C6FC4 /* dsa_pub.pem */,
 				E291FAD4088161DA0061216E /* cursors.plist */,
 				E2CA650906DA451500B70BDF /* help */,
 				F5DC7177033DB40D01A8010C /* icon.icns */,
 				E21FE256062B6C8D0059585C /* Info.plist */,
-				F5DC7172033DB3DC01A8010C /* InfoPlist.strings */,
 				E21FE261062B6D310059585C /* Localizable.strings */,
 				F5DC717C033DB40D01A8010C /* rfbCursor.tiff */,
 				F5DC717B033DB40D01A8010C /* rfbCursor2.tiff */,
 				F5DC7178033DB40D01A8010C /* rfbCursor3.tiff */,
 				DAD6DEE812DCF4A3001FD9D6 /* AuthPrompt.nib */,
 				E2F3A7E606D4A687005EB917 /* ConnectionDialog.nib */,
+				F5DC7172033DB3DC01A8010C /* InfoPlist.strings */,
 				E2F3A33E06D44E0E005EB917 /* Preferences.nib */,
 				E2F3A99C06D4BFD8005EB917 /* ProfileManager.nib */,
 				E2B083F70763AAC200CE24C1 /* ListenDialog.nib */,
@@ -821,6 +828,8 @@
 				E2B083EE0763AA9A00CE24C1 /* ListenerController.m */,
 				7FBB0A6605F5BC9700F716C4 /* ServerDataViewController.h */,
 				7FBB0A6705F5BC9700F716C4 /* ServerDataViewController.m */,
+				0F7BE39C1522183800B64686 /* LoginController.h */,
+				0F7BE39D1522183800B64686 /* LoginController.m */,
 			);
 			name = "GUI Controller";
 			sourceTree = "<group>";
@@ -1227,6 +1236,7 @@
 				0F67590215103B86008DBBEE /* SBJsonUTF8Stream.h in Headers */,
 				0F67590415103B86008DBBEE /* SBJsonWriter.h in Headers */,
 				0FDB429E1511459A00841EE9 /* SaucePreconnect.h in Headers */,
+				0F7BE39E1522183800B64686 /* LoginController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1305,6 +1315,7 @@
 				DAFB492212944331008C6FC4 /* dsa_pub.pem in Resources */,
 				DAD6DEEA12DCF4A3001FD9D6 /* AuthPrompt.nib in Resources */,
 				DAC8077E12FEC38400C4ADB6 /* ssh-helper.sh in Resources */,
+				0F7BF6F11523FEF400F1A478 /* LoginController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1466,6 +1477,7 @@
 				0F67590315103B86008DBBEE /* SBJsonUTF8Stream.m in Sources */,
 				0F67590515103B86008DBBEE /* SBJsonWriter.m in Sources */,
 				0FDB429F1511459A00841EE9 /* SaucePreconnect.m in Sources */,
+				0F7BE39F1522183800B64686 /* LoginController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1593,7 +1605,6 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/build/Development\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1635,7 +1646,6 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/build/Development\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1672,7 +1682,6 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/build/Development\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
