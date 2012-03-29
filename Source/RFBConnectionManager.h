@@ -19,6 +19,7 @@
 #import <AppKit/AppKit.h>
 #import "ServerDataViewController.h"
 #import "ConnectionWaiter.h"
+#import "LoginController.h"
 
 @class Profile, ProfileManager;
 @class RFBConnection;
@@ -52,6 +53,10 @@
 - (void)wakeup;
 - (BOOL)runFromCommandLine;
 - (void)runNormally;
+
+- (void)preconnect:(id)sender;
+- (void)connectToServer;
+
 - (void)connectionSucceeded:(RFBConnection *)conn;
 - (void)connectionFailed;
 
