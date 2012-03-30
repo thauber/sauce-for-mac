@@ -38,8 +38,8 @@
         if([[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:akey])
         {
             // good name/key, so get job-id and connect
-//            [[RFBConnectionManager sharedManager] preconnect];  // TESTING
-//            [[RFBConnectionManager sharedManager] connectToServer];
+            [[RFBConnectionManager sharedManager] preconnect];  // TESTING; call after options dlg
+            [[RFBConnectionManager sharedManager] connectToServer];
             bLoginDlg = NO;
         }
     }
