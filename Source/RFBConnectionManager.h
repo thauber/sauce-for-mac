@@ -26,6 +26,9 @@
 @class ServerDataViewController;
 @protocol IServerData;
 
+// stored in prefs, but not editable in the pref dlg
+extern NSString *kUsername;
+extern NSString *kAccountkey;
 
 @interface RFBConnectionManager : NSWindowController<ConnectionWaiterDelegate>
 {
@@ -54,7 +57,7 @@
 - (BOOL)runFromCommandLine;
 - (void)runNormally;
 
-- (void)preconnect:(id)sender;
+- (void)preconnect;
 - (void)connectToServer;
 
 - (void)connectionSucceeded:(RFBConnection *)conn;
