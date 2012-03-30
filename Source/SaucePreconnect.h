@@ -40,5 +40,7 @@
 -(void)startHeartbeat;
 -(void)cancelHeartbeat;
 - (BOOL)checkUserLogin:(NSString *)uuser  key:(NSString*)kkey;
+- (NSString*)signupNew:(NSString*)usernew password:(NSString*)passNew email:(NSString*)email;
+
 
 @end

@@ -124,7 +124,6 @@ static SaucePreconnect* _sharedPreconnect = nil;
             self.jobId  = [jsonDict objectForKey:@"job-id"];
             if(secret.length)
             {
-                // TESTING: don't call here; call after user options dialog                
                 [self startHeartbeat];      // TESTING: don't call here; call after connection succeeds
                 break;
             }
@@ -213,6 +212,42 @@ static SaucePreconnect* _sharedPreconnect = nil;
         }
     }
     return NO;
+}
+
+- (NSString*)signupNew:(NSString*)userNew password:(NSString*)passNew email:(NSString*)emailNew
+{
+    NSString *farg = [NSString stringWithFormat:@"curl -X POST http://saucelabs.com/rest/v1/users -H 'Content-Type: application/json' -d '{\"username\":\"%@\", \"password\":\"%@\",\"name\":\"\",\"email\":\"%@\",\"token\":\"0E44EF6E-B170-4CA0-8264-78FD9E49E5CD\"}'",userNew,passNew,emailNew];
+                      
+    while(1)
+    {
+        NSTask *ftask = [[NSTask alloc] init];
+        NSPipe *fpipe = [NSPipe pipe];
+        [ftask setStandardOutput:fpipe];
+        [ftask setLaunchPath:@"/bin/bash"];
+        [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+        [ftask launch];		// fetch live id
+        [ftask waitUntilExit];
+        if([ftask terminationStatus])
+        {
+            NSLog(@"failed NSTask");
+            break;
+        }
+        else
+        {
+            NSFileHandle *fhand = [fpipe fileHandleForReading];
+            
+            NSData *data = [fhand readDataToEndOfFile];		 
+            NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSDictionary *jsonDict = [jsonString JSONValue];
+            NSString *akey = [jsonDict objectForKey:@"access_key"];
+            if(akey.length)
+            {
+                return akey;
+            }
+        }
+    }
+    return @"";
+    
 }
 
 @end
