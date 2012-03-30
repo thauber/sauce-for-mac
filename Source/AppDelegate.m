@@ -13,6 +13,7 @@
 #import "RFBConnectionManager.h"
 #import "ListenerController.h"
 #import "LoginController.h"
+#import "SaucePreconnect.h"
 
 
 @implementation AppDelegate
@@ -26,8 +27,26 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    LoginController *lc = [[LoginController alloc] initWithWindowNibName:@"LoginController"];
-    [lc window];        // need this to get window shown
+    // check for username/key in prefs
+    NSUserDefaults* user = [NSUserDefaults standardUserDefaults];
+    NSString *uname = [user stringForKey:kUsername];
+    NSString *akey = [user stringForKey:kAccountkey];
+    BOOL bLoginDlg = YES;
+    
+    if([uname length] && [akey length])
+    {
+        if([[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:akey])
+        {
+            // good name/key, so get job-id and connect
+//            [[RFBConnectionManager sharedManager] preconnect];  // TESTING
+//            [[RFBConnectionManager sharedManager] connectToServer];
+            bLoginDlg = NO;
+        }
+    }
+    if(bLoginDlg)
+    {
+        [self showLoginDlg:self];
+    }
 
 /*		
     RFBConnectionManager *cm = [RFBConnectionManager sharedManager];
@@ -39,6 +58,13 @@
 */	
     [mInfoVersionNumber setStringValue: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleVersion"]];
 
+}
+
+
+- (IBAction)showLoginDlg:(id)sender 
+{
+    LoginController *lc = [[LoginController alloc] initWithWindowNibName:@"LoginController"];
+    [lc window];        // need this to get window shown
 }
 
 - (IBAction)showPreferences: (id)sender
