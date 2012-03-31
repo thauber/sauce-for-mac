@@ -691,7 +691,7 @@
 							<string key="NSAntiCompressionPriority">{250, 750}</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="988366817">
-								<int key="NSCellFlags">-2076049920</int>
+								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">272666624</int>
 								<string key="NSContents">Scout native lets you spotcheck your css, test browser compatibility, and even debug your web projects across every import browser and OS. To begin, please sign in or sign up for a new account.</string>
 								<reference key="NSSupport" ref="98796976"/>
