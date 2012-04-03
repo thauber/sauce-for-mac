@@ -24,6 +24,7 @@
 #import "LoginController.h"
 #import "SaucePreconnect.h"
 #import "RFBConnectionManager.h"
+#import "SessionController.h"
 
 
 @implementation LoginController
@@ -54,8 +55,8 @@
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setObject:uname  forKey:kUsername];
             [defaults setObject:aaccountkey  forKey:kAccountkey];
-            [[RFBConnectionManager sharedManager] preconnect];  //TESTING; do this after options dlg
-            [[RFBConnectionManager sharedManager] connectToServer];
+            SessionController *odlg = [[SessionController alloc] initWithWindowNibName:@"SessionController"];
+            [odlg window];
             [self dealloc];     // get rid of the login dialog
         }
         else 
@@ -88,8 +89,8 @@
         SaucePreconnect *precon = [SaucePreconnect sharedPreconnect];
         [precon setUser:nameNew];
         [precon setUkey:akey];
-        [[RFBConnectionManager sharedManager] preconnect];  // TESTING; do this after options dlg
-        [[RFBConnectionManager sharedManager] connectToServer];
+        SessionController *odlg = [[SessionController alloc] initWithWindowNibName:@"SessionController"];
+        [odlg window];
         [self dealloc];     // get rid of the login dialog
     }    
 }
