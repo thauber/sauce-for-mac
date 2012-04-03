@@ -14,6 +14,7 @@
 	IBOutlet NSTextField *mInfoVersionNumber;
     IBOutlet NSMenuItem *fullScreenMenuItem;    
 }
+- (IBAction)showOptionsDlg:(id)sender;
 - (IBAction)showLoginDlg:(id)sender;
 
 - (IBAction)showPreferences: (id)sender;
