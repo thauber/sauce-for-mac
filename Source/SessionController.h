@@ -13,10 +13,14 @@
     int selectedTag;
     NSView *selectBox;
     NSTextField *url;
+    NSBox *box2;
+    NSBox *box1;
 }
+@property (assign) IBOutlet NSBox *box1;
+@property (assign) IBOutlet NSBox *box2;
 @property (assign) IBOutlet NSTextField *url;
 
-- (IBAction)Connect:(id)sender;
-- (IBAction)selectBrowser:(NSImageView *)sender;
+- (IBAction)connect:(id)sender;
+- (IBAction)selectBrowser:(id)sender;
 
 @end
