@@ -214,6 +214,14 @@
 									<reference key="NSOnImage" ref="529750286"/>
 									<reference key="NSMixedImage" ref="368837609"/>
 								</object>
+								<object class="NSMenuItem" id="75250313">
+									<reference key="NSMenu" ref="857574433"/>
+									<string key="NSTitle">Session Options...</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="529750286"/>
+									<reference key="NSMixedImage" ref="368837609"/>
+								</object>
 								<object class="NSMenuItem" id="1006586167">
 									<reference key="NSMenu" ref="857574433"/>
 									<string key="NSTitle">New Connection…</string>
@@ -1221,11 +1229,11 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">showLoginDlg:</string>
+						<string key="label">showOptionsDlg:</string>
 						<reference key="source" ref="569964129"/>
 						<reference key="destination" ref="370934380"/>
 					</object>
-					<int key="connectionID">1516</int>
+					<int key="connectionID">1518</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -1300,6 +1308,7 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 							<reference ref="679668183"/>
 							<reference ref="121065899"/>
 							<reference ref="370934380"/>
+							<reference ref="75250313"/>
 						</object>
 						<reference key="parent" ref="791818499"/>
 					</object>
@@ -1872,6 +1881,11 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 						<reference key="object" ref="370934380"/>
 						<reference key="parent" ref="857574433"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1517</int>
+						<reference key="object" ref="75250313"/>
+						<reference key="parent" ref="857574433"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1939,6 +1953,7 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 					<string>1511.IBPluginDependency</string>
 					<string>1513.IBPluginDependency</string>
 					<string>1515.IBPluginDependency</string>
+					<string>1517.IBPluginDependency</string>
 					<string>165.IBPluginDependency</string>
 					<string>225.IBPluginDependency</string>
 					<string>227.IBPluginDependency</string>
@@ -1973,6 +1988,7 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 				</object>
 				<object class="NSArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2079,7 +2095,7 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1516</int>
+			<int key="maxID">1518</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
