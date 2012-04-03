@@ -35,9 +35,10 @@
 		0F7BE39E1522183800B64686 /* LoginController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F7BE39C1522183800B64686 /* LoginController.h */; };
 		0F7BE39F1522183800B64686 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7BE39D1522183800B64686 /* LoginController.m */; };
 		0F7BF6F11523FEF400F1A478 /* LoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7BF6F01523FEF400F1A478 /* LoginController.xib */; };
-		0F996170152678A3002657A9 /* UserOptionsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F99616E152678A3002657A9 /* UserOptionsController.h */; };
-		0F996171152678A3002657A9 /* UserOptionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F99616F152678A3002657A9 /* UserOptionsController.m */; };
-		0F996173152678D3002657A9 /* UserOptionsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F996172152678D3002657A9 /* UserOptionsController.xib */; };
+		0F7C605D152A279A00DA9A4A /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F7C605C152A279A00DA9A4A /* Quartz.framework */; };
+		0F7C6067152A8F8800DA9A4A /* SessionController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F7C6064152A8F8700DA9A4A /* SessionController.h */; };
+		0F7C6068152A8F8800DA9A4A /* SessionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7C6065152A8F8700DA9A4A /* SessionController.m */; };
+		0F7C606D152A964900DA9A4A /* SessionController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7C606C152A964900DA9A4A /* SessionController.xib */; };
 		0F99617915267C6C002657A9 /* chrome_color.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F99617415267C6B002657A9 /* chrome_color.pdf */; };
 		0F99617A15267C6C002657A9 /* firefox_color.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0F99617515267C6B002657A9 /* firefox_color.icns */; };
 		0F99617B15267C6C002657A9 /* ie_color.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F99617615267C6C002657A9 /* ie_color.pdf */; };
@@ -345,9 +346,10 @@
 		0F7BE39C1522183800B64686 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
 		0F7BE39D1522183800B64686 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
 		0F7BF6F01523FEF400F1A478 /* LoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginController.xib; path = Resources/LoginController.xib; sourceTree = "<group>"; };
-		0F99616E152678A3002657A9 /* UserOptionsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserOptionsController.h; sourceTree = "<group>"; };
-		0F99616F152678A3002657A9 /* UserOptionsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserOptionsController.m; sourceTree = "<group>"; };
-		0F996172152678D3002657A9 /* UserOptionsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserOptionsController.xib; path = Resources/UserOptionsController.xib; sourceTree = "<group>"; };
+		0F7C605C152A279A00DA9A4A /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		0F7C6064152A8F8700DA9A4A /* SessionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionController.h; sourceTree = "<group>"; };
+		0F7C6065152A8F8700DA9A4A /* SessionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionController.m; sourceTree = "<group>"; };
+		0F7C606C152A964900DA9A4A /* SessionController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SessionController.xib; path = Resources/SessionController.xib; sourceTree = SOURCE_ROOT; };
 		0F99617415267C6B002657A9 /* chrome_color.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = chrome_color.pdf; path = Resources/chrome_color.pdf; sourceTree = "<group>"; };
 		0F99617515267C6B002657A9 /* firefox_color.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = firefox_color.icns; path = Resources/firefox_color.icns; sourceTree = "<group>"; };
 		0F99617615267C6C002657A9 /* ie_color.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = ie_color.pdf; path = Resources/ie_color.pdf; sourceTree = "<group>"; };
@@ -677,6 +679,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F7C605D152A279A00DA9A4A /* Quartz.framework in Frameworks */,
 				7F7A945905E71B5C00E20416 /* Cocoa.framework in Frameworks */,
 				7F7A945A05E71B5C00E20416 /* libz.dylib in Frameworks */,
 				7F7A945B05E71B5C00E20416 /* Carbon.framework in Frameworks */,
@@ -722,6 +725,7 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0F7C605C152A279A00DA9A4A /* Quartz.framework */,
 				DA1FDD9112D6B1A000632D78 /* Security.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				E2F48D78040EDD5100BD55BA /* Carbon.framework */,
@@ -762,8 +766,8 @@
 				0F99617615267C6C002657A9 /* ie_color.pdf */,
 				0F99617715267C6C002657A9 /* safari_color.icns */,
 				0F99617815267C6C002657A9 /* windows_color.pdf */,
-				0F996172152678D3002657A9 /* UserOptionsController.xib */,
 				0F7BF6F01523FEF400F1A478 /* LoginController.xib */,
+				0F7C606C152A964900DA9A4A /* SessionController.xib */,
 				DAC8077D12FEC38400C4ADB6 /* ssh-helper.sh */,
 				DAFB492112944331008C6FC4 /* dsa_pub.pem */,
 				E291FAD4088161DA0061216E /* cursors.plist */,
@@ -861,8 +865,8 @@
 				7FBB0A6705F5BC9700F716C4 /* ServerDataViewController.m */,
 				0F7BE39C1522183800B64686 /* LoginController.h */,
 				0F7BE39D1522183800B64686 /* LoginController.m */,
-				0F99616E152678A3002657A9 /* UserOptionsController.h */,
-				0F99616F152678A3002657A9 /* UserOptionsController.m */,
+				0F7C6064152A8F8700DA9A4A /* SessionController.h */,
+				0F7C6065152A8F8700DA9A4A /* SessionController.m */,
 			);
 			name = "GUI Controller";
 			sourceTree = "<group>";
@@ -1051,6 +1055,7 @@
 				DA00481412CCF82E004E2C70 /* ZlibStreamReader.m */,
 				DAA91C8F1234319B000F1CCD /* DesktopNameEncodingReader.h */,
 				DAA91C901234319B000F1CCD /* DesktopNameEncodingReader.m */,
+				DA231DF512BD562100D3AD44 /* Keymap.h */,
 				DAEB76F11232AE3400002E6A /* Keymap.m */,
 				7FE7F82F06D8003200647AA1 /* Connection Management */,
 				7FE7F82E06D7FFC700647AA1 /* Preferences */,
@@ -1078,19 +1083,19 @@
 				DA68E53111E7867500F23347 /* ConnectionWaiter.m */,
 				DA80A6ED11E27B430076CB0A /* CursorPseudoEncodingReader.h */,
 				DA80A6EE11E27B430076CB0A /* CursorPseudoEncodingReader.m */,
-				F5DC71AC033DB4A801A8010C /* d3des.c */,
 				F5DC71AD033DB4A801A8010C /* d3des.h */,
 				F5F2D5A603B3C93B01150DB1 /* debug.h */,
 				F5F2D5A703B3C93B01150DB1 /* debug.m */,
 				F5DC71B0033DB4A801A8010C /* EncodingReader.h */,
 				F5DC71B1033DB4A801A8010C /* EncodingReader.m */,
 				E291FA1308815A950061216E /* EventFilter.h */,
-				E291FA1408815A950061216E /* EventFilter.m */,
 				F5DC71B2033DB4A801A8010C /* FilterReader.h */,
 				F5DC71B3033DB4A801A8010C /* FilterReader.m */,
 				F5DC71B4033DB4A801A8010C /* FrameBuffer.h */,
 				F5DC71B5033DB4A801A8010C /* FrameBuffer.m */,
 				F5DC71B6033DB4A801A8010C /* FrameBufferDrawing.h */,
+				F5DC71AC033DB4A801A8010C /* d3des.c */,
+				E291FA1408815A950061216E /* EventFilter.m */,
 				F5DC71B7033DB4A801A8010C /* FrameBufferUpdateReader.h */,
 				F5DC71B8033DB4A801A8010C /* FrameBufferUpdateReader.m */,
 				F5E4C9AA03416C2701A8010C /* FullscreenWindow.h */,
@@ -1099,15 +1104,14 @@
 				F5DC71BA033DB4A801A8010C /* GradientFilter.m */,
 				F5DC71BB033DB4A801A8010C /* GrayScaleFrameBuffer.h */,
 				F5DC71BC033DB4A801A8010C /* GrayScaleFrameBuffer.m */,
-				DA231DF512BD562100D3AD44 /* Keymap.h */,
 				F5DC71BD033DB4A801A8010C /* HextileEncodingReader.h */,
 				F5DC71BE033DB4A801A8010C /* HextileEncodingReader.m */,
 				F5DC71BF033DB4A801A8010C /* HighColorFrameBuffer.h */,
 				F5DC71C0033DB4A801A8010C /* HighColorFrameBuffer.m */,
 				E2F48D74040EDD2200BD55BA /* KeyChain.h */,
+				E2F48D75040EDD2200BD55BA /* KeyChain.m */,
 				F5DC71CE033DB4A801A8010C /* LowColorFrameBuffer.h */,
 				F5DC71CF033DB4A801A8010C /* LowColorFrameBuffer.m */,
-				E2F48D75040EDD2200BD55BA /* KeyChain.m */,
 				E2929DD307675DE800190669 /* MyApp.h */,
 				E2929DD407675DE800190669 /* MyApp.m */,
 				E2F3AD6F06D5E11D005EB917 /* NSObject_Chicken.h */,
@@ -1270,7 +1274,7 @@
 				0F67590415103B86008DBBEE /* SBJsonWriter.h in Headers */,
 				0FDB429E1511459A00841EE9 /* SaucePreconnect.h in Headers */,
 				0F7BE39E1522183800B64686 /* LoginController.h in Headers */,
-				0F996170152678A3002657A9 /* UserOptionsController.h in Headers */,
+				0F7C6067152A8F8800DA9A4A /* SessionController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1350,7 +1354,6 @@
 				DAD6DEEA12DCF4A3001FD9D6 /* AuthPrompt.nib in Resources */,
 				DAC8077E12FEC38400C4ADB6 /* ssh-helper.sh in Resources */,
 				0F7BF6F11523FEF400F1A478 /* LoginController.xib in Resources */,
-				0F996173152678D3002657A9 /* UserOptionsController.xib in Resources */,
 				0F99617915267C6C002657A9 /* chrome_color.pdf in Resources */,
 				0F99617A15267C6C002657A9 /* firefox_color.icns in Resources */,
 				0F99617B15267C6C002657A9 /* ie_color.pdf in Resources */,
@@ -1359,6 +1362,7 @@
 				0F99617F15267CAF002657A9 /* opera_color.pdf in Resources */,
 				0F9961831526ABC2002657A9 /* apple_color.pdf in Resources */,
 				0F9961851526AC06002657A9 /* linux_color.pdf in Resources */,
+				0F7C606D152A964900DA9A4A /* SessionController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1521,7 +1525,7 @@
 				0F67590515103B86008DBBEE /* SBJsonWriter.m in Sources */,
 				0FDB429F1511459A00841EE9 /* SaucePreconnect.m in Sources */,
 				0F7BE39F1522183800B64686 /* LoginController.m in Sources */,
-				0F996171152678A3002657A9 /* UserOptionsController.m in Sources */,
+				0F7C6068152A8F8800DA9A4A /* SessionController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
