@@ -57,7 +57,6 @@ extern NSString *kAccountkey;
 - (BOOL)runFromCommandLine;
 - (void)runNormally;
 
-- (void)preconnect;
 - (void)connectToServer;
 
 - (void)connectionSucceeded:(RFBConnection *)conn;

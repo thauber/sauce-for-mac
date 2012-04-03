@@ -41,10 +41,12 @@ NSString *kAccountkey = @"accountkey";
 // for initial testing with fixed values until we have options dialog
 //NSString *user=@"obowah";
 //NSString *ukey=@"e803c27d-5355-4646-b298-4d2f54259ab5";
+/*
 NSString *uos=@"Windows 2003";
 NSString *ubrowser=@"Firefox";
 NSString *ubrowserVersion=@"7";
 NSString *uurl=@"http://google.com";
+*/
 
 static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
 
@@ -303,12 +305,6 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
     exit(1);
 }
 
-- (void)preconnect
-{    
-    [[SaucePreconnect sharedPreconnect] preAuthorize:uos browser:ubrowser 
-                                  browserVersion:ubrowserVersion url:uurl];
-}
-
 - (void)connectToServer     // called after login and user options dialogs
 {
     [mServerCtrler connectToServer:self];
@@ -318,6 +314,7 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
 - (void)connectionSucceeded:(RFBConnection *)conn
 {
     [self successfulConnection:conn];
+    [[SaucePreconnect sharedPreconnect]  startHeartbeat];      
 }
 
 /* Connection initiated from command-line failed */
