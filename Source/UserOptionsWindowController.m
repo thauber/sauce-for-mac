@@ -1,18 +1,18 @@
 //
-//  UserOptionsController.m
+//  UserOptionsWindowController.m
 //  scout-desktop
 //
 //  Created by ackerman dudley on 3/30/12.
-//  Copyright (c) 2012 __SauceLabs__. All rights reserved.
+//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "UserOptionsController.h"
+#import "UserOptionsWindowController.h"
 
-@interface UserOptionsController ()
+@interface UserOptionsWindowController ()
 
 @end
 
-@implementation UserOptionsController
+@implementation UserOptionsWindowController
 
 - (id)initWithWindow:(NSWindow *)window
 {
