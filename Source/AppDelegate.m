@@ -14,6 +14,7 @@
 #import "ListenerController.h"
 #import "LoginController.h"
 #import "SaucePreconnect.h"
+#import "SessionController.h"
 
 
 @implementation AppDelegate
@@ -37,9 +38,8 @@
     {
         if([[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:akey])
         {
-            // good name/key, so get job-id and connect
-            [[RFBConnectionManager sharedManager] preconnect];  // TESTING; call after options dlg
-            [[RFBConnectionManager sharedManager] connectToServer];
+            // good name/key, so go on to options dialog
+            [self showOptionsDlg:self];
             bLoginDlg = NO;
         }
     }
@@ -60,6 +60,12 @@
 
 }
 
+
+- (IBAction)showOptionsDlg:(id)sender 
+{
+    SessionController *odlg = [[SessionController alloc] initWithWindowNibName:@"SessionController"];
+    [odlg window];
+}
 
 - (IBAction)showLoginDlg:(id)sender 
 {
