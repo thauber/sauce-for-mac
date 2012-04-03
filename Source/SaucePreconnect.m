@@ -97,8 +97,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 // poll til we get secret/jobid
 -(void)curlGetauth
 {
-	NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/scout/live/%@/status?secret&'",
-                       self.user, self.ukey, self.liveId ];
+	NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/scout/live/%@/status?secret&'", self.user, self.ukey, self.liveId ];
 
     while(1)    // TODO: progress display with cancel button
     {
@@ -124,7 +123,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
             self.jobId  = [jsonDict objectForKey:@"job-id"];
             if(secret.length)
             {
-                [self startHeartbeat];      // TESTING: don't call here; call after connection succeeds
+                [[RFBConnectionManager sharedManager] connectToServer];
                 break;
             }
         }
