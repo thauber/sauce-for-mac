@@ -8,6 +8,7 @@
 
 #import "SessionController.h"
 #import "SaucePreconnect.h"
+#import "RFBConnectionManager.h"
 
 @implementation SessionController
 
@@ -17,24 +18,47 @@
 
 - (void)windowDidLoad
 {
-    // recompute position of windows/linux when osx is hidden
-    int y1 = box1.frame.origin.y;
+    // recompute position of windows/linux sections when osx is hidden
     int h1 = box1.frame.size.height;
     NSRect fr = box2.frame;
-    int h2 = fr.size.height;
-    fr.origin.y = y1 + h1 - h2;
+    fr.origin.y += h1;
     [box2 setFrame:fr];
+    
+    // use last used values from prefs
+    NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
+    NSString *urlstr = [defs stringForKey:kSessionURL];
+    if(urlstr)
+        [self.url setStringValue:urlstr];
+    selectedTag = [defs integerForKey:kSessionTag];
+    if(selectedTag)
+    {
+         
+        NSString *str = [defs stringForKey:kSessionFrame];
+        if(str)
+        {
+            selectedFrame = NSRectFromString(str);
+            [self selectBrowser:self];
+        }
+    }
 }
 
 - (IBAction)selectBrowser:(id)sender 
 {
-    selectedTag = [sender tag];
-    // compute new position and width for selection box
-    NSRect frame = [sender frame];
-    NSView *vv = (NSView*)sender;
-    NSPoint pt = [vv.superview convertPoint:vv.frame.origin toView:nil];
-    frame.origin = pt;
-    frame.size.width += frame.size.width;
+    NSRect frame;
+    
+    if(sender == (id)self)
+        frame = selectedFrame;
+    else
+    {
+        selectedTag = [sender tag];
+        // compute new position and width for selection box
+        frame = [sender frame];
+        NSView *vv = (NSView*)sender;
+        NSPoint pt = [vv.superview convertPoint:vv.frame.origin toView:nil];
+        frame.origin = pt;
+        frame.size.width += frame.size.width + 4;
+        selectedFrame = frame;
+    }
     
     if(!selectBox)
     {
@@ -54,6 +78,11 @@
     
 }
 
+- (void)makeSelected
+{
+    
+}
+
 -(IBAction)connect:(id)sender 
 {
     NSString *os = [self selected:@"os"];
@@ -63,6 +92,13 @@
     
     [[SaucePreconnect sharedPreconnect] preAuthorize:os browser:browser 
                                       browserVersion:version url:urlstr];
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:urlstr  forKey:kSessionURL];
+    [defaults setInteger:selectedTag  forKey:kSessionTag];
+    NSString *frStr = NSStringFromRect(selectedFrame);
+    [defaults setObject:frStr  forKey:kSessionFrame];
+    
     [self dealloc];     // done
 }
 

@@ -11,6 +11,7 @@
 @interface SessionController : NSWindowController
 {
     int selectedTag;
+    NSRect selectedFrame;
     NSView *selectBox;
     NSTextField *url;
     NSBox *box2;
