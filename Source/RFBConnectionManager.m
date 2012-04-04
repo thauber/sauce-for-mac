@@ -37,6 +37,11 @@
 
 NSString *kUsername = @"username";
 NSString *kAccountkey = @"accountkey";
+NSString *kSessionURL = @"sessionURL";
+NSString *kSessionTag = @"sessionTag";
+NSString *kSessionFrame = @"sessionFrame";
+
+
 
 // for initial testing with fixed values until we have options dialog
 //NSString *user=@"obowah";
@@ -288,7 +293,7 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
 			   name: NSControlTextDidBeginEditingNotification 
 			 object: serverList];
 
-	[self showConnectionDialog: nil];   
+//	[self showConnectionDialog: nil];   // [rda] scout doesn't use this dialog 
 }
 
 - (void)cmdlineUsage
@@ -335,8 +340,8 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
 
 - (void)showConnectionDialog: (id)sender
 {
-	[[self window] makeFirstResponder: serverListBox];
-	[[self window] makeKeyAndOrderFront:self];
+//	[[self window] makeFirstResponder: serverListBox];   // [rda] don't show this dialog
+//	[[self window] makeKeyAndOrderFront:self];
 }
 
 - (void)showProfileManager: (id)sender
