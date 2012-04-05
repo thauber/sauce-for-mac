@@ -48,7 +48,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 }
 
 // use user/password and users selections to get live_id from server
-- (void)preAuthorize:(NSString*)os browser:(NSString*)browser 
+- (NSString *)preAuthorize:(NSString*)os browser:(NSString*)browser 
                     browserVersion:(NSString*)browserVersion url:(NSString*)url
 {    
     NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@saucelabs.com/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\"}'", self.user, self.ukey, self.user, os, browser, browserVersion, url];
@@ -65,6 +65,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if([ftask terminationStatus])
         {
             NSLog(@"failed NSTask");
+            return @"Failed to send user options to server";
         }
         else
         {
@@ -75,12 +76,14 @@ static SaucePreconnect* _sharedPreconnect = nil;
             NSDictionary *jsonDict = [jsonString JSONValue];
             self.liveId = [jsonDict objectForKey:@"live-id"];
             if(self.liveId.length)
-            {
                 break;
+            else 
+            {
+                return @"Failed to retrieve live-id";
             }
         }
     }
-    [self curlGetauth];
+    return [self curlGetauth];
  
 }
 
@@ -95,7 +98,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 
 
 // poll til we get secret/jobid
--(void)curlGetauth
+-(NSString *)curlGetauth
 {
 	NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/scout/live/%@/status?secret&'", self.user, self.ukey, self.liveId ];
 
@@ -111,6 +114,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if([ftask terminationStatus])
         {
             NSLog(@"failed NSTask");
+            return @"Failed to request job-id";
         }
         else
         {
@@ -124,7 +128,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
             if(secret.length)
             {
                 [[RFBConnectionManager sharedManager] connectToServer];
-                break;
+                return @"";     //  got job-id ok
             }
         }
     }
@@ -174,7 +178,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
             }
             else
             {
-                [self cancelHeartbeat]; // TODO: tell user
+                [self cancelHeartbeat];
+                NSLog(@"Heartbeat doesn't say 'in progress'");    // TODO: tell user
                 break;
             }
         }
