@@ -61,11 +61,14 @@
         }
         else 
         {
-            // TODO: alert for bad login
+            // alert for bad login
+            NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [self window], self,nil, NULL, NULL, @"Failed to Authenticate");
         }
     }
-    else {
-        // TODO: alert for missing username or accountkey
+    else
+    {
+        // alert for missing username or accountkey
+        NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [self window], self,nil, NULL, NULL, @"Need valid user-name and account-key");    
     }
 }
 
