@@ -33,8 +33,6 @@
 #import "ServerFromPrefs.h"
 #import "SshWaiter.h"
 
-#import "SaucePreconnect.h"
-
 #define DISPLAY_MAX 50 // numbers >= this are interpreted as a port
 
 @implementation ServerDataViewController
