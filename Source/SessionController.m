@@ -12,12 +12,17 @@
 
 @implementation SessionController
 
+@synthesize connectBtn;
+@synthesize connectIndicatorText;
+@synthesize connectIndicator;
 @synthesize box1;
 @synthesize box2;
 @synthesize url;
 
 - (void)windowDidLoad
 {
+    [connectIndicatorText setStringValue:@""];
+
     // recompute position of windows/linux sections when osx is hidden
     int h1 = box1.frame.size.height;
     NSRect fr = box2.frame;
@@ -78,10 +83,6 @@
     
 }
 
-- (void)makeSelected
-{
-    
-}
 
 -(IBAction)connect:(id)sender 
 {
@@ -90,18 +91,61 @@
     NSString *version = [self selected:@"version"];
     NSString *urlstr = [self.url stringValue];
     
-    [[SaucePreconnect sharedPreconnect] preAuthorize:os browser:browser 
-                                      browserVersion:version url:urlstr];
-
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:urlstr  forKey:kSessionURL];
-    [defaults setInteger:selectedTag  forKey:kSessionTag];
-    NSString *frStr = NSStringFromRect(selectedFrame);
-    [defaults setObject:frStr  forKey:kSessionFrame];
+    NSString *res = @"";        // default is success
     
-    [self dealloc];     // done
+    if([os length])
+    {
+        [connectIndicator startAnimation:self];
+        [connectIndicatorText setStringValue:@"Connecting..."];
+        
+        [connectIndicatorText display];
+        
+        [connectBtn setTitle: NSLocalizedString(@"Cancel", nil)];
+        [connectBtn setAction: @selector(cancelConnect:)];
+        [connectBtn setKeyEquivalent:@"."];
+        [connectBtn setKeyEquivalentModifierMask:NSCommandKeyMask];	    
+
+        res = [[SaucePreconnect sharedPreconnect] preAuthorize:os browser:browser 
+                                      browserVersion:version url:urlstr];
+    }
+    else 
+    {
+        NSBeginAlertSheet(@"Session Options Error", @"Okay", nil, nil, [self window], self,nil, NULL, NULL, @"User Needs to select a browser");    
+    }
+
+    if([res length])
+    {
+        NSBeginAlertSheet(@"Session Options Error", @"Okay", nil, nil, [self window], self,nil, NULL, NULL, res);    
+    }
+    else 
+    {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:urlstr  forKey:kSessionURL];
+        [defaults setInteger:selectedTag  forKey:kSessionTag];
+        NSString *frStr = NSStringFromRect(selectedFrame);
+        [defaults setObject:frStr  forKey:kSessionFrame];
+        
+//        [self dealloc];     // done -- TODO: do this after connection succeeds
+    }
 }
 
+- (IBAction)cancelConnect: (id)sender
+{
+    [self connectionAttemptEnded];
+}
+
+/* Update the interface to indicate the end of the connection attempt. */
+- (void)connectionAttemptEnded
+{
+	[connectIndicator stopAnimation:self];
+	[connectIndicatorText setStringValue:@""];
+	[connectIndicatorText display];
+    
+    [connectBtn setTitle: NSLocalizedString(@"Connect", nil)];
+    [connectBtn setAction: @selector(connectToServer:)];
+    [connectBtn setKeyEquivalent:@"\r"];
+    [connectBtn setKeyEquivalentModifierMask:0];    
+}
 
 - (NSString *)selected:(NSString*)type      // 'browser', 'version' or 'os'
 {

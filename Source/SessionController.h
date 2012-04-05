@@ -16,12 +16,19 @@
     NSTextField *url;
     NSBox *box2;
     NSBox *box1;
+    NSProgressIndicator *connectIndicator;
+    NSTextField *connectIndicatorText;
+    NSButton *connectBtn;
 }
+@property (assign) IBOutlet NSButton *connectBtn;
+@property (assign) IBOutlet NSTextField *connectIndicatorText;
+@property (assign) IBOutlet NSProgressIndicator *connectIndicator;
 @property (assign) IBOutlet NSBox *box1;
 @property (assign) IBOutlet NSBox *box2;
 @property (assign) IBOutlet NSTextField *url;
 
 - (IBAction)connect:(id)sender;
+- (IBAction)cancelConnect: (id)sender;
 - (IBAction)selectBrowser:(id)sender;
 
 @end
