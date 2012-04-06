@@ -34,6 +34,7 @@
 #import "Session.h"
 
 #import "SaucePreconnect.h"
+#import "AppDelegate.h"
 
 NSString *kUsername = @"username";
 NSString *kAccountkey = @"accountkey";
@@ -319,7 +320,8 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
 - (void)connectionSucceeded:(RFBConnection *)conn
 {
     [self successfulConnection:conn];
-    [[SaucePreconnect sharedPreconnect]  startHeartbeat];      
+    [[SaucePreconnect sharedPreconnect]  startHeartbeat]; 
+    [[NSApp optionsCtrlr] dealloc];
 }
 
 /* Connection initiated from command-line failed */
