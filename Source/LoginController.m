@@ -55,8 +55,7 @@
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setObject:uname  forKey:kUsername];
             [defaults setObject:aaccountkey  forKey:kAccountkey];
-            SessionController *odlg = [[SessionController alloc] initWithWindowNibName:@"SessionController"];
-            [odlg window];
+            [NSApp showOptionsDlg:nil];
             [self dealloc];     // get rid of the login dialog
         }
         else 
@@ -82,20 +81,21 @@
     NSString *nameNew = [self.aNewUsername stringValue];
     NSString *passNew = [self.aNewPassword stringValue];
     NSString *emailNew = [self.aNewEmail stringValue];
+    
+    [[SaucePreconnect sharedPreconnect] setNewUser:nameNew passNew:passNew emailNew:emailNew];
+    [[SaucePreconnect sharedPreconnect] signupNew:nil];
+}
 
-    NSString *akey = [[SaucePreconnect sharedPreconnect] signupNew:nameNew password:passNew email:emailNew];
-    if([akey length])
+- (void)newUserAuthorized  // called from saucePreconnect
+{
+    
+    SaucePreconnect *precon = [SaucePreconnect sharedPreconnect];
+    if([precon.ukey length])
     {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:nameNew  forKey:kUsername];
-        [defaults setObject:akey  forKey:kAccountkey];
-        SaucePreconnect *precon = [SaucePreconnect sharedPreconnect];
-        [precon setUser:nameNew];
-        [precon setUkey:akey];
-        SessionController *odlg = [[SessionController alloc] initWithWindowNibName:@"SessionController"];
-        [odlg window];
+        [NSApp showOptionsDlg:nil];
         [self dealloc];     // get rid of the login dialog
     }    
+    
 }
 
 
