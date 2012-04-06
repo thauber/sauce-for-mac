@@ -12,27 +12,45 @@
 {
     NSString *user;
     NSString *ukey;
+    NSString *os;
+    NSString *browser;
+    NSString *browserVersion;
+    NSString *urlStr;
     NSString *secret;       // from saucelabs server
     NSString *jobId;        // from saucelabs server
     NSString *liveId;
+    NSString *userNew;
+    NSString *passNew;
+    NSString *emailNew;
     NSString *remaining;
     NSTimer *timer;
+    NSString *errStr;
+    BOOL cancelled;         // yes -> stop the presses!
 }
 
 @property(nonatomic,copy) NSString *user;
 @property(nonatomic,copy) NSString *ukey;
+@property(nonatomic,copy) NSString *os;
+@property(nonatomic,copy) NSString *browser;
+@property(nonatomic,copy) NSString *browserVersion;
+@property(nonatomic,copy) NSString *urlStr;
 @property(nonatomic,copy) NSString *secret;
 @property(nonatomic,copy) NSString *jobId;
 @property(nonatomic,copy) NSString *liveId;
+@property(nonatomic,copy) NSString *userNew;
+@property(nonatomic,copy) NSString *passNew;
+@property(nonatomic,copy) NSString *emailNew;
 @property(nonatomic,copy) NSString *remaining;
 @property(nonatomic,assign) NSTimer *timer;
+@property(nonatomic,copy) NSString *errStr;
 
 
 +(SaucePreconnect*)sharedPreconnect;
 
 // use user/password to get live_id from server using
 // use live_id to get secret and job-id 
-- (NSString *)preAuthorize:(NSString*)os browser:(NSString*)browser 
+- (void)preAuthorize:(id)param;
+- (void)setOptions:(NSString*)os browser:(NSString*)browser 
                     browserVersion:(NSString*)version url:(NSString*)url;
 
 // return json with secret/job_id for server connection
@@ -40,7 +58,9 @@
 -(void)startHeartbeat;
 -(void)cancelHeartbeat;
 - (BOOL)checkUserLogin:(NSString *)uuser  key:(NSString*)kkey;
-- (NSString*)signupNew:(NSString*)usernew password:(NSString*)passNew email:(NSString*)email;
+- (void)setNewUser:(NSString*)uuserNew passNew:(NSString*)upassNew 
+    emailNew:(NSString*)uemailNew;
+- (void)signupNew:(id)param;
 
 
 @end

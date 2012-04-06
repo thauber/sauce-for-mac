@@ -14,11 +14,20 @@
 
 @synthesize user;
 @synthesize ukey;
+@synthesize os;
+@synthesize browser;
+@synthesize browserVersion;
+@synthesize urlStr;
 @synthesize secret;
 @synthesize jobId;
 @synthesize liveId;
+@synthesize userNew;
+@synthesize passNew;
+@synthesize emailNew;
+
 @synthesize remaining;
 @synthesize timer;
+@synthesize errStr;
 
 static SaucePreconnect* _sharedPreconnect = nil;
 
@@ -47,13 +56,21 @@ static SaucePreconnect* _sharedPreconnect = nil;
 	return nil;
 }
 
+- (void)setOptions:(NSString*)uos browser:(NSString*)ubrowser 
+    browserVersion:(NSString*)ubrowserVersion url:(NSString*)uurlStr
+{
+    os = uos;
+    browser = ubrowser;
+    browserVersion = ubrowserVersion;
+    urlStr = uurlStr;    
+}
+
 // use user/password and users selections to get live_id from server
-- (NSString *)preAuthorize:(NSString*)os browser:(NSString*)browser 
-                    browserVersion:(NSString*)browserVersion url:(NSString*)url
+- (void)preAuthorize:(id)param
 {    
-    NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@saucelabs.com/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\"}'", self.user, self.ukey, self.user, os, browser, browserVersion, url];
-    
-    while(1)    // TODO: progress display with cancel button
+    NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@saucelabs.com/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\"}'", self.user, self.ukey, self.user, self.os, self.browser, self.browserVersion, self.urlStr];
+    self.errStr = @"";
+    while(1)
     {
         NSTask *ftask = [[NSTask alloc] init];
         NSPipe *fpipe = [NSPipe pipe];
@@ -65,7 +82,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if([ftask terminationStatus])
         {
             NSLog(@"failed NSTask");
-            return @"Failed to send user options to server";
+            self.errStr = @"Failed to send user options to server";
+            return;
         }
         else
         {
@@ -79,12 +97,19 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 break;
             else 
             {
-                return @"Failed to retrieve live-id";
+                self.errStr =@"Failed to retrieve live-id";
+                return;
             }
         }
     }
-    return [self curlGetauth];
- 
+    [self curlGetauth];
+    // call error method of app which calls error method of sessionController
+    if(self.errStr.length)
+    {
+        [[RFBConnectionManager sharedManager] 
+         performSelectorOnMainThread:@selector(errOnConnect)   
+         withObject:nil  waitUntilDone:NO];
+    }
 }
 
 
@@ -98,12 +123,17 @@ static SaucePreconnect* _sharedPreconnect = nil;
 
 
 // poll til we get secret/jobid
--(NSString *)curlGetauth
+-(void)curlGetauth
 {
 	NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/scout/live/%@/status?secret&'", self.user, self.ukey, self.liveId ];
 
-    while(1)    // TODO: progress display with cancel button
+    while(1)    // use live-id to get job-id
     {
+        if(cancelled)
+        {
+            self.errStr = @"Connecting was Cancelled";
+            return;
+        }
         NSTask *ftask = [[NSTask alloc] init];
         NSPipe *fpipe = [NSPipe pipe];
         [ftask setStandardOutput:fpipe];
@@ -114,7 +144,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if([ftask terminationStatus])
         {
             NSLog(@"failed NSTask");
-            return @"Failed to request job-id";
+            self.errStr =  @"Failed to request job-id";
+            return;
         }
         else
         {
@@ -127,9 +158,11 @@ static SaucePreconnect* _sharedPreconnect = nil;
             self.jobId  = [jsonDict objectForKey:@"job-id"];
             if(secret.length)
             {
-                [[RFBConnectionManager sharedManager] connectToServer];
-                return @"";     //  got job-id ok
+                self.errStr = @"";     //  got job-id ok
+                [[RFBConnectionManager sharedManager] performSelectorOnMainThread:@selector(connectToServer)   withObject:nil  waitUntilDone:NO];
+                return;
             }
+            
         }
     }
 }
@@ -141,6 +174,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
 
 -(void)cancelHeartbeat
 {
+    cancelled = YES;
+    [self.timer invalidate];
     self.timer = nil;
 }
 
@@ -150,6 +185,9 @@ static SaucePreconnect* _sharedPreconnect = nil;
     
     while(1)    
     {
+        if(cancelled)
+            return;
+
         NSTask *ftask = [[NSTask alloc] init];
         NSPipe *fpipe = [NSPipe pipe];
         [ftask setStandardOutput:fpipe];
@@ -159,7 +197,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
         [ftask waitUntilExit];
         if([ftask terminationStatus])
         {
-            NSLog(@"failed NSTask");    // TODO: tell user
+            self.errStr = @"failed NSTask in heartbeat";
+            [self cancelHeartbeat];
             break;
         }
         else
@@ -173,13 +212,14 @@ static SaucePreconnect* _sharedPreconnect = nil;
             int val = [[jsonDict valueForKey:@"remaining-time"] intValue];  // doesn't work just asking for NSString?
             if([status isEqualToString:@"in progress"])
             {
+                // TODO: show in status
                 self.remaining  = [NSString stringWithFormat:@"%d",val];                
                 break;                
             }
             else
             {
+                self.errStr = @"Heartbeat doesn't say 'in progress'";
                 [self cancelHeartbeat];
-                NSLog(@"Heartbeat doesn't say 'in progress'");    // TODO: tell user
                 break;
             }
         }
@@ -199,7 +239,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     [ftask waitUntilExit];
     if([ftask terminationStatus])
     {
-        NSLog(@"failed NSTask");
+        self.errStr = @"Failed NSTask in checkUserLogin";
     }
     else
     {
@@ -214,16 +254,34 @@ static SaucePreconnect* _sharedPreconnect = nil;
             self.ukey = kkey;
             return YES;
         }
+        else 
+        {
+            self.errStr = @"Failed server authentication";
+        }
     }
     return NO;
 }
 
-- (NSString*)signupNew:(NSString*)userNew password:(NSString*)passNew email:(NSString*)emailNew
+- (void)setNewUser:(NSString*)uuserNew passNew:(NSString*)upassNew 
+          emailNew:(NSString*)uemailNew
 {
-    NSString *farg = [NSString stringWithFormat:@"curl -X POST http://saucelabs.com/rest/v1/users -H 'Content-Type: application/json' -d '{\"username\":\"%@\", \"password\":\"%@\",\"name\":\"\",\"email\":\"%@\",\"token\":\"0E44EF6E-B170-4CA0-8264-78FD9E49E5CD\"}'",userNew,passNew,emailNew];
-                      
+    self.userNew = uuserNew;
+    self.passNew = upassNew;
+    self.emailNew = uemailNew;
+}
+
+- (void)signupNew:(id)param     // called on a thread
+{
+    NSString *farg = [NSString stringWithFormat:@"curl -X POST http://saucelabs.com/rest/v1/users -H 'Content-Type: application/json' -d '{\"username\":\"%@\", \"password\":\"%@\",\"name\":\"\",\"email\":\"%@\",\"token\":\"0E44EF6E-B170-4CA0-8264-78FD9E49E5CD\"}'",self.userNew, self.passNew, self.emailNew];
+     
+    self.errStr = @"";
     while(1)
     {
+        if(cancelled)
+        {
+            self.errStr = @"Connecting was Cancelled";
+        }
+
         NSTask *ftask = [[NSTask alloc] init];
         NSPipe *fpipe = [NSPipe pipe];
         [ftask setStandardOutput:fpipe];
@@ -233,7 +291,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         [ftask waitUntilExit];
         if([ftask terminationStatus])
         {
-            NSLog(@"failed NSTask");
+            self.errStr = @"Failed NSTask in signupNew";
             break;
         }
         else
@@ -246,12 +304,16 @@ static SaucePreconnect* _sharedPreconnect = nil;
             NSString *akey = [jsonDict objectForKey:@"access_key"];
             if(akey.length)
             {
-                return akey;
+                self.user = self.userNew;
+                self.ukey = akey;
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                [defaults setObject:self.user  forKey:kUsername];
+                [defaults setObject:self.ukey  forKey:kAccountkey];
+                [NSApp performSelectorOnMainThread:@selector(newUserAuthorized:)   
+                                        withObject:nil  waitUntilDone:NO];
             }
         }
-    }
-    return @"";
-    
+    }    
 }
 
 @end
