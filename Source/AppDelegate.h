@@ -9,11 +9,20 @@
 #import <Cocoa/Cocoa.h>
 #import "SaucePreconnect.h"
 
+@class SessionController;
+@class LoginController;
+
 @interface AppDelegate : NSObject {
 	IBOutlet NSMenuItem *mRendezvousMenuItem;
 	IBOutlet NSTextField *mInfoVersionNumber;
-    IBOutlet NSMenuItem *fullScreenMenuItem;    
+    IBOutlet NSMenuItem *fullScreenMenuItem;
+    SessionController *optionsCtrlr;
+    LoginController *loginCtrlr;
 }
+
+@property (retain)SessionController *optionsCtrlr;
+@property (retain)LoginController *loginCtrlr;
+
 - (IBAction)showOptionsDlg:(id)sender;
 - (IBAction)showLoginDlg:(id)sender;
 

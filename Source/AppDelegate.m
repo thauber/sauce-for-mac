@@ -19,6 +19,7 @@
 
 @implementation AppDelegate
 
+@synthesize optionsCtrlr;
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification
 {
@@ -48,7 +49,7 @@
         [self showLoginDlg:self];
     }
 
-/*		
+/*	[rda] unused in Scout	
     RFBConnectionManager *cm = [RFBConnectionManager sharedManager];
     if ( ! [cm runFromCommandLine] && ! [cm launchedByURL] )
 		[cm runNormally];
@@ -57,20 +58,36 @@
 	[mRendezvousMenuItem setState: [[PrefController sharedController] usesRendezvous] ? NSOnState : NSOffState];
 */	
     [mInfoVersionNumber setStringValue: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleVersion"]];
-
 }
-
 
 - (IBAction)showOptionsDlg:(id)sender 
 {
-    SessionController *odlg = [[SessionController alloc] initWithWindowNibName:@"SessionController"];
-    [odlg window];
+    self.optionsCtrlr = [[SessionController alloc] initWithWindowNibName:@"SessionController"];
+    [optionsCtrlr window];
+}
+
+- (void)newUserAuthorized:(id)param
+{
+    [self.loginCtrlr dealloc];
+    self.loginCtrlr = nil;
+    [self showOptionsDlg:nil];
+}
+
+- (void)preAuthorizeErr
+{
+    NSString *err = [[SaucePreconnect sharedPreconnect] errStr];
+    [optionsCtrlr showError:err];
+}
+
+- (void)cancelOptionsConnect
+{
+    [optionsCtrlr cancelConnect:nil];
 }
 
 - (IBAction)showLoginDlg:(id)sender 
 {
-    LoginController *lc = [[LoginController alloc] initWithWindowNibName:@"LoginController"];
-    [lc window];        // need this to get window shown
+    self.loginCtrlr = [[LoginController alloc] initWithWindowNibName:@"LoginController"];
+    [loginCtrlr window];        // need this to get window shown
 }
 
 - (IBAction)showPreferences: (id)sender
