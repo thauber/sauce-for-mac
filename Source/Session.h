@@ -26,7 +26,7 @@
 @class RFBView;
 @class SshTunnel;
 
-@interface Session : NSObject <ConnectionWaiterDelegate>
+@interface Session : NSObject <ConnectionWaiterDelegate, NSWindowDelegate>
 {
     RFBConnection   *connection;
     IBOutlet RFBView *rfbView;
@@ -76,7 +76,22 @@
     int         _horizScrollFactor;
     int         _vertScrollFactor;
 	NSTimer *_autoscrollTimer;
+    NSTextField *osbrowser;
+    NSTextField *userStat;
+    NSTextField *timeRemainingStat;
+    NSSegmentedControl *bugcamera;
+    NSSegmentedControl *playstop;
+    NSTextField *statusMessage;
 }
+- (IBAction)doPlayStop:(id)sender;
+- (IBAction)doBugCamera:(id)sender;
+- (IBAction)newSession:(id)sender;
+@property (assign) IBOutlet NSTextField *statusMessage;
+@property (assign) IBOutlet NSSegmentedControl *playstop;
+@property (assign) IBOutlet NSSegmentedControl *bugcamera;
+@property (assign) IBOutlet NSTextField *timeRemainingStat;
+@property (assign) IBOutlet NSTextField *osbrowser;
+@property (assign) IBOutlet NSTextField *userStat;
 
 - (id)initWithConnection:(RFBConnection*)conn;
 - (void)dealloc;

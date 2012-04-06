@@ -68,6 +68,12 @@ enum {
 @end
 
 @implementation Session
+@synthesize statusMessage;
+@synthesize playstop;
+@synthesize bugcamera;
+@synthesize timeRemainingStat;
+@synthesize osbrowser;
+@synthesize userStat;
 
 - (id)initWithConnection:(RFBConnection *)aConnection
 {
@@ -793,7 +799,7 @@ enum {
             // Use the default KeyEquivalentManager to get the key equivalents
             // for the fullscreen scenario
         scen = [[KeyEquivalentManager defaultManager] keyEquivalentsForScenarioName: kConnectionFullscreenScenario]; 
-        menuItem = [[[NSApplication sharedApplication] delegate] getFullScreenMenuItem];
+        menuItem = [NSApp getFullScreenMenuItem];
         
         if (scen && menuItem) {
             KeyEquivalent *keyEquiv = [scen keyEquivalentForMenuItem: menuItem];
@@ -1056,4 +1062,12 @@ enum {
         [[server_ profile] profileName]];
 }
 
+- (IBAction)doPlayStop:(id)sender {
+}
+
+- (IBAction)doBugCamera:(id)sender {
+}
+
+- (IBAction)newSession:(id)sender {
+}
 @end

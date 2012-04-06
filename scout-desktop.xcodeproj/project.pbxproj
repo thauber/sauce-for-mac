@@ -39,6 +39,10 @@
 		0F7C6067152A8F8800DA9A4A /* SessionController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F7C6064152A8F8700DA9A4A /* SessionController.h */; };
 		0F7C6068152A8F8800DA9A4A /* SessionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7C6065152A8F8700DA9A4A /* SessionController.m */; };
 		0F7C606D152A964900DA9A4A /* SessionController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7C606C152A964900DA9A4A /* SessionController.xib */; };
+		0F7CE3D0152F6C2800068464 /* bug.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F7CE3CC152F6C2800068464 /* bug.pdf */; };
+		0F7CE3D1152F6C2800068464 /* camera.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F7CE3CD152F6C2800068464 /* camera.pdf */; };
+		0F7CE3D2152F6C2800068464 /* play.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F7CE3CE152F6C2800068464 /* play.pdf */; };
+		0F7CE3D3152F6C2800068464 /* stop.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F7CE3CF152F6C2800068464 /* stop.pdf */; };
 		0F99617915267C6C002657A9 /* chrome_color.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F99617415267C6B002657A9 /* chrome_color.pdf */; };
 		0F99617A15267C6C002657A9 /* firefox_color.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0F99617515267C6B002657A9 /* firefox_color.icns */; };
 		0F99617B15267C6C002657A9 /* ie_color.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F99617615267C6C002657A9 /* ie_color.pdf */; };
@@ -350,6 +354,10 @@
 		0F7C6064152A8F8700DA9A4A /* SessionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionController.h; sourceTree = "<group>"; };
 		0F7C6065152A8F8700DA9A4A /* SessionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionController.m; sourceTree = "<group>"; };
 		0F7C606C152A964900DA9A4A /* SessionController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SessionController.xib; path = Resources/SessionController.xib; sourceTree = SOURCE_ROOT; };
+		0F7CE3CC152F6C2800068464 /* bug.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = bug.pdf; path = Resources/bug.pdf; sourceTree = "<group>"; };
+		0F7CE3CD152F6C2800068464 /* camera.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = camera.pdf; path = Resources/camera.pdf; sourceTree = "<group>"; };
+		0F7CE3CE152F6C2800068464 /* play.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = play.pdf; path = Resources/play.pdf; sourceTree = "<group>"; };
+		0F7CE3CF152F6C2800068464 /* stop.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = stop.pdf; path = Resources/stop.pdf; sourceTree = "<group>"; };
 		0F99617415267C6B002657A9 /* chrome_color.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = chrome_color.pdf; path = Resources/chrome_color.pdf; sourceTree = "<group>"; };
 		0F99617515267C6B002657A9 /* firefox_color.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = firefox_color.icns; path = Resources/firefox_color.icns; sourceTree = "<group>"; };
 		0F99617615267C6C002657A9 /* ie_color.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = ie_color.pdf; path = Resources/ie_color.pdf; sourceTree = "<group>"; };
@@ -758,6 +766,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0F7CE3CC152F6C2800068464 /* bug.pdf */,
+				0F7CE3CD152F6C2800068464 /* camera.pdf */,
+				0F7CE3CE152F6C2800068464 /* play.pdf */,
+				0F7CE3CF152F6C2800068464 /* stop.pdf */,
 				0F9961841526AC06002657A9 /* linux_color.pdf */,
 				0F9961821526ABC2002657A9 /* apple_color.pdf */,
 				0F99617E15267CAF002657A9 /* opera_color.pdf */,
@@ -1363,6 +1375,10 @@
 				0F9961831526ABC2002657A9 /* apple_color.pdf in Resources */,
 				0F9961851526AC06002657A9 /* linux_color.pdf in Resources */,
 				0F7C606D152A964900DA9A4A /* SessionController.xib in Resources */,
+				0F7CE3D0152F6C2800068464 /* bug.pdf in Resources */,
+				0F7CE3D1152F6C2800068464 /* camera.pdf in Resources */,
+				0F7CE3D2152F6C2800068464 /* play.pdf in Resources */,
+				0F7CE3D3152F6C2800068464 /* stop.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
