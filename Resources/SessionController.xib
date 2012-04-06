@@ -1310,7 +1310,7 @@
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="943438786">
-												<int key="NSCellFlags">67239424</int>
+												<int key="NSCellFlags">-2080244224</int>
 												<int key="NSCellFlags2">134217728</int>
 												<string key="NSContents">Scout!</string>
 												<reference key="NSSupport" ref="770766460"/>
@@ -3715,10 +3715,15 @@
 					<string key="className">SessionController</string>
 					<string key="superclassName">NSWindowController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="cancelConnect:">id</string>
 						<string key="connect:">id</string>
 						<string key="selectBrowser:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="cancelConnect:">
+							<string key="name">cancelConnect:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="connect:">
 							<string key="name">connect:</string>
 							<string key="candidateClassName">id</string>
