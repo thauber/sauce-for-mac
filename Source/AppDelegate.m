@@ -20,6 +20,7 @@
 @implementation AppDelegate
 
 @synthesize optionsCtrlr;
+@synthesize loginCtrlr;
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification
 {
