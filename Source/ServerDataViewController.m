@@ -32,6 +32,7 @@
 #import "ServerStandAlone.h"
 #import "ServerFromPrefs.h"
 #import "SshWaiter.h"
+#import "SessionController.h"
 
 #define DISPLAY_MAX 50 // numbers >= this are interpreted as a port
 
@@ -459,13 +460,11 @@
 
 - (IBAction)connectToServer:(id)sender
 {
-    NSWindow *window;    
-
-    window = superController ? [superController window] : [self window];
+//    window = superController ? [superController window] : [self window];
 
     // needed so that any changes being made now are reflected in server
-    [window makeFirstResponder:nil];
-
+//    [window makeFirstResponder:nil];
+/*
     saveCheckboxWasVisible = !removedSaveCheckbox;
     [self setSaveCheckboxIsVisible: NO];
 	[connectIndicator startAnimation:self];
@@ -477,7 +476,7 @@
     [connectBtn setAction: @selector(cancelConnect:)];
     [connectBtn setKeyEquivalent:@"."];
     [connectBtn setKeyEquivalentModifierMask:NSCommandKeyMask];	    
-    
+*/    
     // go on to connect
     // Asynchronously creates a connection to the server
     ServerBase *server;
@@ -490,9 +489,12 @@
     } else
         server = mServer;
 
-    connectionWaiter = [[ConnectionWaiter waiterForServer:server
+//    connectionWaiter = [[ConnectionWaiter waiterForServer:server
+//                                                delegate:self
+//                                                window:window] retain];
+    connectionWaiter = [[ConnectionWaiter waiterForServer:nil
                                                  delegate:self
-                                                   window:window] retain];
+                                                   window:nil] retain];
     [[ServerDataManager sharedInstance] save]; // just in case we crash
     [[NSUserDefaults standardUserDefaults] synchronize];
     if (connectionWaiter == nil)
@@ -530,6 +532,7 @@
 /* Update the interface to indicate the end of the connection attempt. */
 - (void)connectionAttemptEnded
 {
+#if 0
 	[connectIndicator stopAnimation:self];
 	[connectIndicatorText setStringValue:@""];
 	[connectIndicatorText display];
@@ -541,7 +544,7 @@
     [connectBtn setAction: @selector(connectToServer:)];
     [connectBtn setKeyEquivalent:@"\r"];
     [connectBtn setKeyEquivalentModifierMask:0];
-
+#endif
     [connectionWaiter release];
     connectionWaiter = nil;
 }
@@ -549,6 +552,7 @@
 /* Disables or enables controls as part of connection attempt */
 - (void)disableControls
 {
+#if 0
     [display setEnabled: NO];
     [hostName setEnabled: NO];
     [password setEnabled: NO];
@@ -560,6 +564,7 @@
     [useSshTunnel setEnabled: NO];
     [sshHost setEnabled: NO];
     [superController setControlsEnabled: NO];
+#endif
 }
 
 - (void)windowClose:(id)notification
