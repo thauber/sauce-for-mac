@@ -43,7 +43,8 @@
 {
     ConnectionWaiter    *cw;
 
-    cw = [aServer sshHost] ? [SshWaiter alloc] : [ConnectionWaiter alloc];
+//    cw = [aServer sshHost] ? [SshWaiter alloc] : [ConnectionWaiter alloc];
+    cw = [ConnectionWaiter alloc];
     cw = [cw initWithServer:aServer delegate:aDelegate window:aWind];
     return [cw autorelease];
 }
@@ -52,14 +53,18 @@
     delegate:(id<ConnectionWaiterDelegate>)aDelegate window:(NSWindow *)aWindow
 {
     if (self = [super init]) {
-        server = [aServer retain];
-        host = [[server host] copy];
+//        server = [aServer retain];
+//        host = [[server host] copy];
+        host = @"tv1.saucelabs.com";        // fixed
+
         if (host == nil)
             host = [DEFAULT_HOST retain];
-        port = [server port];
+//        port = [server port];
+       port = 5901;
+
         lock = [[NSLock alloc] init];
         currentSock = -1;
-        window = [aWindow retain];
+//        window = [aWindow retain];
 
         delegate = aDelegate;
 
@@ -71,10 +76,10 @@
 
 - (void)dealloc
 {
-    [server release];
+//    [server release];
     [host release];
     [lock release];
-    [window release];
+//    [window release];
     [errorStr release];
     [super dealloc];
 }
@@ -96,7 +101,7 @@
         currentSock = -1;
     }
     [lock unlock];
-    [window release];
+//    [window release];
     window = nil;
 }
 
@@ -228,8 +233,10 @@
 
         fh = [[NSFileHandle alloc] initWithFileDescriptor: currentSock
                                            closeOnDealloc: YES];
+//        theConnection = [[RFBConnection alloc] initWithFileHandle:fh
+//                server:server];
         theConnection = [[RFBConnection alloc] initWithFileHandle:fh
-                server:server];
+                                                           server:nil];
         [delegate connectionSucceeded: theConnection];
         [fh release];
         [theConnection release];
