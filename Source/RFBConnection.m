@@ -76,8 +76,8 @@
 
         currentReader = nil;
 
-        server_ = [(id)server retain];
-        password = [[server password] retain];
+//        server_ = [(id)server retain];      // why not work without this set?
+//        password = [[server password] retain];
         
         _eventFilter = [[EventFilter alloc] init];
         [_eventFilter setConnection: self];
@@ -137,7 +137,7 @@
     [currentReader release];
 	[_eventFilter release];
 	[handshaker release];
-    [server_ release];
+//    [server_ release];
     [password release];
 	[rfbProtocol release];
 	[frameBuffer release];
@@ -238,7 +238,7 @@
 
 - (void)setCursor: (NSCursor *)aCursor
 {
-    if (![server_ viewOnly])
+//    if (![server_ viewOnly])    
         [rfbView setServerCursorTo: aCursor];
 }
 
@@ -302,12 +302,14 @@
 
 - (BOOL)connectShared
 {
-    return [server_ shared];
+//    return [server_ shared];
+    return YES;
 }
 
 - (BOOL)viewOnly
 {
-	return [server_ viewOnly];
+//	return [server_ viewOnly];
+    return NO;
 }
 
 - (void)invalidateRect:(NSRect)aRect
@@ -453,8 +455,8 @@
 /* The server has moved the cursor to pos in RFB coordinates */
 - (void)serverMovedMouseTo:(NSPoint)pos
 {
-    if ([session hasKeyWindow] && -[lastMouseMovement timeIntervalSinceNow] > 0.5
-            && ![server_ viewOnly])
+    if ([session hasKeyWindow] && -[lastMouseMovement timeIntervalSinceNow] > 0.5)
+//            && ![server_ viewOnly])
     {
         NSSize  size = [frameBuffer size];
         CGPoint screenCoords;
