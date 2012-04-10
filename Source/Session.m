@@ -81,16 +81,16 @@ enum {
         return nil;
 
     connection = [aConnection retain];
-    server_ = [[connection server] retain];
-    host = [[server_ host] retain];
-    sshTunnel = [[connection sshTunnel] retain];
+//    server_ = [[connection server] retain];
+    host = kSauceLabsHost;
+//    sshTunnel = [[connection sshTunnel] retain];
 
     _isFullscreen = NO; // jason added for fullscreen display
 
     [NSBundle loadNibNamed:@"RFBConnection.nib" owner:self];
     [rfbView registerForDraggedTypes:[NSArray arrayWithObjects:NSStringPboardType, NSFilenamesPboardType, nil]];
 
-    password = [[connection password] retain];
+//    password = [[connection password] retain];
 
     _reconnectWaiter = nil;
     _reconnectSheetTimer = nil;
@@ -133,11 +133,11 @@ enum {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
 	[titleString release];
-	[(id)server_ release];
-	[host release];
-    [password release];
-    [sshTunnel close];
-    [sshTunnel release];
+//	[(id)server_ release];
+//	[host release];
+//    [password release];
+//    [sshTunnel close];
+//    [sshTunnel release];
 	[realDisplayName release];
     [_reconnectSheetTimer invalidate];
     [_reconnectSheetTimer release];
@@ -155,7 +155,8 @@ enum {
 
 - (BOOL)viewOnly
 {
-    return [server_ viewOnly];
+//    return [server_ viewOnly];
+    return NO;
 }
 
 /* Begin a reconnection attempt to the server. */
@@ -168,7 +169,8 @@ enum {
                                                       window:window
                                                    sshTunnel:sshTunnel];
     } else {
-        _reconnectWaiter = [[ConnectionWaiter waiterForServer:server_
+//        _reconnectWaiter = [[ConnectionWaiter waiterForServer:server_
+        _reconnectWaiter = [[ConnectionWaiter waiterForServer:nil
                                                      delegate:self
                                                        window:window] retain];
     }
@@ -242,7 +244,8 @@ enum {
     } else {
         if(aReason) {
             NSTimeInterval timeout = [[PrefController sharedController] intervalBeforeReconnect];
-            BOOL supportReconnect = [server_ doYouSupport:CONNECT];
+//            BOOL supportReconnect = [server_ doYouSupport:CONNECT];
+            BOOL supportReconnect = NO;
 
             [_reconnectReason setStringValue:aReason];
 			if (supportReconnect
@@ -270,15 +273,15 @@ enum {
     if (connection == nil)
         return;
 
-    if (![server_ doYouSupport:CONNECT])
-        [self terminateConnection:NSLocalizedString(@"AuthenticationFailed", nil)];
+//    if (![server_ doYouSupport:CONNECT])
+//        [self terminateConnection:NSLocalizedString(@"AuthenticationFailed", nil)];
 
     [self connectionProblem];
     [authHeader setStringValue:NSLocalizedString(@"AuthenticationFailed", nil)];
     [authMessage setStringValue: aReason];
-    [[passwordSheet defaultButtonCell] setTitle:NSLocalizedString(@"Reconnect",
-            nil)];
-    [self displayPasswordSheet];
+//    [[passwordSheet defaultButtonCell] setTitle:NSLocalizedString(@"Reconnect",
+//            nil)];
+//    [self displayPasswordSheet];
 }
 
 - (void)promptForPassword
@@ -359,7 +362,8 @@ enum {
 {
     if ([item action] == @selector(forceReconnect:))
         // we only enable Force Reconnect menu item if server supports it
-        return [server_ doYouSupport:CONNECT];
+//        return [server_ doYouSupport:CONNECT];
+        return NO;
     else
         return [self respondsToSelector:[item action]];
 }
@@ -434,17 +438,18 @@ enum {
 	wf.origin.y = floor((NSHeight(screenRect) - NSHeight(wf))*2/3 + NSMinY(screenRect));
 	
     // :TOFIX: this doesn't work for unnamed servers
-	serverName = [server_ name];
+//	serverName = [server_ name];
+	serverName =@"SauceLabs";
 	if(![window setFrameUsingName:serverName]) {
 		// NSLog(@"Window did NOT have an entry: %@\n", serverName);
 		[window setFrame:wf display:NO];
 	}
 	[window setFrameAutosaveName:serverName];
 
-    if ([server_ fullscreen]) {
-        [self makeConnectionFullscreen:self];
-        return;
-    }
+//    if ([server_ fullscreen]) {
+//        [self makeConnectionFullscreen:self];
+//        return;
+//    }
 
 	contentView = [scrollView contentView];
     [contentView scrollToPoint: [contentView constrainScrollPoint: NSMakePoint(0.0, _maxSize.height - [scrollView contentSize].height)]];
