@@ -32,6 +32,8 @@ extern NSString *kAccountkey;
 extern NSString *kSessionURL;
 extern NSString *kSessionTag;
 extern NSString *kSessionFrame;
+extern NSString *kSauceLabsHost;        // fixed host for connection
+extern int kPort;                       // fixed port for connection
 
 @interface RFBConnectionManager : NSWindowController<ConnectionWaiterDelegate>
 {

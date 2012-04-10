@@ -41,6 +41,8 @@ NSString *kAccountkey = @"accountkey";
 NSString *kSessionURL = @"sessionURL";
 NSString *kSessionTag = @"sessionTag";
 NSString *kSessionFrame = @"sessionFrame";
+NSString *kSauceLabsHost;        // fixed host for connection
+int kPort;                       // fixed port for connection
 
 
 
