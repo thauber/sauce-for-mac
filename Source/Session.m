@@ -81,7 +81,6 @@ enum {
         return nil;
 
     connection = [aConnection retain];
-//    server_ = [[connection server] retain];
     host = kSauceLabsHost;
 //    sshTunnel = [[connection sshTunnel] retain];
 
@@ -89,8 +88,6 @@ enum {
 
     [NSBundle loadNibNamed:@"RFBConnection.nib" owner:self];
     [rfbView registerForDraggedTypes:[NSArray arrayWithObjects:NSStringPboardType, NSFilenamesPboardType, nil]];
-
-//    password = [[connection password] retain];
 
     _reconnectWaiter = nil;
     _reconnectSheetTimer = nil;
@@ -164,7 +161,7 @@ enum {
 {
     if (sshTunnel) {
         /* Reuse the same SSH tunnel if we have one. */
-        _reconnectWaiter = [[SshWaiter alloc] initWithServer:server_
+        _reconnectWaiter = [[SshWaiter alloc] initWithServer:nil
                                                     delegate:self
                                                       window:window
                                                    sshTunnel:sshTunnel];
@@ -437,8 +434,6 @@ enum {
 	wf.origin.x = floor((NSWidth(screenRect) - NSWidth(wf))/2 + NSMinX(screenRect));
 	wf.origin.y = floor((NSHeight(screenRect) - NSHeight(wf))*2/3 + NSMinY(screenRect));
 	
-    // :TOFIX: this doesn't work for unnamed servers
-//	serverName = [server_ name];
 	serverName =@"SauceLabs";
 	if(![window setFrameUsingName:serverName]) {
 		// NSLog(@"Window did NOT have an entry: %@\n", serverName);
