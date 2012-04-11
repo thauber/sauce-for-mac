@@ -37,19 +37,8 @@ extern int kPort;                       // fixed port for connection
 
 @interface RFBConnectionManager : NSWindowController<ConnectionWaiterDelegate>
 {
-	IBOutlet NSTableView *serverList;
-	IBOutlet NSTableView *groupList;
-	IBOutlet NSBox *serverDataBoxLocal;
-	IBOutlet NSBox *serverListBox;
-	IBOutlet NSBox *serverGroupBox;
-	IBOutlet NSSplitView *splitView;
-    IBOutlet NSButton *serverDeleteBtn;
-    IBOutlet NSButton *serverAddBtn;
     NSMutableArray*	sessions;
 	ServerDataViewController* mServerCtrler;
-	BOOL mDisplayGroups;
-	BOOL mRunningFromCommandLine;
-	BOOL mLaunchedByURL;
 	NSArray* mOrderedServerNames;
 
     ConnectionWaiter    *connectionWaiter;
@@ -59,50 +48,21 @@ extern int kPort;                       // fixed port for connection
 + (id)sharedManager;
 
 - (void)wakeup;
-- (BOOL)runFromCommandLine;
-- (void)runNormally;
 
 - (void)connectToServer;
 
 - (void)connectionSucceeded:(RFBConnection *)conn;
 - (void)connectionFailed;
 
-- (void)showNewConnectionDialog: (id)sender;
-- (void)showConnectionDialog: (id)sender;
-
 - (void)removeConnection:(id)aConnection;
-- (void)cmdlineUsage;
-
-- (void)selectedHostChanged;
-
-- (void)setControlsEnabled:(BOOL)enabled;
 - (void)connectionDone;
 
 - (NSString*)translateDisplayName:(NSString*)aName forHost:(NSString*)aHost;
-- (void)setDisplayNameTranslation:(NSString*)translation forName:(NSString*)aName forHost:(NSString*)aHost;
 
 - (BOOL)createConnectionWithFileHandle:(NSFileHandle*)file 
     server:(id<IServerData>) server;
 - (void)successfulConnection: (RFBConnection *)theConnection;
 
-- (IBAction)addServer:(id)sender;
-- (IBAction)deleteSelectedServer:(id)sender;
-
 - (void)makeAllConnectionsWindowed;
-
-- (void)serverListDidChange:(NSNotification*)notification;
-
-- (id<IServerData>)selectedServer;
-- (BOOL)selectServerByName:(NSString *)aName;
-
-- (void)useRendezvous:(BOOL)useRendezvous;
-
-- (void)displayGroups:(bool)display;
-
-- (void)setFrontWindowUpdateInterval: (NSTimeInterval)interval;
-- (void)setOtherWindowUpdateInterval: (NSTimeInterval)interval;
-
-- (BOOL)launchedByURL;
-- (void)setLaunchedByURL:(bool)launchedByURL;
 
 @end
