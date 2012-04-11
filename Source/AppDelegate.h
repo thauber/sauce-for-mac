@@ -34,6 +34,8 @@
 - (IBAction)showProfileManager: (id)sender;
 - (IBAction)showHelp: (id)sender;
 
+-(void)connectionSucceeded;
+
 - (NSMenuItem *)getFullScreenMenuItem;
 
 @end

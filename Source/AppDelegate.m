@@ -67,6 +67,11 @@
     [optionsCtrlr window];
 }
 
+-(void)connectionSucceeded
+{
+    [optionsCtrlr connectionSucceeded];
+}
+
 - (void)newUserAuthorized:(id)param
 {
     [self.loginCtrlr dealloc];
