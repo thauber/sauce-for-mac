@@ -76,7 +76,7 @@
 
         currentReader = nil;
 
-//        server_ = [(id)server retain];      // why not work without this set?
+//        server_ = [(id)server retain];      
 //        password = [[server password] retain];
         
         _eventFilter = [[EventFilter alloc] init];
