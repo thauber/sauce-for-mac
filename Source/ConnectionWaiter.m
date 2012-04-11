@@ -53,14 +53,9 @@
     delegate:(id<ConnectionWaiterDelegate>)aDelegate window:(NSWindow *)aWindow
 {
     if (self = [super init]) {
-//        server = [aServer retain];
-//        host = [[server host] copy];
         host = @"tv1.saucelabs.com";        // fixed
 
-        if (host == nil)
-            host = [DEFAULT_HOST retain];
-//        port = [server port];
-       port = 5901;
+        port = 5901;
 
         lock = [[NSLock alloc] init];
         currentSock = -1;
@@ -76,10 +71,7 @@
 
 - (void)dealloc
 {
-//    [server release];
-    [host release];
     [lock release];
-//    [window release];
     [errorStr release];
     [super dealloc];
 }
@@ -101,8 +93,6 @@
         currentSock = -1;
     }
     [lock unlock];
-//    [window release];
-    window = nil;
 }
 
 /* Attempts to connect to the server. */
@@ -233,8 +223,6 @@
 
         fh = [[NSFileHandle alloc] initWithFileDescriptor: currentSock
                                            closeOnDealloc: YES];
-//        theConnection = [[RFBConnection alloc] initWithFileHandle:fh
-//                server:server];
         theConnection = [[RFBConnection alloc] initWithFileHandle:fh
                                                            server:nil];
         [delegate connectionSucceeded: theConnection];
