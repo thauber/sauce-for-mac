@@ -30,6 +30,7 @@
 - (IBAction)connect:(id)sender;
 - (IBAction)cancelConnect: (id)sender;
 - (IBAction)selectBrowser:(id)sender;
+-(void)connectionSucceeded;
 - (void)showError:(NSString *)errStr;
 
 

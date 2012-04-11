@@ -117,6 +117,11 @@
     [defaults setObject:frStr  forKey:kSessionFrame];        
 }
 
+-(void)connectionSucceeded
+{
+    [self dealloc];
+}
+
 - (void)showError:(NSString *)errStr
 {
     NSBeginAlertSheet(@"Session Options Error", @"Okay", nil, nil, [self window], self,nil,     
