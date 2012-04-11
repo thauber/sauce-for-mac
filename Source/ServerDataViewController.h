@@ -32,25 +32,6 @@
 @interface ServerDataViewController : NSWindowController
                                             <ConnectionWaiterDelegate>
 {
-    IBOutlet NSTextField *display;
-    IBOutlet NSTextField *displayDescription;
-    IBOutlet NSTextField *hostName;
-    IBOutlet NSTextField *password;
-    IBOutlet NSPopUpButton *profilePopup;
-    IBOutlet NSButton *rememberPwd;
-	IBOutlet NSButton *fullscreen;
-    IBOutlet NSButton *shared;
-	IBOutlet NSButton *viewOnly;
-	IBOutlet NSButton *save;
-    IBOutlet NSButton *useSshTunnel;
-    IBOutlet NSTextField *sshHost;
-
-	IBOutlet NSBox *box;
-	IBOutlet NSButton *connectBtn;
-	
-	IBOutlet NSProgressIndicator *connectIndicator;
-	IBOutlet NSTextField *connectIndicatorText;
-	
 	ServerBase  *mServer;
 	
 	bool selfTerminate;
@@ -69,20 +50,6 @@
 
 - (void)setServer:(id<IServerData>)server;
 - (id<IServerData>)server;
-
-- (IBAction)passwordChanged:(id)sender;
-- (IBAction)rememberPwdChanged:(id)sender;
-- (IBAction)profileSelectionChanged:(id)sender;
-- (IBAction)fullscreenChanged:(id)sender;
-- (IBAction)sharedChanged:(id)sender;
-- (IBAction)viewOnlyChanged:(id)sender;
-- (IBAction)useSshTunnelChanged:(id)sender;
-- (IBAction)sshHostChanged:(id)sender;
-- (IBAction)connectToServer:(id)sender;
-- (IBAction)addServerChanged:(id)sender;
-
-- (IBAction)showProfileManager:(id)sender;
-
 - (IBAction)connectToServer:(id)sender;
 - (IBAction)cancelConnect: (id)sender;
 
@@ -90,17 +57,6 @@
 - (void)connectionFailed;
 - (void)connectionAttemptEnded;
 
-- (void)disableControls;
-
-- (NSBox*)box;
-
-- (void)updateView:(id)notification;
-- (void)updateProfileView:(id)notification;
-- (void)setProfilePopupToProfile: (Profile *)profileName;
-
-- (void)loadProfileIntoView;
-
-- (void)setSaveCheckboxIsVisible:(BOOL)visible;
 - (void)setSuperController:(RFBConnectionManager *)aSuperController;
 
 @end
