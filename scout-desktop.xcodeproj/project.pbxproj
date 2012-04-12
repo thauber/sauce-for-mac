@@ -52,6 +52,7 @@
 		0F9961831526ABC2002657A9 /* apple_color.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F9961821526ABC2002657A9 /* apple_color.pdf */; };
 		0F9961851526AC06002657A9 /* linux_color.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F9961841526AC06002657A9 /* linux_color.pdf */; };
 		0FD6E34D15364A090028C9B3 /* PSMTabBarControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FD6E34C15364A090028C9B3 /* PSMTabBarControl.framework */; };
+		0FD6E35A15366CBC0028C9B3 /* PSMTabBarControl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0FD6E35915366CBB0028C9B3 /* PSMTabBarControl.framework */; };
 		0FDB429E1511459A00841EE9 /* SaucePreconnect.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FDB429C1511459A00841EE9 /* SaucePreconnect.h */; };
 		0FDB429F1511459A00841EE9 /* SaucePreconnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FDB429D1511459A00841EE9 /* SaucePreconnect.m */; };
 		7F7A93E505E71B5C00E20416 /* ByteBlockReader.h in Headers */ = {isa = PBXBuildFile; fileRef = F5DC719B033DB4A801A8010C /* ByteBlockReader.h */; };
@@ -316,6 +317,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				0FD6E35A15366CBC0028C9B3 /* PSMTabBarControl.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,6 +369,7 @@
 		0F9961821526ABC2002657A9 /* apple_color.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = apple_color.pdf; path = Resources/apple_color.pdf; sourceTree = "<group>"; };
 		0F9961841526AC06002657A9 /* linux_color.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = linux_color.pdf; path = Resources/linux_color.pdf; sourceTree = "<group>"; };
 		0FD6E34C15364A090028C9B3 /* PSMTabBarControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PSMTabBarControl.framework; sourceTree = "<group>"; };
+		0FD6E35915366CBB0028C9B3 /* PSMTabBarControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PSMTabBarControl.framework; sourceTree = "<group>"; };
 		0FDB429C1511459A00841EE9 /* SaucePreconnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaucePreconnect.h; sourceTree = "<group>"; };
 		0FDB429D1511459A00841EE9 /* SaucePreconnect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaucePreconnect.m; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -752,6 +755,7 @@
 		29B97314FDCFA39411CA2CEA /* Chicken of the VNC */ = {
 			isa = PBXGroup;
 			children = (
+				0FD6E35915366CBB0028C9B3 /* PSMTabBarControl.framework */,
 				F5DC718B033DB45F01A8010C /* Documentation */,
 				F5DC7198033DB4A801A8010C /* Source */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
