@@ -25,29 +25,36 @@
 #import "SaucePreconnect.h"
 #import "RFBConnectionManager.h"
 #import "SessionController.h"
+#import "ScoutWindowController.h"
 
 
 @implementation LoginController
-@synthesize user;
-@synthesize accountKey;
-@synthesize aNewUsername;
-@synthesize aNewPassword;
-@synthesize aNewEmail;
 
-
--(void)awakeFromNib
+- (id)init
 {
+    self=[super initWithNibName:@"LoginController" bundle:nil];
+    if(self)
+    {
+        //perform any initializations
+    }
+    return self;
+}
+
+- (void)loadView {
+    [super loadView];
+    
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
     NSString *uname = [defs stringForKey:kUsername];
     NSString *akey = [defs stringForKey:kAccountkey];
-    [self.user setStringValue:uname];
-    [self.accountKey setStringValue:akey];   
+    [user setStringValue:uname];
+    [accountKey setStringValue:akey]; 
+    [[ScoutWindowController sharedScout] addNewTab:login view:[self view]];
 }
 
 - (IBAction)login:(id)sender
 {
-    NSString *uname = [self.user stringValue];
-    NSString *aaccountkey = [self.accountKey stringValue];
+    NSString *uname = [user stringValue];
+    NSString *aaccountkey = [accountKey stringValue];
     if([uname length] && [aaccountkey length])
     {
         if([[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:aaccountkey])
@@ -61,13 +68,13 @@
         else 
         {
             // alert for bad login
-            NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [self window], self,nil, NULL, NULL, @"Failed to Authenticate");
+//            NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [self window], self,nil, NULL, NULL, @"Failed to Authenticate");
         }
     }
     else
     {
         // alert for missing username or accountkey
-        NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [self window], self,nil, NULL, NULL, @"Need valid user-name and account-key");    
+//        NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [self window], self,nil, NULL, NULL, @"Need valid user-name and account-key");    
     }
 }
 
@@ -78,9 +85,9 @@
 
 - (IBAction)signUp:(id)sender
 {
-    NSString *nameNew = [self.aNewUsername stringValue];
-    NSString *passNew = [self.aNewPassword stringValue];
-    NSString *emailNew = [self.aNewEmail stringValue];
+    NSString *nameNew = [aNewUsername stringValue];
+    NSString *passNew = [aNewPassword stringValue];
+    NSString *emailNew = [aNewEmail stringValue];
     
     [[SaucePreconnect sharedPreconnect] setNewUser:nameNew passNew:passNew emailNew:emailNew];
     [[SaucePreconnect sharedPreconnect] signupNew:nil];
