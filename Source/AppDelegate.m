@@ -15,6 +15,7 @@
 #import "LoginController.h"
 #import "SaucePreconnect.h"
 #import "SessionController.h"
+#import "ScoutWindowController.h"
 
 
 @implementation AppDelegate
@@ -30,6 +31,9 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    [[ScoutWindowController sharedScout] showWindow:nil];
+    
+    
     // check for username/key in prefs
     NSUserDefaults* user = [NSUserDefaults standardUserDefaults];
     NSString *uname = [user stringForKey:kUsername];
@@ -41,7 +45,7 @@
         if([[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:akey])
         {
             // good name/key, so go on to options dialog
-            [self showOptionsDlg:self];
+            //[self showOptionsDlg:self];            
             bLoginDlg = NO;
         }
     }
@@ -63,8 +67,9 @@
 
 - (IBAction)showOptionsDlg:(id)sender 
 {
-    self.optionsCtrlr = [[SessionController alloc] initWithWindowNibName:@"SessionController"];
-    [optionsCtrlr window];
+    self.optionsCtrlr = [[SessionController alloc] init];
+//    [optionsCtrlr view];    
+    
 }
 
 -(void)connectionSucceeded
@@ -74,15 +79,16 @@
 
 - (void)newUserAuthorized:(id)param
 {
-    [self.loginCtrlr dealloc];
-    self.loginCtrlr = nil;
-    [self showOptionsDlg:nil];
+    // TODO: remove tab
+//    [self.loginCtrlr dealloc];
+//    self.loginCtrlr = nil;
+//    [self showOptionsDlg:nil];
 }
 
 - (void)preAuthorizeErr
 {
     NSString *err = [[SaucePreconnect sharedPreconnect] errStr];
-    [optionsCtrlr showError:err];
+  [optionsCtrlr showError:err];
 }
 
 - (void)cancelOptionsConnect
@@ -92,8 +98,8 @@
 
 - (IBAction)showLoginDlg:(id)sender 
 {
-    self.loginCtrlr = [[LoginController alloc] initWithWindowNibName:@"LoginController"];
-    [loginCtrlr window];        // need this to get window shown
+    LoginController *lc = [[LoginController alloc] init];
+    [lc view];
 }
 
 - (IBAction)showPreferences: (id)sender
