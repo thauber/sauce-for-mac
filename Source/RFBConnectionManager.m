@@ -162,37 +162,11 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
  * object. */
 - (void)successfulConnection: (RFBConnection *)theConnection
 {
+    [[NSApp delegate] connectionSucceeded]; 
     Session *sess = [[Session alloc] initWithConnection:theConnection];
     [sessions addObject:sess];
     [sess release];
     [[SaucePreconnect sharedPreconnect]  startHeartbeat]; 
-    [[NSApp delegate] connectionSucceeded]; 
 }
-
-
-- (void)windowWillClose:(NSNotification *)aNotification
-{
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (void)applicationDidBecomeActive:(NSNotification *)aNotification
-{
-//    if ([[NSApp windows] count] == 0) {
-//        [[self window] makeKeyAndOrderFront:self];
-//    }
-}
-
-
-// Jason added the following for full-screen windows
-- (void)makeAllConnectionsWindowed {
-	NSEnumerator *enumerator = [sessions objectEnumerator];
-    Session      *session;
-
-	while (session = [enumerator nextObject]) {
-		if ([session connectionIsFullscreen])
-			[session makeConnectionWindowed: self];
-	}
-}
-
 
 @end

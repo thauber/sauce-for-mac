@@ -63,6 +63,4 @@ extern int kPort;                       // fixed port for connection
     server:(id<IServerData>) server;
 - (void)successfulConnection: (RFBConnection *)theConnection;
 
-- (void)makeAllConnectionsWindowed;
-
 @end
