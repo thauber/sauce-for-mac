@@ -26,18 +26,16 @@
 @class RFBView;
 @class SshTunnel;
 
-@interface Session : NSObject <ConnectionWaiterDelegate, NSWindowDelegate>
+@interface Session : NSViewController <ConnectionWaiterDelegate>
 {
+    NSWindow *window;       // TODO: set to scoutwindowcontroller's window?
+    
     RFBConnection   *connection;
     IBOutlet RFBView *rfbView;
-    IBOutlet NSWindow    *window;
-    id<IServerData> server_;
-    NSString        *password;
     SshTunnel       *sshTunnel;
 
     id      scrollView;
     id      newTitleField;
-    IBOutlet NSPanel *newTitlePanel;
     NSString    *titleString;
     id      statisticField;
 
@@ -52,11 +50,8 @@
     NSString *realDisplayName;
     NSString *host;
 
-    IBOutlet NSPanel *passwordSheet;
-    IBOutlet NSTextField *passwordField;
     IBOutlet NSTextField *authHeader;
     IBOutlet NSTextField *authMessage;
-    IBOutlet NSButton *rememberNewPassword;
 
         // for reconnection attempts
     IBOutlet NSPanel                *_reconnectPanel;
@@ -68,7 +63,6 @@
 
         // instance variables for managing the fullscreen display
 	BOOL _isFullscreen;
-    NSWindow *windowedWindow;
 	NSTrackingRectTag _leftTrackingTag;
 	NSTrackingRectTag _topTrackingTag;
 	NSTrackingRectTag _rightTrackingTag;
@@ -76,22 +70,7 @@
     int         _horizScrollFactor;
     int         _vertScrollFactor;
 	NSTimer *_autoscrollTimer;
-    NSTextField *osbrowser;
-    NSTextField *userStat;
-    NSTextField *timeRemainingStat;
-    NSSegmentedControl *bugcamera;
-    NSSegmentedControl *playstop;
-    NSTextField *statusMessage;
 }
-- (IBAction)doPlayStop:(id)sender;
-- (IBAction)doBugCamera:(id)sender;
-- (IBAction)newSession:(id)sender;
-@property (assign) IBOutlet NSTextField *statusMessage;
-@property (assign) IBOutlet NSSegmentedControl *playstop;
-@property (assign) IBOutlet NSSegmentedControl *bugcamera;
-@property (assign) IBOutlet NSTextField *timeRemainingStat;
-@property (assign) IBOutlet NSTextField *osbrowser;
-@property (assign) IBOutlet NSTextField *userStat;
 
 - (id)initWithConnection:(RFBConnection*)conn;
 - (void)dealloc;
@@ -108,12 +87,8 @@
 - (IBAction)sendPasteboardToServer:(id)sender;
 - (void)terminateConnection:(NSString*)aReason;
 - (void)authenticationFailed:(NSString *)aReason;
-- (void)promptForPassword;
-- (IBAction)reconnectWithNewPassword:(id)sender;
 - (IBAction)dontReconnect:(id)sender;
 - (IBAction)forceReconnect:(id)sender;
-- (void)openNewTitlePanel:(id)sender;
-- (void)setNewTitle:(id)sender;
 
 - (IBAction)requestFrameBufferUpdate:(id)sender;
 
@@ -128,23 +103,11 @@
 
 - (void)openOptions:(id)sender;
 
-- (BOOL)hasKeyWindow;
-
-// Full-screen mode
-- (BOOL)connectionIsFullscreen;
-- (IBAction)toggleFullscreenMode: (id)sender;
-- (IBAction)makeConnectionWindowed: (id)sender;
-- (IBAction)makeConnectionFullscreen: (id)sender;
-- (void)applicationWillHide:(NSNotification*)notif;
-
-- (void)installFullscreenTrackingRects;
-- (void)removeFullscreenTrackingRects;
+#if 0
 - (void)mouseEntered:(NSEvent *)theEvent;
 - (void)mouseExited:(NSEvent *)theEvent;
 - (void)mouseDragged:(NSEvent *)theEvent;
-- (void)beginFullscreenScrolling;
-- (void)endFullscreenScrolling;
-- (void)scrollFullscreenView: (NSTimer *)timer;
+#endif
 
 - (void)setFrameBufferUpdateSeconds: (float)seconds;
 
