@@ -253,11 +253,6 @@
     [session authenticationFailed:reason];
 }
 
-- (void)promptForPassword
-{
-    [session promptForPassword];
-}
-
 /* Creates a framebuffer and sets up rfbView for a given display size */
 - (void)sizeDisplay:(NSSize)aSize withPixelFormat:(rfbPixelFormat *)pixf
 {
@@ -455,7 +450,8 @@
 /* The server has moved the cursor to pos in RFB coordinates */
 - (void)serverMovedMouseTo:(NSPoint)pos
 {
-    if ([session hasKeyWindow] && -[lastMouseMovement timeIntervalSinceNow] > 0.5)
+    // TODO: maybe check if this session is in the selected tab
+//    if ([session hasKeyWindow] && -[lastMouseMovement timeIntervalSinceNow] > 0.5)
 //            && ![server_ viewOnly])
     {
         NSSize  size = [frameBuffer size];
