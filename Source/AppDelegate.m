@@ -45,7 +45,7 @@
         if([[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:akey])
         {
             // good name/key, so go on to options dialog
-            //[self showOptionsDlg:self];            
+            [self showOptionsDlg:self];            
             bLoginDlg = NO;
         }
     }
@@ -68,8 +68,6 @@
 - (IBAction)showOptionsDlg:(id)sender 
 {
     self.optionsCtrlr = [[SessionController alloc] init];
-//    [optionsCtrlr view];    
-    
 }
 
 -(void)connectionSucceeded
@@ -77,12 +75,14 @@
     [optionsCtrlr connectionSucceeded];
 }
 
+// TODO: test
 - (void)newUserAuthorized:(id)param
 {
-    // TODO: remove tab
-//    [self.loginCtrlr dealloc];
-//    self.loginCtrlr = nil;
-//    [self showOptionsDlg:nil];
+    // remove login tab
+    [[ScoutWindowController sharedScout] closeTab:nil];
+    [loginCtrlr dealloc];
+    self.loginCtrlr = nil;
+    [self showOptionsDlg:nil];
 }
 
 - (void)preAuthorizeErr
