@@ -36,6 +36,7 @@
     if(self)
     {
         //perform any initializations
+        [self loadView];
     }
     return self;
 }
@@ -62,19 +63,20 @@
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setObject:uname  forKey:kUsername];
             [defaults setObject:aaccountkey  forKey:kAccountkey];
-            [NSApp showOptionsDlg:nil];
+            [[ScoutWindowController sharedScout] closeTab:nil];
+            [[NSApp delegate] showOptionsDlg:nil];
             [self dealloc];     // get rid of the login dialog
         }
         else 
         {
             // alert for bad login
-//            NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [self window], self,nil, NULL, NULL, @"Failed to Authenticate");
+            NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [NSApp keyWindow], self,nil, NULL, NULL, @"Failed to Authenticate");
         }
     }
     else
     {
         // alert for missing username or accountkey
-//        NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [self window], self,nil, NULL, NULL, @"Need valid user-name and account-key");    
+        NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [NSApp keyWindow], self,nil, NULL, NULL, @"Need valid user-name and account-key");    
     }
 }
 
