@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface SessionController : NSWindowController
+@interface SessionController : NSViewController
 {
     int selectedTag;
     NSRect selectedFrame;

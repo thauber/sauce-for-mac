@@ -9,6 +9,7 @@
 #import "SessionController.h"
 #import "SaucePreconnect.h"
 #import "RFBConnectionManager.h"
+#import "ScoutWindowController.h"
 
 @implementation SessionController
 
@@ -19,11 +20,24 @@
 @synthesize box2;
 @synthesize url;
 
-- (void)windowDidLoad
+- (id)init
 {
+    self=[super initWithNibName:@"SessionController" bundle:nil];
+    if(self)
+    {
+        //perform any initializations
+        [self loadView];
+    }
+    return self;
+}
+
+- (void)loadView
+{
+    [super loadView];
+    
     [connectIndicatorText setStringValue:@""];
 
-    // recompute position of windows/linux sections when osx is hidden
+    // recompute position of mswindows/linux sections when osx is hidden
     int h1 = box1.frame.size.height;
     NSRect fr = box2.frame;
     fr.origin.y += h1;
@@ -45,6 +59,7 @@
             [self selectBrowser:self];
         }
     }
+    [[ScoutWindowController sharedScout] addNewTab:options view:[self view]];
 }
 
 - (IBAction)selectBrowser:(id)sender 
@@ -59,7 +74,7 @@
         // compute new position and width for selection box
         frame = [sender frame];
         NSView *vv = (NSView*)sender;
-        NSPoint pt = [vv.superview convertPoint:vv.frame.origin toView:nil];
+        NSPoint pt = [vv.superview convertPoint:vv.frame.origin toView:[self view]];
         frame.origin = pt;
         frame.size.width += frame.size.width + 4;
         selectedFrame = frame;
@@ -69,7 +84,7 @@
     {
         // create box
         selectBox = [[NSView alloc ] initWithFrame:frame];
-        [[[self window] contentView] addSubview:selectBox];
+        [[self view] addSubview:selectBox];
         CALayer *viewLayer = [CALayer layer];
         [viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.0, 0.0, 0.0, 0.3)]; //RGB plus Alpha Channel
         [selectBox setWantsLayer:YES]; // view's backing store is using a Core Animation Layer
@@ -107,7 +122,7 @@
     }
     else 
     {
-        NSBeginAlertSheet(@"Session Options Error", @"Okay", nil, nil, [self window], self,nil, NULL, NULL, @"User Needs to select a browser");    
+        NSBeginAlertSheet(@"Session Options Error", @"Okay", nil, nil, [NSApp keyWindow], self,nil, NULL, NULL, @"User Needs to select a browser");    
     }
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -119,12 +134,13 @@
 
 -(void)connectionSucceeded
 {
+    [[ScoutWindowController sharedScout] closeTab:nil];
     [self dealloc];
 }
 
 - (void)showError:(NSString *)errStr
 {
-    NSBeginAlertSheet(@"Session Options Error", @"Okay", nil, nil, [self window], self,nil,     
+    NSBeginAlertSheet(@"Session Options Error", @"Okay", nil, nil, [NSApp keyWindow], self,nil,     
                       NULL, NULL, errStr);    
 }
 
