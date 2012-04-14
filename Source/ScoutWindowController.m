@@ -8,6 +8,7 @@
 
 #import "ScoutWindowController.h"
 #import "LoginController.h"
+#import "AppDelegate.h"
 #import "PSMTabBarControl/PSMTabBarControl.h"
 #import "PSMTabBarControl/PSMTabStyle.h"
 
@@ -48,12 +49,6 @@ static ScoutWindowController* _sharedScout = nil;
 
 }
 
-- (void)windowDidLoad
-{
-    LoginController *lc = [[LoginController alloc] init];
-    [lc view];
-}
-
 - (IBAction)doPlayStop:(id)sender
 {
    // what does 'stop' mean? msg to server? is 'play' then reconnect or continue?
@@ -65,7 +60,7 @@ static ScoutWindowController* _sharedScout = nil;
 
 - (IBAction)newSession:(id)sender
 {
-    [self addNewTab:session view:nil];
+    [[NSApp delegate] showOptionsDlg:nil];
 }
 
 
@@ -86,7 +81,6 @@ static ScoutWindowController* _sharedScout = nil;
 	[tabView addTabViewItem:newItem];
 	[tabView selectTabViewItem:newItem];
 }
-
 
 - (IBAction)closeTab:(id)sender {
 	[tabView removeTabViewItem:[tabView selectedTabViewItem]];
