@@ -138,6 +138,7 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
 {
     [aConnection retain];
     [sessions removeObject:aConnection];
+    [[SaucePreconnect sharedPreconnect] sessionClosed:aConnection];
     [aConnection autorelease];
 }
 
@@ -166,7 +167,35 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
     Session *sess = [[Session alloc] initWithConnection:theConnection];
     [sessions addObject:sess];
     [sess release];
-    [[SaucePreconnect sharedPreconnect]  startHeartbeat]; 
+    [[SaucePreconnect sharedPreconnect]  startHeartbeat:sess]; 
 }
+
+#if 0
+// TODO: needs to be in SauceWindowController - or reference it from here
+- (void)setFrontWindowUpdateInterval: (NSTimeInterval)interval
+{
+	NSEnumerator *enumerator = [sessions objectEnumerator];
+    Session      *session;
+	
+	while (session = [enumerator nextObject]) {
+		if ([session hasKeyWindow]) {
+			[session setFrameBufferUpdateSeconds: interval];
+			break;
+		}
+	}
+}
+
+- (void)setOtherWindowUpdateInterval: (NSTimeInterval)interval
+{
+	NSEnumerator *enumerator = [sessions objectEnumerator];
+    Session      *session;
+	
+	while (session = [enumerator nextObject]) {
+		if (![session hasKeyWindow]) {
+			[session setFrameBufferUpdateSeconds: interval];
+		}
+	}
+}
+#endif
 
 @end
