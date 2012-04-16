@@ -37,7 +37,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 	{
 		if (!_sharedPreconnect)
 			[[self alloc] init];
-        
+                
 		return _sharedPreconnect;
 	}
     
@@ -167,60 +167,103 @@ static SaucePreconnect* _sharedPreconnect = nil;
     }
 }
 
--(void)startHeartbeat       // 1 minute is ok; at 2 minutes, server times out
+// remove session being close from heartbeat array
+-(void)sessionClosed:(id)session
 {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(heartbeat:) userInfo:nil repeats:YES];
+	int len = [credArr count];
+    NSDictionary *sdict;
+    
+    for(int i=0;i<len;i++)
+    {
+        sdict = [credArr objectAtIndex:i];
+        if([sdict objectForKey:@"session"] == session)
+        {
+            [credArr removeObjectAtIndex:i];
+            return;
+        }
+    }
+}
+
+-(void)startHeartbeat:(id)session       // 1 minute is ok; at 2 minutes, server times out
+{
+    NSDictionary *sdict = [[NSDictionary alloc] initWithObjectsAndKeys:
+        session,@"session", liveId,@"liveId", nil];
+    if(!credArr)
+    {
+        credArr = [[[NSMutableArray alloc] init] retain];
+    }
+    [credArr addObject:sdict];
+    
+    if(!self.timer)    
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(heartbeat:) userInfo:nil repeats:YES];
 }
 
 -(void)cancelHeartbeat
 {
-    cancelled = YES;
-    [self.timer invalidate];
-    self.timer = nil;
+    if(![credArr count])    // only stop heartbeat if no sessions are active
+    {
+        cancelled = YES;
+        [self.timer invalidate];
+        self.timer = nil;
+    }
 }
 
 - (void)heartbeat:(NSTimer*)tm
-{    
-	NSString *farg = [NSString stringWithFormat:@"curl 'https://saucelabs.com/scout/live/%@/status?auth_username=%@&auth_access_key=%@'", self.liveId, self.user, self.ukey];
+{
+	NSEnumerator *credEnumerator = [credArr objectEnumerator];
+    NSDictionary *sdict;
     
-    while(1)    
+    if(![credArr count])
     {
-        if(cancelled)
-            return;
+        [self cancelHeartbeat];
+        return;        
+    }
+    
+	while ( sdict = (NSDictionary*)[credEnumerator nextObject] )
+    {
+        NSString *aliveid = [sdict objectForKey:@"liveId"];
+                             
+        NSString *farg = [NSString stringWithFormat:@"curl 'https://saucelabs.com/scout/live/%@/status?auth_username=%@&auth_access_key=%@'", aliveid, self.user, self.ukey];
+        
+        while(1)    
+        {
+            if(cancelled)
+                return;
 
-        NSTask *ftask = [[NSTask alloc] init];
-        NSPipe *fpipe = [NSPipe pipe];
-        [ftask setStandardOutput:fpipe];
-        [ftask setLaunchPath:@"/bin/bash"];
-        [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-        [ftask launch];		// fetch job-id and secret server
-        [ftask waitUntilExit];
-        if([ftask terminationStatus])
-        {
-            self.errStr = @"failed NSTask in heartbeat";
-            [self cancelHeartbeat];
-            break;
-        }
-        else
-        {
-            NSFileHandle *fhand = [fpipe fileHandleForReading];
-            
-            NSData *data = [fhand readDataToEndOfFile];		 
-            NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            NSDictionary *jsonDict = [jsonString JSONValue];
-            NSString *status = [jsonDict objectForKey:@"status"];
-            int val = [[jsonDict valueForKey:@"remaining-time"] intValue];  // doesn't work just asking for NSString?
-            if([status isEqualToString:@"in progress"])
+            NSTask *ftask = [[NSTask alloc] init];
+            NSPipe *fpipe = [NSPipe pipe];
+            [ftask setStandardOutput:fpipe];
+            [ftask setLaunchPath:@"/bin/bash"];
+            [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+            [ftask launch];		// fetch job-id and secret server
+            [ftask waitUntilExit];
+            if([ftask terminationStatus])
             {
-                // TODO: show in status
-                self.remaining  = [NSString stringWithFormat:@"%d",val];                
-                break;                
+                self.errStr = @"failed NSTask in heartbeat";
+                [self cancelHeartbeat];
+                break;
             }
             else
             {
-                self.errStr = @"Heartbeat doesn't say 'in progress'";
-                [self cancelHeartbeat];
-                break;
+                NSFileHandle *fhand = [fpipe fileHandleForReading];
+                
+                NSData *data = [fhand readDataToEndOfFile];		 
+                NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                NSDictionary *jsonDict = [jsonString JSONValue];
+                NSString *status = [jsonDict objectForKey:@"status"];
+                int val = [[jsonDict valueForKey:@"remaining-time"] intValue];  // doesn't work just asking for NSString?
+                if([status isEqualToString:@"in progress"])
+                {
+                    // TODO: show in status
+                    self.remaining  = [NSString stringWithFormat:@"%d",val];                
+                    break;                
+                }
+                else
+                {
+                    self.errStr = @"Heartbeat doesn't say 'in progress'";
+                    [self cancelHeartbeat];
+                    break;
+                }
             }
         }
     }

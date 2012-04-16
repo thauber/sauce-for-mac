@@ -19,6 +19,7 @@
     NSString *secret;       // from saucelabs server
     NSString *jobId;        // from saucelabs server
     NSString *liveId;
+    NSMutableArray *credArr;   // array of dictionaries with session,secret,jobid,and liveid
     NSString *userNew;
     NSString *passNew;
     NSString *emailNew;
@@ -55,7 +56,8 @@
 
 // return json with secret/job_id for server connection
 - (NSString *)credStr;
--(void)startHeartbeat;
+-(void)sessionClosed:(id)session;
+-(void)startHeartbeat:(id)session;
 -(void)cancelHeartbeat;
 - (BOOL)checkUserLogin:(NSString *)uuser  key:(NSString*)kkey;
 - (void)setNewUser:(NSString*)uuserNew passNew:(NSString*)upassNew 
