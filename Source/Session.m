@@ -491,7 +491,7 @@ enum {
 
 /* --------------------------------------------------------------------------------- */
 
-/* TODO: call (some of) these from scoutwindowcontroller? */
+/* TODO: move/call (some of) these to/from scoutwindowcontroller? */
 /* Window delegate methods */
 
 - (void)windowDidDeminiaturize:(NSNotification *)aNotification
