@@ -10,6 +10,7 @@
 #import "SaucePreconnect.h"
 #import "RFBConnectionManager.h"
 #import "ScoutWindowController.h"
+#import "AppDelegate.h"
 
 @implementation SessionController
 
@@ -135,6 +136,7 @@
 -(void)connectionSucceeded
 {
     [[ScoutWindowController sharedScout] closeTab:nil];
+    [[NSApp delegate] setOptionsCtrlr:nil];
     [self dealloc];
 }
 
