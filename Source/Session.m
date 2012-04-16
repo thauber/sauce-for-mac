@@ -718,12 +718,4 @@ enum {
     _reconnectWaiter = nil;
 }
 
-- (IBAction)doPlayStop:(id)sender {
-}
-
-- (IBAction)doBugCamera:(id)sender {
-}
-
-- (IBAction)newSession:(id)sender {
-}
 @end
