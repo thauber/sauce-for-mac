@@ -114,6 +114,7 @@ enum {
     [connection setSession:self];
     [connection setRfbView:rfbView];
     
+    [[SaucePreconnect sharedPreconnect] setSessionInfo:connection view:[self view]];
     [[ScoutWindowController sharedScout] addNewTab:session view:[self view]];
     
 }
