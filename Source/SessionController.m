@@ -60,6 +60,10 @@
             [self selectBrowser:self];
         }
     }
+    NSTextField *tf = [[ScoutWindowController sharedScout] userStat];
+    NSString *uname = [[SaucePreconnect sharedPreconnect] user];
+    [tf setStringValue:uname];
+
     [[ScoutWindowController sharedScout] addNewTab:options view:[self view]];
 }
 
@@ -106,7 +110,7 @@
     NSString *browser = [self selected:@"browser"];
     NSString *version = [self selected:@"version"];
     NSString *urlstr = [self.url stringValue];
-        
+            
     if([os length])
     {
         [connectIndicator startAnimation:self];
