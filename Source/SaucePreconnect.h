@@ -57,7 +57,9 @@
 // return json with secret/job_id for server connection
 - (NSString *)credStr;
 -(void)sessionClosed:(id)session;
--(void)startHeartbeat:(id)session;
+-(NSString *)osbrowserStr:(id)view;
+-(void)setSessionInfo:(id)session view:(id)view;
+-(void)startHeartbeat;
 -(void)cancelHeartbeat;
 - (BOOL)checkUserLogin:(NSString *)uuser  key:(NSString*)kkey;
 - (void)setNewUser:(NSString*)uuserNew passNew:(NSString*)upassNew 
