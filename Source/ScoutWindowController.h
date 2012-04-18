@@ -25,6 +25,10 @@ typedef enum { login,options,session } tabType;
     IBOutlet NSTextField *userStat;
 }
 
+@property (assign)IBOutlet NSTextField *timeRemainingStat;
+@property (assign)IBOutlet NSTextField *userStat;
+@property (assign)IBOutlet NSTextField *osbrowser;
+
 +(ScoutWindowController*)sharedScout;
 
 - (IBAction)doPlayStop:(id)sender;

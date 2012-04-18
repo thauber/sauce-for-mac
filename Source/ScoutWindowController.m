@@ -14,6 +14,10 @@
 
 @implementation ScoutWindowController
 
+@synthesize timeRemainingStat;
+@synthesize userStat;
+@synthesize osbrowser;
+
 static ScoutWindowController* _sharedScout = nil;
 
 +(ScoutWindowController*)sharedScout
@@ -62,7 +66,6 @@ static ScoutWindowController* _sharedScout = nil;
 {
     [[NSApp delegate] showOptionsDlg:nil];
 }
-
 
 - (void)addNewTab:(tabType)type view:(NSView*)view
 {
@@ -114,7 +117,9 @@ static ScoutWindowController* _sharedScout = nil;
 
 - (void)tabView:(NSTabView *)aTabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem 
 {
-
+    NSString *osbvStr = [[SaucePreconnect sharedPreconnect] osbrowserStr:[tabViewItem view]];
+    if(osbvStr)
+        [self.osbrowser setStringValue:osbvStr];
 }
 
 - (BOOL)tabView:(NSTabView *)aTabView shouldCloseTabViewItem:(NSTabViewItem *)tabViewItem {
