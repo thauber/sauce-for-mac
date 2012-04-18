@@ -64,6 +64,9 @@
             [defaults setObject:uname  forKey:kUsername];
             [defaults setObject:aaccountkey  forKey:kAccountkey];
             [[ScoutWindowController sharedScout] closeTab:nil];
+            NSTextField *tf = [[ScoutWindowController sharedScout] userStat];
+            [tf setStringValue:uname];
+
             [[NSApp delegate] showOptionsDlg:nil];
             [self dealloc];     // get rid of the login dialog
         }
