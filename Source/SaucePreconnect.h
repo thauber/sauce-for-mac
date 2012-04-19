@@ -42,7 +42,7 @@
 @property(nonatomic,copy) NSString *passNew;
 @property(nonatomic,copy) NSString *emailNew;
 @property(nonatomic,assign) int remaining;
-@property(nonatomic,assign) NSTimer *timer;
+@property(nonatomic,retain) NSTimer *timer;
 @property(nonatomic,copy) NSString *errStr;
 
 
@@ -58,6 +58,7 @@
 - (NSString *)credStr;
 -(void)sessionClosed:(id)session;
 -(NSDictionary *)sessionInfo:(id)view;
+-(void)setvmsize:(NSSize)size;
 -(void)setSessionInfo:(id)session view:(id)view;
 -(NSString*)remainingTimeStr;
 -(void)startHeartbeat;

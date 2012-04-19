@@ -202,6 +202,14 @@ static SaucePreconnect* _sharedPreconnect = nil;
     return nil;
 }
 
+-(void)setvmsize:(NSSize)size
+{
+    NSMutableDictionary *sdict = [credArr lastObject];
+    NSString *str = [NSString stringWithFormat:@"%.0fx%.0f",size.width,size.height];
+    [sdict setValue:str forKey:@"size"];
+    [[[ScoutWindowController sharedScout] vmsize] setStringValue:str];
+}
+
 // array for each session/tab - 
 //  session for closing session 
 //  liveId for heartbeat
@@ -213,7 +221,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     NSString *osbvStr = [NSString stringWithFormat:@"%@/%@ %@",os,browser,browserVersion];
     [[[ScoutWindowController sharedScout] osbrowser] setStringValue:osbvStr];
     
-    NSDictionary *sdict = [[NSDictionary alloc] initWithObjectsAndKeys:
+    NSMutableDictionary *sdict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                     session,@"session", view,@"view", liveId,@"liveId", osbvStr,@"osbv",
                     urlStr, @"url", os, @"os", browser, @"browser",
                     browserVersion, @"browserVersion", nil];
