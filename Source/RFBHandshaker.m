@@ -174,7 +174,7 @@
     unsigned char bytes[CHALLENGESIZE];
 
     if ([connection password] == nil) {
-        [connection promptForPassword];
+//        [connection promptForPassword];
         [vncAuthChallenge autorelease];
         /* Note that theChallenge uses strictly temporary memory, so we can't
          * just retain, we have to copy. */
