@@ -12,9 +12,10 @@
 typedef enum { login,options,session } tabType;
 
 @class PSMTabBarControl;
+@class Session;
 
 
-@interface ScoutWindowController : NSWindowController <NSToolbarDelegate> {
+@interface ScoutWindowController : NSWindowController <NSToolbarDelegate, NSWindowDelegate> {
 	IBOutlet NSTabView					*tabView;
 	IBOutlet PSMTabBarControl			*tabBar;
     IBOutlet NSTextField *statusMessage;
@@ -29,7 +30,11 @@ typedef enum { login,options,session } tabType;
     NSImageView *browsermsg;
     NSTextField *browserversmsg;
     NSTextField *timeRemainingMsg;
+    NSTextField *vmsize;
+    Session *curSession;
+    
 }
+
 @property (assign) IBOutlet NSTextField *statusMessage;
 @property (assign) IBOutlet NSTextField *urlmsg;
 @property (assign) IBOutlet NSImageView *osmsg;
@@ -37,7 +42,7 @@ typedef enum { login,options,session } tabType;
 @property (assign) IBOutlet NSImageView *browsermsg;
 @property (assign) IBOutlet NSTextField *browserversmsg;
 @property (assign) IBOutlet NSTextField *timeRemainingMsg;
-
+@property (assign) IBOutlet NSTextField *vmsize;
 @property (assign)IBOutlet NSTextField *timeRemainingStat;
 @property (assign)IBOutlet NSTextField *userStat;
 @property (assign)IBOutlet NSTextField *osbrowser;
@@ -55,9 +60,18 @@ typedef enum { login,options,session } tabType;
 
 - (PSMTabBarControl *)tabBar;
 
-// delegate
+// tabview delegate
 - (void)tabView:(NSTabView *)aTabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem;
 - (BOOL)tabView:(NSTabView *)aTabView shouldCloseTabViewItem:(NSTabViewItem *)tabViewItem;
 - (void)tabView:(NSTabView *)aTabView didCloseTabViewItem:(NSTabViewItem *)tabViewItem;
+
+//window delegate messages
+- (void)windowDidBecomeKey:(NSNotification *)aNotification;
+- (void)windowDidResignKey:(NSNotification *)aNotification;
+- (void)windowDidDeminiaturize:(NSNotification *)aNotification;
+- (void)windowDidMiniaturize:(NSNotification *)aNotification;
+- (void)windowWillClose:(NSNotification *)aNotification;
+- (void)windowDidResize:(NSNotification *)aNotification;
+- (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)proposedFrameSize;
 
 @end

@@ -20,6 +20,7 @@
 @synthesize browsermsg;
 @synthesize browserversmsg;
 @synthesize timeRemainingMsg;
+@synthesize vmsize;
 @synthesize statusMessage;
 @synthesize timeRemainingStat;
 @synthesize userStat;
@@ -57,22 +58,91 @@ static ScoutWindowController* _sharedScout = nil;
     [tabView setTabViewType:NSNoTabsNoBorder];
     [tabBar setStyleNamed:@"Unified"];
     [self showWindow:self];
-
+    [[self window] setDelegate:self];
 }
 
 - (IBAction)doPlayStop:(id)sender
 {
    // what does 'stop' mean? msg to server? is 'play' then reconnect or continue?
+    int sel = [sender selectedSegment];
+    if(sel==0)
+    {
+        NSLog(@"do play");
+    }
+    else if(sel==1)
+    {
+        NSLog(@"do stop");
+    }
 }
+
 - (IBAction)doBugCamera:(id)sender
 {
     // TODO: code needed snapshot or bug
+    int sel = [sender selectedSegment];
+    if(sel==0)
+    {
+        NSLog(@"do bug");
+    }
+    else if(sel==1)
+    {
+        NSLog(@"do snap");
+    }
 }
 
 - (IBAction)newSession:(id)sender
 {
     [[NSApp delegate] showOptionsDlg:nil];
 }
+
+#pragma mark -
+#pragma mark ---- window delegate ----
+
+//window delegate messages
+- (void)windowDidBecomeKey:(NSNotification *)aNotification
+{
+    if(curSession)
+        [curSession windowDidBecomeKey:aNotification];
+}
+
+- (void)windowDidResignKey:(NSNotification *)aNotification
+{
+    if(curSession)
+        [curSession windowDidResignKey:aNotification];    
+}
+
+- (void)windowDidDeminiaturize:(NSNotification *)aNotification
+{
+    if(curSession)
+        [curSession windowDidDeminiaturize:aNotification];    
+}
+
+- (void)windowDidMiniaturize:(NSNotification *)aNotification
+{    
+    if(curSession)
+        [curSession windowDidMiniaturize:aNotification];    
+}
+
+- (void)windowWillClose:(NSNotification *)aNotification
+{
+    if(curSession)
+        [curSession windowWillClose:aNotification];
+    [self autorelease];
+}
+
+- (void)windowDidResize:(NSNotification *)aNotification
+{
+    if(curSession)
+        [curSession windowDidResize:aNotification];            
+}
+
+- (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)proposedFrameSize
+{
+//    if(curSession)
+//        return [curSession windowWillResize:sender toSize:proposedFrameSize];
+    return proposedFrameSize;
+}
+
+#pragma mark -
 
 - (void)addNewTab:(tabType)type view:(NSView*)view
 {
@@ -90,6 +160,13 @@ static ScoutWindowController* _sharedScout = nil;
 	[newItem setLabel:tstr];
 	[tabView addTabViewItem:newItem];
 	[tabView selectTabViewItem:newItem];
+    if(type==session)
+    {
+        [bugcamera setEnabled:YES forSegment:0];
+        [bugcamera setEnabled:YES forSegment:1];
+        [playstop setEnabled:NO forSegment:0];
+        [playstop setEnabled:YES forSegment:1];
+    }
 }
 
 - (IBAction)closeTab:(id)sender {
@@ -114,20 +191,20 @@ static ScoutWindowController* _sharedScout = nil;
 	return tabBar;
 }
 
-- (void)windowWillClose:(NSNotification *)note {
-	[self autorelease];
-}
-
 
 #pragma mark -
-#pragma mark ---- delegate ----
+#pragma mark ---- tabview delegate ----
 
 - (void)tabView:(NSTabView *)aTabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem 
 {
     NSDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:[tabViewItem view]];
     if(sdict)
     {
-        NSString *str = [sdict objectForKey:@"osbv"];
+        NSString *str = [sdict objectForKey:@"size"];
+        if(str)
+            [self.vmsize setStringValue:str];
+                
+        str = [sdict objectForKey:@"osbv"];
         [self.osbrowser setStringValue:str];
         
         [self.statusMessage setStringValue:@"now scouting: "];
@@ -175,7 +252,10 @@ static ScoutWindowController* _sharedScout = nil;
         [self.browserversmsg  setStringValue:str];
         str = [[SaucePreconnect sharedPreconnect] remainingTimeStr];
         str = [NSString stringWithFormat:@" %@ rem.",str];
-        [self.timeRemainingMsg  setStringValue:str];                
+        [self.timeRemainingMsg  setStringValue:str];
+        
+        curSession = [sdict objectForKey:@"session"];
+
     }
 }
 
