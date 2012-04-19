@@ -60,7 +60,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 - (void)setOptions:(NSString*)uos browser:(NSString*)ubrowser 
     browserVersion:(NSString*)ubrowserVersion url:(NSString*)uurlStr
 {
-    os = uos;
+    os = uos;       
     browser = ubrowser;
     browserVersion = ubrowserVersion;
     urlStr = uurlStr;
@@ -185,7 +185,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
     }
 }
 
--(NSString *)osbrowserStr:(id)view
+// return os/browser string for status; also used to determine if tab has an active session
+-(NSDictionary *)sessionInfo:(id)view
 {
 	int len = [credArr count];
     NSDictionary *sdict;
@@ -195,7 +196,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         sdict = [credArr objectAtIndex:i];
         if([sdict objectForKey:@"view"] == view)
         {
-            return [sdict objectForKey:@"osbv"];
+            return sdict;
         }
     }
     return nil;
@@ -206,19 +207,49 @@ static SaucePreconnect* _sharedPreconnect = nil;
 //  liveId for heartbeat
 //  osbrowserversion string for setting status when switching tabs
 //  view to know which tab is becoming active
+//  os, browser, and browserversion taken from most recent preauthorization
 -(void)setSessionInfo:(id)session view:(id)view
 {
     NSString *osbvStr = [NSString stringWithFormat:@"%@/%@ %@",os,browser,browserVersion];
     [[[ScoutWindowController sharedScout] osbrowser] setStringValue:osbvStr];
     
     NSDictionary *sdict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                    session,@"session", view,@"view", liveId,@"liveId", osbvStr,@"osbv",nil];
+                    session,@"session", view,@"view", liveId,@"liveId", osbvStr,@"osbv",
+                    urlStr, @"url", os, @"os", browser, @"browser",
+                    browserVersion, @"browserVersion", nil];
     
     if(!credArr)
     {
         credArr = [[[NSMutableArray alloc] init] retain];
     }
     [credArr addObject:sdict];
+}
+
+-(NSString *)remainingTimeStr
+{
+    if(!self.remaining)
+        return @"";
+    
+    int hr = self.remaining / 3600;
+    int min = (self.remaining % 3600)/60;
+    int sec = self.remaining % 60;
+
+    NSString *hrstr, *minstr, *secstr;
+
+    if(hr)
+        hrstr = [NSString stringWithFormat:@"%d",hr];
+    else
+        hrstr = @"";        
+    if(min<10)
+        minstr = [NSString stringWithFormat:@"0%d",min];
+    else
+        minstr = [NSString stringWithFormat:@"%d",min];
+    if(sec<10)
+        secstr = [NSString stringWithFormat:@"0%d",sec];
+    else
+        secstr = [NSString stringWithFormat:@"%d",sec];
+    NSString *str = [NSString stringWithFormat:@"%@:%@:%@",hrstr,minstr,secstr];
+    return str;
 }
 
 -(void)startHeartbeat       // 1 minute is ok; at 2 minutes, server times out
@@ -280,13 +311,17 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                 NSDictionary *jsonDict = [jsonString JSONValue];
                 NSString *status = [jsonDict objectForKey:@"status"];
-                int val = [[jsonDict valueForKey:@"remaining-time"] intValue];  // doesn't work just asking for NSString?
                 if([status isEqualToString:@"in progress"])
                 {
+                    self.remaining = [[jsonDict valueForKey:@"remaining-time"] intValue];  
                     // show in status
-                    self.remaining  = [NSString stringWithFormat:@"%d sec.",val];
+                    NSString *str = [self remainingTimeStr];
                     NSTextField *tf = [[ScoutWindowController sharedScout] timeRemainingStat];
-                    [tf setStringValue:remaining];
+                    [tf setStringValue:str];
+                    tf = [[ScoutWindowController sharedScout] timeRemainingMsg];
+                    str = [NSString stringWithFormat:@"%@ rem.",str];
+                    [tf setStringValue:str];
+                    
                     break;                
                 }
                 else

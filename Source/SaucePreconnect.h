@@ -23,7 +23,7 @@
     NSString *userNew;
     NSString *passNew;
     NSString *emailNew;
-    NSString *remaining;
+    int remaining;
     NSTimer *timer;
     NSString *errStr;
     BOOL cancelled;         // yes -> stop the presses!
@@ -41,7 +41,7 @@
 @property(nonatomic,copy) NSString *userNew;
 @property(nonatomic,copy) NSString *passNew;
 @property(nonatomic,copy) NSString *emailNew;
-@property(nonatomic,copy) NSString *remaining;
+@property(nonatomic,assign) int remaining;
 @property(nonatomic,assign) NSTimer *timer;
 @property(nonatomic,copy) NSString *errStr;
 
@@ -57,8 +57,9 @@
 // return json with secret/job_id for server connection
 - (NSString *)credStr;
 -(void)sessionClosed:(id)session;
--(NSString *)osbrowserStr:(id)view;
+-(NSDictionary *)sessionInfo:(id)view;
 -(void)setSessionInfo:(id)session view:(id)view;
+-(NSString*)remainingTimeStr;
 -(void)startHeartbeat;
 -(void)cancelHeartbeat;
 - (BOOL)checkUserLogin:(NSString *)uuser  key:(NSString*)kkey;
