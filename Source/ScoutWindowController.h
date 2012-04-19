@@ -23,7 +23,20 @@ typedef enum { login,options,session } tabType;
     IBOutlet NSTextField *timeRemainingStat;
     IBOutlet NSTextField *osbrowser;
     IBOutlet NSTextField *userStat;
+    NSTextField *urlmsg;
+    NSImageView *osmsg;
+    NSTextField *osversionmsg;
+    NSImageView *browsermsg;
+    NSTextField *browserversmsg;
+    NSTextField *timeRemainingMsg;
 }
+@property (assign) IBOutlet NSTextField *statusMessage;
+@property (assign) IBOutlet NSTextField *urlmsg;
+@property (assign) IBOutlet NSImageView *osmsg;
+@property (assign) IBOutlet NSTextField *osversionmsg;
+@property (assign) IBOutlet NSImageView *browsermsg;
+@property (assign) IBOutlet NSTextField *browserversmsg;
+@property (assign) IBOutlet NSTextField *timeRemainingMsg;
 
 @property (assign)IBOutlet NSTextField *timeRemainingStat;
 @property (assign)IBOutlet NSTextField *userStat;

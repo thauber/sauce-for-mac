@@ -14,6 +14,13 @@
 
 @implementation ScoutWindowController
 
+@synthesize urlmsg;
+@synthesize osmsg;
+@synthesize osversionmsg;
+@synthesize browsermsg;
+@synthesize browserversmsg;
+@synthesize timeRemainingMsg;
+@synthesize statusMessage;
 @synthesize timeRemainingStat;
 @synthesize userStat;
 @synthesize osbrowser;
@@ -117,9 +124,59 @@ static ScoutWindowController* _sharedScout = nil;
 
 - (void)tabView:(NSTabView *)aTabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem 
 {
-    NSString *osbvStr = [[SaucePreconnect sharedPreconnect] osbrowserStr:[tabViewItem view]];
-    if(osbvStr)
-        [self.osbrowser setStringValue:osbvStr];
+    NSDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:[tabViewItem view]];
+    if(sdict)
+    {
+        NSString *str = [sdict objectForKey:@"osbv"];
+        [self.osbrowser setStringValue:str];
+        
+        [self.statusMessage setStringValue:@"now scouting: "];
+        str = [sdict objectForKey:@"url"];
+        [self.urlmsg  setStringValue:str];
+        str = [sdict objectForKey:@"os"];
+        
+        // get correct image based on os string
+        NSImage *img = nil;
+        NSArray *arr = [str  componentsSeparatedByString:@" "];
+        str = [arr objectAtIndex:0];
+        if([str isEqualToString:@"Windows"])
+            img = [NSImage imageNamed:@"windows_color.pdf"];
+        else if([str isEqualToString:@"Linux"])
+            img = [NSImage imageNamed:@"linux_color.pdf"];
+        else if([str isEqualToString:@"OSX"])
+            img = [NSImage imageNamed:@"linux_color.pdf"];
+        if(img)
+        {
+            [self.osmsg setEnabled:NO];
+            [self.osmsg  setImage:img];
+        }
+        
+        [self.osversionmsg  setStringValue:@""];    // TODO: figure out if and what
+
+        str = [sdict objectForKey:@"browser"];        
+        // get correct image based on browser string
+        if([str isEqualToString:@"iexplore"])
+            img = [NSImage imageNamed:@"ie_color.pdf"];
+        else if([str isEqualToString:@"firefox"])
+            img = [NSImage imageNamed:@"firefox_color.icns"];
+        else if([str isEqualToString:@"googlechrome"])
+            img = [NSImage imageNamed:@"chrome_color.pdf"];
+        else if([str isEqualToString:@"safari"])
+            img = [NSImage imageNamed:@"safari_color.icns"];
+        else if([str isEqualToString:@"opera"])
+            img = [NSImage imageNamed:@"opera_color.pdf"];
+        if(img)
+        {
+            [self.browsermsg setEnabled:NO];
+            [self.browsermsg  setImage:img];
+        }
+        
+        str = [sdict objectForKey:@"browserVersion"];
+        [self.browserversmsg  setStringValue:str];
+        str = [[SaucePreconnect sharedPreconnect] remainingTimeStr];
+        str = [NSString stringWithFormat:@" %@ rem.",str];
+        [self.timeRemainingMsg  setStringValue:str];                
+    }
 }
 
 - (BOOL)tabView:(NSTabView *)aTabView shouldCloseTabViewItem:(NSTabViewItem *)tabViewItem {
