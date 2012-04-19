@@ -28,13 +28,13 @@
 
 @interface Session : NSViewController <ConnectionWaiterDelegate>
 {
-    NSWindow *window;       // TODO: set to scoutwindowcontroller's window?
+    NSWindow *window;       // set to scoutwindowcontroller's window
+
     
     RFBConnection   *connection;
     IBOutlet RFBView *rfbView;
     SshTunnel       *sshTunnel;
 
-    id      scrollView;
     id      newTitleField;
     NSString    *titleString;
     id      statisticField;
@@ -70,7 +70,10 @@
     int         _horizScrollFactor;
     int         _vertScrollFactor;
 	NSTimer *_autoscrollTimer;
+
+    NSScrollView *scrollView;
 }
+@property (assign) IBOutlet NSScrollView *scrollView;
 
 - (id)initWithConnection:(RFBConnection*)conn;
 - (void)dealloc;

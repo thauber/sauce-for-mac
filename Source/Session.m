@@ -69,6 +69,7 @@ enum {
 @end
 
 @implementation Session
+@synthesize scrollView;
 
 - (id)initWithConnection:(RFBConnection *)aConnection
 {
@@ -90,10 +91,12 @@ enum {
 {
     [super loadView];
     
+    window = [[ScoutWindowController sharedScout] window];
+
     host = kSauceLabsHost;
     //    sshTunnel = [[connection sshTunnel] retain];
     
-    _isFullscreen = NO; // jason added for fullscreen display
+    _isFullscreen = YES; // jason added for fullscreen display
     
     //    [NSBundle loadNibNamed:@"RFBConnection.nib" owner:self];
     [rfbView registerForDraggedTypes:[NSArray arrayWithObjects:NSStringPboardType, NSFilenamesPboardType, nil]];
@@ -285,6 +288,7 @@ enum {
 - (void)setSize:(NSSize)aSize
 {
     _maxSize = aSize;
+    [[SaucePreconnect sharedPreconnect] setvmsize:aSize];
 }
 
 /* Returns the maximum possible size for the window. Also, determines whether or
@@ -293,15 +297,17 @@ enum {
 {
     NSRect  winframe;
     NSSize	maxviewsize;
-    BOOL usesFullscreenScrollers = [[PrefController sharedController] fullscreenHasScrollbars];
+//    BOOL usesFullscreenScrollers = [[PrefController sharedController] fullscreenHasScrollbars];
 
-    horizontalScroll = verticalScroll = NO;
+    horizontalScroll = verticalScroll = YES;
 
     maxviewsize = [NSScrollView frameSizeForContentSize:[rfbView frame].size
                                   hasHorizontalScroller:horizontalScroll
                                     hasVerticalScroller:verticalScroll
                                              borderType:NSNoBorder];
-    if (!_isFullscreen || usesFullscreenScrollers) {
+
+//    if (!_isFullscreen || usesFullscreenScrollers) 
+    {
         if(aSize.width < maxviewsize.width) {
             horizontalScroll = YES;
         }
@@ -309,6 +315,7 @@ enum {
             verticalScroll = YES;
         }
     }
+
     maxviewsize = [NSScrollView frameSizeForContentSize:[rfbView frame].size
                                   hasHorizontalScroller:horizontalScroll
                                     hasVerticalScroller:verticalScroll
@@ -322,15 +329,14 @@ enum {
 /* Sets up window. */
 - (void)setupWindow
 {
-#if 0
     NSRect wf;
 	NSRect screenRect;
 	NSClipView *contentView;
-	NSString *serverName;
+//	NSString *serverName;
 
 	screenRect = [[NSScreen mainScreen] visibleFrame];
     wf.origin.x = wf.origin.y = 0;
-    wf.size = [NSScrollView frameSizeForContentSize:_maxSize hasHorizontalScroller:NO hasVerticalScroller:NO borderType:NSNoBorder];
+    wf.size = [NSScrollView frameSizeForContentSize:_maxSize hasHorizontalScroller:YES hasVerticalScroller:YES borderType:NSNoBorder];
     wf = [NSWindow frameRectForContentRect:wf styleMask:[window styleMask]];
 	if (NSWidth(wf) > NSWidth(screenRect)) {
 		horizontalScroll = YES;
@@ -352,22 +358,24 @@ enum {
 	wf.origin.x = floor((NSWidth(screenRect) - NSWidth(wf))/2 + NSMinX(screenRect));
 	wf.origin.y = floor((NSHeight(screenRect) - NSHeight(wf))*2/3 + NSMinY(screenRect));
 	
+#if 0
 	serverName =@"SauceLabs";
 	if(![window setFrameUsingName:serverName]) {
 		// NSLog(@"Window did NOT have an entry: %@\n", serverName);
 		[window setFrame:wf display:NO];
 	}
 	[window setFrameAutosaveName:serverName];
-
+#else
+    [window setFrame:wf display:NO];
+#endif
 	contentView = [scrollView contentView];
     [contentView scrollToPoint: [contentView constrainScrollPoint: NSMakePoint(0.0, _maxSize.height - [scrollView contentSize].height)]];
     [scrollView reflectScrolledClipView: contentView];
 
     [window makeFirstResponder:rfbView];
 	[self windowDidResize: nil];
-    [window makeKeyAndOrderFront:self];
+//    [window makeKeyAndOrderFront:self];
     [window display];
-#endif
 }
 
 - (void)setNewTitle:(id)sender
@@ -406,9 +414,9 @@ enum {
         frame.size.width = maxSize.width;
     if (frame.size.height > maxSize.height)
         frame.size.height = maxSize.height;
-//    [window setFrame:frame display:YES];
+    [window setFrame:frame display:YES];
 
-//    [self windowDidResize:nil]; // setup scroll bars if necessary
+    [self windowDidResize:nil]; // setup scroll bars if necessary
 }
 
 - (void)requestFrameBufferUpdate:(id)sender
@@ -517,7 +525,7 @@ enum {
     // The window will autorelease itself when closed.  If we allow terminateConnection
     // to close it again, it will get double-autoreleased.  Bummer.
     window = NULL;
-    [self endSession];
+//    [self endSession];
 }
 
 - (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)proposedFrameSize
@@ -531,8 +539,11 @@ enum {
 
 - (void)windowDidResize:(NSNotification *)aNotification
 {
-	[scrollView setHasHorizontalScroller:horizontalScroll];
-	[scrollView setHasVerticalScroller:verticalScroll];
+//	[scrollView setHasHorizontalScroller:horizontalScroll];
+//	[scrollView setHasVerticalScroller:verticalScroll];
+	[scrollView setHasHorizontalScroller:YES];
+	[scrollView setHasVerticalScroller:YES];
+
 }
 
 - (void)windowDidBecomeKey:(NSNotification *)aNotification
@@ -575,7 +586,6 @@ enum {
 	_isFullscreen ? [self makeConnectionWindowed: self] : [self makeConnectionFullscreen: self];
 }
 
-
 - (void)mouseEntered:(NSEvent *)theEvent {
 	NSTrackingRectTag trackingNumber = [theEvent trackingNumber];
 
@@ -590,7 +600,7 @@ enum {
     else
         NSLog(@"Unknown trackingNumber %d", trackingNumber);
 
-    if ([self connectionIsFullscreen])
+//    if ([self connectionIsFullscreen])
         [self beginFullscreenScrolling];
 }
 
@@ -640,7 +650,6 @@ enum {
     else
         [self endFullscreenScrolling];
 }
-#endif
 
 - (void)setFrameBufferUpdateSeconds: (float)seconds
 {
@@ -648,6 +657,40 @@ enum {
     if (![window isMiniaturized])
         [connection setFrameBufferUpdateSeconds:seconds];
 }
+
+- (void)beginFullscreenScrolling {
+    if (_autoscrollTimer)
+        return;
+	_autoscrollTimer = [[NSTimer scheduledTimerWithTimeInterval: kAutoscrollInterval
+                                                         target: self
+                                                       selector: @selector(scrollFullscreenView:)
+                                                       userInfo: nil repeats: YES] retain];
+}
+
+- (void)endFullscreenScrolling {
+	[_autoscrollTimer invalidate];
+	[_autoscrollTimer release];
+	_autoscrollTimer = nil;
+}
+
+- (void)scrollFullscreenView: (NSTimer *)timer {
+	NSClipView *contentView = [scrollView contentView];
+	NSPoint origin = [contentView bounds].origin;
+	float autoscrollIncrement = [[PrefController sharedController] fullscreenAutoscrollIncrement];
+    NSPoint newOrigin = NSMakePoint(origin.x + _horizScrollFactor * autoscrollIncrement, origin.y + _vertScrollFactor * autoscrollIncrement);
+    
+    newOrigin = [contentView constrainScrollPoint: newOrigin];
+    // don't let constrainScrollPoint screw up centering
+    if (_horizScrollFactor == 0)
+        newOrigin.x = origin.x;
+    if (_vertScrollFactor == 0)
+        newOrigin.y = origin.y;
+    
+    [contentView scrollToPoint: newOrigin];
+    [scrollView reflectScrolledClipView: contentView];
+}
+#endif
+
 
 /* Reconnection attempts */
 
