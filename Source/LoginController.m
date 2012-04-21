@@ -94,8 +94,7 @@
     NSString *passNew = [aNewPassword stringValue];
     NSString *emailNew = [aNewEmail stringValue];
     
-    [[SaucePreconnect sharedPreconnect] setNewUser:nameNew passNew:passNew emailNew:emailNew];
-    [[SaucePreconnect sharedPreconnect] signupNew:nil];
+    [[SaucePreconnect sharedPreconnect] signupNew:nameNew passNew:passNew emailNew:emailNew];
 }
 
 - (void)newUserAuthorized  // called from saucePreconnect
