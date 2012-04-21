@@ -64,9 +64,10 @@
 -(void)startHeartbeat;
 -(void)cancelHeartbeat;
 - (BOOL)checkUserLogin:(NSString *)uuser  key:(NSString*)kkey;
-- (void)setNewUser:(NSString*)uuserNew passNew:(NSString*)upassNew 
-    emailNew:(NSString*)uemailNew;
-- (void)signupNew:(id)param;
+- (void)signupNew:(NSString*)uuserNew passNew:(NSString*)upassNew 
+        emailNew:(NSString*)uemailNew;
+- (void)postSnapshot:(id)view snapName:(NSString *)snapName;
+- (void)snapshot:(id)view;
 
 
 @end

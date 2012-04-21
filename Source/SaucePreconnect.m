@@ -215,16 +215,17 @@ static SaucePreconnect* _sharedPreconnect = nil;
 //  liveId for heartbeat
 //  osbrowserversion string for setting status when switching tabs
 //  view to know which tab is becoming active
-//  os, browser, and browserversion taken from most recent preauthorization
+//  user, authkey, job-id, os, browser, and browserversion taken from most recent preauthorization
 -(void)setSessionInfo:(id)session view:(id)view
 {
     NSString *osbvStr = [NSString stringWithFormat:@"%@/%@ %@",os,browser,browserVersion];
     [[[ScoutWindowController sharedScout] osbrowser] setStringValue:osbvStr];
     
     NSMutableDictionary *sdict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                    session,@"session", view,@"view", liveId,@"liveId", osbvStr,@"osbv",
-                    urlStr, @"url", os, @"os", browser, @"browser",
-                    browserVersion, @"browserVersion", nil];
+                    session,@"session", view, @"view", liveId, @"liveId",
+                    user, @"user", ukey, @"ukey", jobId, @"jobId",
+                    osbvStr, @"osbv", urlStr, @"url", 
+                    os, @"os", browser, @"browser", browserVersion, @"browserVersion", nil];
     
     if(!credArr)
     {
@@ -379,16 +380,13 @@ static SaucePreconnect* _sharedPreconnect = nil;
     return NO;
 }
 
-- (void)setNewUser:(NSString*)uuserNew passNew:(NSString*)upassNew 
-          emailNew:(NSString*)uemailNew
-{
+- (void)signupNew:(NSString*)uuserNew passNew:(NSString*)upassNew 
+         emailNew:(NSString*)uemailNew
+{    
     self.userNew = uuserNew;
     self.passNew = upassNew;
     self.emailNew = uemailNew;
-}
-
-- (void)signupNew:(id)param     // called on a thread
-{
+    
     NSString *farg = [NSString stringWithFormat:@"curl -X POST http://saucelabs.com/rest/v1/users -H 'Content-Type: application/json' -d '{\"username\":\"%@\", \"password\":\"%@\",\"name\":\"\",\"email\":\"%@\",\"token\":\"0E44EF6E-B170-4CA0-8264-78FD9E49E5CD\"}'",self.userNew, self.passNew, self.emailNew];
      
     self.errStr = @"";
@@ -397,6 +395,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if(cancelled)
         {
             self.errStr = @"Connecting was Cancelled";
+            break;
         }
 
         NSTask *ftask = [[NSTask alloc] init];
@@ -428,9 +427,124 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 [defaults setObject:self.ukey  forKey:kAccountkey];
                 [NSApp performSelectorOnMainThread:@selector(newUserAuthorized:)   
                                         withObject:nil  waitUntilDone:NO];
+                break;
             }
         }
     }    
 }
+
+- (void)postSnapshot:(id)view snapName:(NSString *)snapName
+{    
+    NSDictionary *sdict = [self sessionInfo:view];
+    NSString *aliveid = [sdict objectForKey:@"liveId"];
+    NSString *auser = [sdict objectForKey:@"user"];
+    NSString *akey = [sdict objectForKey:@"ukey"];
+
+    int hrs, mins;
+    time_t rawtime;
+    struct tm * ptm;    
+    time(&rawtime);    
+    ptm = localtime(&rawtime);
+    hrs = ptm->tm_hour;
+    mins = ptm->tm_min;
+
+    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/scout/live/%@/reportbug?&ssname=%@&title=Snapshot&description=A%%20snapshot%%20taken%%20at%%20%d:%d'", auser, akey, aliveid, snapName, hrs, mins];
+    
+    self.errStr = @"";
+    while(1)
+    {
+        if(cancelled)
+        {
+            self.errStr = @"Post snapshot was cancelled";
+            break;
+        }
+        
+        NSTask *ftask = [[NSTask alloc] init];
+        NSPipe *fpipe = [NSPipe pipe];
+        [ftask setStandardOutput:fpipe];
+        [ftask setLaunchPath:@"/bin/bash"];
+        [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+        [ftask launch];		// fetch live id
+        [ftask waitUntilExit];
+        if([ftask terminationStatus])
+        {
+            self.errStr = @"Failed NSTask in postSnapshot";
+            break;
+        }
+        else
+        {
+            NSFileHandle *fhand = [fpipe fileHandleForReading];
+            
+            NSData *data = [fhand readDataToEndOfFile];		 
+            NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSDictionary *jsonDict = [jsonString JSONValue];
+            NSString *snapId = [jsonDict objectForKey:@"c"];
+            if(snapId)
+            {
+                NSLog(@"got snap id:%@",snapId);
+            }
+            else {
+                self.errStr = @"Failed to get snapshot id";
+            }
+            break;
+        }
+    }        
+}
+
+- (void)snapshot:(id)view
+{
+    NSDictionary *sdict = [self sessionInfo:view];
+    NSString *aliveid = [sdict objectForKey:@"liveId"];
+    NSString *auser = [sdict objectForKey:@"user"];
+    NSString *akey = [sdict objectForKey:@"ukey"];
+    NSString *ajobid = [sdict objectForKey:@"jobId"];
+    
+    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/scout/live/%@/sendcommand?&1=getScreenshotName&sessionId=%@&cmd=captureScreenshot'", 
+                      auser, akey, aliveid, ajobid];
+
+    self.errStr = @"";
+    while(1)
+    {
+        if(cancelled)
+        {
+            self.errStr = @"Snapshot was Cancelled";
+            break;
+        }
+        
+        NSTask *ftask = [[NSTask alloc] init];
+        NSPipe *fpipe = [NSPipe pipe];
+        [ftask setStandardOutput:fpipe];
+        [ftask setLaunchPath:@"/bin/bash"];
+        [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+        [ftask launch];		// fetch live id
+        [ftask waitUntilExit];
+        if([ftask terminationStatus])
+        {
+            self.errStr = @"Failed NSTask in snapshot";
+            break;
+        }
+        else
+        {
+            NSFileHandle *fhand = [fpipe fileHandleForReading];
+            
+            NSData *data = [fhand readDataToEndOfFile];		 
+            NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSDictionary *jsonDict = [jsonString JSONValue];
+            BOOL res = (BOOL)[jsonDict valueForKey:@"success"];
+            if(res)
+            {
+                NSString *msg = [jsonDict objectForKey:@"message"];
+                [self postSnapshot:view snapName:msg];
+                break;
+            }
+            else
+            {
+                self.errStr = @"Failed to get snapshot";
+                break;
+            }                
+        }
+    }    
+}
+
 
 @end
