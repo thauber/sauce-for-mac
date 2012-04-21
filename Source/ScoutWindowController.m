@@ -85,7 +85,8 @@ static ScoutWindowController* _sharedScout = nil;
     }
     else if(sel==1)
     {
-        NSLog(@"do snap");
+        NSView *view = [[tabView selectedTabViewItem] view];
+        [[SaucePreconnect sharedPreconnect] snapshot:view];
     }
 }
 
