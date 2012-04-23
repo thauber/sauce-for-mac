@@ -433,29 +433,23 @@ static SaucePreconnect* _sharedPreconnect = nil;
     }    
 }
 
-- (void)postSnapshot:(id)view snapName:(NSString *)snapName
+- (void)postSnapshotBug:(id)view snapName:(NSString *)snapName  
+               title:(NSString *)title desc:(NSString *)desc
 {    
     NSDictionary *sdict = [self sessionInfo:view];
     NSString *aliveid = [sdict objectForKey:@"liveId"];
     NSString *auser = [sdict objectForKey:@"user"];
     NSString *akey = [sdict objectForKey:@"ukey"];
 
-    int hrs, mins;
-    time_t rawtime;
-    struct tm * ptm;    
-    time(&rawtime);    
-    ptm = localtime(&rawtime);
-    hrs = ptm->tm_hour;
-    mins = ptm->tm_min;
 
-    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/scout/live/%@/reportbug?&ssname=%@&title=Snapshot&description=A%%20snapshot%%20taken%%20at%%20%d:%d'", auser, akey, aliveid, snapName, hrs, mins];
+    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/scout/live/%@/reportbug?&ssname=%@&title=%@&description=%@'", auser, akey, aliveid, snapName, title, desc];
     
     self.errStr = @"";
     while(1)
     {
         if(cancelled)
         {
-            self.errStr = @"Post snapshot was cancelled";
+            self.errStr = @"Post snapshotbug was cancelled";
             break;
         }
         
@@ -468,7 +462,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         [ftask waitUntilExit];
         if([ftask terminationStatus])
         {
-            self.errStr = @"Failed NSTask in postSnapshot";
+            self.errStr = @"Failed NSTask in postSnapshotBug";
             break;
         }
         else
@@ -491,7 +485,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     }        
 }
 
-- (void)snapshot:(id)view
+- (void)snapshotBug:(id)view  title:(NSString *)title desc:(NSString *)desc
 {
     NSDictionary *sdict = [self sessionInfo:view];
     NSString *aliveid = [sdict objectForKey:@"liveId"];
@@ -507,7 +501,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     {
         if(cancelled)
         {
-            self.errStr = @"Snapshot was Cancelled";
+            self.errStr = @"SnapshotBug was Cancelled";
             break;
         }
         
@@ -520,7 +514,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         [ftask waitUntilExit];
         if([ftask terminationStatus])
         {
-            self.errStr = @"Failed NSTask in snapshot";
+            self.errStr = @"Failed NSTask in snapshotBug";
             break;
         }
         else
@@ -534,12 +528,12 @@ static SaucePreconnect* _sharedPreconnect = nil;
             if(res)
             {
                 NSString *msg = [jsonDict objectForKey:@"message"];
-                [self postSnapshot:view snapName:msg];
+                [self postSnapshotBug:view snapName:msg title:title desc:desc];
                 break;
             }
             else
             {
-                self.errStr = @"Failed to get snapshot";
+                self.errStr = @"Failed to get snapshot name";
                 break;
             }                
         }
