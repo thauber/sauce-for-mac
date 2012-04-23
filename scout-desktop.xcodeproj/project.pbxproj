@@ -54,6 +54,9 @@
 		0FD424F2153736AA00682AD6 /* ScoutWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FD424F0153736AA00682AD6 /* ScoutWindowController.h */; };
 		0FD424F3153736AA00682AD6 /* ScoutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD424F1153736AA00682AD6 /* ScoutWindowController.m */; };
 		0FD424F6153738DC00682AD6 /* scoutwin.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FD424F5153738DC00682AD6 /* scoutwin.xib */; };
+		0FD566901545B17B0007C94A /* BugInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FD5668F1545B17B0007C94A /* BugInfo.xib */; };
+		0FD566931545B1A90007C94A /* BugInfoController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FD566911545B1A90007C94A /* BugInfoController.h */; };
+		0FD566941545B1A90007C94A /* BugInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD566921545B1A90007C94A /* BugInfoController.m */; };
 		0FD6E34D15364A090028C9B3 /* PSMTabBarControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FD6E34C15364A090028C9B3 /* PSMTabBarControl.framework */; };
 		0FD6E35A15366CBC0028C9B3 /* PSMTabBarControl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0FD6E35915366CBB0028C9B3 /* PSMTabBarControl.framework */; };
 		0FDB429E1511459A00841EE9 /* SaucePreconnect.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FDB429C1511459A00841EE9 /* SaucePreconnect.h */; };
@@ -374,6 +377,9 @@
 		0FD424F0153736AA00682AD6 /* ScoutWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoutWindowController.h; sourceTree = "<group>"; };
 		0FD424F1153736AA00682AD6 /* ScoutWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoutWindowController.m; sourceTree = "<group>"; };
 		0FD424F5153738DC00682AD6 /* scoutwin.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = scoutwin.xib; path = Resources/scoutwin.xib; sourceTree = "<group>"; };
+		0FD5668F1545B17B0007C94A /* BugInfo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BugInfo.xib; path = Resources/BugInfo.xib; sourceTree = "<group>"; };
+		0FD566911545B1A90007C94A /* BugInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BugInfoController.h; sourceTree = "<group>"; };
+		0FD566921545B1A90007C94A /* BugInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BugInfoController.m; sourceTree = "<group>"; };
 		0FD6E34C15364A090028C9B3 /* PSMTabBarControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PSMTabBarControl.framework; sourceTree = "<group>"; };
 		0FD6E35915366CBB0028C9B3 /* PSMTabBarControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PSMTabBarControl.framework; sourceTree = "<group>"; };
 		0FDB429C1511459A00841EE9 /* SaucePreconnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaucePreconnect.h; sourceTree = "<group>"; };
@@ -790,6 +796,7 @@
 				0F99617815267C6C002657A9 /* windows_color.pdf */,
 				0F7BF6F01523FEF400F1A478 /* LoginController.xib */,
 				0F7C606C152A964900DA9A4A /* SessionController.xib */,
+				0FD5668F1545B17B0007C94A /* BugInfo.xib */,
 				DAC8077D12FEC38400C4ADB6 /* ssh-helper.sh */,
 				DAFB492112944331008C6FC4 /* dsa_pub.pem */,
 				E291FAD4088161DA0061216E /* cursors.plist */,
@@ -1067,6 +1074,8 @@
 				0F6758A015103868008DBBEE /* sbjson */,
 				0FDB429C1511459A00841EE9 /* SaucePreconnect.h */,
 				0FDB429D1511459A00841EE9 /* SaucePreconnect.m */,
+				0FD566911545B1A90007C94A /* BugInfoController.h */,
+				0FD566921545B1A90007C94A /* BugInfoController.m */,
 				DA78379712DE159800F1893E /* SshWaiter.h */,
 				DA78379812DE159800F1893E /* SshWaiter.m */,
 				DAD6DEFC12DCF583001FD9D6 /* SshTunnel.h */,
@@ -1299,6 +1308,7 @@
 				0F7BE39E1522183800B64686 /* LoginController.h in Headers */,
 				0F7C6067152A8F8800DA9A4A /* SessionController.h in Headers */,
 				0FD424F2153736AA00682AD6 /* ScoutWindowController.h in Headers */,
+				0FD566931545B1A90007C94A /* BugInfoController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1391,6 +1401,7 @@
 				0F7CE3D2152F6C2800068464 /* play.pdf in Resources */,
 				0F7CE3D3152F6C2800068464 /* stop.pdf in Resources */,
 				0FD424F6153738DC00682AD6 /* scoutwin.xib in Resources */,
+				0FD566901545B17B0007C94A /* BugInfo.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1555,6 +1566,7 @@
 				0F7BE39F1522183800B64686 /* LoginController.m in Sources */,
 				0F7C6068152A8F8800DA9A4A /* SessionController.m in Sources */,
 				0FD424F3153736AA00682AD6 /* ScoutWindowController.m in Sources */,
+				0FD566941545B1A90007C94A /* BugInfoController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
