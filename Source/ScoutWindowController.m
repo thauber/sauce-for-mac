@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "PSMTabBarControl/PSMTabBarControl.h"
 #import "PSMTabBarControl/PSMTabStyle.h"
+#import "BugInfoController.h"
 
 @implementation ScoutWindowController
 
@@ -77,17 +78,38 @@ static ScoutWindowController* _sharedScout = nil;
 
 - (IBAction)doBugCamera:(id)sender
 {
-    // TODO: code needed snapshot or bug
+    NSString *title=nil;
+    NSString *desc=nil;    
+    NSView *view = [[tabView selectedTabViewItem] view];
+    
     int sel = [sender selectedSegment];
-    if(sel==0)
+    if(sel==0)      // bug
     {
-        NSLog(@"do bug");
+        // modal dlg for title and description
+        BugInfoController *bugCtrl = [[BugInfoController alloc] init];
+        [bugCtrl runSheetOnWindow:[self window]];
     }
-    else if(sel==1)
+    else if(sel==1)     // snapshot
     {
-        NSView *view = [[tabView selectedTabViewItem] view];
-        [[SaucePreconnect sharedPreconnect] snapshot:view];
+        title = @"Snapshot";
+
+        int hrs, mins;
+        time_t rawtime;
+        struct tm * ptm;    
+        time(&rawtime);    
+        ptm = localtime(&rawtime);
+        hrs = ptm->tm_hour;
+        mins = ptm->tm_min;
+        desc = [NSString stringWithFormat:@"A%%20snapshot%%20taken%%20at%%20%d:%d",hrs,mins];
+        [[SaucePreconnect sharedPreconnect] snapshotBug:view title:title desc:desc];
     }
+}
+
+-(void)submitBug:(NSString*)title desc:(NSString*)description
+{
+    NSView *view = [[tabView selectedTabViewItem] view];
+    [[SaucePreconnect sharedPreconnect] snapshotBug:view title:title desc:description];
+
 }
 
 - (IBAction)newSession:(id)sender
@@ -107,8 +129,8 @@ static ScoutWindowController* _sharedScout = nil;
 
 - (void)windowDidResignKey:(NSNotification *)aNotification
 {
-    if(curSession)
-        [curSession windowDidResignKey:aNotification];    
+//    if(curSession)
+//        [curSession windowDidResignKey:aNotification];    
 }
 
 - (void)windowDidDeminiaturize:(NSNotification *)aNotification

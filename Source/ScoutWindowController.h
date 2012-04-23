@@ -14,7 +14,6 @@ typedef enum { login,options,session } tabType;
 @class PSMTabBarControl;
 @class Session;
 
-
 @interface ScoutWindowController : NSWindowController <NSToolbarDelegate, NSWindowDelegate> {
 	IBOutlet NSTabView					*tabView;
 	IBOutlet PSMTabBarControl			*tabBar;
@@ -32,7 +31,6 @@ typedef enum { login,options,session } tabType;
     NSTextField *timeRemainingMsg;
     NSTextField *vmsize;
     Session *curSession;
-    
 }
 
 @property (assign) IBOutlet NSTextField *statusMessage;
@@ -73,5 +71,7 @@ typedef enum { login,options,session } tabType;
 - (void)windowWillClose:(NSNotification *)aNotification;
 - (void)windowDidResize:(NSNotification *)aNotification;
 - (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)proposedFrameSize;
+
+-(void)submitBug:(NSString*)title desc:(NSString*)description;
 
 @end
