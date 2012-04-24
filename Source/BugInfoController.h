@@ -11,6 +11,8 @@
 @interface BugInfoController : NSObject
 {
     NSTextField *title;
+    NSTextField *fromFld;
+    NSTextField *toFld;
     NSTextField *description;
     NSPanel *panel;
 }
@@ -19,6 +21,8 @@
 - (IBAction)cancel:(id)sender;
 @property (assign) IBOutlet NSTextField *description;
 @property (assign) IBOutlet NSTextField *title;
+@property (assign) IBOutlet NSTextField *fromFld;
+@property (assign) IBOutlet NSTextField *toFld;
 
 - (void)runSheetOnWindow:(NSWindow *)window;
 
