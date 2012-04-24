@@ -152,4 +152,7 @@
     return fullScreenMenuItem;
 }
 
+- (IBAction)toggleToolbar:(id)sender {
+    [[ScoutWindowController sharedScout] toggleToolbar];
+}
 @end

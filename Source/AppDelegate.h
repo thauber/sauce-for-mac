@@ -19,6 +19,7 @@
     SessionController *optionsCtrlr;
     LoginController *loginCtrlr;
 }
+- (IBAction)toggleToolbar:(id)sender;
 
 @property (retain)SessionController *optionsCtrlr;
 @property (retain)LoginController *loginCtrlr;
