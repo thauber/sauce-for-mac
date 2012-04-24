@@ -65,6 +65,8 @@
     [tf setStringValue:uname];
 
     [[ScoutWindowController sharedScout] addNewTab:options view:[self view]];
+    [connectBtn setKeyEquivalent:@"\r"];
+
 }
 
 - (IBAction)selectBrowser:(id)sender 
@@ -166,8 +168,7 @@
     [connectBtn setTitle:@"Connect"];
     [connectBtn setAction: @selector(connectToServer:)];
     [connectBtn setKeyEquivalent:@"\r"];
-    [connectBtn setKeyEquivalentModifierMask:0]; 
-    [connectBtn highlight:NO];
+    [connectBtn setKeyEquivalentModifierMask:0];
 }
 
 - (NSString *)selected:(NSString*)type      // 'browser', 'version' or 'os'
