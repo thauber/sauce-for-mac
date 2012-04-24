@@ -31,8 +31,11 @@ typedef enum { login,options,session } tabType;
     NSTextField *timeRemainingMsg;
     NSTextField *vmsize;
     Session *curSession;
+    NSBox *msgBox;
+    NSToolbar *toolbar;
 }
-
+@property (assign) IBOutlet NSToolbar *toolbar;
+@property (assign) IBOutlet NSBox *msgBox;
 @property (assign) IBOutlet NSTextField *statusMessage;
 @property (assign) IBOutlet NSTextField *urlmsg;
 @property (assign) IBOutlet NSImageView *osmsg;
@@ -72,6 +75,5 @@ typedef enum { login,options,session } tabType;
 - (void)windowDidResize:(NSNotification *)aNotification;
 - (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)proposedFrameSize;
 
--(void)submitBug:(NSString*)title desc:(NSString*)description;
-
+-(void)submitBug:(NSString*)title desc:(NSString*)description from:(NSString*)from to:(NSString*)to;
 @end

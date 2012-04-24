@@ -12,6 +12,7 @@
 #import "PSMTabBarControl/PSMTabBarControl.h"
 #import "PSMTabBarControl/PSMTabStyle.h"
 #import "BugInfoController.h"
+#import "RFBConnectionManager.h"
 
 @implementation ScoutWindowController
 
@@ -22,6 +23,8 @@
 @synthesize browserversmsg;
 @synthesize timeRemainingMsg;
 @synthesize vmsize;
+@synthesize toolbar;
+@synthesize msgBox;
 @synthesize statusMessage;
 @synthesize timeRemainingStat;
 @synthesize userStat;
@@ -58,6 +61,9 @@ static ScoutWindowController* _sharedScout = nil;
 {        
     [tabView setTabViewType:NSNoTabsNoBorder];
     [tabBar setStyleNamed:@"Unified"];
+    [tabBar setSizeCellsToFit:YES];
+    [tabBar setCellMaxWidth:500];       // allow longer tab labels
+
     [self showWindow:self];
     [[self window] setDelegate:self];
 }
@@ -87,7 +93,7 @@ static ScoutWindowController* _sharedScout = nil;
     {
         // modal dlg for title and description
         BugInfoController *bugCtrl = [[BugInfoController alloc] init];
-        [bugCtrl runSheetOnWindow:[self window]];
+        [bugCtrl runSheetOnWindow:[self window]];                
     }
     else if(sel==1)     // snapshot
     {
@@ -105,10 +111,19 @@ static ScoutWindowController* _sharedScout = nil;
     }
 }
 
--(void)submitBug:(NSString*)title desc:(NSString*)description
+-(void)submitBug:(NSString*)title desc:(NSString*)description from:(NSString*)from to:(NSString*)to
 {
     NSView *view = [[tabView selectedTabViewItem] view];
     [[SaucePreconnect sharedPreconnect] snapshotBug:view title:title desc:description];
+    
+    // send email
+    NSString *encodedSubject = [NSString stringWithFormat:@"SUBJECT=%@", [title stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSString *encodedBody = [NSString stringWithFormat:@"BODY=%@", [description stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSString *encodedFrom = [NSString stringWithFormat:@"FROM=%@", [from stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSString *encodedTo = [to stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *encodedURLString = [NSString stringWithFormat:@"mailto:%@?%@&%@&%@", encodedTo, encodedFrom, encodedSubject, encodedBody];
+    NSURL *mailtoURL = [NSURL URLWithString:encodedURLString];
+    [[NSWorkspace sharedWorkspace] openURL:mailtoURL];
 
 }
 
@@ -160,6 +175,7 @@ static ScoutWindowController* _sharedScout = nil;
 
 - (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)proposedFrameSize
 {
+    // TODO: figure out why it crashes on the call - doesn't get there
 //    if(curSession)
 //        return [curSession windowWillResize:sender toSize:proposedFrameSize];
     return proposedFrameSize;
@@ -167,32 +183,61 @@ static ScoutWindowController* _sharedScout = nil;
 
 #pragma mark -
 
+-(void)toggleToolbar
+{
+    BOOL vis = [toolbar isVisible];
+    [toolbar setVisible:!vis];
+}
+
 - (void)addNewTab:(tabType)type view:(NSView*)view
 {
-    NSTabViewItem *newItem = [[(NSTabViewItem*)[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
-    [newItem setView:view];
     NSString *tstr;
+    NSDictionary *sdict;
     switch (type) 
     {
         case login:   tstr = @"login"; break;
-        case options: tstr = @"options"; break;
-        case session: tstr = @"session"; break;            
+        case options: tstr = @"Welcome"; break;
+        case session:
+            sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:view];
+            if(sdict)
+            {
+                NSString *os = [sdict  objectForKey:@"os"];
+                NSString *browser = [sdict objectForKey:@"browser"];
+                NSString *bvers = [sdict objectForKey:@"browserVersion"];
+                tstr = [NSString stringWithFormat:@"%@/%@%@",os,browser,bvers];
+            }
+            else
+                tstr = @"session";             
+            break;            
         default:
             break;
     }
-	[newItem setLabel:tstr];
-	[tabView addTabViewItem:newItem];
-	[tabView selectTabViewItem:newItem];
     if(type==session)
     {
+        [toolbar setVisible:YES];
         [bugcamera setEnabled:YES forSegment:0];
         [bugcamera setEnabled:YES forSegment:1];
         [playstop setEnabled:NO forSegment:0];
         [playstop setEnabled:YES forSegment:1];
     }
+    else
+    {
+        [toolbar setVisible:NO];        
+    }
+    NSTabViewItem *newItem = [[(NSTabViewItem*)[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
+    [newItem setView:view];
+	[newItem setLabel:tstr];
+	[tabView addTabViewItem:newItem];
+	[tabView selectTabViewItem:newItem];
 }
 
-- (IBAction)closeTab:(id)sender {
+- (IBAction)closeTab:(id)sender 
+{
+    if(curSession)
+    {
+        [[SaucePreconnect sharedPreconnect] sessionClosed:curSession];
+        [[RFBConnectionManager sharedManager] removeConnection:curSession];
+    }
 	[tabView removeTabViewItem:[tabView selectedTabViewItem]];
 }
 
