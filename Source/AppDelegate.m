@@ -54,41 +54,31 @@
         [self showLoginDlg:self];
     }
 
-/*	[rda] unused in Scout	
-    RFBConnectionManager *cm = [RFBConnectionManager sharedManager];
-    if ( ! [cm runFromCommandLine] && ! [cm launchedByURL] )
-		[cm runNormally];
-    
-
-	[mRendezvousMenuItem setState: [[PrefController sharedController] usesRendezvous] ? NSOnState : NSOffState];
-*/	
     [mInfoVersionNumber setStringValue: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleVersion"]];
 }
 
 - (IBAction)showOptionsDlg:(id)sender 
 {
-    self.optionsCtrlr = [[SessionController alloc] init];
+    if(!self.optionsCtrlr)
+        self.optionsCtrlr = [[SessionController alloc] init];
+    [optionsCtrlr runSheet];
 }
 
 -(void)connectionSucceeded
 {
-    [optionsCtrlr connectionSucceeded];
+    [optionsCtrlr connectionSucceeded];    
 }
 
-// TODO: test
 - (void)newUserAuthorized:(id)param
 {
-    // remove login tab
-    [[ScoutWindowController sharedScout] closeTab:nil];
-    [loginCtrlr dealloc];
-    self.loginCtrlr = nil;
+    [loginCtrlr login:nil];
     [self showOptionsDlg:nil];
 }
 
 - (void)preAuthorizeErr
 {
     NSString *err = [[SaucePreconnect sharedPreconnect] errStr];
-  [optionsCtrlr showError:err];
+    [optionsCtrlr showError:err];
 }
 
 - (void)cancelOptionsConnect
@@ -98,8 +88,7 @@
 
 - (IBAction)showLoginDlg:(id)sender 
 {
-    LoginController *lc = [[LoginController alloc] init];
-    [lc view];
+    [[LoginController alloc] init];
 }
 
 - (IBAction)showPreferences: (id)sender
