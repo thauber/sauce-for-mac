@@ -29,27 +29,41 @@
 
 
 @implementation LoginController
+@synthesize panel;
+@synthesize cancelLogin;
 
 - (id)init
 {
-    self=[super initWithNibName:@"LoginController" bundle:nil];
-    if(self)
+    if (self = [super init]) 
     {
-        //perform any initializations
-        [self loadView];
+        [NSBundle loadNibNamed:@"LoginController" owner:self];
+        NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
+        NSString *uname = [defs stringForKey:kUsername];
+        NSString *akey = [defs stringForKey:kAccountkey];
+        [user setStringValue:uname];
+        [accountKey setStringValue:akey];
+        if(!uname || !akey)     // can't cancel login if we don't have username/acctkey
+            [cancelLogin setHidden:YES];
+        [panel setOpaque:YES];
+        [panel setAlphaValue:1.0];
+        [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];
+        [self retain];
     }
     return self;
 }
 
-- (void)loadView {
-    [super loadView];
-    
-    NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
-    NSString *uname = [defs stringForKey:kUsername];
-    NSString *akey = [defs stringForKey:kAccountkey];
-    [user setStringValue:uname];
-    [accountKey setStringValue:akey]; 
-    [[ScoutWindowController sharedScout] addNewTab:login view:[self view]];
+- (IBAction)doCancelLogin:(id)sender 
+{
+    [NSApp endSheet:panel];
+    [panel orderOut:nil];
+    if(![[SaucePreconnect sharedPreconnect] user])
+    {
+        NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
+        NSString *uname = [defs stringForKey:kUsername];
+        NSString *akey = [defs stringForKey:kAccountkey];
+        if([[SaucePreconnect sharedPreconnect] checkUserLogin:uname key:akey])
+            [[NSApp delegate] showOptionsDlg:nil];            
+    }
 }
 
 - (IBAction)login:(id)sender
@@ -63,12 +77,15 @@
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setObject:uname  forKey:kUsername];
             [defaults setObject:aaccountkey  forKey:kAccountkey];
-            [[ScoutWindowController sharedScout] closeTab:nil];
             NSTextField *tf = [[ScoutWindowController sharedScout] userStat];
             [tf setStringValue:uname];
 
-            [[NSApp delegate] showOptionsDlg:nil];
-            [self dealloc];     // get rid of the login dialog
+            [NSApp endSheet:panel];
+            [panel orderOut:nil];
+
+            if(![[ScoutWindowController sharedScout] tabCount])
+                [[NSApp delegate] showOptionsDlg:nil];
+            [self release];     
         }
         else 
         {

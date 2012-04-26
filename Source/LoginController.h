@@ -22,14 +22,19 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface LoginController : NSViewController                                            
+@interface LoginController : NSObject                                            
 {
     IBOutlet NSTextField *user;
     IBOutlet NSTextField *accountKey;
     IBOutlet NSTextField *aNewUsername;
     IBOutlet NSSecureTextField *aNewPassword;
     IBOutlet NSTextField *aNewEmail;
+    NSPanel *panel;
+    NSButton *cancelLogin;
 }
+@property (assign) IBOutlet NSPanel *panel;
+@property (assign) IBOutlet NSButton *cancelLogin;
+- (IBAction)doCancelLogin:(id)sender;
 
 - (IBAction)login:(id)sender;
 - (IBAction)forgotKey:(id)sender;
