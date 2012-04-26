@@ -14,6 +14,8 @@
 
 @implementation SessionController
 
+@synthesize panel;
+@synthesize view;
 @synthesize connectBtn;
 @synthesize connectIndicatorText;
 @synthesize connectIndicator;
@@ -23,27 +25,23 @@
 
 - (id)init
 {
-    self=[super initWithNibName:@"SessionController" bundle:nil];
+    self = [super init];
     if(self)
     {
-        //perform any initializations
-        [self loadView];
+        [NSBundle loadNibNamed:@"SessionController"  owner:self];
+        // recompute position of mswindows/linux sections when osx is hidden
+        int h1 = box1.frame.size.height;
+        NSRect fr = box2.frame;
+        fr.origin.y += h1;
+        [box2 setFrame:fr];
     }
     return self;
 }
 
-- (void)loadView
+-(void)runSheet
 {
-    [super loadView];
-    
     [connectIndicatorText setStringValue:@""];
-
-    // recompute position of mswindows/linux sections when osx is hidden
-    int h1 = box1.frame.size.height;
-    NSRect fr = box2.frame;
-    fr.origin.y += h1;
-    [box2 setFrame:fr];
-    
+        
     // use last used values from prefs
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
     NSString *urlstr = [defs stringForKey:kSessionURL];
@@ -52,7 +50,7 @@
     selectedTag = [defs integerForKey:kSessionTag];
     if(selectedTag)
     {
-         
+        
         NSString *str = [defs stringForKey:kSessionFrame];
         if(str)
         {
@@ -64,9 +62,13 @@
     NSString *uname = [[SaucePreconnect sharedPreconnect] user];
     [tf setStringValue:uname];
 
-    [[ScoutWindowController sharedScout] addNewTab:options view:[self view]];
+    [connectBtn setTitle:@"Scout!"];
+    [connectBtn setAction: @selector(connect:)];
     [connectBtn setKeyEquivalent:@"\r"];
-
+    [connectBtn setKeyEquivalentModifierMask:0]; 
+    [connectIndicator stopAnimation:self];
+    [connectIndicatorText setStringValue:@""];
+    [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];        
 }
 
 - (IBAction)selectBrowser:(id)sender 
@@ -105,7 +107,6 @@
     
 }
 
-
 -(IBAction)connect:(id)sender 
 {
     NSString *os = [self selected:@"os"];
@@ -125,6 +126,8 @@
         [connectBtn setKeyEquivalent:@"."];
         [connectBtn setKeyEquivalentModifierMask:NSCommandKeyMask];
 	    [[SaucePreconnect sharedPreconnect] setOptions:os browser:browser browserVersion:version url:urlstr];
+        [NSApp endSheet:panel];
+
         [NSThread detachNewThreadSelector:@selector(preAuthorize:) toTarget:[SaucePreconnect sharedPreconnect] withObject:nil];
     }
     else 
@@ -136,14 +139,19 @@
     [defaults setObject:urlstr  forKey:kSessionURL];
     [defaults setInteger:selectedTag  forKey:kSessionTag];
     NSString *frStr = NSStringFromRect(selectedFrame);
-    [defaults setObject:frStr  forKey:kSessionFrame];        
+    [defaults setObject:frStr  forKey:kSessionFrame];
 }
 
 -(void)connectionSucceeded
 {
-    [[ScoutWindowController sharedScout] closeTab:nil];
-    [[NSApp delegate] setOptionsCtrlr:nil];
-    [self dealloc];
+    @try        // only way i could solve problem of error after 1st time here
+    {
+        [panel orderOut:nil];
+    }
+    @catch (NSException *e) {
+        NSLog(@"error on orderOut");
+    }
+
 }
 
 - (void)showError:(NSString *)errStr
@@ -165,10 +173,10 @@
 	[connectIndicatorText setStringValue:@""];
 	[connectIndicatorText display];
     
-    [connectBtn setTitle:@"Connect"];
-    [connectBtn setAction: @selector(connectToServer:)];
+    [connectBtn setTitle:@"Scout!"];
+    [connectBtn setAction: @selector(connect:)];
     [connectBtn setKeyEquivalent:@"\r"];
-    [connectBtn setKeyEquivalentModifierMask:0];
+    [connectBtn setKeyEquivalentModifierMask:0];    
 }
 
 - (NSString *)selected:(NSString*)type      // 'browser', 'version' or 'os'

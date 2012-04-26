@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface SessionController : NSViewController
+@interface SessionController : NSObject
 {
     int selectedTag;
     NSRect selectedFrame;
@@ -19,7 +19,12 @@
     NSProgressIndicator *connectIndicator;
     NSTextField *connectIndicatorText;
     NSButton *connectBtn;
+    NSPanel *panel;
+    NSView *view;
 }
+@property (assign) IBOutlet NSPanel *panel;
+@property (assign) IBOutlet NSView *view;
+
 @property (assign) IBOutlet NSButton *connectBtn;
 @property (assign) IBOutlet NSTextField *connectIndicatorText;
 @property (assign) IBOutlet NSProgressIndicator *connectIndicator;
@@ -27,6 +32,7 @@
 @property (assign) IBOutlet NSBox *box2;
 @property (assign) IBOutlet NSTextField *url;
 
+- (void)runSheet;
 - (IBAction)connect:(id)sender;
 - (IBAction)cancelConnect: (id)sender;
 - (IBAction)selectBrowser:(id)sender;
