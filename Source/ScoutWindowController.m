@@ -140,12 +140,14 @@ static ScoutWindowController* _sharedScout = nil;
 //window delegate messages
 - (void)windowDidBecomeKey:(NSNotification *)aNotification
 {
-    if(curSession)
-        [curSession windowDidBecomeKey:aNotification];
+    // TODO: why throws exception?
+//    if(curSession)
+//        [curSession windowDidBecomeKey:aNotification];
 }
 
 - (void)windowDidResignKey:(NSNotification *)aNotification
 {
+    // TODO: why throws exception?
 //    if(curSession)
 //        [curSession windowDidResignKey:aNotification];    
 }
@@ -345,6 +347,7 @@ static ScoutWindowController* _sharedScout = nil;
 
 - (void)tabView:(NSTabView *)aTabView didCloseTabViewItem:(NSTabViewItem *)tabViewItem {
 	NSLog(@"didCloseTabViewItem: %@", [tabViewItem label]);
+    curSession = nil;
 }
 
 - (NSArray *)allowedDraggedTypesForTabView:(NSTabView *)aTabView {
