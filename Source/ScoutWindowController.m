@@ -23,6 +23,7 @@
 @synthesize browserversmsg;
 @synthesize timeRemainingMsg;
 @synthesize vmsize;
+@synthesize connectStat;
 @synthesize toolbar;
 @synthesize msgBox;
 @synthesize statusMessage;
@@ -58,12 +59,13 @@ static ScoutWindowController* _sharedScout = nil;
 }
 
 - (void)awakeFromNib 
-{        
+{
+    [toolbar setVisible:NO];
     [tabView setTabViewType:NSNoTabsNoBorder];
     [tabBar setStyleNamed:@"Unified"];
     [tabBar setSizeCellsToFit:YES];
     [tabBar setCellMaxWidth:500];       // allow longer tab labels
-
+    
     [self showWindow:self];
     [[self window] setDelegate:self];
 }
@@ -187,6 +189,11 @@ static ScoutWindowController* _sharedScout = nil;
 {
     BOOL vis = [toolbar isVisible];
     [toolbar setVisible:!vis];
+}
+
+-(int)tabCount
+{
+    return[tabView  numberOfTabViewItems];
 }
 
 - (void)addNewTab:(tabType)type view:(NSView*)view

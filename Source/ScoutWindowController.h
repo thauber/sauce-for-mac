@@ -33,7 +33,9 @@ typedef enum { login,options,session } tabType;
     Session *curSession;
     NSBox *msgBox;
     NSToolbar *toolbar;
+    NSTextField *connectStat;
 }
+@property (assign) IBOutlet NSTextField *connectStat;
 @property (assign) IBOutlet NSToolbar *toolbar;
 @property (assign) IBOutlet NSBox *msgBox;
 @property (assign) IBOutlet NSTextField *statusMessage;
@@ -55,6 +57,8 @@ typedef enum { login,options,session } tabType;
 - (IBAction)newSession:(id)sender;
 
 // UI
+- (void)toggleToolbar;
+- (int)tabCount;
 - (void)addNewTab:(tabType)type  view:(NSView*)view; 
 - (IBAction)closeTab:(id)sender;
 - (void)setTabLabel:(NSString*)lbl;
