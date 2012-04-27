@@ -78,10 +78,10 @@ enum {
     
     connection = [aConnection retain];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(tintChanged:)
-                                                 name:ProfileTintChangedMsg
-                                               object:[connection profile]];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(tintChanged:)
+//                                                 name:ProfileTintChangedMsg
+//                                               object:[connection profile]];
     [self loadView];
 
     return self;
@@ -141,6 +141,11 @@ enum {
 	
     [_connectionStartDate release];
     [super dealloc];
+}
+
+- (RFBConnection *)connection
+{
+    return connection;
 }
 
 - (BOOL)viewOnly
@@ -332,8 +337,7 @@ enum {
     NSRect wf;
 	NSRect screenRect;
 	NSClipView *contentView;
-//	NSString *serverName;
-
+    
 	screenRect = [[NSScreen mainScreen] visibleFrame];
     wf.origin.x = wf.origin.y = 0;
     wf.size = [NSScrollView frameSizeForContentSize:_maxSize hasHorizontalScroller:YES hasVerticalScroller:YES borderType:NSNoBorder];
@@ -373,7 +377,7 @@ enum {
     [scrollView reflectScrolledClipView: contentView];
 
     [window makeFirstResponder:rfbView];
-	[self windowDidResize: nil];
+	[self windowDidResize];
 //    [window makeKeyAndOrderFront:self];
     [window display];
 }
@@ -416,7 +420,7 @@ enum {
         frame.size.height = maxSize.height;
     [window setFrame:frame display:YES];
 
-    [self windowDidResize:nil]; // setup scroll bars if necessary
+    [self windowDidResize]; // setup scroll bars if necessary
 }
 
 - (void)requestFrameBufferUpdate:(id)sender
@@ -500,10 +504,10 @@ enum {
 
 /* --------------------------------------------------------------------------------- */
 
-/* TODO: move/call (some of) these to/from scoutwindowcontroller? */
+/* calling these to/from scoutwindowcontroller */
 /* Window delegate methods */
 
-- (void)windowDidDeminiaturize:(NSNotification *)aNotification
+- (void)windowDidDeminiaturize
 {
     float s = [[PrefController sharedController] frontFrameBufferUpdateSeconds];
 
@@ -511,7 +515,7 @@ enum {
 	[connection installMouseMovedTrackingRect];
 }
 
-- (void)windowDidMiniaturize:(NSNotification *)aNotification
+- (void)windowDidMiniaturize
 {
     float s = [[PrefController sharedController] maxPossibleFrameBufferUpdateSeconds];
 
@@ -519,7 +523,7 @@ enum {
 	[connection removeMouseMovedTrackingRect];
 }
 
-- (void)windowWillClose:(NSNotification *)aNotification
+- (void)windowWillClose
 {
     // dealloc closes the window, so we have to null it out here
     // The window will autorelease itself when closed.  If we allow terminateConnection
@@ -537,7 +541,7 @@ enum {
     return max;
 }
 
-- (void)windowDidResize:(NSNotification *)aNotification
+- (void)windowDidResize
 {
 //	[scrollView setHasHorizontalScroller:horizontalScroll];
 //	[scrollView setHasVerticalScroller:verticalScroll];
@@ -546,14 +550,14 @@ enum {
 
 }
 
-- (void)windowDidBecomeKey:(NSNotification *)aNotification
+- (void)windowDidBecomeKey
 {
 	[connection installMouseMovedTrackingRect];
 	[connection setFrameBufferUpdateSeconds: [[PrefController sharedController] frontFrameBufferUpdateSeconds]];
     [rfbView setTint:[[connection profile] tintWhenFront:YES]];
 }
 
-- (void)windowDidResignKey:(NSNotification *)aNotification
+- (void)windowDidResignKey
 {
 	[connection removeMouseMovedTrackingRect];
 	[connection setFrameBufferUpdateSeconds: [[PrefController sharedController] otherFrameBufferUpdateSeconds]];
@@ -650,6 +654,7 @@ enum {
     else
         [self endFullscreenScrolling];
 }
+#endif
 
 - (void)setFrameBufferUpdateSeconds: (float)seconds
 {
@@ -658,6 +663,7 @@ enum {
         [connection setFrameBufferUpdateSeconds:seconds];
 }
 
+#if 0
 - (void)beginFullscreenScrolling {
     if (_autoscrollTimer)
         return;

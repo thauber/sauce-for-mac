@@ -29,7 +29,6 @@
 @interface Session : NSViewController <ConnectionWaiterDelegate>
 {
     NSWindow *window;       // set to scoutwindowcontroller's window
-
     
     RFBConnection   *connection;
     IBOutlet RFBView *rfbView;
@@ -78,6 +77,7 @@
 - (id)initWithConnection:(RFBConnection*)conn;
 - (void)dealloc;
 
+- (RFBConnection *)connection;
 - (BOOL)viewOnly;
 
 - (void)setSize:(NSSize)size;
@@ -96,12 +96,12 @@
 - (IBAction)requestFrameBufferUpdate:(id)sender;
 
     //window delegate messages
-- (void)windowDidBecomeKey:(NSNotification *)aNotification;
-- (void)windowDidResignKey:(NSNotification *)aNotification;
-- (void)windowDidDeminiaturize:(NSNotification *)aNotification;
-- (void)windowDidMiniaturize:(NSNotification *)aNotification;
-- (void)windowWillClose:(NSNotification *)aNotification;
-- (void)windowDidResize:(NSNotification *)aNotification;
+- (void)windowDidBecomeKey;
+- (void)windowDidResignKey;
+- (void)windowDidDeminiaturize;
+- (void)windowDidMiniaturize;
+- (void)windowWillClose;
+- (void)windowDidResize;
 - (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)proposedFrameSize;
 
 - (void)openOptions:(id)sender;
