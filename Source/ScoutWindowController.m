@@ -13,6 +13,8 @@
 #import "PSMTabBarControl/PSMTabStyle.h"
 #import "BugInfoController.h"
 #import "RFBConnectionManager.h"
+#import "RFBConnection.h"
+#import "Session.h"
 
 @implementation ScoutWindowController
 
@@ -140,48 +142,45 @@ static ScoutWindowController* _sharedScout = nil;
 //window delegate messages
 - (void)windowDidBecomeKey:(NSNotification *)aNotification
 {
-    // TODO: why throws exception?
-//    if(curSession)
-//        [curSession windowDidBecomeKey:aNotification];
+    if(curSession)
+        [curSession windowDidBecomeKey];
 }
 
 - (void)windowDidResignKey:(NSNotification *)aNotification
 {
-    // TODO: why throws exception?
-//    if(curSession)
-//        [curSession windowDidResignKey:aNotification];    
+    if(curSession)
+        [curSession windowDidResignKey];    
 }
 
 - (void)windowDidDeminiaturize:(NSNotification *)aNotification
 {
     if(curSession)
-        [curSession windowDidDeminiaturize:aNotification];    
+        [curSession windowDidDeminiaturize];    
 }
 
 - (void)windowDidMiniaturize:(NSNotification *)aNotification
 {    
     if(curSession)
-        [curSession windowDidMiniaturize:aNotification];    
+        [curSession windowDidMiniaturize];    
 }
 
 - (void)windowWillClose:(NSNotification *)aNotification
 {
     if(curSession)
-        [curSession windowWillClose:aNotification];
+        [curSession windowWillClose];
     [self autorelease];
 }
 
 - (void)windowDidResize:(NSNotification *)aNotification
 {
-    if(curSession)
-        [curSession windowDidResize:aNotification];            
+   if(curSession)
+        [curSession windowDidResize];            
 }
 
 - (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)proposedFrameSize
 {
-    // TODO: figure out why it crashes on the call - doesn't get there
-//    if(curSession)
-//        return [curSession windowWillResize:sender toSize:proposedFrameSize];
+    if(curSession)
+        return [curSession windowWillResize:sender toSize:proposedFrameSize];
     return proposedFrameSize;
 }
 
@@ -201,38 +200,18 @@ static ScoutWindowController* _sharedScout = nil;
 - (void)addNewTab:(tabType)type view:(NSView*)view
 {
     NSString *tstr;
-    NSDictionary *sdict;
-    switch (type) 
-    {
-        case login:   tstr = @"login"; break;
-        case options: tstr = @"Welcome"; break;
-        case session:
-            sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:view];
-            if(sdict)
-            {
-                NSString *os = [sdict  objectForKey:@"os"];
-                NSString *browser = [sdict objectForKey:@"browser"];
-                NSString *bvers = [sdict objectForKey:@"browserVersion"];
-                tstr = [NSString stringWithFormat:@"%@/%@%@",os,browser,bvers];
-            }
-            else
-                tstr = @"session";             
-            break;            
-        default:
-            break;
-    }
-    if(type==session)
-    {
-        [toolbar setVisible:YES];
-        [bugcamera setEnabled:YES forSegment:0];
-        [bugcamera setEnabled:YES forSegment:1];
-        [playstop setEnabled:NO forSegment:0];
-        [playstop setEnabled:YES forSegment:1];
-    }
-    else
-    {
-        [toolbar setVisible:NO];        
-    }
+    NSDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:view];
+    NSString *os = [sdict  objectForKey:@"os"];
+    NSString *browser = [sdict objectForKey:@"browser"];
+    NSString *bvers = [sdict objectForKey:@"browserVersion"];
+    tstr = [NSString stringWithFormat:@"%@/%@%@",os,browser,bvers];
+
+    [toolbar setVisible:YES];
+    [bugcamera setEnabled:YES forSegment:0];
+    [bugcamera setEnabled:YES forSegment:1];
+    [playstop setEnabled:NO forSegment:0];
+    [playstop setEnabled:YES forSegment:1];
+    
     NSTabViewItem *newItem = [[(NSTabViewItem*)[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
     [newItem setView:view];
 	[newItem setLabel:tstr];
@@ -244,8 +223,8 @@ static ScoutWindowController* _sharedScout = nil;
 {
     if(curSession)
     {
-        [[SaucePreconnect sharedPreconnect] sessionClosed:curSession];
-        [[RFBConnectionManager sharedManager] removeConnection:curSession];
+        [[SaucePreconnect sharedPreconnect] sessionClosed:[curSession connection]];
+        [[RFBConnectionManager sharedManager] removeConnection:[curSession connection]];
     }
 	[tabView removeTabViewItem:[tabView selectedTabViewItem]];
 }
@@ -331,22 +310,16 @@ static ScoutWindowController* _sharedScout = nil;
         str = [NSString stringWithFormat:@" %@ rem.",str];
         [self.timeRemainingMsg  setStringValue:str];
         
-        curSession = [sdict objectForKey:@"session"];
-
+        RFBConnection *rfbcon = [sdict objectForKey:@"session"];
+        curSession = [rfbcon session];
     }
 }
 
 - (BOOL)tabView:(NSTabView *)aTabView shouldCloseTabViewItem:(NSTabViewItem *)tabViewItem {
-	if([[tabViewItem label] isEqualToString:@"Drake"]) {
-		NSAlert *drakeAlert = [NSAlert alertWithMessageText:@"No Way!" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"I refuse to close a tab named \"Drake\""];
-		[drakeAlert beginSheetModalForWindow:[NSApp keyWindow] modalDelegate:nil didEndSelector:nil contextInfo:nil];
-		return NO;
-	}
 	return YES;
 }
 
 - (void)tabView:(NSTabView *)aTabView didCloseTabViewItem:(NSTabViewItem *)tabViewItem {
-	NSLog(@"didCloseTabViewItem: %@", [tabViewItem label]);
     curSession = nil;
 }
 
@@ -358,24 +331,28 @@ static ScoutWindowController* _sharedScout = nil;
 	NSLog(@"acceptedDraggingInfo: %@ onTabViewItem: %@", [[draggingInfo draggingPasteboard] stringForType:[[[draggingInfo draggingPasteboard] types] objectAtIndex:0]], [tabViewItem label]);
 }
 
-- (NSMenu *)tabView:(NSTabView *)aTabView menuForTabViewItem:(NSTabViewItem *)tabViewItem {
-	NSLog(@"menuForTabViewItem: %@", [tabViewItem label]);
+- (NSMenu *)tabView:(NSTabView *)aTabView menuForTabViewItem:(NSTabViewItem *)tabViewItem 
+{
 	return nil;
 }
 
-- (BOOL)tabView:(NSTabView*)aTabView shouldDragTabViewItem:(NSTabViewItem *)tabViewItem fromTabBar:(PSMTabBarControl *)tabBarControl {
+- (BOOL)tabView:(NSTabView*)aTabView shouldDragTabViewItem:(NSTabViewItem *)tabViewItem fromTabBar:(PSMTabBarControl *)tabBarControl 
+{
 	return YES;
 }
 
-- (BOOL)tabView:(NSTabView*)aTabView shouldDropTabViewItem:(NSTabViewItem *)tabViewItem inTabBar:(PSMTabBarControl *)tabBarControl {
+- (BOOL)tabView:(NSTabView*)aTabView shouldDropTabViewItem:(NSTabViewItem *)tabViewItem inTabBar:(PSMTabBarControl *)tabBarControl 
+{
 	return YES;
 }
 
-- (void)tabView:(NSTabView*)aTabView didDropTabViewItem:(NSTabViewItem *)tabViewItem inTabBar:(PSMTabBarControl *)tabBarControl {
+- (void)tabView:(NSTabView*)aTabView didDropTabViewItem:(NSTabViewItem *)tabViewItem inTabBar:(PSMTabBarControl *)tabBarControl 
+{
 	NSLog(@"didDropTabViewItem: %@ inTabBar: %@", [tabViewItem label], tabBarControl);
 }
 
-- (NSImage *)tabView:(NSTabView *)aTabView imageForTabViewItem:(NSTabViewItem *)tabViewItem offset:(NSSize *)offset styleMask:(NSUInteger *)styleMask {
+- (NSImage *)tabView:(NSTabView *)aTabView imageForTabViewItem:(NSTabViewItem *)tabViewItem offset:(NSSize *)offset styleMask:(NSUInteger *)styleMask 
+{
 	// grabs whole window image
 	NSImage *viewImage = [[[NSImage alloc] init] autorelease];
 	NSRect contentFrame = [[[self window] contentView] frame];
@@ -430,29 +407,33 @@ static ScoutWindowController* _sharedScout = nil;
 	return viewImage;
 }
 
-- (PSMTabBarControl *)tabView:(NSTabView *)aTabView newTabBarForDraggedTabViewItem:(NSTabViewItem *)tabViewItem atPoint:(NSPoint)point {
+- (PSMTabBarControl *)tabView:(NSTabView *)aTabView newTabBarForDraggedTabViewItem:(NSTabViewItem *)tabViewItem atPoint:(NSPoint)point 
+{
 	NSLog(@"newTabBarForDraggedTabViewItem: %@ atPoint: %@", [tabViewItem label], NSStringFromPoint(point));
     return nil;
 }
 
-- (void)tabView:(NSTabView *)aTabView closeWindowForLastTabViewItem:(NSTabViewItem *)tabViewItem {
+- (void)tabView:(NSTabView *)aTabView closeWindowForLastTabViewItem:(NSTabViewItem *)tabViewItem 
+{
 	NSLog(@"closeWindowForLastTabViewItem: %@", [tabViewItem label]);
 	[[self window] close];
 }
 
-- (void)tabView:(NSTabView *)aTabView tabBarDidHide:(PSMTabBarControl *)tabBarControl {
-	NSLog(@"tabBarDidHide: %@", tabBarControl);
+- (void)tabView:(NSTabView *)aTabView tabBarDidHide:(PSMTabBarControl *)tabBarControl 
+{
 }
 
-- (void)tabView:(NSTabView *)aTabView tabBarDidUnhide:(PSMTabBarControl *)tabBarControl {
-	NSLog(@"tabBarDidUnhide: %@", tabBarControl);
+- (void)tabView:(NSTabView *)aTabView tabBarDidUnhide:(PSMTabBarControl *)tabBarContro
+{
 }
 
-- (NSString *)tabView:(NSTabView *)aTabView toolTipForTabViewItem:(NSTabViewItem *)tabViewItem {
+- (NSString *)tabView:(NSTabView *)aTabView toolTipForTabViewItem:(NSTabViewItem *)tabViewItem 
+{
 	return [tabViewItem label];
 }
 
-- (NSString *)accessibilityStringForTabView:(NSTabView *)aTabView objectCount:(NSInteger)objectCount {
+- (NSString *)accessibilityStringForTabView:(NSTabView *)aTabView objectCount:(NSInteger)objectCount 
+{
 	return (objectCount == 1) ? @"item" : @"items";
 }
 
