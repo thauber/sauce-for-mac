@@ -56,8 +56,8 @@ NSString *kConnectionFullscreenScenario = @"ConnectionFullscreenScenario";
 	{
         if ([session viewOnly])
             [self setCurrentScenarioToName: kNonConnectionWindowFrontmostScenario];
-        else if ( [session connectionIsFullscreen] )
-			[self setCurrentScenarioToName: kConnectionFullscreenScenario];
+//        else if ( [session connectionIsFullscreen] )
+//			[self setCurrentScenarioToName: kConnectionFullscreenScenario];
 		else
 			[self setCurrentScenarioToName: kConnectionWindowFrontmostScenario];
 	}
@@ -213,9 +213,9 @@ NSString *kConnectionFullscreenScenario = @"ConnectionFullscreenScenario";
     fullscreen = [[NSApp delegate] getFullScreenMenuItem];
     entry = [[KeyEquivalentEntry alloc] initWithMenuItem:fullscreen];
     minimal = [[KeyEquivalentScenario alloc] init];
-    [minimal setEntry:entry
-        forEquivalent:[standardKeyEquivalents
-                                        keyEquivalentForMenuItem:fullscreen]];
+//    [minimal setEntry:entry
+//        forEquivalent:[standardKeyEquivalents
+//                                        keyEquivalentForMenuItem:fullscreen]];
 
     [mScenarioDict release];
     mScenarioDict = [[NSMutableDictionary alloc] init];
