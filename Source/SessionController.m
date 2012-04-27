@@ -144,14 +144,7 @@
 
 -(void)connectionSucceeded
 {
-    @try        // only way i could solve problem of error after 1st time here
-    {
-        [panel orderOut:nil];
-    }
-    @catch (NSException *e) {
-        NSLog(@"error on orderOut");
-    }
-
+    [panel orderOut:nil];
 }
 
 - (void)showError:(NSString *)errStr
