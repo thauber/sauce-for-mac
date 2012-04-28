@@ -50,7 +50,7 @@
 			<object class="NSWindowTemplate" id="181263325">
 				<int key="NSWindowStyleMask">4111</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{111, 69}, {877, 604}}</string>
+				<string key="NSWindowRect">{{111, 69}, {877, 692}}</string>
 				<int key="NSWTFlags">1886912512</int>
 				<string key="NSWindowTitle">Sauce Labs</string>
 				<object class="NSMutableString" key="NSWindowClass">
@@ -633,7 +633,6 @@
 					<array key="NSToolbarIBSelectableItems" id="0"/>
 				</object>
 				<nil key="NSUserInterfaceItemIdentifier"/>
-				<string key="NSWindowContentMinSize">{818, 604}</string>
 				<object class="NSView" key="NSWindowView" id="547639528">
 					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
@@ -641,7 +640,7 @@
 						<object class="NSTabView" id="982771337">
 							<reference key="NSNextResponder" ref="547639528"/>
 							<int key="NSvFlags">274</int>
-							<string key="NSFrame">{{13, 22}, {854, 558}}</string>
+							<string key="NSFrame">{{0, 26}, {877, 646}}</string>
 							<reference key="NSSuperview" ref="547639528"/>
 							<reference key="NSWindow"/>
 							<array class="NSMutableArray" key="NSTabViewItems"/>
@@ -653,7 +652,7 @@
 						<object class="NSCustomView" id="707679915">
 							<reference key="NSNextResponder" ref="547639528"/>
 							<int key="NSvFlags">266</int>
-							<string key="NSFrame">{{0, 582}, {877, 22}}</string>
+							<string key="NSFrame">{{0, 672}, {877, 22}}</string>
 							<reference key="NSSuperview" ref="547639528"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="982771337"/>
@@ -771,6 +770,7 @@
 											<string key="NSFrame">{{579, -1}, {49, 16}}</string>
 											<reference key="NSSuperview" ref="836382187"/>
 											<reference key="NSWindow"/>
+											<reference key="NSNextKeyView" ref="120036005"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="64620707">
 												<int key="NSCellFlags">-2080244160</int>
@@ -845,7 +845,7 @@
 									<string key="NSReuseIdentifierKey">_NS:11</string>
 								</object>
 							</array>
-							<string key="NSFrame">{{17, -1}, {854, 26}}</string>
+							<string key="NSFrame">{{17, 0}, {854, 26}}</string>
 							<reference key="NSSuperview" ref="547639528"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="836382187"/>
@@ -878,13 +878,12 @@
 							</object>
 						</object>
 					</array>
-					<string key="NSFrameSize">{877, 604}</string>
+					<string key="NSFrameSize">{877, 692}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="707679915"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
-				<string key="NSMinSize">{818, 666}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>

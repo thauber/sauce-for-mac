@@ -300,34 +300,37 @@ enum {
  * not the scrollbars are necessary. */
 - (NSSize)_maxSizeForWindowSize:(NSSize)aSize;
 {
+    return aSize;       // the code below isn't helping
+    
     NSRect  winframe;
     NSSize	maxviewsize;
-//    BOOL usesFullscreenScrollers = [[PrefController sharedController] fullscreenHasScrollbars];
 
     horizontalScroll = verticalScroll = YES;
 
-    maxviewsize = [NSScrollView frameSizeForContentSize:[rfbView frame].size
+#if 0
+    maxviewsize = [NSScrollView frameSizeForContentSize:_maxSize
                                   hasHorizontalScroller:horizontalScroll
                                     hasVerticalScroller:verticalScroll
                                              borderType:NSNoBorder];
 
-//    if (!_isFullscreen || usesFullscreenScrollers) 
-    {
-        if(aSize.width < maxviewsize.width) {
-            horizontalScroll = YES;
-        }
-        if(aSize.height < maxviewsize.height) {
-            verticalScroll = YES;
-        }
+    if(aSize.width < maxviewsize.width) {
+        horizontalScroll = YES;
     }
-
-    maxviewsize = [NSScrollView frameSizeForContentSize:[rfbView frame].size
+    if(aSize.height < maxviewsize.height) {
+        verticalScroll = YES;
+    }
+#endif
+    
+    maxviewsize = [NSScrollView frameSizeForContentSize:_maxSize
                                   hasHorizontalScroller:horizontalScroll
                                     hasVerticalScroller:verticalScroll
                                              borderType:NSNoBorder];
-    winframe = [[self view] frame];
+    
+    winframe = [window frame];
     winframe.size = maxviewsize;
 //    winframe = [NSWindow frameRectForContentRect:winframe styleMask:[window styleMask]];
+    winframe = [window frameRectForContentRect:winframe];
+
     return winframe.size;
 }
 
@@ -338,10 +341,17 @@ enum {
 	NSRect screenRect;
 	NSClipView *contentView;
     
+    horizontalScroll = verticalScroll = YES;
 	screenRect = [[NSScreen mainScreen] visibleFrame];
     wf.origin.x = wf.origin.y = 0;
-    wf.size = [NSScrollView frameSizeForContentSize:_maxSize hasHorizontalScroller:YES hasVerticalScroller:YES borderType:NSNoBorder];
-    wf = [NSWindow frameRectForContentRect:wf styleMask:[window styleMask]];
+//    wf.size = [NSScrollView frameSizeForContentSize:_maxSize hasHorizontalScroller:horizontalScroll hasVerticalScroller:verticalScroll borderType:NSNoBorder];
+    wf.size = _maxSize;
+//    wf = [NSWindow frameRectForContentRect:wf styleMask:[window styleMask]];
+    wf = [window frameRectForContentRect:wf];
+
+    // ht=48 gives me visible horizontal scroll; ht=70 gives non-visible vertical scrolling
+    wf.size.width += 22;
+    wf.size.height += 48;   
 	if (NSWidth(wf) > NSWidth(screenRect)) {
 		horizontalScroll = YES;
 		wf.size.width = NSWidth(screenRect);
@@ -362,23 +372,12 @@ enum {
 	wf.origin.x = floor((NSWidth(screenRect) - NSWidth(wf))/2 + NSMinX(screenRect));
 	wf.origin.y = floor((NSHeight(screenRect) - NSHeight(wf))*2/3 + NSMinY(screenRect));
 	
-#if 0
-	serverName =@"SauceLabs";
-	if(![window setFrameUsingName:serverName]) {
-		// NSLog(@"Window did NOT have an entry: %@\n", serverName);
-		[window setFrame:wf display:NO];
-	}
-	[window setFrameAutosaveName:serverName];
-#else
     [window setFrame:wf display:NO];
-#endif
 	contentView = [scrollView contentView];
     [contentView scrollToPoint: [contentView constrainScrollPoint: NSMakePoint(0.0, _maxSize.height - [scrollView contentSize].height)]];
     [scrollView reflectScrolledClipView: contentView];
-
     [window makeFirstResponder:rfbView];
 	[self windowDidResize];
-//    [window makeKeyAndOrderFront:self];
     [window display];
 }
 
@@ -543,10 +542,8 @@ enum {
 
 - (void)windowDidResize
 {
-//	[scrollView setHasHorizontalScroller:horizontalScroll];
-//	[scrollView setHasVerticalScroller:verticalScroll];
-	[scrollView setHasHorizontalScroller:YES];
-	[scrollView setHasVerticalScroller:YES];
+	[scrollView setHasHorizontalScroller:horizontalScroll];
+	[scrollView setHasVerticalScroller:verticalScroll];
 
 }
 
