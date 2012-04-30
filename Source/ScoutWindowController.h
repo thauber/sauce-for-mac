@@ -49,6 +49,7 @@ typedef enum { login,options,session } tabType;
 @property (assign)IBOutlet NSTextField *timeRemainingStat;
 @property (assign)IBOutlet NSTextField *userStat;
 @property (assign)IBOutlet NSTextField *osbrowser;
+@property (assign) Session *curSession;
 
 +(ScoutWindowController*)sharedScout;
 

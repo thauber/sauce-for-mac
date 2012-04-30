@@ -32,6 +32,7 @@
 @synthesize timeRemainingStat;
 @synthesize userStat;
 @synthesize osbrowser;
+@synthesize curSession;
 
 static ScoutWindowController* _sharedScout = nil;
 
@@ -197,6 +198,7 @@ static ScoutWindowController* _sharedScout = nil;
     return[tabView  numberOfTabViewItems];
 }
 
+
 - (void)addNewTab:(tabType)type view:(NSView*)view
 {
     NSString *tstr;
@@ -225,8 +227,10 @@ static ScoutWindowController* _sharedScout = nil;
     {
         [[SaucePreconnect sharedPreconnect] sessionClosed:[curSession connection]];
         [[RFBConnectionManager sharedManager] removeConnection:[curSession connection]];
+        curSession = nil;
     }
 	[tabView removeTabViewItem:[tabView selectedTabViewItem]];
+    
 }
 
 - (void)setTabLabel:(NSString*)lbl
