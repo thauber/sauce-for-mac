@@ -185,7 +185,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     }
 }
 
-// return os/browser string for status; also used to determine if tab has an active session
+// return get info for a view; also used to determine if tab has an active session
 -(NSDictionary *)sessionInfo:(id)view
 {
 	int len = [credArr count];
@@ -264,7 +264,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 -(void)startHeartbeat       // 1 minute is ok; at 2 minutes, server times out
 {    
     if(!self.timer)    
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(heartbeat:) userInfo:nil repeats:YES];
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(heartbeat:) userInfo:nil repeats:YES];
 }
 
 -(void)cancelHeartbeat
@@ -278,7 +278,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 }
 
 - (void)heartbeat:(NSTimer*)tm
-{
+{    
 	NSEnumerator *credEnumerator = [credArr objectEnumerator];
     NSDictionary *sdict;
     
