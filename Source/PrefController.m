@@ -52,6 +52,10 @@ static int const kPrefsVersion = 0x00000002;
     [defaultProfile release];
 	
 	[defaults registerDefaults: defaultDict];
+    // force defaults
+    [[NSUserDefaults standardUserDefaults] setFloat:0 forKey:kPrefs_FrontFrameBufferUpdateSeconds_Key];
+    [[NSUserDefaults standardUserDefaults] setFloat:0.9 forKey:kPrefs_OtherFrameBufferUpdateSeconds_Key];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 
