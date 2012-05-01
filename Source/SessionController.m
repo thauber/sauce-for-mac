@@ -171,12 +171,21 @@
 
 - (IBAction)cancelConnect: (id)sender
 {
+    // cancel current connection attempt
+    [[SaucePreconnect sharedPreconnect] setCancelled:YES];
     [self connectionAttemptEnded];
 }
 
 /* Update the interface to indicate the end of the connection attempt. */
 - (void)connectionAttemptEnded
 {
+    if([[ScoutWindowController sharedScout] tabCount])
+    {
+        [NSApp endSheet:panel];
+        [panel orderOut:nil];
+        return;
+    }
+    
     [[SaucePreconnect sharedPreconnect] cancelHeartbeat];
 	[connectIndicator stopAnimation:self];
 	[connectIndicatorText setStringValue:@""];
