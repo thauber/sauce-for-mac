@@ -29,6 +29,7 @@
 @synthesize remaining;
 @synthesize timer;
 @synthesize errStr;
+@synthesize cancelled;
 
 static SaucePreconnect* _sharedPreconnect = nil;
 

@@ -44,7 +44,7 @@
 @property(nonatomic,assign) int remaining;
 @property(nonatomic,retain) NSTimer *timer;
 @property(nonatomic,copy) NSString *errStr;
-
+@property(assign)BOOL cancelled;
 
 +(SaucePreconnect*)sharedPreconnect;
 
