@@ -16,6 +16,7 @@
 
 @synthesize panel;
 @synthesize view;
+@synthesize cancelBtn;
 @synthesize connectBtn;
 @synthesize connectIndicatorText;
 @synthesize connectIndicator;
@@ -68,7 +69,22 @@
     [connectBtn setKeyEquivalentModifierMask:0]; 
     [connectIndicator stopAnimation:self];
     [connectIndicatorText setStringValue:@""];
+    
+    if([[ScoutWindowController sharedScout] tabCount])
+    {
+        [cancelBtn setHidden:NO];
+        [cancelBtn setFrame: NSMakeRect(0,0,0,0)];      // so esc key works
+    }
+    else
+        [cancelBtn setHidden:YES];
+    
     [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];        
+}
+
+- (IBAction)performClose:(id)sender
+{
+    [NSApp endSheet:panel];
+    [panel orderOut:nil];
 }
 
 - (IBAction)selectBrowser:(id)sender 
