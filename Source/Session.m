@@ -118,7 +118,7 @@ enum {
     [connection setRfbView:rfbView];
     
     [[SaucePreconnect sharedPreconnect] setSessionInfo:connection view:[self view]];
-    [[ScoutWindowController sharedScout] addNewTab:session view:[self view]];
+    [[ScoutWindowController sharedScout] addTabWithView:[self view]];
     
 }
 
@@ -305,35 +305,25 @@ enum {
     NSRect  winframe;
     NSSize	maxviewsize;
 
-    horizontalScroll = verticalScroll = YES;
-
-#if 0
-    maxviewsize = [NSScrollView frameSizeForContentSize:_maxSize
-                                  hasHorizontalScroller:horizontalScroll
-                                    hasVerticalScroller:verticalScroll
-                                             borderType:NSNoBorder];
-
-    if(aSize.width < maxviewsize.width) {
-        horizontalScroll = YES;
-    }
-    if(aSize.height < maxviewsize.height) {
-        verticalScroll = YES;
-    }
-    
-    maxviewsize = [NSScrollView frameSizeForContentSize:_maxSize
-                                  hasHorizontalScroller:horizontalScroll
-                                    hasVerticalScroller:verticalScroll
-                                             borderType:NSNoBorder];
-#else
     maxviewsize = _maxSize;
-    maxviewsize.width += 15;
-    maxviewsize.height += 70;
-#endif
+    maxviewsize.height += 48;
+    
+    horizontalScroll = verticalScroll = NO;
+    if(aSize.width<maxviewsize.width)
+    {
+        horizontalScroll = YES;
+        maxviewsize.height += 15;
+    }
+
+    if(aSize.height<maxviewsize.height)
+    {
+        verticalScroll = YES;            
+        maxviewsize.width += 15;
+    }
     
     winframe = [window frame];
     winframe.size = maxviewsize;
     winframe = [NSWindow frameRectForContentRect:winframe styleMask:[window styleMask]];
-//    winframe = [window frameRectForContentRect:winframe];
 
     return winframe.size;
 }
@@ -345,24 +335,13 @@ enum {
 	NSRect screenRect;
 	NSClipView *contentView;
     
-    horizontalScroll = verticalScroll = YES;
+    horizontalScroll = verticalScroll = NO;
 	screenRect = [[NSScreen mainScreen] visibleFrame];
     wf.origin.x = wf.origin.y = 0;
-//    wf.size = [NSScrollView frameSizeForContentSize:_maxSize hasHorizontalScroller:horizontalScroll hasVerticalScroller:verticalScroll borderType:NSNoBorder];
     wf.size = _maxSize;
-    wf.size.width += 15;        // kludge: for hor.scroll
-    wf.size.height += 70;       // kludge for ver.scroll
+    wf.size.height += 48;       // allow for statusbar(26) and tabbar(22)
     wf = [NSWindow frameRectForContentRect:wf styleMask:[window styleMask]];
 //    wf = [window frameRectForContentRect:wf];
-
-	if (NSWidth(wf) > NSWidth(screenRect)) {
-		horizontalScroll = YES;
-		wf.size.width = NSWidth(screenRect);
-	}
-	if (NSHeight(wf) > NSHeight(screenRect)) {
-		verticalScroll = YES;
-		wf.size.height = NSHeight(screenRect);
-	}
 	
 	// According to the Human Interace Guidelines, new windows should be "visually centered"
 	// If screenRect is X1,Y1-X2,Y2, and wf is x1,y1 -x2,y2, then
@@ -379,7 +358,7 @@ enum {
 	[scrollView setHasVerticalScroller:verticalScroll];
     [window setFrame:wf display:NO];
 	contentView = [scrollView contentView];
-    NSPoint pt = NSMakePoint(0.0,_maxSize.height + 22  - [scrollView contentSize].height);
+    NSPoint pt = NSMakePoint(0.0,_maxSize.height  - [scrollView contentSize].height);
     [contentView scrollToPoint: [contentView constrainScrollPoint:pt]];
 
     [scrollView reflectScrolledClipView: contentView];
