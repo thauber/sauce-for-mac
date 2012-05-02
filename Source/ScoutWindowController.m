@@ -66,9 +66,14 @@ static ScoutWindowController* _sharedScout = nil;
     [toolbar setVisible:NO];
     [tabView setTabViewType:NSNoTabsNoBorder];
     [tabBar setStyleNamed:@"Unified"];
+    [tabBar setShowAddTabButton:YES];
     [tabBar setSizeCellsToFit:YES];
     [tabBar setCellMaxWidth:500];       // allow longer tab labels
-    
+
+    // hook up add tab button
+	[[tabBar addTabButton] setTarget:self];
+	[[tabBar addTabButton] setAction:@selector(addNewTab:)];
+
     [self showWindow:self];
     [[self window] setDelegate:self];
 }
@@ -198,8 +203,12 @@ static ScoutWindowController* _sharedScout = nil;
     return[tabView  numberOfTabViewItems];
 }
 
+- (IBAction)addNewTab:(id)sender
+{
+    [self newSession:nil];
+}
 
-- (void)addNewTab:(tabType)type view:(NSView*)view
+- (void)addTabWithView:(NSView*)view
 {
     NSString *tstr;
     NSDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:view];
@@ -256,10 +265,12 @@ static ScoutWindowController* _sharedScout = nil;
 #pragma mark ---- tabview delegate ----
 
 - (void)tabView:(NSTabView *)aTabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem 
-{
+{    
     NSDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:[tabViewItem view]];
     if(sdict)
     {
+        [[self window] setFrame:[[self window] frame] display:NO];  // get scrollbars redone
+
         NSString *str = [sdict objectForKey:@"size"];
         if(str)
             [self.vmsize setStringValue:str];
@@ -316,6 +327,8 @@ static ScoutWindowController* _sharedScout = nil;
         
         RFBConnection *rfbcon = [sdict objectForKey:@"session"];
         curSession = [rfbcon session];
+        
+        [[self window] display];
     }
 }
 

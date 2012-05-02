@@ -52,6 +52,7 @@ typedef enum { login,options,session } tabType;
 @property (assign) Session *curSession;
 
 +(ScoutWindowController*)sharedScout;
+- (IBAction)addNewTab:(id)sender;
 
 - (IBAction)doPlayStop:(id)sender;
 - (IBAction)doBugCamera:(id)sender;
@@ -60,7 +61,7 @@ typedef enum { login,options,session } tabType;
 // UI
 - (void)toggleToolbar;
 - (int)tabCount;
-- (void)addNewTab:(tabType)type  view:(NSView*)view; 
+- (void)addTabWithView:(NSView*)view; 
 - (IBAction)closeTab:(id)sender;
 - (void)setTabLabel:(NSString*)lbl;
 
