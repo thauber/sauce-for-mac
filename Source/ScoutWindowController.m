@@ -325,7 +325,7 @@ static ScoutWindowController* _sharedScout = nil;
         str = [NSString stringWithFormat:@" %@ rem.",str];
         [self.timeRemainingMsg  setStringValue:str];
         
-        RFBConnection *rfbcon = [sdict objectForKey:@"session"];
+        RFBConnection *rfbcon = [sdict objectForKey:@"connection"];
         curSession = [rfbcon session];
         
         [[self window] display];
