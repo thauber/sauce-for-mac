@@ -227,7 +227,7 @@
         case 208: os = @"Windows 2008"; browser = @"firefox"; version = @"10"; break;
         case 305: os = @"Windows 2003"; browser = @"safari"; version = @"3"; break;
         case 306: os = @"Windows 2003"; browser = @"safari"; version = @"4"; break;
-        case 307: os = @"Windows 2008"; browser = @"safari"; version = @"5"; break;
+        case 307: os = @"Windows 2008"; browser = @"safariproxy"; version = @"5"; break;
         case 405: os = @"Windows 2003"; browser = @"opera"; version = @"9"; break;
         case 406: os = @"Windows 2003"; browser = @"opera"; version = @"10"; break;                        
         case 407: os = @"Windows 2003"; browser = @"opera"; version = @"11"; break;                        
