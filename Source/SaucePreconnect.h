@@ -23,7 +23,6 @@
     NSString *userNew;
     NSString *passNew;
     NSString *emailNew;
-    int remaining;
     NSTimer *timer;
     NSString *errStr;
     BOOL cancelled;         // yes -> stop the presses!
@@ -41,7 +40,6 @@
 @property(nonatomic,copy) NSString *userNew;
 @property(nonatomic,copy) NSString *passNew;
 @property(nonatomic,copy) NSString *emailNew;
-@property(nonatomic,assign) int remaining;
 @property(nonatomic,retain) NSTimer *timer;
 @property(nonatomic,copy) NSString *errStr;
 @property(assign)BOOL cancelled;
@@ -60,7 +58,7 @@
 -(NSDictionary *)sessionInfo:(id)view;
 -(void)setvmsize:(NSSize)size;
 -(void)setSessionInfo:(id)session view:(id)view;
--(NSString*)remainingTimeStr;
+-(NSString*)remainingTimeStr:(int)remaining;
 -(void)startHeartbeat;
 -(void)cancelHeartbeat;
 - (BOOL)checkUserLogin:(NSString *)uuser  key:(NSString*)kkey;

@@ -27,7 +27,6 @@
 @synthesize passNew;
 @synthesize emailNew;
 
-@synthesize remaining;
 @synthesize timer;
 @synthesize errStr;
 @synthesize cancelled;
@@ -238,14 +237,14 @@ static SaucePreconnect* _sharedPreconnect = nil;
     [credArr addObject:sdict];
 }
 
--(NSString *)remainingTimeStr
+-(NSString *)remainingTimeStr:(int)remaining
 {
-    if(!self.remaining)
+    if(!remaining)
         return @"";
     
-    int hr = self.remaining / 3600;
-    int min = (self.remaining % 3600)/60;
-    int sec = self.remaining % 60;
+    int hr = remaining / 3600;
+    int min = (remaining % 3600)/60;
+    int sec = remaining % 60;
 
     NSString *hrstr, *minstr, *secstr;
 
@@ -330,16 +329,18 @@ static SaucePreconnect* _sharedPreconnect = nil;
                     Session *session = [[ScoutWindowController sharedScout] curSession];
                     if(ssn == [session connection])
                     {
-                        self.remaining = [[jsonDict valueForKey:@"remaining-time"] intValue];  
+                        int remaining = [[jsonDict valueForKey:@"remaining-time"] intValue];  
                         // show in status
-                        NSString *str = [self remainingTimeStr];
-                        NSTextField *tf = [[ScoutWindowController sharedScout] timeRemainingStat];
-                        [tf setStringValue:str];
-                        tf = [[ScoutWindowController sharedScout] timeRemainingMsg];
-                        str = [NSString stringWithFormat:@"%@ rem.",str];
-                        [tf setStringValue:str];
-                    }
-                    
+                        if(remaining)
+                        {
+                            NSString *str = [self remainingTimeStr:remaining];
+                            NSTextField *tf = [[ScoutWindowController sharedScout] timeRemainingStat];
+                            [tf setStringValue:str];
+                            tf = [[ScoutWindowController sharedScout] timeRemainingMsg];
+                            str = [NSString stringWithFormat:@"%@ rem.",str];
+                            [tf setStringValue:str];
+                        }
+                    }                    
                     break;                
                 }
                 else
