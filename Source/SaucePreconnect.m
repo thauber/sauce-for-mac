@@ -10,6 +10,7 @@
 #import "SBJson.h"
 #import "RFBConnectionManager.h"
 #import "ScoutWindowController.h"
+#import "Session.h"
 
 @implementation SaucePreconnect
 
@@ -72,6 +73,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
 {    
     NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@saucelabs.com/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\"}'", self.user, self.ukey, self.user, self.os, self.browser, self.browserVersion, self.urlStr];
     self.errStr = @"";
+//    NSLog(@"farg:%@",farg);
+    
     while(1)
     {
         NSTask *ftask = [[NSTask alloc] init];
@@ -170,7 +173,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 }
 
 // remove session being close from heartbeat array
--(void)sessionClosed:(id)session
+-(void)sessionClosed:(id)connection
 {
 	int len = [credArr count];
     NSDictionary *sdict;
@@ -178,7 +181,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     for(int i=0;i<len;i++)
     {
         sdict = [credArr objectAtIndex:i];
-        if([sdict objectForKey:@"session"] == session)
+        if([sdict objectForKey:@"connection"] == connection)
         {
             [credArr removeObjectAtIndex:i];
             return;
@@ -217,13 +220,13 @@ static SaucePreconnect* _sharedPreconnect = nil;
 //  osbrowserversion string for setting status when switching tabs
 //  view to know which tab is becoming active
 //  user, authkey, job-id, os, browser, and browserversion taken from most recent preauthorization
--(void)setSessionInfo:(id)session view:(id)view
+-(void)setSessionInfo:(id)connection view:(id)view
 {
     NSString *osbvStr = [NSString stringWithFormat:@"%@/%@ %@",os,browser,browserVersion];
     [[[ScoutWindowController sharedScout] osbrowser] setStringValue:osbvStr];
     
     NSMutableDictionary *sdict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                    session,@"session", view, @"view", liveId, @"liveId",
+                    connection,@"connection", view, @"view", liveId, @"liveId",
                     user, @"user", ukey, @"ukey", jobId, @"jobId",
                     osbvStr, @"osbv", urlStr, @"url", 
                     os, @"os", browser, @"browser", browserVersion, @"browserVersion", nil];
@@ -323,14 +326,19 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 NSString *status = [jsonDict objectForKey:@"status"];
                 if([status isEqualToString:@"in progress"])
                 {
-                    self.remaining = [[jsonDict valueForKey:@"remaining-time"] intValue];  
-                    // show in status
-                    NSString *str = [self remainingTimeStr];
-                    NSTextField *tf = [[ScoutWindowController sharedScout] timeRemainingStat];
-                    [tf setStringValue:str];
-                    tf = [[ScoutWindowController sharedScout] timeRemainingMsg];
-                    str = [NSString stringWithFormat:@"%@ rem.",str];
-                    [tf setStringValue:str];
+                    id ssn = [sdict objectForKey:@"connection"];
+                    Session *session = [[ScoutWindowController sharedScout] curSession];
+                    if(ssn == [session connection])
+                    {
+                        self.remaining = [[jsonDict valueForKey:@"remaining-time"] intValue];  
+                        // show in status
+                        NSString *str = [self remainingTimeStr];
+                        NSTextField *tf = [[ScoutWindowController sharedScout] timeRemainingStat];
+                        [tf setStringValue:str];
+                        tf = [[ScoutWindowController sharedScout] timeRemainingMsg];
+                        str = [NSString stringWithFormat:@"%@ rem.",str];
+                        [tf setStringValue:str];
+                    }
                     
                     break;                
                 }
