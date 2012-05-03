@@ -53,7 +53,7 @@
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="NSCustomView" id="112289914">
 								<reference key="NSNextResponder" ref="831475304"/>
-								<int key="NSvFlags">256</int>
+								<int key="NSvFlags">268</int>
 								<string key="NSFrameSize">{452, 435}</string>
 								<reference key="NSSuperview" ref="831475304"/>
 								<reference key="NSWindow"/>
@@ -79,7 +79,7 @@
 					</object>
 					<object class="NSScroller" id="945297980">
 						<reference key="NSNextResponder" ref="1069521301"/>
-						<int key="NSvFlags">256</int>
+						<int key="NSvFlags">261</int>
 						<string key="NSFrame">{{438, 1}, {15, 422}}</string>
 						<reference key="NSSuperview" ref="1069521301"/>
 						<reference key="NSWindow"/>
@@ -93,7 +93,7 @@
 					</object>
 					<object class="NSScroller" id="275832495">
 						<reference key="NSNextResponder" ref="1069521301"/>
-						<int key="NSvFlags">256</int>
+						<int key="NSvFlags">296</int>
 						<string key="NSFrame">{{1, 414}, {446, 15}}</string>
 						<reference key="NSSuperview" ref="1069521301"/>
 						<reference key="NSWindow"/>
