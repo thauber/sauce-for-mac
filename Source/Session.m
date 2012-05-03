@@ -306,7 +306,7 @@ enum {
     NSSize	maxviewsize;
 
     maxviewsize = _maxSize;
-    maxviewsize.height += 48;
+    maxviewsize.height += 88;
     
     horizontalScroll = verticalScroll = NO;
     if(aSize.width<maxviewsize.width)
@@ -339,9 +339,9 @@ enum {
 	screenRect = [[NSScreen mainScreen] visibleFrame];
     wf.origin.x = wf.origin.y = 0;
     wf.size = _maxSize;
-    wf.size.height += 48;       // allow for statusbar(26) and tabbar(22)
+    wf.size.height += 88;       // allow for statusbar(26) and tabbar(22) + toolbar(40)
+    
     wf = [NSWindow frameRectForContentRect:wf styleMask:[window styleMask]];
-//    wf = [window frameRectForContentRect:wf];
 	
 	// According to the Human Interace Guidelines, new windows should be "visually centered"
 	// If screenRect is X1,Y1-X2,Y2, and wf is x1,y1 -x2,y2, then
