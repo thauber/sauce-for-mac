@@ -321,9 +321,6 @@ static ScoutWindowController* _sharedScout = nil;
         
         str = [sdict objectForKey:@"browserVersion"];
         [self.browserversmsg  setStringValue:str];
-        str = [[SaucePreconnect sharedPreconnect] remainingTimeStr];
-        str = [NSString stringWithFormat:@" %@ rem.",str];
-        [self.timeRemainingMsg  setStringValue:str];
         
         RFBConnection *rfbcon = [sdict objectForKey:@"connection"];
         curSession = [rfbcon session];
