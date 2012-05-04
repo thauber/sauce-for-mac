@@ -450,7 +450,6 @@
 /* The server has moved the cursor to pos in RFB coordinates */
 - (void)serverMovedMouseTo:(NSPoint)pos
 {
-    // TODO: maybe check if this session is in the selected tab
 //    if ([session hasKeyWindow] && -[lastMouseMovement timeIntervalSinceNow] > 0.5)
 //            && ![server_ viewOnly])
     {
