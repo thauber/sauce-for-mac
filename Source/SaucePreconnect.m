@@ -71,11 +71,17 @@ static SaucePreconnect* _sharedPreconnect = nil;
 - (void)preAuthorize:(id)param
 {    
     NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@saucelabs.com/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\"}'", self.user, self.ukey, self.user, self.os, self.browser, self.browserVersion, self.urlStr];
+    cancelled = NO;
     self.errStr = @"";
 //    NSLog(@"farg:%@",farg);
-    
     while(1)
     {
+        if(cancelled)
+        {
+            self.errStr = @"Connecting was cancelled";
+            break;
+        }
+
         NSTask *ftask = [[NSTask alloc] init];
         NSPipe *fpipe = [NSPipe pipe];
         [ftask setStandardOutput:fpipe];
@@ -106,17 +112,25 @@ static SaucePreconnect* _sharedPreconnect = nil;
             }
         }
     }
-    [self curlGetauth];
+    if(!cancelled)
+        [self curlGetauth];
     // call error method of app which calls error method of sessionController
     if(self.errStr.length)
     {
-        [[RFBConnectionManager sharedManager] 
-         performSelectorOnMainThread:@selector(errOnConnect)   
-         withObject:nil  waitUntilDone:NO];
+        NSString *errMsg = [errStr copy];
+        self.errStr = nil;
+        [[ScoutWindowController sharedScout] 
+         performSelectorOnMainThread:@selector(errOnConnect:)   
+         withObject:errMsg  waitUntilDone:NO];
     }
 }
 
 
+-(void)cancelPreAuthorize
+{
+    self.cancelled = YES;
+    self.errStr = @"Connection attempt was cancelled";
+}
 
 // return json object for vnc connection
 - (NSString *)credStr
@@ -135,7 +149,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     {
         if(cancelled)
         {
-            self.errStr = @"Connecting was Cancelled";
+            self.errStr = @"Connecting was cancelled";
             return;
         }
         NSTask *ftask = [[NSTask alloc] init];
@@ -435,7 +449,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                 [defaults setObject:self.user  forKey:kUsername];
                 [defaults setObject:self.ukey  forKey:kAccountkey];
-                [NSApp performSelectorOnMainThread:@selector(newUserAuthorized:)   
+                [[NSApp delegate] performSelectorOnMainThread:@selector(newUserAuthorized:)   
                                         withObject:nil  waitUntilDone:NO];
                 break;
             }
