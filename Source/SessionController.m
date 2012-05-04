@@ -173,12 +173,14 @@
 {
     // cancel current connection attempt
     [[SaucePreconnect sharedPreconnect] setCancelled:YES];
-    [self connectionAttemptEnded];
+    [panel orderOut:nil];
+    [[ScoutWindowController sharedScout] errOnConnect:@"User cancelled"];
 }
 
 /* Update the interface to indicate the end of the connection attempt. */
 - (void)connectionAttemptEnded
 {
+#if 0    
     if([[ScoutWindowController sharedScout] tabCount])
     {
         [NSApp endSheet:panel];
@@ -194,7 +196,9 @@
     [connectBtn setTitle:@"Scout!"];
     [connectBtn setAction: @selector(connect:)];
     [connectBtn setKeyEquivalent:@"\r"];
-    [connectBtn setKeyEquivalentModifierMask:0];    
+    [connectBtn setKeyEquivalentModifierMask:0];
+    [connectBtn setState:NSOnState];
+#endif
 }
 
 - (NSString *)selected:(NSString*)type      // 'browser', 'version' or 'os'
