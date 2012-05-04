@@ -164,12 +164,6 @@
 
 //    [superController connectionDone];
     [self connectionAttemptEnded];
-
-    if( YES == selfTerminate )
-    {
-        // shouldCloseDocument will trigger the autorelease
-        [[self window] performClose:self];
-    }
 }
 
 - (void)connectionFailed
@@ -181,7 +175,7 @@
 - (void)connectionAttemptEnded
 {
     [connectionWaiter release];
-    connectionWaiter = nil;
+    connectionWaiter = nil;    
 }
 
 - (void)windowClose:(id)notification
