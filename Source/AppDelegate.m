@@ -59,14 +59,14 @@
 
 - (IBAction)showOptionsDlg:(id)sender 
 {
-    if(!self.optionsCtrlr)
-        self.optionsCtrlr = [[SessionController alloc] init];
+    self.optionsCtrlr = [[SessionController alloc] init];
     [optionsCtrlr runSheet];
 }
 
 -(void)connectionSucceeded
 {
-    [optionsCtrlr connectionSucceeded];    
+    [optionsCtrlr connectionSucceeded];
+    self.optionsCtrlr = nil;    
 }
 
 - (void)newUserAuthorized:(id)param
@@ -81,9 +81,12 @@
     [optionsCtrlr showError:err];
 }
 
-- (void)cancelOptionsConnect
+- (void)cancelOptionsConnect:(id)sender
 {
-    [optionsCtrlr cancelConnect:nil];
+    [[RFBConnectionManager sharedManager] cancelConnection];
+    if(sender != [ScoutWindowController sharedScout])
+        [optionsCtrlr cancelConnect:nil];
+    self.optionsCtrlr = nil;    
 }
 
 - (IBAction)showLoginDlg:(id)sender 

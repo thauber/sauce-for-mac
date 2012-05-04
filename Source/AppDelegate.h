@@ -36,6 +36,7 @@
 - (IBAction)showHelp: (id)sender;
 
 -(void)connectionSucceeded;
+- (void)cancelOptionsConnect:(id)sender;
 
 - (NSMenuItem *)getFullScreenMenuItem;
 
