@@ -96,7 +96,7 @@ enum {
     host = kSauceLabsHost;
     //    sshTunnel = [[connection sshTunnel] retain];
     
-    _isFullscreen = YES; // jason added for fullscreen display
+    _isFullscreen = NO; // jason added for fullscreen display
     
     //    [NSBundle loadNibNamed:@"RFBConnection.nib" owner:self];
     [rfbView registerForDraggedTypes:[NSArray arrayWithObjects:NSStringPboardType, NSFilenamesPboardType, nil]];
@@ -211,7 +211,7 @@ enum {
     [[ScoutWindowController sharedScout] setCurSession:nil];
 }
 
-/* Some kind of connection failure. Decide whether to try to reconnect. */
+/* Some kind of connection failure. ([rda] don't) Decide whether to try to reconnect. */
 - (void)terminateConnection:(NSString*)aReason
 {
     if (!connection)
