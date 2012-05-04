@@ -120,7 +120,7 @@
     SaucePreconnect *precon = [SaucePreconnect sharedPreconnect];
     if([precon.ukey length])
     {
-        [NSApp showOptionsDlg:nil];
+        [[NSApp delegate] showOptionsDlg:nil];
         [self dealloc];     // get rid of the login dialog
     }    
     
