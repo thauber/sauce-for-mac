@@ -116,10 +116,10 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
     [self successfulConnection:conn];
 }
 
-/* Connection initiated from command-line failed */
-- (void)connectionFailed
+- (void)cancelConnection
 {
-    [NSApp terminate:self];
+    if(mServerCtrler)
+        [mServerCtrler cancelConnect:self];
 }
 
 
@@ -171,7 +171,7 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
 }
 
 #if 0
-// TODO: needs to be in SauceWindowController - or reference it from here
+// in SauceWindowController
 - (void)setFrontWindowUpdateInterval: (NSTimeInterval)interval
 {
 	NSEnumerator *enumerator = [sessions objectEnumerator];

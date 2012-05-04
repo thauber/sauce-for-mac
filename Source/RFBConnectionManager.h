@@ -52,7 +52,7 @@ extern int kPort;                       // fixed port for connection
 - (void)connectToServer;
 
 - (void)connectionSucceeded:(RFBConnection *)conn;
-- (void)connectionFailed;
+- (void)cancelConnection;
 
 - (void)removeConnection:(id)aConnection;
 - (void)connectionDone;
