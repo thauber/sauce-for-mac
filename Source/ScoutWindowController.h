@@ -58,6 +58,8 @@ typedef enum { login,options,session } tabType;
 - (IBAction)doBugCamera:(id)sender;
 - (IBAction)newSession:(id)sender;
 
+-(void)errOnConnect:(NSString *)errStr;
+
 // UI
 - (void)toggleToolbar;
 - (int)tabCount;

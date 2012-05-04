@@ -88,9 +88,30 @@ static ScoutWindowController* _sharedScout = nil;
     }
     else if(sel==1)
     {
-        NSLog(@"do stop");
+        NSString *header = NSLocalizedString( @"Stop Session", nil );
+        NSString *okayButton = NSLocalizedString( @"Close session", nil );
+        NSString *keepButton =  NSLocalizedString( @"Keep session", nil );
+        NSBeginAlertSheet(header, okayButton, keepButton, nil, [self window], self, nil, @selector(stopSessionDidDismiss:returnCode:contextInfo:), nil, @"Do you want to end this session?");
     }
 }
+
+- (void)stopSessionDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+	/* One might reasonably argue that this should be handled by the connection manager. */
+	switch (returnCode)
+    {
+		case NSAlertDefaultReturn:
+            [[ScoutWindowController sharedScout] closeTab:nil];
+			return;
+		case NSAlertAlternateReturn:
+            return;
+		default:
+			NSLog(@"Unknown alert returnvalue: %d", returnCode);
+			break;
+	}
+    [playstop setSelected:NO forSegment:1];
+}
+
 
 - (IBAction)doBugCamera:(id)sender
 {
@@ -141,6 +162,23 @@ static ScoutWindowController* _sharedScout = nil;
 {
     [[NSApp delegate] showOptionsDlg:nil];
 }
+
+-(void)errOnConnect:(NSString *)errStr
+{
+    [[SaucePreconnect sharedPreconnect] setCancelled:NO];
+    [[SaucePreconnect sharedPreconnect] setErrStr:@""];
+    [[NSApp delegate] cancelOptionsConnect:self];
+    NSString *header = NSLocalizedString( @"Connection Error", nil );
+    NSString *okayButton = NSLocalizedString( @"Ok", nil );
+    NSBeginAlertSheet(header, okayButton, nil, nil, [self window], self, nil, @selector(errDidDismiss:returnCode:contextInfo:), nil, errStr);
+}
+
+- (void)errDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+    if(![self tabCount])
+        [self newSession:nil];
+}
+
 
 #pragma mark -
 #pragma mark ---- window delegate ----
@@ -335,6 +373,11 @@ static ScoutWindowController* _sharedScout = nil;
 
 - (void)tabView:(NSTabView *)aTabView didCloseTabViewItem:(NSTabViewItem *)tabViewItem {
     curSession = nil;
+    if(![self tabCount])
+    {
+        [toolbar setVisible:NO];
+        [self newSession:nil];
+    }
 }
 
 - (NSArray *)allowedDraggedTypesForTabView:(NSTabView *)aTabView {
