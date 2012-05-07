@@ -67,6 +67,7 @@
     [connectBtn setAction: @selector(connect:)];
     [connectBtn setKeyEquivalent:@"\r"];
     [connectBtn setKeyEquivalentModifierMask:0]; 
+    [connectBtn setState:NSOnState];
     [connectIndicator stopAnimation:self];
     [connectIndicatorText setStringValue:@""];
     
@@ -130,6 +131,7 @@
     NSString *version = [self selected:@"version"];
     NSString *urlstr = [self.url stringValue];
             
+    [connectBtn setState:NSOffState];
     if([os length])
     {
         [connectIndicator startAnimation:self];
@@ -175,6 +177,7 @@
     [[SaucePreconnect sharedPreconnect] setCancelled:YES];
     [panel orderOut:nil];
     [[ScoutWindowController sharedScout] errOnConnect:@"User cancelled"];
+    [connectBtn setState:NSOffState];
 }
 
 /* Update the interface to indicate the end of the connection attempt. */
