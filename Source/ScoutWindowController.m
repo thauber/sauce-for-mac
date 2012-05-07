@@ -25,7 +25,6 @@
 @synthesize browserversmsg;
 @synthesize timeRemainingMsg;
 @synthesize vmsize;
-@synthesize connectStat;
 @synthesize toolbar;
 @synthesize msgBox;
 @synthesize statusMessage;
@@ -66,7 +65,7 @@ static ScoutWindowController* _sharedScout = nil;
     [toolbar setVisible:NO];
     [tabView setTabViewType:NSNoTabsNoBorder];
     [tabBar setStyleNamed:@"Unified"];
-    [tabBar setShowAddTabButton:YES];
+//    [tabBar setShowAddTabButton:YES];
     [tabBar setSizeCellsToFit:YES];
     [tabBar setCellMaxWidth:500];       // allow longer tab labels
 
@@ -80,24 +79,16 @@ static ScoutWindowController* _sharedScout = nil;
 
 - (IBAction)doPlayStop:(id)sender
 {
-   // what does 'stop' mean? msg to server? is 'play' then reconnect or continue?
-    int sel = [sender selectedSegment];
-    if(sel==0)
-    {
-        NSLog(@"do play");
-    }
-    else if(sel==1)
-    {
-        NSString *header = NSLocalizedString( @"Stop Session", nil );
-        NSString *okayButton = NSLocalizedString( @"Close session", nil );
-        NSString *keepButton =  NSLocalizedString( @"Keep session", nil );
-        NSBeginAlertSheet(header, okayButton, keepButton, nil, [self window], self, nil, @selector(stopSessionDidDismiss:returnCode:contextInfo:), nil, @"Do you want to end this session?");
-    }
+    NSString *header = NSLocalizedString( @"Stop Session", nil );
+    NSString *okayButton = NSLocalizedString( @"Close session", nil );
+    NSString *keepButton =  NSLocalizedString( @"Keep session", nil );
+    NSBeginAlertSheet(header, okayButton, keepButton, nil, [self window], self, nil, @selector(stopSessionDidDismiss:returnCode:contextInfo:), nil, @"Do you want to end this session?");
 }
 
 - (void)stopSessionDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
 	/* One might reasonably argue that this should be handled by the connection manager. */
+    [playstop setSelected:NO forSegment:0];
 	switch (returnCode)
     {
 		case NSAlertDefaultReturn:
@@ -109,7 +100,6 @@ static ScoutWindowController* _sharedScout = nil;
 			NSLog(@"Unknown alert returnvalue: %d", returnCode);
 			break;
 	}
-    [playstop setSelected:NO forSegment:1];
 }
 
 
@@ -156,6 +146,17 @@ static ScoutWindowController* _sharedScout = nil;
     NSURL *mailtoURL = [NSURL URLWithString:encodedURLString];
     [[NSWorkspace sharedWorkspace] openURL:mailtoURL];
 
+}
+
+-(void)snapshotSuccess
+{
+    NSBeginAlertSheet(@"Snapshot", @"Ok", nil, nil, [self window], self, nil, @selector(snapOkDidDismiss:returnCode:contextInfo:), nil, @"Snapshot was successful");    
+    [bugcamera setSelected:NO forSegment:0];
+}
+
+- (void)snapOkDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+    
 }
 
 - (IBAction)newSession:(id)sender
@@ -258,8 +259,8 @@ static ScoutWindowController* _sharedScout = nil;
     [toolbar setVisible:YES];
     [bugcamera setEnabled:YES forSegment:0];
     [bugcamera setEnabled:YES forSegment:1];
-    [playstop setEnabled:NO forSegment:0];
-    [playstop setEnabled:YES forSegment:1];
+    [playstop setEnabled:YES forSegment:0];
+//    [playstop setEnabled:YES forSegment:1];
     
     NSTabViewItem *newItem = [[(NSTabViewItem*)[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
     [newItem setView:view];
