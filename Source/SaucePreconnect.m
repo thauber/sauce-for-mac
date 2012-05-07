@@ -281,7 +281,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 -(void)startHeartbeat       // 1 minute is ok; at 2 minutes, server times out
 {    
     if(!self.timer)    
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(heartbeat:) userInfo:nil repeats:YES];
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(heartbeat:) userInfo:nil repeats:YES];
 }
 
 -(void)cancelHeartbeat
@@ -500,6 +500,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
             if(snapId)
             {
                 NSLog(@"got snap id:%@",snapId);
+                [[ScoutWindowController sharedScout] snapshotSuccess];
             }
             else {
                 self.errStr = @"Failed to get snapshot id";
