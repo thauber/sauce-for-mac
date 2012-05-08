@@ -49,6 +49,7 @@
 // use user/password to get live_id from server using
 // use live_id to get secret and job-id 
 - (void)preAuthorize:(id)param;
+-(NSString *)jsonVal:(NSString *)json key:(NSString *)key;
 - (void)setOptions:(NSString*)os browser:(NSString*)browser 
                     browserVersion:(NSString*)version url:(NSString*)url;
 

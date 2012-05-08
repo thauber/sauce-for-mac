@@ -69,11 +69,13 @@ static SaucePreconnect* _sharedPreconnect = nil;
 
 // use user/password and users selections to get live_id from server
 - (void)preAuthorize:(id)param
-{    
+{
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
     NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@saucelabs.com/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\"}'", self.user, self.ukey, self.user, self.os, self.browser, self.browserVersion, self.urlStr];
     cancelled = NO;
     self.errStr = @"";
-//    NSLog(@"farg:%@",farg);
+
     while(1)
     {
         if(cancelled)
@@ -91,6 +93,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         [ftask waitUntilExit];
         if([ftask terminationStatus])
         {
+            [ftask release];
             NSLog(@"failed NSTask");
             self.errStr = @"Failed to send user options to server";
             return;
@@ -99,10 +102,10 @@ static SaucePreconnect* _sharedPreconnect = nil;
         {
             NSFileHandle *fhand = [fpipe fileHandleForReading];
             
-            NSData *data = [fhand readDataToEndOfFile];		 
+            NSData *data = [fhand readDataToEndOfFile];	
+            [ftask release];
             NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            NSDictionary *jsonDict = [jsonString JSONValue];
-            self.liveId = [jsonDict objectForKey:@"live-id"];
+            self.liveId = [self jsonVal:jsonString key:@"live-id"];
             if(self.liveId.length)
                 break;
             else 
@@ -123,8 +126,43 @@ static SaucePreconnect* _sharedPreconnect = nil;
          performSelectorOnMainThread:@selector(errOnConnect:)   
          withObject:errMsg  waitUntilDone:NO];
     }
+    [pool release];
 }
 
+-(NSString *)jsonVal:(NSString *)json key:(NSString *)key
+{
+    const char *str = [json UTF8String];
+    const char *kk = [key UTF8String];
+    const char *kstr = strstr(str,kk);
+    kstr += [key length] + 2;   // skip over the key, end quote and colon
+    if(*kstr == ' ')
+        kstr++;
+    char *cstr = malloc(100);
+    int indx=0;
+    if(*kstr == '"')
+    {
+        // gather chars up to end quote
+        kstr++;
+        while(*kstr != '"')
+        {
+            cstr[indx] = *kstr;
+            indx++; kstr++;
+        }
+    }
+    else    // value is an int 
+    {
+        // gather chars up to end comma or right brace
+        while(*kstr != ',' && *kstr != '}')
+        {
+            cstr[indx] = *kstr;
+            indx++; kstr++;
+        }
+    }
+    cstr[indx] = 0;
+    NSString *ret = [NSString stringWithCString:cstr encoding:NSUTF8StringEncoding];
+    free(cstr);
+    return ret;
+}
 
 -(void)cancelPreAuthorize
 {
@@ -142,7 +180,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 
 // poll til we get secret/jobid
 -(void)curlGetauth
-{
+{    
 	NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/scout/live/%@/status?secret&'", self.user, self.ukey, self.liveId ];
 
     while(1)    // use live-id to get job-id
@@ -150,7 +188,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if(cancelled)
         {
             self.errStr = @"Connecting was cancelled";
-            return;
+            break;
         }
         NSTask *ftask = [[NSTask alloc] init];
         NSPipe *fpipe = [NSPipe pipe];
@@ -163,22 +201,22 @@ static SaucePreconnect* _sharedPreconnect = nil;
         {
             NSLog(@"failed NSTask");
             self.errStr =  @"Failed to request job-id";
-            return;
+            break;
         }
         else
         {
             NSFileHandle *fhand = [fpipe fileHandleForReading];
             
             NSData *data = [fhand readDataToEndOfFile];		 
+            [ftask release];
             NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            NSDictionary *jsonDict = [jsonString JSONValue];
-            self.secret = [jsonDict objectForKey:@"video-secret"];
-            self.jobId  = [jsonDict objectForKey:@"job-id"];
+            self.secret = [self jsonVal:jsonString key:@"video-secret"];
+            self.jobId  = [self jsonVal:jsonString key:@"job-id"];
             if(secret.length)
             {
                 self.errStr = @"";     //  got job-id ok
                 [[RFBConnectionManager sharedManager] performSelectorOnMainThread:@selector(connectToServer)   withObject:nil  waitUntilDone:NO];
-                return;
+                break;
             }
             
         }
@@ -242,13 +280,15 @@ static SaucePreconnect* _sharedPreconnect = nil;
                     connection,@"connection", view, @"view", liveId, @"liveId",
                     user, @"user", ukey, @"ukey", jobId, @"jobId",
                     osbvStr, @"osbv", urlStr, @"url", 
-                    os, @"os", browser, @"browser", browserVersion, @"browserVersion", nil];
+                    os, @"os", browser, @"browser", browserVersion, @"browserVersion", 
+                    @"2:00:00", @"remainingTime", nil];
     
     if(!credArr)
     {
         credArr = [[[NSMutableArray alloc] init] retain];
     }
     [credArr addObject:sdict];
+    [sdict release];
 }
 
 -(NSString *)remainingTimeStr:(int)remaining
@@ -297,7 +337,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 - (void)heartbeat:(NSTimer*)tm
 {    
 	NSEnumerator *credEnumerator = [credArr objectEnumerator];
-    NSDictionary *sdict;
+    NSMutableDictionary *sdict;
     
     if(![credArr count])
     {
@@ -305,7 +345,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         return;        
     }
     
-	while ( sdict = (NSDictionary*)[credEnumerator nextObject] )
+	while ( sdict = (NSMutableDictionary*)[credEnumerator nextObject] )
     {
         NSString *aliveid = [sdict objectForKey:@"liveId"];
                              
@@ -327,6 +367,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
             {
                 self.errStr = @"failed NSTask in heartbeat";
                 [self cancelHeartbeat];
+                [ftask release];
                 break;
             }
             else
@@ -334,27 +375,28 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 NSFileHandle *fhand = [fpipe fileHandleForReading];
                 
                 NSData *data = [fhand readDataToEndOfFile];		 
+                [ftask release];
                 NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                NSDictionary *jsonDict = [jsonString JSONValue];
-                NSString *status = [jsonDict objectForKey:@"status"];
+                NSString *status = [self jsonVal:jsonString key:@"status"];
                 if([status isEqualToString:@"in progress"])
                 {
                     id ssn = [sdict objectForKey:@"connection"];
                     Session *session = [[ScoutWindowController sharedScout] curSession];
-                    if(ssn == [session connection])
+                    NSString *remaining = [self jsonVal:jsonString key:@"remaining-time"];
+                    // show in status
+                    if([remaining length])
                     {
-                        int remaining = [[jsonDict valueForKey:@"remaining-time"] intValue];  
-                        // show in status
-                        if(remaining)
+                        NSString *str = [self remainingTimeStr:[remaining intValue]];
+                        [sdict setObject:str forKey:@"remainingTime"];
+                        if(ssn == [session connection])
                         {
-                            NSString *str = [self remainingTimeStr:remaining];
                             NSTextField *tf = [[ScoutWindowController sharedScout] timeRemainingStat];
                             [tf setStringValue:str];
                             tf = [[ScoutWindowController sharedScout] timeRemainingMsg];
                             str = [NSString stringWithFormat:@"%@ rem.",str];
-                            [tf setStringValue:str];
+                            [tf setStringValue:str];                        
                         }
-                    }                    
+                    }
                     break;                
                 }
                 else
@@ -388,6 +430,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         NSFileHandle *fhand = [fpipe fileHandleForReading];
         
         NSData *data = [fhand readDataToEndOfFile];		 
+        [ftask release];
         NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSRange range = [jsonString rangeOfString:@"error"];
         if(!range.length)
@@ -432,6 +475,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if([ftask terminationStatus])
         {
             self.errStr = @"Failed NSTask in signupNew";
+            [ftask release];
             break;
         }
         else
@@ -439,9 +483,9 @@ static SaucePreconnect* _sharedPreconnect = nil;
             NSFileHandle *fhand = [fpipe fileHandleForReading];
             
             NSData *data = [fhand readDataToEndOfFile];		 
+            [ftask release];
             NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            NSDictionary *jsonDict = [jsonString JSONValue];
-            NSString *akey = [jsonDict objectForKey:@"access_key"];
+            NSString *akey = [self jsonVal:jsonString key:@"access_key"];
             if(akey.length)
             {
                 self.user = self.userNew;
@@ -487,6 +531,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if([ftask terminationStatus])
         {
             self.errStr = @"Failed NSTask in postSnapshotBug";
+            [ftask release];
             break;
         }
         else
@@ -494,9 +539,9 @@ static SaucePreconnect* _sharedPreconnect = nil;
             NSFileHandle *fhand = [fpipe fileHandleForReading];
             
             NSData *data = [fhand readDataToEndOfFile];		 
+            [ftask release];
             NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            NSDictionary *jsonDict = [jsonString JSONValue];
-            NSString *snapId = [jsonDict objectForKey:@"c"];
+            NSString *snapId = [self jsonVal:jsonString key:@"c"];            
             if(snapId)
             {
                 NSLog(@"got snap id:%@",snapId);
@@ -547,12 +592,13 @@ static SaucePreconnect* _sharedPreconnect = nil;
             NSFileHandle *fhand = [fpipe fileHandleForReading];
             
             NSData *data = [fhand readDataToEndOfFile];		 
+            [ftask release];
             NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            NSDictionary *jsonDict = [jsonString JSONValue];
-            BOOL res = (BOOL)[jsonDict valueForKey:@"success"];
+            NSString *rstr = [self jsonVal:jsonString key:@"success"];            
+            BOOL res = [rstr boolValue];
             if(res)
             {
-                NSString *msg = [jsonDict objectForKey:@"message"];
+                NSString *msg = [self jsonVal:jsonString key:@"message"];            
                 [self postSnapshotBug:view snapName:msg title:title desc:desc];
                 break;
             }
