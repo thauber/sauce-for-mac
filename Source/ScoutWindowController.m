@@ -65,11 +65,11 @@ static ScoutWindowController* _sharedScout = nil;
     [toolbar setVisible:NO];
     [tabView setTabViewType:NSNoTabsNoBorder];
     [tabBar setStyleNamed:@"Unified"];
-//    [tabBar setShowAddTabButton:YES];
     [tabBar setSizeCellsToFit:YES];
     [tabBar setCellMaxWidth:500];       // allow longer tab labels
 
-    // hook up add tab button
+    // set up add tab button
+    [tabBar setShowAddTabButton:YES];
 	[[tabBar addTabButton] setTarget:self];
 	[[tabBar addTabButton] setAction:@selector(addNewTab:)];
 
@@ -361,6 +361,12 @@ static ScoutWindowController* _sharedScout = nil;
         str = [sdict objectForKey:@"browserVersion"];
         [self.browserversmsg  setStringValue:str];
         
+        // use last remaining time value for this session
+        str = [sdict objectForKey:@"remainingTime"];
+        [self.timeRemainingStat setStringValue:str];
+        str = [NSString stringWithFormat:@"%@ rem.",str];
+        [self.timeRemainingMsg setStringValue:str];
+
         RFBConnection *rfbcon = [sdict objectForKey:@"connection"];
         curSession = [rfbcon session];
         
