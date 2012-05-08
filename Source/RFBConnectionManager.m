@@ -41,12 +41,9 @@ NSString *kAccountkey = @"accountkey";
 NSString *kSessionURL = @"sessionURL";
 NSString *kSessionTag = @"sessionTag";
 NSString *kSessionFrame = @"sessionFrame";
-NSString *kSauceLabsHost;        // fixed host for connection
-int kPort;                       // fixed port for connection
+NSString *kSauceLabsHost = @"tv1.saucelabs.com";    // fixed host for connection
+int kPort = 5901;                                   // fixed port for connection
 
-// for initial testing with fixed values until we have options dialog
-//NSString *user=@"obowah";
-//NSString *ukey=@"e803c27d-5355-4646-b298-4d2f54259ab5";
 
 static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
 
@@ -114,6 +111,10 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
 - (void)connectionSucceeded:(RFBConnection *)conn
 {
     [self successfulConnection:conn];
+}
+
+- (void)connectionFailed
+{
 }
 
 - (void)cancelConnection

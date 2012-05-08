@@ -33,7 +33,7 @@ extern NSString *kSessionURL;
 extern NSString *kSessionTag;
 extern NSString *kSessionFrame;
 extern NSString *kSauceLabsHost;        // fixed host for connection
-extern int kPort;                       // fixed port for connection
+extern int kPort;
 
 @interface RFBConnectionManager : NSWindowController<ConnectionWaiterDelegate>
 {
@@ -52,6 +52,7 @@ extern int kPort;                       // fixed port for connection
 - (void)connectToServer;
 
 - (void)connectionSucceeded:(RFBConnection *)conn;
+- (void)connectionFailed;
 - (void)cancelConnection;
 
 - (void)removeConnection:(id)aConnection;
