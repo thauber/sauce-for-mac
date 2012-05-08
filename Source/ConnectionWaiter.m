@@ -52,10 +52,10 @@
 - (id)initWithServer:(id<IServerData>)aServer
     delegate:(id<ConnectionWaiterDelegate>)aDelegate window:(NSWindow *)aWindow
 {
-    if (self = [super init]) {
-        host = @"tv1.saucelabs.com";        // fixed
-
-        port = 5901;
+    if (self = [super init])
+    {
+        host = kSauceLabsHost;        // fixed
+        port = kPort;
 
         lock = [[NSLock alloc] init];
         currentSock = -1;
