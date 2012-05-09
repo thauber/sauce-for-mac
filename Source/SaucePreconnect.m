@@ -134,6 +134,9 @@ static SaucePreconnect* _sharedPreconnect = nil;
     const char *str = [json UTF8String];
     const char *kk = [key UTF8String];
     const char *kstr = strstr(str,kk);
+    if(!kstr)
+        return @"";
+    
     kstr += [key length] + 2;   // skip over the key, end quote and colon
     if(*kstr == ' ')
         kstr++;
