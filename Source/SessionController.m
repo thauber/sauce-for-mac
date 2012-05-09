@@ -134,6 +134,7 @@
     [connectBtn setState:NSOffState];
     if([os length])
     {
+        [url setEnabled:NO];
         [connectIndicator startAnimation:self];
         [connectIndicatorText setStringValue:@"Connecting..."];
         
@@ -175,6 +176,7 @@
 {
     // cancel current connection attempt
     [[SaucePreconnect sharedPreconnect] setCancelled:YES];
+    [[RFBConnectionManager sharedManager] cancelConnection];
     [panel orderOut:nil];
     [[ScoutWindowController sharedScout] errOnConnect:@"User cancelled"];
     [connectBtn setState:NSOffState];
