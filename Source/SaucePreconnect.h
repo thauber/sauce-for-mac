@@ -24,6 +24,7 @@
     NSString *passNew;
     NSString *emailNew;
     NSTimer *timer;
+    NSTimer *authTimer;
     NSString *errStr;
     BOOL cancelled;         // yes -> stop the presses!
 }
@@ -41,6 +42,7 @@
 @property(nonatomic,copy) NSString *passNew;
 @property(nonatomic,copy) NSString *emailNew;
 @property(nonatomic,retain) NSTimer *timer;
+@property(nonatomic,retain) NSTimer *authTimer;
 @property(nonatomic,copy) NSString *errStr;
 @property(assign)BOOL cancelled;
 
@@ -55,6 +57,7 @@
 
 // return json with secret/job_id for server connection
 - (NSString *)credStr;
+-(void)cancelPreAuthorize:(NSTimer*)tm;
 -(void)sessionClosed:(id)session;
 -(NSDictionary *)sessionInfo:(id)view;
 -(void)setvmsize:(NSSize)size;

@@ -28,6 +28,7 @@
 @synthesize emailNew;
 
 @synthesize timer;
+@synthesize authTimer;
 @synthesize errStr;
 @synthesize cancelled;
 
@@ -72,6 +73,9 @@ static SaucePreconnect* _sharedPreconnect = nil;
 {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
+    // timeout if can't get creditions from server
+    self.authTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(cancelPreAuthorize:) userInfo:nil repeats:NO];
+
     NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@saucelabs.com/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\"}'", self.user, self.ukey, self.user, self.os, self.browser, self.browserVersion, self.urlStr];
     cancelled = NO;
     self.errStr = @"";
@@ -96,7 +100,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
             [ftask release];
             NSLog(@"failed NSTask");
             self.errStr = @"Failed to send user options to server";
-            return;
+            break;;
         }
         else
         {
@@ -111,7 +115,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
             else 
             {
                 self.errStr =@"Failed to retrieve live-id";
-                return;
+                break;
             }
         }
     }
@@ -120,15 +124,12 @@ static SaucePreconnect* _sharedPreconnect = nil;
     // call error method of app which calls error method of sessionController
     if(self.errStr.length)
     {
-        NSString *errMsg = [errStr copy];
-        self.errStr = nil;
-        [[ScoutWindowController sharedScout] 
-         performSelectorOnMainThread:@selector(errOnConnect:)   
-         withObject:errMsg  waitUntilDone:NO];
+        [self cancelPreAuthorize:nil];
     }
     [pool release];
 }
 
+// retrieve value for a key out of json formatted data
 -(NSString *)jsonVal:(NSString *)json key:(NSString *)key
 {
     const char *str = [json UTF8String];
@@ -145,7 +146,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     if(*kstr == '"')
     {
         // gather chars up to end quote
-        kstr++;
+        kstr++;     // skip leading quote
         while(*kstr != '"')
         {
             cstr[indx] = *kstr;
@@ -167,10 +168,21 @@ static SaucePreconnect* _sharedPreconnect = nil;
     return ret;
 }
 
--(void)cancelPreAuthorize
+-(void)cancelPreAuthorize:(NSTimer*)tm
 {
     self.cancelled = YES;
-    self.errStr = @"Connection attempt was cancelled";
+    NSString *errMsg;
+    if(tm)
+    {
+        self.authTimer = nil;
+        errMsg = @"Connection attempt timed out";
+    }
+    else
+        errMsg = [errStr copy];
+    self.errStr = nil;
+    [[ScoutWindowController sharedScout] 
+     performSelectorOnMainThread:@selector(errOnConnect:)   
+     withObject:errMsg  waitUntilDone:NO];
 }
 
 // return json object for vnc connection
