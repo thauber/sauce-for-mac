@@ -339,11 +339,22 @@ enum {
 	screenRect = [[NSScreen mainScreen] visibleFrame];
     wf.origin.x = wf.origin.y = 0;
     wf.size = _maxSize;
-    wf.size.height += 88;       // allow for statusbar(26) and tabbar(22) + toolbar(40)
+    wf.size.height += 84;       // allow for statusbar(26) and tabbar(22) + toolbar(40) [oops]
     
     wf = [NSWindow frameRectForContentRect:wf styleMask:[window styleMask]];
-	
-	// According to the Human Interace Guidelines, new windows should be "visually centered"
+
+	if(wf.size.width > NSWidth(screenRect))
+    {
+        horizontalScroll = YES;
+        wf.size.width = NSWidth(screenRect);
+    }
+	if(wf.size.height >  NSHeight(screenRect))
+    {
+        verticalScroll = YES;
+        wf.size.height = NSHeight(screenRect);
+    }
+    
+	// According to the Human Interface Guidelines, new windows should be "visually centered"
 	// If screenRect is X1,Y1-X2,Y2, and wf is x1,y1 -x2,y2, then
 	// the origin (bottom left point of the rect) for wf should be
 	// Ox = ((X2-X1)-(x2-x1)) * (1/2)    [I.e., one half screen width less window width]
