@@ -339,7 +339,7 @@ enum {
 	screenRect = [[NSScreen mainScreen] visibleFrame];
     wf.origin.x = wf.origin.y = 0;
     wf.size = _maxSize;
-    wf.size.height += 84;       // allow for statusbar(26) and tabbar(22) + toolbar(40) [oops]
+    wf.size.height += 88;       // allow for statusbar(26) and tabbar(22) + toolbar(40)
     
     wf = [NSWindow frameRectForContentRect:wf styleMask:[window styleMask]];
 
