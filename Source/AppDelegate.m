@@ -59,6 +59,9 @@
 
 - (IBAction)showOptionsDlg:(id)sender 
 {
+    if(loginCtrlr)
+        [loginCtrlr doCancelLogin:self];
+    loginCtrlr = nil;
     self.optionsCtrlr = [[SessionController alloc] init];
     [optionsCtrlr runSheet];
 }
@@ -91,7 +94,13 @@
 
 - (IBAction)showLoginDlg:(id)sender 
 {
-    [[LoginController alloc] init];
+    if(optionsCtrlr)
+    {
+        [NSApp endSheet:[optionsCtrlr panel]];
+        [[optionsCtrlr panel] orderOut:nil]; 
+        self.optionsCtrlr = nil;
+    }
+    self.loginCtrlr = [[LoginController alloc] init];
 }
 
 - (IBAction)showPreferences: (id)sender
