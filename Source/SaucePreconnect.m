@@ -121,7 +121,12 @@ static SaucePreconnect* _sharedPreconnect = nil;
     }
     if(!cancelled)
         [self curlGetauth];
+
+    [authTimer invalidate];
+    self.authTimer = nil;
+
     // call error method of app which calls error method of sessionController
+
     if(self.errStr.length)
     {
         [self cancelPreAuthorize:nil];
@@ -171,6 +176,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 -(void)cancelPreAuthorize:(NSTimer*)tm
 {
     self.cancelled = YES;
+    
     NSString *errMsg;
     if(tm)
     {
