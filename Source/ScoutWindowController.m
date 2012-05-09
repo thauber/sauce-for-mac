@@ -214,6 +214,7 @@ static ScoutWindowController* _sharedScout = nil;
     if(curSession)
         [curSession windowWillClose];
     [self autorelease];
+    [NSApp terminate:self];
 }
 
 - (void)windowDidResize:(NSNotification *)aNotification
