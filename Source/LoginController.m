@@ -40,7 +40,11 @@
         NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
         NSString *uname = [defs stringForKey:kUsername];
         NSString *akey = [defs stringForKey:kAccountkey];
+        if(!uname)
+            uname=@"";
         [user setStringValue:uname];
+        if(!akey)
+            akey = @"";
         [accountKey setStringValue:akey];
         if(!uname || !akey)     // can't cancel login if we don't have username/acctkey
             [cancelLogin setHidden:YES];
