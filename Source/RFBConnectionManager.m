@@ -168,7 +168,8 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
     Session *sess = [[Session alloc] initWithConnection:theConnection];
     [sessions addObject:sess];
     [sess release];
-    [[SaucePreconnect sharedPreconnect]  startHeartbeat]; 
+    if(![sessions count])
+        [[SaucePreconnect sharedPreconnect]  startHeartbeat]; 
 }
 
 #if 0
