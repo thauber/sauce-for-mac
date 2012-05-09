@@ -5,17 +5,17 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>scout-desktop</string>
+	<string>Scout</string>
 	<key>CFBundleGetInfoString</key>
-	<string>Scout-desktop version 2.2b2, Copyright 2002-2006 Sauce Labs, 2012</string>
+	<string>Scout version 1.0, Copyright 2012 Sauce Labs</string>
 	<key>CFBundleIconFile</key>
 	<string>icon.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.saucelabs.scout-desktop</string>
+	<string>com.saucelabs.scout</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>ScoutDesktop</string>
+	<string>Scout</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -35,9 +35,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.2b2</string>
+	<string>1.0</string>
 	<key>NSAppleScriptEnabled</key>
-	<string>YES</string>
+	<string>NO</string>
 	<key>NSMainNibFile</key>
 	<string>OSX_RFBViewer</string>
 	<key>NSPrincipalClass</key>
