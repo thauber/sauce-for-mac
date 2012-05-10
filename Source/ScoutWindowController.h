@@ -33,6 +33,9 @@ typedef enum { login,options,session } tabType;
     Session *curSession;
     NSBox *msgBox;
     NSToolbar *toolbar;
+    NSString *bugTitle;
+    NSString *bugDesc;
+    NSString *bugTo;
 }
 @property (assign) IBOutlet NSToolbar *toolbar;
 @property (assign) IBOutlet NSBox *msgBox;
@@ -48,6 +51,10 @@ typedef enum { login,options,session } tabType;
 @property (assign)IBOutlet NSTextField *userStat;
 @property (assign)IBOutlet NSTextField *osbrowser;
 @property (assign) Session *curSession;
+@property (copy) NSString *bugTitle;
+@property (copy) NSString *bugDesc;
+@property (copy) NSString *bugTo;
+
 
 +(ScoutWindowController*)sharedScout;
 - (IBAction)addNewTab:(id)sender;
@@ -81,7 +88,7 @@ typedef enum { login,options,session } tabType;
 - (void)windowDidResize:(NSNotification *)aNotification;
 - (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)proposedFrameSize;
 
--(void)submitBug:(NSString*)title desc:(NSString*)description from:(NSString*)from to:(NSString*)to;
+-(void)submitBug:(NSString*)title desc:(NSString*)description to:(NSString*)to;
 -(void)snapshotSuccess;
 
 @end

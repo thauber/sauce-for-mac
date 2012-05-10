@@ -32,6 +32,10 @@
 @synthesize userStat;
 @synthesize osbrowser;
 @synthesize curSession;
+@synthesize bugTitle;
+@synthesize bugDesc;
+@synthesize bugTo;
+
 
 static ScoutWindowController* _sharedScout = nil;
 
@@ -105,8 +109,9 @@ static ScoutWindowController* _sharedScout = nil;
 
 - (IBAction)doBugCamera:(id)sender
 {
-    NSString *title=nil;
-    NSString *desc=nil;    
+    self.bugTitle=nil;
+    self.bugDesc=nil;
+    self.bugTo=nil;
     NSView *view = [[tabView selectedTabViewItem] view];
     
     int sel = [sender selectedSegment];
@@ -114,11 +119,12 @@ static ScoutWindowController* _sharedScout = nil;
     {
         // modal dlg for title and description
         BugInfoController *bugCtrl = [[BugInfoController alloc] init];
+        [bugcamera setSelected:NO forSegment:0];
         [bugCtrl runSheetOnWindow:[self window]];                
     }
     else if(sel==1)     // snapshot
     {
-        title = @"Snapshot";
+        NSString *title = @"Snapshot";
 
         int hrs, mins;
         time_t rawtime;
@@ -127,31 +133,40 @@ static ScoutWindowController* _sharedScout = nil;
         ptm = localtime(&rawtime);
         hrs = ptm->tm_hour;
         mins = ptm->tm_min;
-        desc = [NSString stringWithFormat:@"A%%20snapshot%%20taken%%20at%%20%d:%d",hrs,mins];
+        NSString *desc = [NSString stringWithFormat:@"A%%20snapshot%%20taken%%20at%%20%d:%d",hrs,mins];
+        [bugcamera setSelected:NO forSegment:1];
         [[SaucePreconnect sharedPreconnect] snapshotBug:view title:title desc:desc];
     }
 }
 
--(void)submitBug:(NSString*)title desc:(NSString*)description from:(NSString*)from to:(NSString*)to
+-(void)submitBug:(NSString*)title desc:(NSString*)description to:(NSString*)to
 {
+    if([to length])
+    {
+        self.bugTitle = title;
+        self.bugDesc = description;
+        self.bugTo = to;
+    }
+    
     NSView *view = [[tabView selectedTabViewItem] view];
     [[SaucePreconnect sharedPreconnect] snapshotBug:view title:title desc:description];
     
-    // send email
-    NSString *encodedSubject = [NSString stringWithFormat:@"SUBJECT=%@", [title stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    NSString *encodedBody = [NSString stringWithFormat:@"BODY=%@", [description stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    NSString *encodedFrom = [NSString stringWithFormat:@"FROM=%@", [from stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    NSString *encodedTo = [to stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *encodedURLString = [NSString stringWithFormat:@"mailto:%@?%@&%@&%@", encodedTo, encodedFrom, encodedSubject, encodedBody];
-    NSURL *mailtoURL = [NSURL URLWithString:encodedURLString];
-    [[NSWorkspace sharedWorkspace] openURL:mailtoURL];
-
 }
 
 -(void)snapshotSuccess
 {
     NSBeginAlertSheet(@"Snapshot", @"Ok", nil, nil, [self window], self, nil, @selector(snapOkDidDismiss:returnCode:contextInfo:), nil, @"Snapshot was successful");    
-    [bugcamera setSelected:NO forSegment:0];
+    
+    if(bugTo)
+    {
+        // send email
+        NSString *encodedSubject = [NSString stringWithFormat:@"SUBJECT=%@", [bugTitle stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        NSString *encodedBody = [NSString stringWithFormat:@"BODY=%@", [bugDesc stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        NSString *encodedTo = [bugTo stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *encodedURLString = [NSString stringWithFormat:@"mailto:%@?%@&%@", encodedTo, encodedSubject, encodedBody];
+        NSURL *mailtoURL = [NSURL URLWithString:encodedURLString];
+        [[NSWorkspace sharedWorkspace] openURL:mailtoURL];
+    }
 }
 
 - (void)snapOkDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
@@ -214,7 +229,7 @@ static ScoutWindowController* _sharedScout = nil;
     if(curSession)
         [curSession windowWillClose];
     [self autorelease];
-    [NSApp terminate:self];
+    [NSApp terminate:nil];
 }
 
 - (void)windowDidResize:(NSNotification *)aNotification
