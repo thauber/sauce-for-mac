@@ -144,8 +144,7 @@
 
 - (IBAction)showHelp: (id)sender
 {
-	NSString *path = [[NSBundle mainBundle] pathForResource: @"index" ofType: @"html" inDirectory: @"help"];
-	[[NSWorkspace sharedWorkspace] openFile: path];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://saucelabs.com/scoutdesktop"]]; 
 }
 
 - (NSMenuItem *)getFullScreenMenuItem
