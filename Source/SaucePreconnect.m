@@ -304,7 +304,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
                     os, @"os", browser, @"browser", browserVersion, @"browserVersion", 
                     @"2:00:00", @"remainingTime", nil];
     
-    delayedSession=YES;    // stop heartbeat processing til after we add new tab
+    delayedSession=1;    // adding a new tab
 
     if(!credArr)
     {
@@ -312,7 +312,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     }
     [credArr addObject:sdict];
     [sdict release];
-    delayedSession = NO;
+    delayedSession = 2;     // done adding
 }
 
 -(NSString *)remainingTimeStr:(int)remaining
@@ -369,7 +369,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         return;        
     }
     
-    if(delayedSession)
+    if(delayedSession == 1)
         return;
     
 	while ( sdict = (NSMutableDictionary*)[credEnumerator nextObject] )
@@ -434,7 +434,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if(delayedSession)
             break;
     }
-    
+    delayedSession = 0;
 }
 
 - (BOOL)checkUserLogin:(NSString *)uuser  key:(NSString*)kkey

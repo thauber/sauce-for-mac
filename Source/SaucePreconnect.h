@@ -27,7 +27,7 @@
     NSTimer *authTimer;
     NSString *errStr;
     BOOL cancelled;         // yes -> stop the presses!
-    BOOL delayedSession;
+    int delayedSession;     // 1->adding 2->done adding (but need to abort if in heartbeat loop
 }
 
 @property(nonatomic,copy) NSString *user;
