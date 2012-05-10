@@ -13,7 +13,6 @@
 @synthesize panel;
 @synthesize description;
 @synthesize title;
-@synthesize fromFld;
 @synthesize toFld;
 
 -(id)init
@@ -33,7 +32,7 @@
 
 - (IBAction)submit:(id)sender 
 {
-    [[ScoutWindowController sharedScout] submitBug:[title stringValue] desc:[description stringValue] from:[fromFld stringValue] to:[toFld stringValue]];
+    [[ScoutWindowController sharedScout] submitBug:[title stringValue] desc:[description stringValue] to:[toFld stringValue]];
     [NSApp endSheet:panel];
     [panel orderOut:nil];
 }
