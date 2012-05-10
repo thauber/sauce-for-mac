@@ -55,18 +55,23 @@
     }
     return self;
 }
+    
 
 - (IBAction)doCancelLogin:(id)sender 
 {
-    [NSApp endSheet:panel];
-    [panel orderOut:nil];
-    if(![[SaucePreconnect sharedPreconnect] user])
+    if([[SaucePreconnect sharedPreconnect] user])
     {
+
         NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
         NSString *uname = [defs stringForKey:kUsername];
         NSString *akey = [defs stringForKey:kAccountkey];
         if([[SaucePreconnect sharedPreconnect] checkUserLogin:uname key:akey])
-            [[NSApp delegate] showOptionsDlg:nil];            
+        {
+            [NSApp endSheet:panel];
+            [panel orderOut:nil];
+            [[NSApp delegate] setLoginCtrlr:nil];
+            [[NSApp delegate] showOptionsDlg:nil];
+        }
     }
 }
 
@@ -106,7 +111,7 @@
 
 - (IBAction)forgotKey:(id)sender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.saucelabs.com"]];    
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.saucelabs.com/send-password-reset"]];    
 }
 
 - (IBAction)signUp:(id)sender
