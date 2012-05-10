@@ -27,6 +27,7 @@
     NSTimer *authTimer;
     NSString *errStr;
     BOOL cancelled;         // yes -> stop the presses!
+    BOOL delayedSession;
 }
 
 @property(nonatomic,copy) NSString *user;
