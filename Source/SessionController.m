@@ -30,11 +30,6 @@
     if(self)
     {
         [NSBundle loadNibNamed:@"SessionController"  owner:self];
-        // recompute position of mswindows/linux sections when osx is hidden
-        int h1 = box1.frame.size.height;
-        NSRect fr = box2.frame;
-        fr.origin.y += h1;
-        [box2 setFrame:fr];
     }
     return self;
 }
