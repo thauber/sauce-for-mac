@@ -155,4 +155,10 @@
 - (IBAction)toggleToolbar:(id)sender {
     [[ScoutWindowController sharedScout] toggleToolbar];
 }
+
+- (IBAction)doTunnel:(id)sender
+{
+    [[ScoutWindowController sharedScout] doTunnel:self];
+}
+
 @end

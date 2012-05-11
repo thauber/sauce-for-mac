@@ -20,6 +20,7 @@
     LoginController *loginCtrlr;
 }
 - (IBAction)toggleToolbar:(id)sender;
+- (IBAction)doTunnel:(id)sender;
 
 @property (retain)SessionController *optionsCtrlr;
 @property (retain)LoginController *loginCtrlr;
