@@ -31,6 +31,8 @@
 @synthesize authTimer;
 @synthesize errStr;
 @synthesize cancelled;
+@synthesize fhandTunnel;
+@synthesize ftaskTunnel;
 
 static SaucePreconnect* _sharedPreconnect = nil;
 
@@ -360,6 +362,9 @@ static SaucePreconnect* _sharedPreconnect = nil;
 
 - (void)heartbeat:(NSTimer*)tm
 {    
+    if(delayedSession == 1)     // about to add a sesson
+        return;
+
 	NSEnumerator *credEnumerator = [credArr objectEnumerator];
     NSMutableDictionary *sdict;
     
@@ -369,8 +374,6 @@ static SaucePreconnect* _sharedPreconnect = nil;
         return;        
     }
     
-    if(delayedSession == 1)
-        return;
     
 	while ( sdict = (NSMutableDictionary*)[credEnumerator nextObject] )
     {
@@ -434,7 +437,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if(delayedSession)
             break;
     }
-    delayedSession = 0;
+    if(delayedSession == 2)     // done adding, so clear flag
+        delayedSession = 0;
 }
 
 - (BOOL)checkUserLogin:(NSString *)uuser  key:(NSString*)kkey
@@ -638,5 +642,29 @@ static SaucePreconnect* _sharedPreconnect = nil;
     }    
 }
 
+- (BOOL)doTunnel
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Sauce-Connect" ofType:@"jar"];
+    
+    NSString *farg = [NSString stringWithFormat:@"java -jar %@ %@ %@", path, self.user, self.ukey];
+    
+    self.ftaskTunnel = [[NSTask alloc] init];
+    NSPipe *fpipe = [NSPipe pipe];
+    [ftaskTunnel setStandardOutput:fpipe];
+    [ftaskTunnel setLaunchPath:@"/bin/bash"];
+    [ftaskTunnel setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+    [ftaskTunnel launch];		// setup tunnel
+    self.fhandTunnel = [fpipe fileHandleForReading];        
+    return YES;
+}
+
+-(NSString *)tunnelData
+{
+    if(!fhandTunnel)
+        return nil;
+    NSData *data = [fhandTunnel availableData];
+    NSString *str = [[NSString alloc] initWithData: data encoding:NSASCIIStringEncoding];
+    return str;
+}
 
 @end

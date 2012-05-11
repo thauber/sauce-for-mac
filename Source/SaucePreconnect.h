@@ -28,6 +28,8 @@
     NSString *errStr;
     BOOL cancelled;         // yes -> stop the presses!
     int delayedSession;     // 1->adding 2->done adding (but need to abort if in heartbeat loop
+    NSFileHandle *fhandTunnel;
+    NSTask *ftaskTunnel;
 }
 
 @property(nonatomic,copy) NSString *user;
@@ -46,6 +48,8 @@
 @property(nonatomic,retain) NSTimer *authTimer;
 @property(nonatomic,copy) NSString *errStr;
 @property(assign)BOOL cancelled;
+@property(nonatomic, retain) NSFileHandle *fhandTunnel;
+@property(nonatomic, retain) NSTask *ftaskTunnel;
 
 +(SaucePreconnect*)sharedPreconnect;
 
@@ -71,6 +75,8 @@
         emailNew:(NSString*)uemailNew;
 - (void)postSnapshotBug:(id)view snapName:(NSString *)snapName title:(NSString *)title desc:(NSString *)desc;
 - (void)snapshotBug:(id)view title:(NSString *)title desc:(NSString *)desc;
+-(BOOL)doTunnel;
+-(NSString *)tunnelData;
 
 
 @end
