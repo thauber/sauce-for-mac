@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F486EA3155CBD1A004502C4 /* dotgreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F486EA1155CBD1A004502C4 /* dotgreen.png */; };
+		0F486EA4155CBD1A004502C4 /* dotred.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F486EA2155CBD1A004502C4 /* dotred.png */; };
+		0F486EA7155CC2CF004502C4 /* Sauce-Connect.jar in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F486EA6155CC2CF004502C4 /* Sauce-Connect.jar */; };
+		0F486EA8155CC5CA004502C4 /* Sauce-Connect.jar in Resources */ = {isa = PBXBuildFile; fileRef = 0F486EA6155CC2CF004502C4 /* Sauce-Connect.jar */; };
 		0F7BE39E1522183800B64686 /* LoginController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F7BE39C1522183800B64686 /* LoginController.h */; };
 		0F7BE39F1522183800B64686 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7BE39D1522183800B64686 /* LoginController.m */; };
 		0F7BF6F11523FEF400F1A478 /* LoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7BF6F01523FEF400F1A478 /* LoginController.xib */; };
@@ -305,6 +309,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0F486EA1155CBD1A004502C4 /* dotgreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dotgreen.png; path = Resources/dotgreen.png; sourceTree = "<group>"; };
+		0F486EA2155CBD1A004502C4 /* dotred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dotred.png; path = Resources/dotred.png; sourceTree = "<group>"; };
+		0F486EA6155CC2CF004502C4 /* Sauce-Connect.jar */ = {isa = PBXFileReference; lastKnownFileType = archive.jar; name = "Sauce-Connect.jar"; path = "Resources/Sauce-Connect.jar"; sourceTree = "<group>"; };
 		0F7BE39C1522183800B64686 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
 		0F7BE39D1522183800B64686 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
 		0F7BF6F01523FEF400F1A478 /* LoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginController.xib; path = Resources/LoginController.xib; sourceTree = "<group>"; };
@@ -655,6 +662,7 @@
 				7F7A945A05E71B5C00E20416 /* libz.dylib in Frameworks */,
 				7F7A945B05E71B5C00E20416 /* Carbon.framework in Frameworks */,
 				DA1FDD9212D6B1A000632D78 /* Security.framework in Frameworks */,
+				0F486EA7155CC2CF004502C4 /* Sauce-Connect.jar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -708,9 +716,12 @@
 				0F9961821526ABC2002657A9 /* apple_color.pdf */,
 				0F99617E15267CAF002657A9 /* opera_color.pdf */,
 				0F99617415267C6B002657A9 /* chrome_color.pdf */,
+				0F486EA1155CBD1A004502C4 /* dotgreen.png */,
+				0F486EA2155CBD1A004502C4 /* dotred.png */,
 				0F99617515267C6B002657A9 /* firefox_color.icns */,
 				0F99617615267C6C002657A9 /* ie_color.pdf */,
 				0F99617715267C6C002657A9 /* safari_color.icns */,
+				0F486EA6155CC2CF004502C4 /* Sauce-Connect.jar */,
 				0F99617815267C6C002657A9 /* windows_color.pdf */,
 				0F7BF6F01523FEF400F1A478 /* LoginController.xib */,
 				0F7C606C152A964900DA9A4A /* SessionController.xib */,
@@ -1271,6 +1282,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F486EA8155CC5CA004502C4 /* Sauce-Connect.jar in Resources */,
 				7F7A941905E71B5C00E20416 /* InfoPlist.strings in Resources */,
 				7F7A941B05E71B5C00E20416 /* icon.icns in Resources */,
 				7F7A941C05E71B5C00E20416 /* rfbCursor3.tiff in Resources */,
@@ -1306,6 +1318,8 @@
 				0F7CE3D3152F6C2800068464 /* stop.pdf in Resources */,
 				0FD424F6153738DC00682AD6 /* scoutwin.xib in Resources */,
 				0FD566901545B17B0007C94A /* BugInfo.xib in Resources */,
+				0F486EA3155CBD1A004502C4 /* dotgreen.png in Resources */,
+				0F486EA4155CBD1A004502C4 /* dotred.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
