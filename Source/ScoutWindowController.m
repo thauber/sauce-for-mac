@@ -25,6 +25,7 @@
 @synthesize browserversmsg;
 @synthesize timeRemainingMsg;
 @synthesize vmsize;
+@synthesize tunnelButton;
 @synthesize toolbar;
 @synthesize msgBox;
 @synthesize statusMessage;
@@ -517,5 +518,15 @@ static ScoutWindowController* _sharedScout = nil;
 	return (objectCount == 1) ? @"item" : @"items";
 }
 
+
+- (IBAction)doTunnel:(id)sender 
+{
+    if([[SaucePreconnect sharedPreconnect] doTunnel])
+    {
+        // TODO: retrieve data on a timer
+        NSString *str = [[SaucePreconnect sharedPreconnect] tunnelData];
+        NSLog(@"%@",str);
+    }
+}
 
 @end

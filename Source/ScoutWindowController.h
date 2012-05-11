@@ -36,7 +36,9 @@ typedef enum { login,options,session } tabType;
     NSString *bugTitle;
     NSString *bugDesc;
     NSString *bugTo;
+    NSButton *tunnelButton;
 }
+@property (assign) IBOutlet NSButton *tunnelButton;
 @property (assign) IBOutlet NSToolbar *toolbar;
 @property (assign) IBOutlet NSBox *msgBox;
 @property (assign) IBOutlet NSTextField *statusMessage;
@@ -62,6 +64,7 @@ typedef enum { login,options,session } tabType;
 - (IBAction)doPlayStop:(id)sender;
 - (IBAction)doBugCamera:(id)sender;
 - (IBAction)newSession:(id)sender;
+- (IBAction)doTunnel:(id)sender;
 
 -(void)errOnConnect:(NSString *)errStr;
 
