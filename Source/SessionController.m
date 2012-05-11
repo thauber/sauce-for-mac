@@ -77,6 +77,13 @@
     [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];        
 }
 
+-(IBAction)terminateApp:(id)sender
+{
+    [NSApp endSheet:panel];
+    [panel orderOut:nil];
+    [NSApp terminate:nil];
+}
+
 - (IBAction)performClose:(id)sender
 {
     [NSApp endSheet:panel];
