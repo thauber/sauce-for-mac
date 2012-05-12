@@ -11,6 +11,7 @@
 
 @class SessionController;
 @class LoginController;
+@class TunnelController;
 
 @interface AppDelegate : NSObject {
 	IBOutlet NSMenuItem *mRendezvousMenuItem;
@@ -18,14 +19,24 @@
     IBOutlet NSMenuItem *fullScreenMenuItem;
     SessionController *optionsCtrlr;
     LoginController *loginCtrlr;
+    TunnelController *tunnelCtrlr;
+    NSMenuItem *tunnelMenuItem;
+    NSMenuItem *tunnelDspMenuItem;
 }
+@property (assign) IBOutlet NSMenuItem *tunnelMenuItem;
+@property (assign) IBOutlet NSMenuItem *tunnelDspMenuItem;
+
 - (IBAction)toggleToolbar:(id)sender;
 - (IBAction)doTunnel:(id)sender;
+- (IBAction)doTunnelDisplay:(id)sender;
+- (void)toggleTunnelDisplay:(BOOL)connected;
 
 @property (retain)SessionController *optionsCtrlr;
 @property (retain)LoginController *loginCtrlr;
+@property (retain)TunnelController *tunnelCtrlr;
 
 - (IBAction)showOptionsDlg:(id)sender;
+- (void)showOptionsIfNoTabs;
 - (IBAction)showLoginDlg:(id)sender;
 
 - (IBAction)showPreferences: (id)sender;

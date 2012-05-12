@@ -15,13 +15,17 @@
 #import "LoginController.h"
 #import "SaucePreconnect.h"
 #import "SessionController.h"
+#import "TunnelController.h"
 #import "ScoutWindowController.h"
 
 
 @implementation AppDelegate
+@synthesize tunnelDspMenuItem;
+@synthesize tunnelMenuItem;
 
 @synthesize optionsCtrlr;
 @synthesize loginCtrlr;
+@synthesize tunnelCtrlr;
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification
 {
@@ -45,7 +49,7 @@
         if([[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:akey])
         {
             // good name/key, so go on to options dialog
-            [self showOptionsDlg:self];            
+            [self showOptionsDlg:self];
             bLoginDlg = NO;
         }
     }
@@ -64,6 +68,12 @@
     loginCtrlr = nil;
     self.optionsCtrlr = [[SessionController alloc] init];
     [optionsCtrlr runSheet];
+}
+
+-(void)showOptionsIfNoTabs
+{
+    if(![[ScoutWindowController sharedScout] tabCount])
+        [self showOptionsDlg:self];
 }
 
 -(void)connectionSucceeded
@@ -152,13 +162,64 @@
     return fullScreenMenuItem;
 }
 
-- (IBAction)toggleToolbar:(id)sender {
+- (IBAction)toggleToolbar:(id)sender
+{
     [[ScoutWindowController sharedScout] toggleToolbar];
 }
 
 - (IBAction)doTunnel:(id)sender
 {
-    [[ScoutWindowController sharedScout] doTunnel:self];
+    if(tunnelCtrlr)
+        [self toggleTunnelDisplay:YES];
+    else
+    {
+        [self doTunnelDisplay:self];        
+        if(tunnelCtrlr)
+            [tunnelCtrlr doTunnel];
+    }
 }
 
+- (IBAction)doTunnelDisplay:(id)sender
+{
+    if(self.optionsCtrlr)
+    {
+        [NSApp endSheet:[optionsCtrlr panel]];
+        [[optionsCtrlr panel] orderOut:nil];
+    }
+    self.optionsCtrlr = nil;    
+        
+    NSWindow *win = [[ScoutWindowController sharedScout] window];
+    if(!tunnelCtrlr)
+        self.tunnelCtrlr = [[TunnelController alloc] init];
+    [tunnelCtrlr runSheetOnWindow:win];
+
+    [tunnelMenuItem setTitle:@"Disconnect"];
+    [tunnelDspMenuItem setEnabled:YES];
+    [tunnelDspMenuItem setTitle:@"Hide display"];
+}
+
+- (void)toggleTunnelDisplay:(BOOL)connected
+{
+    if(!tunnelCtrlr)
+    {
+        [[ScoutWindowController sharedScout] tunnelConnected:NO];            
+        [self showOptionsIfNoTabs];
+        return;
+    }
+    if(connected)
+    {
+        [tunnelMenuItem setTitle:@"Disconnect"];
+        [tunnelDspMenuItem setEnabled:YES];
+        if([tunnelCtrlr hiddenDisplay])
+            [tunnelDspMenuItem setTitle:@"Show display"];
+        else 
+            [tunnelDspMenuItem setTitle:@"Hide display"];
+    }
+    else    // tunnel is not connected
+    {
+        [tunnelMenuItem setTitle:@"Connect"];
+        [tunnelDspMenuItem setEnabled:NO];
+        [tunnelDspMenuItem setTitle:@"Show display"];        
+    }
+}
 @end
