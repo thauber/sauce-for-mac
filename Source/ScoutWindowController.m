@@ -522,9 +522,9 @@ static ScoutWindowController* _sharedScout = nil;
 {    
     NSImage *img;
     if(is)
-        img = [NSImage imageNamed:@"dotred.png"];
-    else 
         img = [NSImage imageNamed:@"dotgreen.png"];
+    else 
+        img = [NSImage imageNamed:@"dotred.png"];
     
     [tunnelImage setImage:img];
     [img release];
