@@ -25,7 +25,7 @@
 @synthesize browserversmsg;
 @synthesize timeRemainingMsg;
 @synthesize vmsize;
-@synthesize tunnelButton;
+@synthesize tunnelImage;
 @synthesize toolbar;
 @synthesize msgBox;
 @synthesize statusMessage;
@@ -518,15 +518,16 @@ static ScoutWindowController* _sharedScout = nil;
 	return (objectCount == 1) ? @"item" : @"items";
 }
 
-
-- (IBAction)doTunnel:(id)sender 
-{
-    if([[SaucePreconnect sharedPreconnect] doTunnel])
-    {
-        // TODO: retrieve data on a timer
-        NSString *str = [[SaucePreconnect sharedPreconnect] tunnelData];
-        NSLog(@"%@",str);
-    }
+- (void)tunnelConnected:(BOOL)is     // tunnel is ready to use
+{    
+    NSImage *img;
+    if(is)
+        img = [NSImage imageNamed:@"dotred.png"];
+    else 
+        img = [NSImage imageNamed:@"dotgreen.png"];
+    
+    [tunnelImage setImage:img];
+    [img release];
 }
 
 @end
