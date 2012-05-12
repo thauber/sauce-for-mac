@@ -55,7 +55,7 @@
         NSRange textRange =[str rangeOfString:@"Connected!"];        
         if(textRange.location != NSNotFound)    //Does contain the substring
         {
-            [[NSApp delegate] tunnelConnected:YES];            
+            [[ScoutWindowController sharedScout] tunnelConnected:YES];            
         }           
     }
 }
@@ -74,7 +74,7 @@
     [NSApp endSheet:panel];
     [panel orderOut:self];
     hiddenDisplay = YES;
-    [[NSApp delegate] toggleTunnelDisplay:YES];
+    [[NSApp delegate] showOptionsIfNoTabs];
 }
 
 - (void)doTunnel
@@ -107,7 +107,6 @@
 {
     NSData *data = [[notif userInfo] objectForKey: NSFileHandleNotificationDataItem];    
     NSString *str = [[NSString alloc] initWithData: data encoding:NSASCIIStringEncoding];
-    NSLog(@"got data");
     [self displayInfo:str];
     [fhand readInBackgroundAndNotify];
 }
