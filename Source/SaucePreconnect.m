@@ -11,6 +11,7 @@
 #import "RFBConnectionManager.h"
 #import "ScoutWindowController.h"
 #import "Session.h"
+#import "TunnelController.h"
 
 @implementation SaucePreconnect
 
@@ -31,8 +32,6 @@
 @synthesize authTimer;
 @synthesize errStr;
 @synthesize cancelled;
-@synthesize fhandTunnel;
-@synthesize ftaskTunnel;
 
 static SaucePreconnect* _sharedPreconnect = nil;
 
@@ -642,29 +641,5 @@ static SaucePreconnect* _sharedPreconnect = nil;
     }    
 }
 
-- (BOOL)doTunnel
-{
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"Sauce-Connect" ofType:@"jar"];
-    
-    NSString *farg = [NSString stringWithFormat:@"java -jar %@ %@ %@", path, self.user, self.ukey];
-    
-    self.ftaskTunnel = [[NSTask alloc] init];
-    NSPipe *fpipe = [NSPipe pipe];
-    [ftaskTunnel setStandardOutput:fpipe];
-    [ftaskTunnel setLaunchPath:@"/bin/bash"];
-    [ftaskTunnel setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-    [ftaskTunnel launch];		// setup tunnel
-    self.fhandTunnel = [fpipe fileHandleForReading];        
-    return YES;
-}
-
--(NSString *)tunnelData
-{
-    if(!fhandTunnel)
-        return nil;
-    NSData *data = [fhandTunnel availableData];
-    NSString *str = [[NSString alloc] initWithData: data encoding:NSASCIIStringEncoding];
-    return str;
-}
 
 @end
