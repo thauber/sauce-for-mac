@@ -237,6 +237,26 @@
 									<reference key="NSOnImage" ref="529750286"/>
 									<reference key="NSMixedImage" ref="368837609"/>
 								</object>
+								<object class="NSMenuItem" id="613875431">
+									<reference key="NSMenu" ref="862758163"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsSeparator">YES</bool>
+									<string key="NSTitle"/>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="529750286"/>
+									<reference key="NSMixedImage" ref="368837609"/>
+								</object>
+								<object class="NSMenuItem" id="168759686">
+									<reference key="NSMenu" ref="862758163"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<string key="NSTitle">Hide Display</string>
+									<string key="NSKeyEquiv">d</string>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="529750286"/>
+									<reference key="NSMixedImage" ref="368837609"/>
+								</object>
 							</object>
 						</object>
 					</object>
@@ -937,6 +957,30 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 					</object>
 					<int key="connectionID">1531</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">tunnelMenuItem</string>
+						<reference key="source" ref="569964129"/>
+						<reference key="destination" ref="553151444"/>
+					</object>
+					<int key="connectionID">1535</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">doTunnel:</string>
+						<reference key="source" ref="569964129"/>
+						<reference key="destination" ref="168759686"/>
+					</object>
+					<int key="connectionID">1536</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">tunnelDspMenuItem</string>
+						<reference key="source" ref="569964129"/>
+						<reference key="destination" ref="168759686"/>
+					</object>
+					<int key="connectionID">1537</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1447,12 +1491,24 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="553151444"/>
+							<reference ref="613875431"/>
+							<reference ref="168759686"/>
 						</object>
 						<reference key="parent" ref="956700113"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1528</int>
 						<reference key="object" ref="553151444"/>
+						<reference key="parent" ref="862758163"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1532</int>
+						<reference key="object" ref="613875431"/>
+						<reference key="parent" ref="862758163"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1533</int>
+						<reference key="object" ref="168759686"/>
 						<reference key="parent" ref="862758163"/>
 					</object>
 				</object>
@@ -1507,6 +1563,8 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 					<string>1526.IBPluginDependency</string>
 					<string>1527.IBPluginDependency</string>
 					<string>1528.IBPluginDependency</string>
+					<string>1532.IBPluginDependency</string>
+					<string>1533.IBPluginDependency</string>
 					<string>225.IBPluginDependency</string>
 					<string>227.IBPluginDependency</string>
 					<string>228.IBPluginDependency</string>
@@ -1536,6 +1594,8 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 				</object>
 				<object class="NSArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1622,7 +1682,7 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1531</int>
+			<int key="maxID">1537</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
