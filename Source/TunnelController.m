@@ -62,9 +62,15 @@
 
 - (IBAction)doClose:(id)sender
 {
-    [self endTunnel:nil];
-    [NSApp endSheet:panel];
-    [panel orderOut:self];
+    if(panel)
+    {
+        [NSApp endSheet:panel];
+        [panel orderOut:self];
+    }
+    self.panel = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver: self];
+    self.fhand = nil;
+    self.fpipe = nil;
     [[NSApp delegate] setTunnelCtrlr:nil];
     [[NSApp delegate] toggleTunnelDisplay:NO];
 }
@@ -113,9 +119,7 @@
 
 -(void)endTunnel: (NSNotification *) notif
 {
-    [[NSNotificationCenter defaultCenter] removeObserver: self];
-    [fhand closeFile];    
-    self.fhand = nil;
+    [self doClose:self];
 }
 
 
