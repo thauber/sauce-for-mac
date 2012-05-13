@@ -170,7 +170,7 @@
 - (IBAction)doTunnel:(id)sender
 {
     if(tunnelCtrlr)
-        [self toggleTunnelDisplay:YES];
+        [self doTunnelDisplay:self];
     else
     {
         [self doTunnelDisplay:self];        
@@ -203,6 +203,9 @@
     if(!tunnelCtrlr)
     {
         [[ScoutWindowController sharedScout] tunnelConnected:NO];            
+        [tunnelMenuItem setTitle:@"Connect"];
+        [tunnelDspMenuItem setEnabled:NO];
+        [tunnelDspMenuItem setTitle:@"Hide display"];        
         [self showOptionsIfNoTabs];
         return;
     }
