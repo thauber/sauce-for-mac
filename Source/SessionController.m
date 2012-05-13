@@ -81,7 +81,13 @@
 {
     [NSApp endSheet:panel];
     [panel orderOut:nil];
-    [NSApp terminate:nil];
+    NSBeginAlertSheet(@"Quit Scout", @"Ok", @"Cancel", nil, [[ScoutWindowController sharedScout] window], self, @selector(quitDidDismiss:returnCode:contextInfo:),nil, nil, @"Do you really want to quit Scout?");    
+}
+
+- (void)quitDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+    if(returnCode == NSAlertDefaultReturn)
+        [NSApp terminate:nil];        
 }
 
 - (IBAction)performClose:(id)sender
