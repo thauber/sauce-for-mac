@@ -30,6 +30,7 @@
 
 - (void)dealloc
 {
+    [super dealloc];
     if(ftask)
         [ftask terminate];
         
