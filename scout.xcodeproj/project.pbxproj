@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0F3DC439155D6C8B0069F7AB /* tunnel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3DC438155D6C8B0069F7AB /* tunnel.xib */; };
+		0F3A18D115617D39007BAA78 /* tunnel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3A18D015617D39007BAA78 /* tunnel.xib */; };
 		0F3DC43D155D6F760069F7AB /* TunnelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F3DC43B155D6F760069F7AB /* TunnelController.h */; };
 		0F3DC43E155D6F760069F7AB /* TunnelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3DC43C155D6F760069F7AB /* TunnelController.m */; };
 		0F486EA3155CBD1A004502C4 /* dotgreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F486EA1155CBD1A004502C4 /* dotgreen.png */; };
@@ -312,7 +312,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0F3DC438155D6C8B0069F7AB /* tunnel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = tunnel.xib; sourceTree = "<group>"; };
+		0F3A18D015617D39007BAA78 /* tunnel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = tunnel.xib; path = Resources/tunnel.xib; sourceTree = "<group>"; };
 		0F3DC43B155D6F760069F7AB /* TunnelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TunnelController.h; sourceTree = "<group>"; };
 		0F3DC43C155D6F760069F7AB /* TunnelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TunnelController.m; sourceTree = "<group>"; };
 		0F486EA1155CBD1A004502C4 /* dotgreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dotgreen.png; path = Resources/dotgreen.png; sourceTree = "<group>"; };
@@ -731,8 +731,8 @@
 				0F99617815267C6C002657A9 /* windows_color.pdf */,
 				0F7BF6F01523FEF400F1A478 /* LoginController.xib */,
 				0F7C606C152A964900DA9A4A /* SessionController.xib */,
+				0F3A18D015617D39007BAA78 /* tunnel.xib */,
 				0FD5668F1545B17B0007C94A /* BugInfo.xib */,
-				0F3DC438155D6C8B0069F7AB /* tunnel.xib */,
 				DAC8077D12FEC38400C4ADB6 /* ssh-helper.sh */,
 				DAFB492112944331008C6FC4 /* dsa_pub.pem */,
 				E291FAD4088161DA0061216E /* cursors.plist */,
@@ -1330,7 +1330,7 @@
 				0FD566901545B17B0007C94A /* BugInfo.xib in Resources */,
 				0F486EA3155CBD1A004502C4 /* dotgreen.png in Resources */,
 				0F486EA4155CBD1A004502C4 /* dotred.png in Resources */,
-				0F3DC439155D6C8B0069F7AB /* tunnel.xib in Resources */,
+				0F3A18D115617D39007BAA78 /* tunnel.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
