@@ -15,6 +15,7 @@
     NSButton *hideButton;
     NSTextView *infoTV;
     BOOL hiddenDisplay;
+    NSTask *ftask;
     NSFileHandle *fhand;
     NSPipe *fpipe;
 }
@@ -23,12 +24,12 @@
 @property (assign) IBOutlet NSButton *hideButton;
 @property (assign) IBOutlet NSTextView *infoTV;
 @property (assign) BOOL hiddenDisplay;
+@property(nonatomic, retain) NSTask *ftask;
 @property(nonatomic, retain) NSFileHandle *fhand;
 @property(nonatomic, retain) NSPipe *fpipe;
 
 - (id)init;
 - (void)runSheetOnWindow:(NSWindow *)window;
-- (void)displayInfo:(NSString *)str;
 - (IBAction)doClose:(id)sender;
 - (IBAction)doHide:(id)sender;
 -(void)doTunnel;

@@ -28,6 +28,13 @@
     return self;
 }
 
+- (void)dealloc
+{
+    if(ftask)
+        [ftask terminate];
+        
+}
+
 - (void)runSheetOnWindow:(NSWindow *)window
 {
     [NSApp beginSheet:panel modalForWindow:window modalDelegate:self
@@ -69,6 +76,8 @@
     }
     self.panel = nil;
     [[NSNotificationCenter defaultCenter] removeObserver: self];
+    [ftask terminate];
+    self.ftask = nil;
     self.fhand = nil;
     self.fpipe = nil;
     [[NSApp delegate] setTunnelCtrlr:nil];
@@ -91,7 +100,7 @@
     
     NSString *farg = [NSString stringWithFormat:@"java -jar %@ %@ %@", path, user, ukey];
     
-    NSTask *ftask = [[NSTask alloc] init];
+    self.ftask = [[NSTask alloc] init];
     self.fpipe = [NSPipe pipe];
     [ftask setStandardOutput:fpipe];
     [ftask setLaunchPath:@"/bin/bash"];
@@ -119,7 +128,7 @@
 
 -(void)endTunnel: (NSNotification *) notif
 {
-    [self doClose:self];
+//    [self doClose:self];
 }
 
 
