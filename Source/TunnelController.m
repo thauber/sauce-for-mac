@@ -29,12 +29,10 @@
     return self;
 }
 
-- (void)dealloc
+-(void)terminate
 {
-    [super dealloc];
     if(ftask)
-        [ftask terminate];
-        
+        [ftask terminate];    
 }
 
 - (void)runSheetOnWindow:(NSWindow *)window
