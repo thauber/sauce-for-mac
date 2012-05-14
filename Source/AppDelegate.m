@@ -66,8 +66,11 @@
     if(loginCtrlr)
         [loginCtrlr doCancelLogin:self];
     loginCtrlr = nil;
-    self.optionsCtrlr = [[SessionController alloc] init];
-    [optionsCtrlr runSheet];
+    if(!optionsCtrlr)
+    {
+        self.optionsCtrlr = [[SessionController alloc] init];
+        [optionsCtrlr runSheet];
+    }
 }
 
 -(void)showOptionsIfNoTabs
