@@ -337,6 +337,8 @@ enum {
     
     horizontalScroll = verticalScroll = NO;
 	screenRect = [[NSScreen mainScreen] visibleFrame];
+    if(screenRect.size.height == 874)       // cut off 4 pixies instead of having scrollbars
+        screenRect.size.height +=4; // kludge b/c we need a few more pixels than the screen gives us
     wf.origin.x = wf.origin.y = 0;
     wf.size = _maxSize;
     wf.size.height += 88;       // allow for statusbar(26) and tabbar(22) + toolbar(40)
