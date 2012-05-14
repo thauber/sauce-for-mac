@@ -16,6 +16,7 @@
 @synthesize closeButton;
 @synthesize hideButton;
 @synthesize infoTV;
+@synthesize ftask;
 @synthesize fhand;
 @synthesize fpipe;
 
