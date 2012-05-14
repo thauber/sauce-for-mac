@@ -61,6 +61,14 @@
     [mInfoVersionNumber setStringValue: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleVersion"]];
 }
 
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSNotification *)aNotification
+{
+    if(tunnelCtrlr)
+        [tunnelCtrlr terminate];
+    return YES;
+        
+}
+
 - (IBAction)showOptionsDlg:(id)sender 
 {
     if(loginCtrlr)
