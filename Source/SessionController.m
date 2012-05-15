@@ -77,7 +77,7 @@
     [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];        
 }
 
--(IBAction)terminateApp:(id)sender
+-(void)terminateApp
 {
     [NSApp endSheet:panel];
     [panel orderOut:nil];
@@ -87,7 +87,13 @@
 - (void)quitDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
     if(returnCode == NSAlertDefaultReturn)
-        [NSApp terminate:nil];        
+        [NSApp terminate:nil];
+    else
+    {
+        [[NSApp delegate] setOptionsCtrlr:nil]; 
+        [[NSApp delegate] performSelectorOnMainThread:@selector(showOptionsDlg:)   
+         withObject:nil  waitUntilDone:NO];
+    }
 }
 
 - (IBAction)performClose:(id)sender

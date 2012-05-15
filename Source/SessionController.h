@@ -34,8 +34,7 @@
 @property (assign) IBOutlet NSBox *box2;
 @property (assign) IBOutlet NSTextField *url;
 - (IBAction)performClose:(id)sender;
-- (IBAction)terminateApp:(id)sender;
-
+- (void)terminateApp;
 - (void)runSheet;
 - (IBAction)connect:(id)sender;
 - (IBAction)cancelConnect: (id)sender;
