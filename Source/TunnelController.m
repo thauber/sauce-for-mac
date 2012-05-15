@@ -37,6 +37,9 @@
 
 - (void)runSheetOnWindow:(NSWindow *)window
 {
+    [[NSApp delegate] toggleTunnelDisplay];
+    NSString *str = @"Now launching Sauce Connect, allowing you to test local websites";
+    [[[infoTV textStorage] mutableString] appendString: str];
     [NSApp beginSheet:panel modalForWindow:window modalDelegate:self
        didEndSelector:nil   contextInfo:nil];
     hiddenDisplay = NO;    
@@ -81,7 +84,7 @@
     self.fhand = nil;
     self.fpipe = nil;
     [[NSApp delegate] setTunnelCtrlr:nil];
-    [[NSApp delegate] toggleTunnelDisplay:NO];
+    [[NSApp delegate] toggleTunnelDisplay];
 }
 
 - (IBAction)doHide:(id)sender
@@ -89,6 +92,7 @@
     [NSApp endSheet:panel];
     [panel orderOut:self];
     hiddenDisplay = YES;
+    [[NSApp delegate] toggleTunnelDisplay];
     [[NSApp delegate] showOptionsIfNoTabs];
 }
 
