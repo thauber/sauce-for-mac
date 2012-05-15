@@ -29,7 +29,7 @@
 - (IBAction)toggleToolbar:(id)sender;
 - (IBAction)doTunnel:(id)sender;
 - (IBAction)doTunnelDisplay:(id)sender;
-- (void)toggleTunnelDisplay:(BOOL)connected;
+- (void)toggleTunnelDisplay;
 
 @property (retain)SessionController *optionsCtrlr;
 @property (retain)LoginController *loginCtrlr;

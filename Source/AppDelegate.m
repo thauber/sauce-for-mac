@@ -35,6 +35,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    [tunnelDspMenuItem setHidden:YES];
+    
     [[ScoutWindowController sharedScout] showWindow:nil];
     
     
@@ -180,14 +182,15 @@
 
 - (IBAction)doTunnel:(id)sender
 {
-    if(tunnelCtrlr)
-        [self doTunnelDisplay:self];
-    else
+    if(tunnelCtrlr && ![tunnelCtrlr hiddenDisplay])       // it's running and shown
     {
-        [self doTunnelDisplay:self];        
-        if(tunnelCtrlr)
-            [tunnelCtrlr doTunnel];
+        [tunnelCtrlr doHide:nil];
+        return;
     }
+    BOOL running = tunnelCtrlr ? YES:NO;
+    [self doTunnelDisplay:self];
+    if(tunnelCtrlr && !running)
+        [tunnelCtrlr doTunnel];
 }
 
 - (IBAction)doTunnelDisplay:(id)sender
@@ -203,37 +206,25 @@
     if(!tunnelCtrlr)
         self.tunnelCtrlr = [[TunnelController alloc] init];
     [tunnelCtrlr runSheetOnWindow:win];
-
-    [tunnelMenuItem setTitle:@"Disconnect"];
-    [tunnelDspMenuItem setEnabled:YES];
-    [tunnelDspMenuItem setTitle:@"Hide display"];
+    [self toggleTunnelDisplay];
 }
 
-- (void)toggleTunnelDisplay:(BOOL)connected
+- (void)toggleTunnelDisplay
 {
     if(!tunnelCtrlr)
     {
-        [[ScoutWindowController sharedScout] tunnelConnected:NO];            
+        [[ScoutWindowController sharedScout] tunnelConnected:NO];
+        [tunnelDspMenuItem setHidden:YES];
         [tunnelMenuItem setTitle:@"Connect"];
-        [tunnelDspMenuItem setEnabled:NO];
-        [tunnelDspMenuItem setTitle:@"Hide display"];        
         [self showOptionsIfNoTabs];
         return;
     }
-    if(connected)
-    {
-        [tunnelMenuItem setTitle:@"Disconnect"];
-        [tunnelDspMenuItem setEnabled:YES];
-        if([tunnelCtrlr hiddenDisplay])
-            [tunnelDspMenuItem setTitle:@"Show display"];
-        else 
-            [tunnelDspMenuItem setTitle:@"Hide display"];
-    }
-    else    // tunnel is not connected
-    {
-        [tunnelMenuItem setTitle:@"Connect"];
-        [tunnelDspMenuItem setEnabled:NO];
-        [tunnelDspMenuItem setTitle:@"Show display"];        
-    }
+    [tunnelMenuItem setTitle:@"Disconnect"];
+    [tunnelDspMenuItem setHidden:NO];
+    [tunnelDspMenuItem setEnabled:YES];
+    if([tunnelCtrlr hiddenDisplay])
+        [tunnelDspMenuItem setTitle:@"Show display"];
+    else 
+        [tunnelDspMenuItem setTitle:@"Hide display"];
 }
 @end
