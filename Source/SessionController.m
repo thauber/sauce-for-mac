@@ -74,13 +74,15 @@
     else
         [cancelBtn setHidden:YES];
     
-    [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];        
+    [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];
+
 }
 
 -(void)terminateApp
 {
     [NSApp endSheet:panel];
     [panel orderOut:nil];
+    [[NSApp delegate] setOptionsCtrlr:nil];
     NSBeginAlertSheet(@"Quit Scout", @"Ok", @"Cancel", nil, [[ScoutWindowController sharedScout] window], self, @selector(quitDidDismiss:returnCode:contextInfo:),nil, nil, @"Do you really want to quit Scout?");    
 }
 
