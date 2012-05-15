@@ -29,7 +29,7 @@
 @property(nonatomic, retain) NSPipe *fpipe;
 
 - (id)init;
--(void)terminate;
+- (void)terminate;
 - (void)runSheetOnWindow:(NSWindow *)window;
 - (IBAction)doClose:(id)sender;
 - (IBAction)doHide:(id)sender;
