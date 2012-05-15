@@ -11,6 +11,8 @@
 #import "KeyEquivalentManager.h"
 #import "RFBConnection.h"
 #import "RFBView.h"
+#import "AppDelegate.h"
+#import "SessionController.h"
 
 
 @implementation MyApp
@@ -40,11 +42,11 @@
 	// change this.
 	KeyEquivalentManager *keyManager = [KeyEquivalentManager defaultManager];
 	NSString *currentScenario = [keyManager currentScenarioName];
+    NSEventType eventType = [anEvent type];
 	if ( currentScenario && ! [currentScenario isEqualToString: kNonConnectionWindowFrontmostScenario] )
 	{
 		// we only care about keyboard events.  flagsChanged events get passed fine, so we'll 
 		// let them be handled normally.
-		NSEventType eventType = [anEvent type];
 		if ( NSKeyDown == eventType || NSKeyUp == eventType )
 		{
 			RFBView *rfbView = [keyManager keyRFBView];;
@@ -89,7 +91,15 @@
 			return;
 		}
 	}
-	
+    else if(NSKeyUp == eventType)       // special case allow cmd-Q quit app when in modal dialog
+    {
+        if (([anEvent modifierFlags] & NSCommandKeyMask) && [[anEvent characters] isEqualToString:@"q"])
+            if([[NSApp delegate] optionsCtrlr])
+            {
+                [[[NSApp delegate] optionsCtrlr] terminateApp];
+                return;
+            }
+    }
 	[super sendEvent: anEvent];
 }
 
