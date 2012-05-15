@@ -91,16 +91,17 @@
 			return;
 		}
 	}
-    else if(NSKeyUp == eventType)       // special case allow cmd-Q quit app when in modal dialog
-    {
-        if (([anEvent modifierFlags] & NSCommandKeyMask) && [[anEvent characters] isEqualToString:@"q"])
-            if([[NSApp delegate] optionsCtrlr])
-            {
-                [[[NSApp delegate] optionsCtrlr] terminateApp];
-                return;
-            }
-    }
 	[super sendEvent: anEvent];
 }
 
+- (void)terminate:(id)sender
+{
+    // First close the sheet (if it's active), using whatever method
+    // you have set up to do this...
+    if([[NSApp delegate] optionsCtrlr])
+        [[[NSApp delegate] optionsCtrlr] terminateApp];
+    
+    // Now call the normal implementation
+    [super terminate:sender];
+}
 @end
