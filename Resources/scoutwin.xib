@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">11E53</string>
+		<string key="IBDocument.SystemVersion">11D50b</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
-		<string key="IBDocument.AppKitVersion">1138.47</string>
-		<string key="IBDocument.HIToolboxVersion">569.00</string>
+		<string key="IBDocument.AppKitVersion">1138.32</string>
+		<string key="IBDocument.HIToolboxVersion">568.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">2182</string>
@@ -759,7 +759,7 @@
 										<object class="NSTextField" id="120036005">
 											<reference key="NSNextResponder" ref="836382187"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{693, 2}, {141, 16}}</string>
+											<string key="NSFrame">{{710, 4}, {141, 16}}</string>
 											<reference key="NSSuperview" ref="836382187"/>
 											<reference key="NSWindow"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -838,7 +838,7 @@
 									<string key="NSReuseIdentifierKey">_NS:11</string>
 								</object>
 							</array>
-							<string key="NSFrame">{{17, 0}, {975, 26}}</string>
+							<string key="NSFrame">{{31, 0}, {975, 26}}</string>
 							<reference key="NSSuperview" ref="547639528"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="836382187"/>
@@ -876,7 +876,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="707679915"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1366, 746}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
@@ -1234,9 +1234,9 @@
 							<reference ref="324968206"/>
 							<reference ref="967098556"/>
 							<reference ref="230508716"/>
-							<reference ref="120036005"/>
 							<reference ref="52278618"/>
 							<reference ref="828708692"/>
+							<reference ref="120036005"/>
 						</array>
 						<reference key="parent" ref="547639528"/>
 					</object>
