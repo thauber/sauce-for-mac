@@ -308,7 +308,6 @@
 									<int key="NSBoxType">0</int>
 									<int key="NSTitlePosition">2</int>
 									<bool key="NSTransparent">NO</bool>
-									<bool key="NSFullyTransparent">YES</bool>
 								</object>
 								<object class="NSTextField" id="642930035">
 									<reference key="NSNextResponder" ref="667167168"/>
