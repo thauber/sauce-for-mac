@@ -101,7 +101,7 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"Sauce-Connect" ofType:@"jar"];
     NSString *user = [[SaucePreconnect sharedPreconnect] user];
     NSString *ukey = [[SaucePreconnect sharedPreconnect] ukey];
-    NSString *farg = [NSString stringWithFormat:@"java -jar %@ %@ %@", path, user, ukey];
+    NSString *farg = [NSString stringWithFormat:@"java -jar \"%@\" %@ %@", path, user, ukey];
     
     self.ftask = [[NSTask alloc] init];
     self.fpipe = [NSPipe pipe];
