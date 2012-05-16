@@ -101,7 +101,6 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"Sauce-Connect" ofType:@"jar"];
     NSString *user = [[SaucePreconnect sharedPreconnect] user];
     NSString *ukey = [[SaucePreconnect sharedPreconnect] ukey];
-    
     NSString *farg = [NSString stringWithFormat:@"java -jar %@ %@ %@", path, user, ukey];
     
     self.ftask = [[NSTask alloc] init];
@@ -109,6 +108,8 @@
     [ftask setStandardOutput:fpipe];
     [ftask setLaunchPath:@"/bin/bash"];
     [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+    NSString *cdir = [NSString stringWithFormat:@"%@/Library/Logs",NSHomeDirectory()];
+    [ftask setCurrentDirectoryPath:cdir];
     self.fhand = [fpipe fileHandleForReading];        
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(endTunnel:)
