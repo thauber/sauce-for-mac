@@ -51,7 +51,6 @@
         [panel setOpaque:YES];
         [panel setAlphaValue:1.0];
         [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];
-        [self retain];
     }
     return self;
 }
@@ -79,6 +78,8 @@
 {
     NSString *uname = [user stringValue];
     NSString *aaccountkey = [accountKey stringValue];
+    [NSApp endSheet:panel];
+    [panel orderOut:nil];
     if([uname length] && [aaccountkey length])
     {
         if([[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:aaccountkey])
@@ -89,24 +90,25 @@
             NSTextField *tf = [[ScoutWindowController sharedScout] userStat];
             [tf setStringValue:uname];
 
-            [NSApp endSheet:panel];
-            [panel orderOut:nil];
-
-            if(![[ScoutWindowController sharedScout] tabCount])
-                [[NSApp delegate] showOptionsDlg:nil];
-            [self release];     
+            [[NSApp delegate] setLoginCtrlr:nil];
+            [[NSApp delegate] showOptionsIfNoTabs];
         }
         else 
         {
             // alert for bad login
-            NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [NSApp keyWindow], self,nil, NULL, NULL, @"Failed to Authenticate");
+            NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [NSApp keyWindow], self,@selector(redoLogin:returnCode:contextInfo:), NULL, NULL, @"Failed to Authenticate");
         }
     }
     else
     {
         // alert for missing username or accountkey
-        NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [NSApp keyWindow], self,nil, NULL, NULL, @"Need valid user-name and account-key");    
+        NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [NSApp keyWindow], self,@selector(redoLogin:returnCode:contextInfo:), NULL, NULL, @"Need valid user-name and account-key");    
     }
+}
+
+-(void)redoLogin:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+    [[NSApp delegate] performSelectorOnMainThread:@selector(showLoginDlg:) withObject:nil  waitUntilDone:NO];    
 }
 
 - (IBAction)forgotKey:(id)sender
@@ -119,8 +121,17 @@
     NSString *nameNew = [aNewUsername stringValue];
     NSString *passNew = [aNewPassword stringValue];
     NSString *emailNew = [aNewEmail stringValue];
+
+    [NSApp endSheet:panel];
+    [panel orderOut:nil];
     
-    [[SaucePreconnect sharedPreconnect] signupNew:nameNew passNew:passNew emailNew:emailNew];
+    if([nameNew length] && [passNew length])
+        [[SaucePreconnect sharedPreconnect] signupNew:nameNew passNew:passNew emailNew:emailNew];
+    else
+    {
+        // alert for missing username or accountkey
+        NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [NSApp keyWindow], self,@selector(redoLogin:returnCode:contextInfo:), NULL, NULL, @"Need valid username and password to sign up");            
+    }
 }
 
 - (void)newUserAuthorized  // called from saucePreconnect
@@ -129,10 +140,13 @@
     SaucePreconnect *precon = [SaucePreconnect sharedPreconnect];
     if([precon.ukey length])
     {
+        [NSApp endSheet:panel];
+        [panel orderOut:self];
         [[NSApp delegate] showOptionsDlg:nil];
-        [self dealloc];     // get rid of the login dialog
-    }    
-    
+    } 
+    else
+        // alert for missing username or accountkey
+        NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [NSApp keyWindow], self,@selector(redoLogin:returnCode:contextInfo:), NULL, NULL, @"Sign up was not successful");                
 }
 
 
