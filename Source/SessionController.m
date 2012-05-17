@@ -14,13 +14,13 @@
 
 @implementation SessionController
 
+@synthesize defaultBrowser;
 @synthesize panel;
 @synthesize view;
 @synthesize cancelBtn;
 @synthesize connectBtn;
 @synthesize connectIndicatorText;
 @synthesize connectIndicator;
-@synthesize box1;
 @synthesize box2;
 @synthesize url;
 
@@ -49,10 +49,17 @@
         
         NSString *str = [defs stringForKey:kSessionFrame];
         if(str)
-        {
             selectedFrame = NSRectFromString(str);
-            [self selectBrowser:self];
+        else
+        {
+            NSView *vv = (NSView*)defaultBrowser;
+            NSRect frame = [vv frame];
+            NSPoint pt = [vv.superview convertPoint:vv.frame.origin toView:[self view]];
+            frame.origin = pt;
+            frame.size.width += frame.size.width + 4;
+            selectedFrame = frame;
         }
+        [self selectBrowser:self];
     }
     NSTextField *tf = [[ScoutWindowController sharedScout] userStat];
     NSString *uname = [[SaucePreconnect sharedPreconnect] user];
@@ -118,7 +125,12 @@
         NSView *vv = (NSView*)sender;
         NSPoint pt = [vv.superview convertPoint:vv.frame.origin toView:[self view]];
         frame.origin = pt;
-        frame.size.width += frame.size.width + 4;
+        if(selectedTag > 1000)      // version#
+        {
+            selectedTag -= 1000;
+            frame.origin.x -= 30;       // move back to icon position
+        }
+        frame.size.width = 64;
         selectedFrame = frame;
     }
     

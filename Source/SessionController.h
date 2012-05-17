@@ -15,14 +15,15 @@
     NSView *selectBox;
     NSTextField *url;
     NSBox *box2;
-    NSBox *box1;
     NSProgressIndicator *connectIndicator;
     NSTextField *connectIndicatorText;
     NSButton *connectBtn;
     NSPanel *panel;
     NSView *view;
     NSButton *cancelBtn;
+    NSButton *defaultBrowser;
 }
+@property (assign) IBOutlet NSButton *defaultBrowser;
 @property (assign) IBOutlet NSPanel *panel;
 @property (assign) IBOutlet NSView *view;
 @property (assign) IBOutlet NSButton *cancelBtn;
@@ -30,7 +31,6 @@
 @property (assign) IBOutlet NSButton *connectBtn;
 @property (assign) IBOutlet NSTextField *connectIndicatorText;
 @property (assign) IBOutlet NSProgressIndicator *connectIndicator;
-@property (assign) IBOutlet NSBox *box1;
 @property (assign) IBOutlet NSBox *box2;
 @property (assign) IBOutlet NSTextField *url;
 - (IBAction)performClose:(id)sender;
