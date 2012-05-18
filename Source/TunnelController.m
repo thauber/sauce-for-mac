@@ -37,7 +37,6 @@
 
 - (void)runSheetOnWindow:(NSWindow *)window
 {
-    [[NSApp delegate] toggleTunnelDisplay];
     NSString *str = @"Please wait while we launch Sauce Connect, (which allows testing local websites) ...\n\n";
     [[[infoTV textStorage] mutableString] appendString: str];
     [NSApp beginSheet:panel modalForWindow:window modalDelegate:self
