@@ -72,6 +72,7 @@ static ScoutWindowController* _sharedScout = nil;
     [tabBar setStyleNamed:@"Unified"];
     [tabBar setSizeCellsToFit:YES];
     [tabBar setCellMaxWidth:500];       // allow longer tab labels
+    [tabBar setCanCloseOnlyTab:YES];
 
     // set up add tab button
     [tabBar setShowAddTabButton:YES];
@@ -97,7 +98,7 @@ static ScoutWindowController* _sharedScout = nil;
 	switch (returnCode)
     {
 		case NSAlertDefaultReturn:
-            [[ScoutWindowController sharedScout] closeTab:nil];
+            [self closeTab:nil];
 			return;
 		case NSAlertAlternateReturn:
             return;
@@ -156,7 +157,7 @@ static ScoutWindowController* _sharedScout = nil;
 
 -(void)snapshotSuccess
 {
-    NSBeginAlertSheet(@"Snapshot", @"Ok", nil, nil, [self window], self, nil, @selector(snapOkDidDismiss:returnCode:contextInfo:), nil, @"Snapshot was successful");    
+    NSBeginAlertSheet(@"Snapshot", @"Ok", nil, nil, [self window], self, nil, @selector(snapOkDidDismiss:returnCode:contextInfo:), nil, @"Snapshot saved to your Sauce Labs account");    
     
     if(bugTo)
     {
@@ -294,8 +295,7 @@ static ScoutWindowController* _sharedScout = nil;
         [[RFBConnectionManager sharedManager] removeConnection:[curSession connection]];
         curSession = nil;
     }
-	[tabView removeTabViewItem:[tabView selectedTabViewItem]];
-    
+	[tabView removeTabViewItem:[tabView selectedTabViewItem]];    
 }
 
 - (void)setTabLabel:(NSString*)lbl
@@ -395,13 +395,10 @@ static ScoutWindowController* _sharedScout = nil;
 	return YES;
 }
 
-- (void)tabView:(NSTabView *)aTabView didCloseTabViewItem:(NSTabViewItem *)tabViewItem {
+- (void)tabView:(NSTabView *)aTabView didCloseTabViewItem:(NSTabViewItem *)tabViewItem 
+{
     curSession = nil;
-    if(![self tabCount])
-    {
-        [toolbar setVisible:NO];
-        [self newSession:nil];
-    }
+    [[NSApp delegate] showOptionsIfNoTabs];
 }
 
 - (NSArray *)allowedDraggedTypesForTabView:(NSTabView *)aTabView {
