@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">11E53</string>
+		<string key="IBDocument.SystemVersion">11D50b</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
-		<string key="IBDocument.AppKitVersion">1138.47</string>
-		<string key="IBDocument.HIToolboxVersion">569.00</string>
+		<string key="IBDocument.AppKitVersion">1138.32</string>
+		<string key="IBDocument.HIToolboxVersion">568.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">2182</string>
@@ -68,7 +68,7 @@
 										<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
 										<string>NeXT TIFF v4.0 pasteboard type</string>
 									</set>
-									<string key="NSFrame">{{60, 545}, {105, 71}}</string>
+									<string key="NSFrame">{{13, 515}, {149, 90}}</string>
 									<reference key="NSSuperview" ref="277014095"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="911330322"/>
@@ -92,7 +92,7 @@
 								<object class="NSTextField" id="911330322">
 									<reference key="NSNextResponder" ref="277014095"/>
 									<int key="NSvFlags">268</int>
-									<string key="NSFrame">{{201, 579}, {218, 23}}</string>
+									<string key="NSFrame">{{114, 569}, {218, 22}}</string>
 									<reference key="NSSuperview" ref="277014095"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="939498792"/>
@@ -103,7 +103,7 @@
 										<int key="NSCellFlags2">138413056</int>
 										<string key="NSContents">Start Scouting!</string>
 										<object class="NSFont" key="NSSupport">
-											<string key="NSName">LucidaGrande</string>
+											<string key="NSName">Arial-BoldMT</string>
 											<double key="NSSize">19</double>
 											<int key="NSfFlags">16</int>
 										</object>
@@ -132,7 +132,7 @@
 								<object class="NSTextField" id="476288794">
 									<reference key="NSNextResponder" ref="277014095"/>
 									<int key="NSvFlags">268</int>
-									<string key="NSFrame">{{43, 465}, {100, 17}}</string>
+									<string key="NSFrame">{{43, 465}, {102, 17}}</string>
 									<reference key="NSSuperview" ref="277014095"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="824176155"/>
@@ -141,11 +141,11 @@
 									<object class="NSTextFieldCell" key="NSCell" id="517740577">
 										<int key="NSCellFlags">68288064</int>
 										<int key="NSCellFlags2">272630784</int>
-										<string key="NSContents">Enter a URL</string>
-										<object class="NSFont" key="NSSupport" id="770766460">
-											<string key="NSName">LucidaGrande</string>
+										<string key="NSContents">Enter a URL:</string>
+										<object class="NSFont" key="NSSupport" id="575434834">
+											<string key="NSName">ArialMT</string>
 											<double key="NSSize">13</double>
-											<int key="NSfFlags">1044</int>
+											<int key="NSfFlags">16</int>
 										</object>
 										<string key="NSCellIdentifier">_NS:1505</string>
 										<reference key="NSControlView" ref="476288794"/>
@@ -179,7 +179,11 @@
 										<int key="NSCellFlags">-1804468671</int>
 										<int key="NSCellFlags2">272630784</int>
 										<string key="NSContents"/>
-										<reference key="NSSupport" ref="770766460"/>
+										<object class="NSFont" key="NSSupport" id="770766460">
+											<string key="NSName">LucidaGrande</string>
+											<double key="NSSize">13</double>
+											<int key="NSfFlags">1044</int>
+										</object>
 										<string key="NSCellIdentifier">_NS:9</string>
 										<reference key="NSControlView" ref="824176155"/>
 										<bool key="NSDrawsBackground">YES</bool>
@@ -190,7 +194,7 @@
 								<object class="NSTextField" id="894534953">
 									<reference key="NSNextResponder" ref="277014095"/>
 									<int key="NSvFlags">268</int>
-									<string key="NSFrame">{{43, 416}, {134, 17}}</string>
+									<string key="NSFrame">{{43, 416}, {138, 17}}</string>
 									<reference key="NSSuperview" ref="277014095"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="768453751"/>
@@ -199,8 +203,8 @@
 									<object class="NSTextFieldCell" key="NSCell" id="222537778">
 										<int key="NSCellFlags">68288064</int>
 										<int key="NSCellFlags2">272630784</int>
-										<string key="NSContents">Select Browser/OS</string>
-										<reference key="NSSupport" ref="770766460"/>
+										<string key="NSContents">Select Browser/OS:</string>
+										<reference key="NSSupport" ref="575434834"/>
 										<string key="NSCellIdentifier">_NS:1505</string>
 										<reference key="NSControlView" ref="894534953"/>
 										<reference key="NSBackgroundColor" ref="569029355"/>
@@ -1614,7 +1618,7 @@
 								<object class="NSTextField" id="939498792">
 									<reference key="NSNextResponder" ref="277014095"/>
 									<int key="NSvFlags">268</int>
-									<string key="NSFrame">{{167, 509}, {403, 52}}</string>
+									<string key="NSFrame">{{151, 509}, {403, 57}}</string>
 									<reference key="NSSuperview" ref="277014095"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="476288794"/>
@@ -1624,12 +1628,8 @@
 									<object class="NSTextFieldCell" key="NSCell" id="921587581">
 										<int key="NSCellFlags">67239424</int>
 										<int key="NSCellFlags2">272629760</int>
-										<string key="NSContents">Scout native lets you spotcheck your css, test browser compatibility, and even debug your web projects across every important browser and OS.</string>
-										<object class="NSFont" key="NSSupport">
-											<string key="NSName">LucidaGrande</string>
-											<double key="NSSize">13</double>
-											<int key="NSfFlags">16</int>
-										</object>
+										<string key="NSContents">Choose the platform and browser you want to Scout.</string>
+										<reference key="NSSupport" ref="575434834"/>
 										<string key="NSCellIdentifier">_NS:9</string>
 										<reference key="NSControlView" ref="939498792"/>
 										<reference key="NSBackgroundColor" ref="569029355"/>
@@ -1642,7 +1642,6 @@
 									<string key="NSFrame">{{303, 168}, {82, 32}}</string>
 									<reference key="NSSuperview" ref="277014095"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="828706686">
@@ -1773,7 +1772,7 @@
 					<reference key="NSNextKeyView" ref="277014095"/>
 					<string key="NSReuseIdentifierKey">_NS:21</string>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1366, 746}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
@@ -2235,8 +2234,6 @@
 						<int key="objectID">1021</int>
 						<reference key="object" ref="277014095"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="459495990"/>
-							<reference ref="911330322"/>
 							<reference ref="476288794"/>
 							<reference ref="824176155"/>
 							<reference ref="894534953"/>
@@ -2244,7 +2241,6 @@
 							<reference ref="339986101"/>
 							<reference ref="602987165"/>
 							<reference ref="670314017"/>
-							<reference ref="939498792"/>
 							<reference ref="714803199"/>
 							<reference ref="395266941"/>
 							<reference ref="313247553"/>
@@ -2253,6 +2249,9 @@
 							<reference ref="632025248"/>
 							<reference ref="596812684"/>
 							<reference ref="603517139"/>
+							<reference ref="459495990"/>
+							<reference ref="939498792"/>
+							<reference ref="911330322"/>
 						</array>
 						<reference key="parent" ref="259890589"/>
 					</object>
