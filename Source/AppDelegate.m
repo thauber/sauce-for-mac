@@ -86,7 +86,10 @@
 -(void)showOptionsIfNoTabs
 {
     if(![[ScoutWindowController sharedScout] tabCount])
+    {
+        [[[ScoutWindowController sharedScout] toolbar] setVisible:NO];
         [self showOptionsDlg:self];
+    }
 }
 
 -(void)connectionSucceeded
@@ -182,49 +185,57 @@
 
 - (IBAction)doTunnel:(id)sender
 {
-    if(tunnelCtrlr && ![tunnelCtrlr hiddenDisplay])       // it's running and shown
+    if(tunnelCtrlr)       // it's running, so user is asking to disconnect   
     {
-        [tunnelCtrlr doHide:nil];
+        [tunnelCtrlr doClose:nil];       // close the jar task and nil the object
         return;
     }
-    BOOL running = tunnelCtrlr ? YES:NO;
     [self doTunnelDisplay:self];
-    if(tunnelCtrlr && !running)
-        [tunnelCtrlr doTunnel];
+    if(tunnelCtrlr)     // tunnel sheet exists now, but wasn't before
+        [tunnelCtrlr doTunnel];     // so start up the jar task
 }
 
 - (IBAction)doTunnelDisplay:(id)sender
 {
-    if(self.optionsCtrlr)
+    if(self.optionsCtrlr)       // close the options sheet
     {
         [NSApp endSheet:[optionsCtrlr panel]];
         [[optionsCtrlr panel] orderOut:nil];
+        self.optionsCtrlr = nil;    
     }
-    self.optionsCtrlr = nil;    
         
     NSWindow *win = [[ScoutWindowController sharedScout] window];
-    if(!tunnelCtrlr)
-        self.tunnelCtrlr = [[TunnelController alloc] init];
-    [tunnelCtrlr runSheetOnWindow:win];
-    [self toggleTunnelDisplay];
+    if(tunnelCtrlr && ![tunnelCtrlr hiddenDisplay])
+    {
+        [tunnelCtrlr doHide:self];
+    }
+    else        // tunnel is running but sheet is not shown
+    {
+        if(!tunnelCtrlr)    // need to create the tunnel object
+            self.tunnelCtrlr = [[TunnelController alloc] init];
+        [tunnelCtrlr runSheetOnWindow:win];
+        [self toggleTunnelDisplay];
+    }
 }
 
 - (void)toggleTunnelDisplay
 {
-    if(!tunnelCtrlr)
+    if(tunnelCtrlr)
+    {
+        [tunnelMenuItem setTitle:@"Disconnect"];
+        [tunnelDspMenuItem setHidden:NO];
+        [tunnelDspMenuItem setEnabled:YES];
+        if([tunnelCtrlr hiddenDisplay])
+            [tunnelDspMenuItem setTitle:@"Show display"];
+        else 
+            [tunnelDspMenuItem setTitle:@"Hide display"];
+    }
+    else    // no tunnel
     {
         [[ScoutWindowController sharedScout] tunnelConnected:NO];
         [tunnelDspMenuItem setHidden:YES];
         [tunnelMenuItem setTitle:@"Connect"];
         [self showOptionsIfNoTabs];
-        return;
     }
-    [tunnelMenuItem setTitle:@"Disconnect"];
-    [tunnelDspMenuItem setHidden:NO];
-    [tunnelDspMenuItem setEnabled:YES];
-    if([tunnelCtrlr hiddenDisplay])
-        [tunnelDspMenuItem setTitle:@"Show display"];
-    else 
-        [tunnelDspMenuItem setTitle:@"Hide display"];
 }
 @end
