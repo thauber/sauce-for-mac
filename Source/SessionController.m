@@ -43,6 +43,9 @@
     NSString *urlstr = [defs stringForKey:kSessionURL];
     if(urlstr)
         [self.url setStringValue:urlstr];
+    else
+        [connectBtn setEnabled:NO];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(textDidChange:) name: NSTextDidChangeNotification object: nil];    
     selectedTag = [defs integerForKey:kSessionTag];
     if(selectedTag)
     {
@@ -73,13 +76,15 @@
     [connectIndicator stopAnimation:self];
     [connectIndicatorText setStringValue:@""];
     
-    if([[ScoutWindowController sharedScout] tabCount])
+    if([[ScoutWindowController sharedScout] tabCount])      // allow cancel if at least 1 tab running
     {
         [cancelBtn setHidden:NO];
-        [cancelBtn setFrame: NSMakeRect(0,0,0,0)];      // so esc key works
+        [cancelBtn setAction:@selector(performClose:)];
     }
     else
+    {
         [cancelBtn setHidden:YES];
+    }
     
     [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];
 
@@ -109,6 +114,14 @@
 {
     [NSApp endSheet:panel];
     [panel orderOut:nil];
+    [[NSApp delegate] setOptionsCtrlr:nil];
+    [[NSApp delegate] showOptionsIfNoTabs];
+}
+
+- (void)textDidChange:(NSNotification *)aNotification
+{
+    BOOL bchars = [[url stringValue] length] ? YES : NO;
+    [connectBtn setEnabled:bchars];
 }
 
 - (IBAction)selectBrowser:(id)sender 
@@ -167,11 +180,9 @@
         [connectIndicatorText setStringValue:@"Connecting..."];
         
         [connectIndicatorText display];
-        
-        [connectBtn setTitle:@"Cancel"];
-        [connectBtn setAction: @selector(cancelConnect:)];
-        [connectBtn setKeyEquivalent:@"."];
-        [connectBtn setKeyEquivalentModifierMask:NSCommandKeyMask];
+        [cancelBtn setAction:@selector(cancelConnect:)];
+        [cancelBtn setHidden:NO];
+        [connectBtn setEnabled:NO];
 	    [[SaucePreconnect sharedPreconnect] setOptions:os browser:browser browserVersion:version url:urlstr];
         [NSApp endSheet:panel];
 
@@ -207,31 +218,6 @@
     [[RFBConnectionManager sharedManager] cancelConnection];
     [panel orderOut:nil];
     [[ScoutWindowController sharedScout] errOnConnect:@"User cancelled"];
-    [connectBtn setState:NSOffState];
-}
-
-/* Update the interface to indicate the end of the connection attempt. */
-- (void)connectionAttemptEnded
-{
-#if 0    
-    if([[ScoutWindowController sharedScout] tabCount])
-    {
-        [NSApp endSheet:panel];
-        [panel orderOut:nil];
-        return;
-    }
-    
-    [[SaucePreconnect sharedPreconnect] cancelHeartbeat];
-	[connectIndicator stopAnimation:self];
-	[connectIndicatorText setStringValue:@""];
-	[connectIndicatorText display];
-    
-    [connectBtn setTitle:@"Scout!"];
-    [connectBtn setAction: @selector(connect:)];
-    [connectBtn setKeyEquivalent:@"\r"];
-    [connectBtn setKeyEquivalentModifierMask:0];
-    [connectBtn setState:NSOnState];
-#endif
 }
 
 - (NSString *)selected:(NSString*)type      // 'browser', 'version' or 'os'
