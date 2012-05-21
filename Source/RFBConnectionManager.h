@@ -63,5 +63,6 @@ extern int kPort;
 - (BOOL)createConnectionWithFileHandle:(NSFileHandle*)file 
     server:(id<IServerData>) server;
 - (void)successfulConnection: (RFBConnection *)theConnection;
+- (void)setSessionsUpdateIntervals;
 
 @end

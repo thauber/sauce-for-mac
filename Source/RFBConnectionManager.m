@@ -35,6 +35,7 @@
 #import "SessionController.h"
 #import "SaucePreconnect.h"
 #import "AppDelegate.h"
+#import "ScoutWindowController.h"
 
 NSString *kUsername = @"username";
 NSString *kAccountkey = @"accountkey";
@@ -168,36 +169,25 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
     Session *sess = [[Session alloc] initWithConnection:theConnection];
     [sessions addObject:sess];
     [sess release];
+    [self setSessionsUpdateIntervals];
     if(![[SaucePreconnect sharedPreconnect] timer])
         [[SaucePreconnect sharedPreconnect]  startHeartbeat]; 
 }
 
-#if 0
-// in SauceWindowController
-- (void)setFrontWindowUpdateInterval: (NSTimeInterval)interval
+- (void)setSessionsUpdateIntervals
 {
 	NSEnumerator *enumerator = [sessions objectEnumerator];
     Session      *session;
-	
-	while (session = [enumerator nextObject]) {
-		if ([session hasKeyWindow]) {
-			[session setFrameBufferUpdateSeconds: interval];
-			break;
-		}
+	float       interval;
+	while (session = [enumerator nextObject])
+    {
+		if ([[ScoutWindowController sharedScout] curSession] == session) 
+            interval = [[PrefController sharedController] frontFrameBufferUpdateSeconds];
+        else
+            interval = [[PrefController sharedController] otherFrameBufferUpdateSeconds];
+            
+        [session setFrameBufferUpdateSeconds: interval];
 	}
 }
-
-- (void)setOtherWindowUpdateInterval: (NSTimeInterval)interval
-{
-	NSEnumerator *enumerator = [sessions objectEnumerator];
-    Session      *session;
-	
-	while (session = [enumerator nextObject]) {
-		if (![session hasKeyWindow]) {
-			[session setFrameBufferUpdateSeconds: interval];
-		}
-	}
-}
-#endif
 
 @end
