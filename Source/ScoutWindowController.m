@@ -316,7 +316,6 @@ static ScoutWindowController* _sharedScout = nil;
 	return tabBar;
 }
 
-
 #pragma mark -
 #pragma mark ---- tabview delegate ----
 
@@ -386,6 +385,7 @@ static ScoutWindowController* _sharedScout = nil;
 
         RFBConnection *rfbcon = [sdict objectForKey:@"connection"];
         curSession = [rfbcon session];
+        [[RFBConnectionManager sharedManager] setSessionsUpdateIntervals];
         
         [[self window] display];
     }
@@ -519,9 +519,15 @@ static ScoutWindowController* _sharedScout = nil;
 {    
     NSImage *img;
     if(is)
+    {
         img = [NSImage imageNamed:@"dotgreen.png"];
-    else 
+        [tunnelImage setToolTip:@"Tunnel connected"];
+    }
+    else
+    {
         img = [NSImage imageNamed:@"dotred.png"];
+        [tunnelImage setToolTip:@"Tunnel not connected"];
+    }
     
     [tunnelImage setImage:img];
     [img release];
