@@ -194,6 +194,7 @@ enum {
 			break;
 	}
     [[RFBConnectionManager sharedManager] removeConnection:self];
+    [[NSApp delegate] performSelectorOnMainThread:@selector(showOptionsIfNoTabs) withObject:nil waitUntilDone:NO];
 }
 
 - (void)connectionProblem
@@ -623,8 +624,8 @@ enum {
  * scrolling. */
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-    if (!_isFullscreen)
-        return;
+//    if (!_isFullscreen)
+//        return;
     
     NSPoint pt = [scrollView convertPoint: [theEvent locationInWindow]
                                  fromView:nil];
