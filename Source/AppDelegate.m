@@ -92,6 +92,13 @@
     }
 }
 
+-(BOOL)VMinFront    // no modal dialogs running and a vm is running
+{
+    BOOL notFront = self.optionsCtrlr || self.loginCtrlr;
+    notFront = notFront || (self.tunnelCtrlr && ![tunnelCtrlr hiddenDisplay]);
+    return !notFront;
+}
+
 -(void)connectionSucceeded
 {
     [optionsCtrlr connectionSucceeded];

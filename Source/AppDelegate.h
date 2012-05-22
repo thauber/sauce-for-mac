@@ -47,6 +47,7 @@
 - (IBAction)showProfileManager: (id)sender;
 - (IBAction)showHelp: (id)sender;
 
+-(BOOL)VMinFront;   // no modal dialogs running and a vm is running
 -(void)connectionSucceeded;
 - (void)cancelOptionsConnect:(id)sender;
 
