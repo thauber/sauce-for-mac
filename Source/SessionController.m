@@ -95,19 +95,7 @@
     [NSApp endSheet:panel];
     [panel orderOut:nil];
     [[NSApp delegate] setOptionsCtrlr:nil];
-    NSBeginAlertSheet(@"Quit Scout", @"Ok", @"Cancel", nil, [[ScoutWindowController sharedScout] window], self, @selector(quitDidDismiss:returnCode:contextInfo:),nil, nil, @"Do you really want to quit Scout?");    
-}
-
-- (void)quitDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-    if(returnCode == NSAlertDefaultReturn)
-        [NSApp terminate:nil];
-    else
-    {
-        [[NSApp delegate] setOptionsCtrlr:nil]; 
-        [[NSApp delegate] performSelectorOnMainThread:@selector(showOptionsDlg:)   
-         withObject:nil  waitUntilDone:NO];
-    }
+//    [NSApp terminate:nil];
 }
 
 - (IBAction)performClose:(id)sender
