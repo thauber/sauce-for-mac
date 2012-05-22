@@ -72,7 +72,7 @@
     if (self = [super init]) {
         ByteBlockReader *versionReader;
 
-        _profile = [[server profile] retain];
+        _profile = [[ProfileManager sharedManager] defaultProfile];     // need this for modifier keys
 
         currentReader = nil;
 
