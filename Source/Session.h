@@ -73,6 +73,7 @@
     NSScrollView *scrollView;
 }
 @property (assign) IBOutlet NSScrollView *scrollView;
+@property (assign) RFBView *rfbView;
 
 - (id)initWithConnection:(RFBConnection*)conn;
 - (void)dealloc;

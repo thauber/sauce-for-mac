@@ -70,6 +70,7 @@ enum {
 
 @implementation Session
 @synthesize scrollView;
+@synthesize rfbView;
 
 - (id)initWithConnection:(RFBConnection *)aConnection
 {
