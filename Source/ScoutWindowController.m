@@ -392,12 +392,12 @@ static ScoutWindowController* _sharedScout = nil;
 }
 
 - (BOOL)tabView:(NSTabView *)aTabView shouldCloseTabViewItem:(NSTabViewItem *)tabViewItem {
-	return YES;
+    [self doPlayStop:self];
+	return NO;
 }
 
 - (void)tabView:(NSTabView *)aTabView didCloseTabViewItem:(NSTabViewItem *)tabViewItem 
 {
-    curSession = nil;
     [[NSApp delegate] showOptionsIfNoTabs];
 }
 
