@@ -13,6 +13,9 @@
 #import "RFBView.h"
 #import "AppDelegate.h"
 #import "SessionController.h"
+#import "ScoutWindowController.h"
+#import "Session.h"
+#import "RFBView.h"
 
 
 @implementation MyApp
@@ -41,16 +44,19 @@
 	// proceed normally.  Note that if we add new scenarios at some point, we might need to 
 	// change this.
 	KeyEquivalentManager *keyManager = [KeyEquivalentManager defaultManager];
-	NSString *currentScenario = [keyManager currentScenarioName];
+//	NSString *currentScenario = [keyManager currentScenarioName];
     NSEventType eventType = [anEvent type];
-	if ( currentScenario && ! [currentScenario isEqualToString: kNonConnectionWindowFrontmostScenario] )
+    Session *cs = [[ScoutWindowController sharedScout] curSession];
+    RFBView *rfbView = [cs rfbView];
+    BOOL noModal = [[NSApp delegate] VMinFront];
+	if(rfbView && noModal)
 	{
 		// we only care about keyboard events.  flagsChanged events get passed fine, so we'll 
 		// let them be handled normally.
 		if ( NSKeyDown == eventType || NSKeyUp == eventType )
 		{
-			RFBView *rfbView = [keyManager keyRFBView];;
-			NSParameterAssert( rfbView != nil );
+			//RFBView *rfbView = [keyManager keyRFBView];
+			//NSParameterAssert( rfbView != nil );
 			static NSString *lastCharacters = nil;
 			NSString *characters = [anEvent charactersIgnoringModifiers];
 			
@@ -59,7 +65,6 @@
 			if ( NSKeyDown == eventType )
 			{
 				unsigned int modifiers = [anEvent modifierFlags] & 0xFFFF0000;
-				
 				[lastCharacters release];
 				lastCharacters = nil;
 				if ( [keyManager performEquivalentWithCharacters: characters modifiers: modifiers] )
@@ -102,6 +107,17 @@
         [[[NSApp delegate] optionsCtrlr] terminateApp];
     
     // Now call the normal implementation
-    [super terminate:sender];
+    NSBeginAlertSheet(@"Quit Scout", @"Ok", @"Cancel", nil, [[ScoutWindowController sharedScout] window], self, @selector(quitDidDismiss:returnCode:contextInfo:),nil, nil, @"Do you really want to quit Scout?");    
 }
+
+- (void)quitDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+    if(returnCode == NSAlertDefaultReturn)
+        [super terminate:nil];
+    else
+    {
+        [[NSApp delegate] performSelectorOnMainThread:@selector(showOptionsIfNoTabs) withObject:nil waitUntilDone:NO]; 
+    }
+} 
+
 @end
