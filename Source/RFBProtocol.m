@@ -77,7 +77,8 @@
  * subsequent message will be written without buffering. */
 - (void)setEncodings
 {
-    Profile* profile = [connection profile];
+    //Profile* profile = [connection profile];
+    Profile* profile = nil;     // [rda] slows mouse tracking when encodings are used
     CARD16 i;
     CARD16 l = [profile numEnabledEncodingsIfViewOnly:[connection viewOnly]];
     rfbSetEncodingsMsg msg;
@@ -104,6 +105,7 @@
 - (void)setPixelFormat:(rfbPixelFormat*)aFormat
 {
     Profile* profile = [connection profile];
+
     rfbSetPixelFormatMsg	msg;
 
     msg.type = rfbSetPixelFormat;
