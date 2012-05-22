@@ -37,10 +37,10 @@ static int const kPrefsVersion = 0x00000002;
 		[NSNumber numberWithBool: YES],			kPrefs_FullscreenWarning_Key,
 		[NSNumber numberWithFloat: 26.0],		kPrefs_AutoscrollIncrement_Key,
 		[NSNumber numberWithBool: NO],			kPrefs_FullscreenScrollbars_Key,
-		[NSNumber numberWithBool: YES],			kPrefs_UseRendezvous_Key,
+		[NSNumber numberWithBool: NO],			kPrefs_UseRendezvous_Key,
 		[NSNumber numberWithFloat: 0],			kPrefs_FrontFrameBufferUpdateSeconds_Key,
 		[NSNumber numberWithFloat: 0.9],		kPrefs_OtherFrameBufferUpdateSeconds_Key, 
-		[NSNumber numberWithBool: YES],			kPrefs_AutoReconnect_Key, 
+		[NSNumber numberWithBool: NO],			kPrefs_AutoReconnect_Key, 
 		[NSNumber numberWithDouble: 30.0],		kPrefs_IntervalBeforeReconnect_Key, 
 		nil,									nil];
 	
