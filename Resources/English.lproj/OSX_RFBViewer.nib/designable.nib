@@ -180,7 +180,7 @@
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSMenuItem" id="370934380">
 									<reference key="NSMenu" ref="857574433"/>
-									<string key="NSTitle">Login...</string>
+									<string key="NSTitle">Credentials...</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="529750286"/>
@@ -188,7 +188,7 @@
 								</object>
 								<object class="NSMenuItem" id="1006586167">
 									<reference key="NSMenu" ref="857574433"/>
-									<string key="NSTitle">New Connection…</string>
+									<string key="NSTitle">New Session</string>
 									<string key="NSKeyEquiv">n</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -201,15 +201,6 @@
 									<bool key="NSIsSeparator">YES</bool>
 									<string key="NSTitle"/>
 									<string key="NSKeyEquiv"/>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="529750286"/>
-									<reference key="NSMixedImage" ref="368837609"/>
-								</object>
-								<object class="NSMenuItem" id="953070231">
-									<reference key="NSMenu" ref="857574433"/>
-									<string key="NSTitle">Toggle toolBar</string>
-									<string key="NSKeyEquiv">t</string>
-									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="529750286"/>
 									<reference key="NSMixedImage" ref="368837609"/>
@@ -421,11 +412,11 @@
 							</object>
 							<object class="NSMutableArray" key="NSMenuItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSMenuItem" id="1050901654">
+								<object class="NSMenuItem" id="829941193">
 									<reference key="NSMenu" ref="315034846"/>
-									<string key="NSTitle">Fullscreen Mode</string>
-									<string key="NSKeyEquiv">`</string>
-									<int key="NSKeyEquivModMask">1835008</int>
+									<string key="NSTitle">Toggle Toolbar</string>
+									<string key="NSKeyEquiv">t</string>
+									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="529750286"/>
 									<reference key="NSMixedImage" ref="368837609"/>
@@ -738,7 +729,7 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 					<string key="NSFrameSize">{565, 196}</string>
 					<reference key="NSNextKeyView" ref="411266181"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1366, 746}}</string>
 				<string key="NSMinSize">{246.94399999999999, 28}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<string key="NSFrameAutosaveName">about</string>
@@ -870,14 +861,6 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">toggleFullscreenMode:</string>
-						<reference key="source" ref="518874856"/>
-						<reference key="destination" ref="1050901654"/>
-					</object>
-					<int key="connectionID">1335</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">arrangeInFront:</string>
 						<reference key="source" ref="518874856"/>
 						<reference key="destination" ref="995408935"/>
@@ -934,14 +917,6 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">toggleToolbar:</string>
-						<reference key="source" ref="569964129"/>
-						<reference key="destination" ref="953070231"/>
-					</object>
-					<int key="connectionID">1524</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">showOptionsDlg:</string>
 						<reference key="source" ref="569964129"/>
 						<reference key="destination" ref="1006586167"/>
@@ -979,6 +954,14 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 						<reference key="destination" ref="168759686"/>
 					</object>
 					<int key="connectionID">1540</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleToolbar:</string>
+						<reference key="source" ref="569964129"/>
+						<reference key="destination" ref="829941193"/>
+					</object>
+					<int key="connectionID">1539</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1036,7 +1019,6 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 							<reference ref="1006586167"/>
 							<reference ref="370934380"/>
 							<reference ref="134679870"/>
-							<reference ref="953070231"/>
 						</object>
 						<reference key="parent" ref="791818499"/>
 					</object>
@@ -1242,20 +1224,15 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="995408935"/>
-							<reference ref="1050901654"/>
 							<reference ref="806468800"/>
 							<reference ref="1062529382"/>
+							<reference ref="829941193"/>
 						</object>
 						<reference key="parent" ref="28065350"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1327</int>
 						<reference key="object" ref="995408935"/>
-						<reference key="parent" ref="315034846"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1328</int>
-						<reference key="object" ref="1050901654"/>
 						<reference key="parent" ref="315034846"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -1471,11 +1448,6 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 						<reference key="parent" ref="857574433"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">1523</int>
-						<reference key="object" ref="953070231"/>
-						<reference key="parent" ref="857574433"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">1526</int>
 						<reference key="object" ref="956700113"/>
 						<object class="NSMutableArray" key="children">
@@ -1510,6 +1482,11 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 						<reference key="object" ref="168759686"/>
 						<reference key="parent" ref="862758163"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1538</int>
+						<reference key="object" ref="829941193"/>
+						<reference key="parent" ref="315034846"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1535,7 +1512,6 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 					<string>1313.IBPluginDependency</string>
 					<string>1314.IBPluginDependency</string>
 					<string>1327.IBPluginDependency</string>
-					<string>1328.IBPluginDependency</string>
 					<string>1329.IBPluginDependency</string>
 					<string>1330.IBPluginDependency</string>
 					<string>1331.IBPluginDependency</string>
@@ -1558,12 +1534,12 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 					<string>1513.IBPluginDependency</string>
 					<string>1515.IBPluginDependency</string>
 					<string>1522.IBPluginDependency</string>
-					<string>1523.IBPluginDependency</string>
 					<string>1526.IBPluginDependency</string>
 					<string>1527.IBPluginDependency</string>
 					<string>1528.IBPluginDependency</string>
 					<string>1532.IBPluginDependency</string>
 					<string>1533.IBPluginDependency</string>
+					<string>1538.IBPluginDependency</string>
 					<string>225.IBPluginDependency</string>
 					<string>227.IBPluginDependency</string>
 					<string>228.IBPluginDependency</string>
@@ -1593,7 +1569,6 @@ dCBhdmFpbGFibGUgYXQgaHR0cDovL2NoaWNrZW4uc291cmNlZm9yZ2UubmV0Lw</string>
 				</object>
 				<object class="NSArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
