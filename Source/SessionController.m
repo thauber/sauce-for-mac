@@ -95,15 +95,18 @@
     [NSApp endSheet:panel];
     [panel orderOut:nil];
     [[NSApp delegate] setOptionsCtrlr:nil];
-//    [NSApp terminate:nil];
 }
 
 - (IBAction)performClose:(id)sender
 {
+    [[SaucePreconnect sharedPreconnect] setErrStr:@"User cancelled"];
+    [[NSApp delegate] cancelOptionsConnect:self];
+}
+
+-(void)quitSheet
+{
     [NSApp endSheet:panel];
-    [panel orderOut:nil];
-    [[NSApp delegate] setOptionsCtrlr:nil];
-    [[NSApp delegate] showOptionsIfNoTabs];
+    [panel orderOut:nil];    
 }
 
 - (void)textDidChange:(NSNotification *)aNotification
@@ -168,7 +171,7 @@
         [connectIndicatorText setStringValue:@"Connecting..."];
         
         [connectIndicatorText display];
-        [cancelBtn setAction:@selector(cancelConnect:)];
+        [cancelBtn setAction:@selector(performClose:)];
         [cancelBtn setHidden:NO];
         [connectBtn setEnabled:NO];
 	    [[SaucePreconnect sharedPreconnect] setOptions:os browser:browser browserVersion:version url:urlstr];
@@ -197,15 +200,6 @@
 {
     NSBeginAlertSheet(@"Session Options Error", @"Okay", nil, nil, [NSApp keyWindow], self,nil,     
                       NULL, NULL, errStr);    
-}
-
-- (IBAction)cancelConnect: (id)sender
-{
-    // cancel current connection attempt
-    [[SaucePreconnect sharedPreconnect] setCancelled:YES];
-    [[RFBConnectionManager sharedManager] cancelConnection];
-    [panel orderOut:nil];
-    [[ScoutWindowController sharedScout] errOnConnect:@"User cancelled"];
 }
 
 - (NSString *)selected:(NSString*)type      // 'browser', 'version' or 'os'
