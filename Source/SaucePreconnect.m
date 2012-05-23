@@ -79,15 +79,12 @@ static SaucePreconnect* _sharedPreconnect = nil;
 
     NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@saucelabs.com/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\"}'", self.user, self.ukey, self.user, self.os, self.browser, self.browserVersion, self.urlStr];
     cancelled = NO;
-    self.errStr = @"";
+    self.errStr = nil;
 
     while(1)
     {
         if(cancelled)
-        {
-            self.errStr = @"Connecting was cancelled";
             break;
-        }
 
         NSTask *ftask = [[NSTask alloc] init];
         NSPipe *fpipe = [NSPipe pipe];
@@ -122,13 +119,10 @@ static SaucePreconnect* _sharedPreconnect = nil;
     }
     if(!cancelled)
         [self curlGetauth];
-
     [authTimer invalidate];
-    self.authTimer = nil;
+    self.authTimer = nil;    
 
-    // call error method of app which calls error method of sessionController
-
-    if(self.errStr.length)
+    if(errStr)      // call error method of app
     {
         [self cancelPreAuthorize:nil];
     }
@@ -176,19 +170,24 @@ static SaucePreconnect* _sharedPreconnect = nil;
 
 -(void)cancelPreAuthorize:(NSTimer*)tm
 {
-    self.cancelled = YES;
+    BOOL wasCancelled = self.cancelled;     // called from appdelegate
     
+    [authTimer invalidate];
+    self.authTimer = nil;
+       
+    if(wasCancelled)        // don't go circular
+        return;
+    
+    self.cancelled = YES;       // make sure any loops break out
+
     NSString *errMsg;
     if(tm)
-    {
-        self.authTimer = nil;
         errMsg = @"Connection attempt timed out";
-    }
-    else
-        errMsg = [errStr copy];
+    else if(errStr)
+            errMsg = [errStr copy];
     self.errStr = nil;
-    [[ScoutWindowController sharedScout] 
-     performSelectorOnMainThread:@selector(errOnConnect:)   
+    [[NSApp delegate]
+     performSelectorOnMainThread:@selector(cancelOptionsConnect:)   
      withObject:errMsg  waitUntilDone:NO];
 }
 
@@ -208,10 +207,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     while(1)    // use live-id to get job-id
     {
         if(cancelled)
-        {
-            self.errStr = @"Connecting was cancelled";
             break;
-        }
         NSTask *ftask = [[NSTask alloc] init];
         NSPipe *fpipe = [NSPipe pipe];
         [ftask setStandardOutput:fpipe];
@@ -226,6 +222,9 @@ static SaucePreconnect* _sharedPreconnect = nil;
             break;
         }
         else
+        if(cancelled)
+            break;
+        else
         {
             NSFileHandle *fhand = [fpipe fileHandleForReading];
             
@@ -236,7 +235,6 @@ static SaucePreconnect* _sharedPreconnect = nil;
             self.jobId  = [self jsonVal:jsonString key:@"job-id"];
             if(secret.length)
             {
-                self.errStr = @"";     //  got job-id ok
                 [[RFBConnectionManager sharedManager] performSelectorOnMainThread:@selector(connectToServer)   withObject:nil  waitUntilDone:NO];
                 break;
             }
@@ -353,7 +351,6 @@ static SaucePreconnect* _sharedPreconnect = nil;
 {
     if(![credArr count])    // only stop heartbeat if no sessions are active
     {
-        cancelled = YES;
         [self.timer invalidate];
         self.timer = nil;
     }
@@ -486,14 +483,11 @@ static SaucePreconnect* _sharedPreconnect = nil;
     
     NSString *farg = [NSString stringWithFormat:@"curl -X POST http://saucelabs.com/rest/v1/users -H 'Content-Type: application/json' -d '{\"username\":\"%@\", \"password\":\"%@\",\"name\":\"\",\"email\":\"%@\",\"token\":\"0E44EF6E-B170-4CA0-8264-78FD9E49E5CD\"}'",self.userNew, self.passNew, self.emailNew];
      
-    self.errStr = @"";
+    self.errStr = nil;
     while(1)
     {
         if(cancelled)
-        {
-            self.errStr = @"Connecting was Cancelled";
             break;
-        }
 
         NSTask *ftask = [[NSTask alloc] init];
         NSPipe *fpipe = [NSPipe pipe];
@@ -508,6 +502,9 @@ static SaucePreconnect* _sharedPreconnect = nil;
             [ftask release];
             break;
         }
+        else
+        if(cancelled)
+            break;
         else
         {
             NSFileHandle *fhand = [fpipe fileHandleForReading];
@@ -542,14 +539,11 @@ static SaucePreconnect* _sharedPreconnect = nil;
 
     NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/scout/live/%@/reportbug?&ssname=%@&title=%@&description=%@'", auser, akey, aliveid, snapName, title, desc];
     
-    self.errStr = @"";
+    self.errStr = nil;
     while(1)
     {
         if(cancelled)
-        {
-            self.errStr = @"Post snapshotbug was cancelled";
             break;
-        }
         
         NSTask *ftask = [[NSTask alloc] init];
         NSPipe *fpipe = [NSPipe pipe];
@@ -564,6 +558,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
             [ftask release];
             break;
         }
+        if(cancelled)
+            break;
         else
         {
             NSFileHandle *fhand = [fpipe fileHandleForReading];
@@ -596,14 +592,11 @@ static SaucePreconnect* _sharedPreconnect = nil;
     NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/scout/live/%@/sendcommand?&1=getScreenshotName&sessionId=%@&cmd=captureScreenshot'", 
                       auser, akey, aliveid, ajobid];
 
-    self.errStr = @"";
+    self.errStr = nil;
     while(1)
     {
         if(cancelled)
-        {
-            self.errStr = @"SnapshotBug was Cancelled";
             break;
-        }
         
         NSTask *ftask = [[NSTask alloc] init];
         NSPipe *fpipe = [NSPipe pipe];
@@ -617,6 +610,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
             self.errStr = @"Failed NSTask in snapshotBug";
             break;
         }
+        if(cancelled)
+            break;
         else
         {
             NSFileHandle *fhand = [fpipe fileHandleForReading];
