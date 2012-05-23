@@ -120,10 +120,24 @@
 - (void)cancelOptionsConnect:(id)sender
 {
     [[RFBConnectionManager sharedManager] cancelConnection];
-    if(sender != [ScoutWindowController sharedScout])
-        [optionsCtrlr cancelConnect:nil];
+    [[SaucePreconnect sharedPreconnect] setCancelled:YES];
+    [[SaucePreconnect sharedPreconnect] cancelPreAuthorize:nil];
+    if(optionsCtrlr)
+        [optionsCtrlr quitSheet];
     self.optionsCtrlr = nil;    
+
+    NSString *errMsg = [[SaucePreconnect sharedPreconnect] errStr];
+    [[SaucePreconnect sharedPreconnect] setErrStr:@""];         // clear error string
+    NSString *header = NSLocalizedString( @"Connection Status", nil );
+    NSString *okayButton = NSLocalizedString( @"Ok", nil );
+    NSBeginAlertSheet(header, okayButton, nil, nil, [[ScoutWindowController sharedScout] window], self, nil, @selector(errDidDismiss:returnCode:contextInfo:), nil, errMsg);
 }
+
+- (void)errDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+    [self showOptionsIfNoTabs];
+}
+
 
 - (IBAction)showLoginDlg:(id)sender 
 {
