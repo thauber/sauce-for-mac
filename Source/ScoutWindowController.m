@@ -181,23 +181,6 @@ static ScoutWindowController* _sharedScout = nil;
     [[NSApp delegate] showOptionsDlg:nil];
 }
 
--(void)errOnConnect:(NSString *)errStr
-{
-    [[SaucePreconnect sharedPreconnect] setCancelled:NO];
-    [[SaucePreconnect sharedPreconnect] setErrStr:@""];
-    [[NSApp delegate] cancelOptionsConnect:self];
-    NSString *header = NSLocalizedString( @"Connection Error", nil );
-    NSString *okayButton = NSLocalizedString( @"Ok", nil );
-    NSBeginAlertSheet(header, okayButton, nil, nil, [self window], self, nil, @selector(errDidDismiss:returnCode:contextInfo:), nil, errStr);
-}
-
-- (void)errDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-    if(![self tabCount])
-        [self newSession:nil];
-}
-
-
 #pragma mark -
 #pragma mark ---- window delegate ----
 

@@ -66,8 +66,6 @@ typedef enum { login,options,session } tabType;
 - (IBAction)newSession:(id)sender;
 - (void)tunnelConnected:(BOOL)is;     // tunnel is ready to use - or not
 
--(void)errOnConnect:(NSString *)errStr;
-
 // UI
 - (void)toggleToolbar;
 - (int)tabCount;
