@@ -181,6 +181,12 @@ static ScoutWindowController* _sharedScout = nil;
     [[NSApp delegate] showOptionsDlg:nil];
 }
 
+-(void)closeAllTabs
+{
+   while([self tabCount])
+       [self closeTab:nil];
+}
+
 #pragma mark -
 #pragma mark ---- window delegate ----
 
@@ -261,7 +267,6 @@ static ScoutWindowController* _sharedScout = nil;
     [bugcamera setEnabled:YES forSegment:0];
     [bugcamera setEnabled:YES forSegment:1];
     [playstop setEnabled:YES forSegment:0];
-//    [playstop setEnabled:YES forSegment:1];
     
     NSTabViewItem *newItem = [[(NSTabViewItem*)[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
     [newItem setView:view];
