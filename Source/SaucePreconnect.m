@@ -117,7 +117,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
             }
         }
     }
-    if(!cancelled)
+    if(!cancelled && !errStr)
         [self curlGetauth];
     [authTimer invalidate];
     self.authTimer = nil;    
@@ -180,15 +180,14 @@ static SaucePreconnect* _sharedPreconnect = nil;
     
     self.cancelled = YES;       // make sure any loops break out
 
-    NSString *errMsg;
     if(tm)
-        errMsg = @"Connection attempt timed out";
-    else if(errStr)
-            errMsg = [errStr copy];
-    self.errStr = nil;
+        self.errStr = @"Connection attempt timed out";
+    else 
+    if(!errStr)
+        self.errStr = @"Connection error";
     [[NSApp delegate]
      performSelectorOnMainThread:@selector(cancelOptionsConnect:)   
-     withObject:errMsg  waitUntilDone:NO];
+     withObject:errStr  waitUntilDone:NO];
 }
 
 // return json object for vnc connection
@@ -353,6 +352,12 @@ static SaucePreconnect* _sharedPreconnect = nil;
     {
         [self.timer invalidate];
         self.timer = nil;
+    }
+    if(errStr)      // lost connection - 
+    {
+        [self cancelPreAuthorize:nil];
+        // close all sessions
+        [[ScoutWindowController sharedScout] closeAllTabs];
     }
 }
 
