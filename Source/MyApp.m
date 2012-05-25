@@ -13,6 +13,7 @@
 #import "RFBView.h"
 #import "AppDelegate.h"
 #import "SessionController.h"
+#import "LoginController.h"
 #import "ScoutWindowController.h"
 #import "Session.h"
 #import "RFBView.h"
@@ -105,7 +106,10 @@
     // you have set up to do this...
     if([[NSApp delegate] optionsCtrlr])
         [[[NSApp delegate] optionsCtrlr] terminateApp];
-    
+    else
+    if([[NSApp delegate] loginCtrlr])
+        [[[NSApp delegate] loginCtrlr] terminateApp];
+
     // Now call the normal implementation
     NSBeginAlertSheet(@"Quit Scout", @"Ok", @"Cancel", nil, [[ScoutWindowController sharedScout] window], self, @selector(quitDidDismiss:returnCode:contextInfo:),nil, nil, @"Do you really want to quit Scout?");    
 }
@@ -116,6 +120,9 @@
         [super terminate:nil];
     else
     {
+        if(![[SaucePreconnect sharedPreconnect] user])
+            [[NSApp delegate] performSelectorOnMainThread:@selector(showLoginDlg:) withObject:nil waitUntilDone:NO]; 
+        else
         [[NSApp delegate] performSelectorOnMainThread:@selector(showOptionsIfNoTabs) withObject:nil waitUntilDone:NO]; 
     }
 } 
