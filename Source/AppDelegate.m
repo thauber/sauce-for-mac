@@ -114,7 +114,8 @@
 - (void)preAuthorizeErr
 {
     NSString *err = [[SaucePreconnect sharedPreconnect] errStr];
-    [optionsCtrlr showError:err];
+    if(err)
+        [optionsCtrlr showError:err];
 }
 
 - (void)cancelOptionsConnect:(id)sender
@@ -127,7 +128,7 @@
     self.optionsCtrlr = nil;    
 
     NSString *errMsg = [[SaucePreconnect sharedPreconnect] errStr];
-    [[SaucePreconnect sharedPreconnect] setErrStr:@""];         // clear error string
+    [[SaucePreconnect sharedPreconnect] setErrStr:nil];         // clear error string
     NSString *header = NSLocalizedString( @"Connection Status", nil );
     NSString *okayButton = NSLocalizedString( @"Ok", nil );
     NSBeginAlertSheet(header, okayButton, nil, nil, [[ScoutWindowController sharedScout] window], self, nil, @selector(errDidDismiss:returnCode:contextInfo:), nil, errMsg);
