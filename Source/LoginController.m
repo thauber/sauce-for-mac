@@ -55,7 +55,12 @@
     return self;
 }
     
-
+-(void)terminateApp
+{
+    [NSApp endSheet:panel];
+    [panel orderOut:nil];
+    [[NSApp delegate] setLoginCtrlr:nil];
+}
 - (IBAction)doCancelLogin:(id)sender 
 {
     if([[SaucePreconnect sharedPreconnect] user])
