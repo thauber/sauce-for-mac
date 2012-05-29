@@ -21,7 +21,7 @@
 {
     if (self = [super init]) 
     {
-        [NSBundle loadNibNamed:@"SnapProgress" owner:self];
+        [NSBundle loadNibNamed:@"snapProgress" owner:self];
         [panel setOpaque:YES];
         [panel setAlphaValue:1.0];
         [urlLabel setHidden:YES];
@@ -39,20 +39,22 @@
     [[ScoutWindowController sharedScout] snapshotDone];
 }
 
-- (void)setServerURL:(NSString*)snapId
+- (void)setServerURL:(NSString*)surl
 {
     if(panel)
     {
-        if(!snapId)
-            snapId = @"Failed to get snap id";
-        NSString *surl = snapId; // TODO: construct url
-
+        NSString *status = @"taken";
+        if(!surl)
+        {
+            surl = @"";
+            status = @"failed to take";
+        }
+        NSString *tstr = [NSString stringWithFormat:@"Server has %@ the snapshot.", status];
         [url setStringValue:surl];
         [urlLabel setHidden:NO];
-        [takingTxt setStringValue:@"Server has taken the snapshot]"];
+        [takingTxt setStringValue:tstr];
         [indicator stopAnimation:self];
         [indicator setHidden:YES];
-        [self OkBtutton:self];
     }
 }
 @end
