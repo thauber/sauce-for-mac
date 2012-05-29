@@ -13,6 +13,7 @@ typedef enum { login,options,session } tabType;
 
 @class PSMTabBarControl;
 @class Session;
+@class SnapProgress;
 
 @interface ScoutWindowController : NSWindowController <NSToolbarDelegate, NSWindowDelegate> {
 	IBOutlet NSTabView					*tabView;
@@ -33,11 +34,11 @@ typedef enum { login,options,session } tabType;
     Session *curSession;
     NSBox *msgBox;
     NSToolbar *toolbar;
-    NSString *bugTitle;
-    NSString *bugDesc;
-    NSString *bugTo;
     NSImageView *tunnelImage;
+    SnapProgress *snapProgress;
+    
 }
+@property (assign) IBOutlet NSTabView *tabView;
 @property (assign) IBOutlet NSImageView *tunnelImage;
 @property (assign) IBOutlet NSToolbar *toolbar;
 @property (assign) IBOutlet NSBox *msgBox;
@@ -53,16 +54,15 @@ typedef enum { login,options,session } tabType;
 @property (assign)IBOutlet NSTextField *userStat;
 @property (assign)IBOutlet NSTextField *osbrowser;
 @property (assign) Session *curSession;
-@property (copy) NSString *bugTitle;
-@property (copy) NSString *bugDesc;
-@property (copy) NSString *bugTo;
-
+@property (retain) SnapProgress *snapProgress;
 
 +(ScoutWindowController*)sharedScout;
 - (IBAction)addNewTab:(id)sender;
 
 - (IBAction)doPlayStop:(id)sender;
 - (IBAction)doBugCamera:(id)sender;
+- (void)submitBug;
+- (void)snapshotDone;
 - (IBAction)newSession:(id)sender;
 - (void)tunnelConnected:(BOOL)is;     // tunnel is ready to use - or not
 
@@ -90,7 +90,5 @@ typedef enum { login,options,session } tabType;
 - (void)windowDidResize:(NSNotification *)aNotification;
 - (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)proposedFrameSize;
 
--(void)submitBug:(NSString*)title desc:(NSString*)description to:(NSString*)to;
--(void)snapshotSuccess;
 
 @end

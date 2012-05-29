@@ -12,12 +12,14 @@
 #import "PSMTabBarControl/PSMTabBarControl.h"
 #import "PSMTabBarControl/PSMTabStyle.h"
 #import "BugInfoController.h"
+#import "SnapProgress.h"
 #import "RFBConnectionManager.h"
 #import "RFBConnection.h"
 #import "Session.h"
 
 @implementation ScoutWindowController
 
+@synthesize tabView;
 @synthesize urlmsg;
 @synthesize osmsg;
 @synthesize osversionmsg;
@@ -33,10 +35,7 @@
 @synthesize userStat;
 @synthesize osbrowser;
 @synthesize curSession;
-@synthesize bugTitle;
-@synthesize bugDesc;
-@synthesize bugTo;
-
+@synthesize snapProgress;
 
 static ScoutWindowController* _sharedScout = nil;
 
@@ -111,16 +110,12 @@ static ScoutWindowController* _sharedScout = nil;
 
 - (IBAction)doBugCamera:(id)sender
 {
-    self.bugTitle=nil;
-    self.bugDesc=nil;
-    self.bugTo=nil;
-    NSView *view = [[tabView selectedTabViewItem] view];
-    
     int sel = [sender selectedSegment];
     if(sel==0)      // bug
     {
         // modal dlg for title and description
         BugInfoController *bugCtrl = [[BugInfoController alloc] init];
+        [[NSApp delegate] setBugCtrlr:bugCtrl];
         [bugcamera setSelected:NO forSegment:0];
         [bugCtrl runSheetOnWindow:[self window]];                
     }
@@ -137,43 +132,45 @@ static ScoutWindowController* _sharedScout = nil;
         mins = ptm->tm_min;
         NSString *desc = [NSString stringWithFormat:@"A%%20snapshot%%20taken%%20at%%20%d:%d",hrs,mins];
         [bugcamera setSelected:NO forSegment:1];
-        [[SaucePreconnect sharedPreconnect] snapshotBug:view title:title desc:desc];
+        self.snapProgress = [[SnapProgress alloc] init];
+        [[SaucePreconnect sharedPreconnect] snapshotBug:title desc:desc];
     }
 }
 
--(void)submitBug:(NSString*)title desc:(NSString*)description to:(NSString*)to
-{
-    if([to length])
+-(void)submitBug        // after user submits from buginfo sheet
+{    
+    BugInfoController *bugctrlr = [[NSApp delegate] bugCtrlr];
+    if(bugctrlr)
     {
-        self.bugTitle = title;
-        self.bugDesc = description;
-        self.bugTo = to;
+        NSString *title = [[bugctrlr title] stringValue];
+        NSString *description = [[bugctrlr description] stringValue];
+        self.snapProgress = [[SnapProgress alloc] init];
+        [[SaucePreconnect sharedPreconnect] snapshotBug:title desc:description];
     }
-    
-    NSView *view = [[tabView selectedTabViewItem] view];
-    [[SaucePreconnect sharedPreconnect] snapshotBug:view title:title desc:description];
-    
 }
 
--(void)snapshotSuccess
-{
-    NSBeginAlertSheet(@"Snapshot", @"Ok", nil, nil, [self window], self, nil, @selector(snapOkDidDismiss:returnCode:contextInfo:), nil, @"Snapshot saved to your Sauce Labs account");    
-    
-    if(bugTo)
+-(void)snapshotDone
+{    
+    if([[NSApp delegate] bugCtrlr])
     {
-        // send email
-        NSString *encodedSubject = [NSString stringWithFormat:@"SUBJECT=%@", [bugTitle stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-        NSString *encodedBody = [NSString stringWithFormat:@"BODY=%@", [bugDesc stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-        NSString *encodedTo = [bugTo stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSString *encodedURLString = [NSString stringWithFormat:@"mailto:%@?%@&%@", encodedTo, encodedSubject, encodedBody];
-        NSURL *mailtoURL = [NSURL URLWithString:encodedURLString];
-        [[NSWorkspace sharedWorkspace] openURL:mailtoURL];
+        BugInfoController *bugctrlr = [[NSApp delegate] bugCtrlr];
+        NSString *str = [[bugctrlr toFld] stringValue];
+        if([str length])
+        {
+            // send email
+            NSString *encodedSubject = [NSString stringWithFormat:@"SUBJECT=%@", [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            str = [[bugctrlr description] stringValue];
+            NSString *encodedBody = [NSString stringWithFormat:@"BODY=%@", [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            str = [[bugctrlr title] stringValue];            
+            NSString *encodedTo = [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            NSString *encodedURLString = [NSString stringWithFormat:@"mailto:%@?%@&%@", encodedTo, encodedSubject, encodedBody];
+            NSURL *mailtoURL = [NSURL URLWithString:encodedURLString];
+            [[NSWorkspace sharedWorkspace] openURL:mailtoURL];
+        }
     }
-}
-
-- (void)snapOkDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-    
+    self.snapProgress = nil;
+    [[NSApp delegate] setBugCtrlr:nil];
+    [[NSApp delegate] showOptionsIfNoTabs];        // in case last session timed out or internet connection lost
 }
 
 - (IBAction)newSession:(id)sender
