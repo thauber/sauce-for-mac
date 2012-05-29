@@ -16,6 +16,7 @@
 #import "SaucePreconnect.h"
 #import "SessionController.h"
 #import "TunnelController.h"
+#import "BugInfoController.h"
 #import "ScoutWindowController.h"
 
 
@@ -26,6 +27,7 @@
 @synthesize optionsCtrlr;
 @synthesize loginCtrlr;
 @synthesize tunnelCtrlr;
+@synthesize bugCtrlr;
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification
 {
@@ -94,7 +96,7 @@
 
 -(BOOL)VMinFront    // no modal dialogs running and a vm is running
 {
-    BOOL notFront = self.optionsCtrlr || self.loginCtrlr;
+    BOOL notFront = self.optionsCtrlr || self.loginCtrlr || self.bugCtrlr;
     notFront = notFront || (self.tunnelCtrlr && ![tunnelCtrlr hiddenDisplay]);
     return !notFront;
 }

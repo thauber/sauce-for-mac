@@ -12,6 +12,7 @@
 @class SessionController;
 @class LoginController;
 @class TunnelController;
+@class BugInfoController;
 
 @interface AppDelegate : NSObject {
 	IBOutlet NSMenuItem *mRendezvousMenuItem;
@@ -20,6 +21,7 @@
     SessionController *optionsCtrlr;
     LoginController *loginCtrlr;
     TunnelController *tunnelCtrlr;
+    BugInfoController *bugCtrlr;
     NSMenuItem *tunnelMenuItem;
     NSMenuItem *tunnelDspMenuItem;
 }
@@ -34,6 +36,7 @@
 @property (retain)SessionController *optionsCtrlr;
 @property (retain)LoginController *loginCtrlr;
 @property (retain)TunnelController *tunnelCtrlr;
+@property (retain)BugInfoController *bugCtrlr;
 
 - (IBAction)showOptionsDlg:(id)sender;
 - (void)showOptionsIfNoTabs;
