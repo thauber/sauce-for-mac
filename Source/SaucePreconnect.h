@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SnapProgress.h"
 
 @class TunnelController;
 
@@ -71,8 +72,8 @@
 - (BOOL)checkUserLogin:(NSString *)uuser  key:(NSString*)kkey;
 - (void)signupNew:(NSString*)uuserNew passNew:(NSString*)upassNew 
         emailNew:(NSString*)uemailNew;
-- (void)postSnapshotBug:(id)view snapName:(NSString *)snapName title:(NSString *)title desc:(NSString *)desc;
-- (void)snapshotBug:(id)view title:(NSString *)title desc:(NSString *)desc;
+- (void)postSnapshotBug:(NSString *)snapName title:(NSString *)title desc:(NSString *)desc;
+- (void)snapshotBug:(NSString *)title desc:(NSString *)desc;
 
 
 @end

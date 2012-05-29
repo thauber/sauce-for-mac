@@ -533,18 +533,22 @@ static SaucePreconnect* _sharedPreconnect = nil;
     }    
 }
 
-- (void)postSnapshotBug:(id)view snapName:(NSString *)snapName  
-               title:(NSString *)title desc:(NSString *)desc
-{    
+- (void)postSnapshotBug:(NSString *)snapName title:(NSString *)title desc:(NSString *)desc
+{ 
+    NSView *view = [[[[ScoutWindowController sharedScout] tabView] selectedTabViewItem] view];
+
     NSDictionary *sdict = [self sessionInfo:view];
     NSString *aliveid = [sdict objectForKey:@"liveId"];
     NSString *auser = [sdict objectForKey:@"user"];
     NSString *akey = [sdict objectForKey:@"ukey"];
+    NSString *ajobid = [sdict objectForKey:@"jobId"];
 
 
     NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/scout/live/%@/reportbug?&ssname=%@&title=%@&description=%@'", auser, akey, aliveid, snapName, title, desc];
     
     self.errStr = nil;
+    NSString *surl;
+    SnapProgress *sp = [[ScoutWindowController sharedScout] snapProgress];
     while(1)
     {
         if(cancelled)
@@ -559,8 +563,6 @@ static SaucePreconnect* _sharedPreconnect = nil;
         [ftask waitUntilExit];
         if([ftask terminationStatus])
         {
-            self.errStr = @"Failed NSTask in postSnapshotBug";
-            [ftask release];
             break;
         }
         if(cancelled)
@@ -572,22 +574,18 @@ static SaucePreconnect* _sharedPreconnect = nil;
             NSData *data = [fhand readDataToEndOfFile];		 
             [ftask release];
             NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            NSString *snapId = [self jsonVal:jsonString key:@"c"];            
-            if(snapId)
-            {
-                NSLog(@"got snap id:%@",snapId);
-                [[ScoutWindowController sharedScout] snapshotSuccess];
-            }
-            else {
-                self.errStr = @"Failed to get snapshot id";
-            }
+            NSString *snapId = [self jsonVal:jsonString key:@"c"];
+            if(snapId)  // QUERY: what is the id for?  jobId isn't always correct?
+                surl = [NSString stringWithFormat:@"https://saucelabs.com/jobs/%@/%@",ajobid,snapName];
             break;
         }
     }        
+    [sp setServerURL:surl];
 }
 
-- (void)snapshotBug:(id)view  title:(NSString *)title desc:(NSString *)desc
+- (void)snapshotBug:(NSString *)title desc:(NSString *)desc
 {
+    NSView *view = [[[[ScoutWindowController sharedScout] tabView] selectedTabViewItem] view];
     NSDictionary *sdict = [self sessionInfo:view];
     NSString *aliveid = [sdict objectForKey:@"liveId"];
     NSString *auser = [sdict objectForKey:@"user"];
@@ -628,8 +626,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
             BOOL res = [rstr boolValue];
             if(res)
             {
-                NSString *msg = [self jsonVal:jsonString key:@"message"];            
-                [self postSnapshotBug:view snapName:msg title:title desc:desc];
+                NSString *snapName = [self jsonVal:jsonString key:@"message"];            
+                [self postSnapshotBug:snapName title:title desc:desc];
                 break;
             }
             else
