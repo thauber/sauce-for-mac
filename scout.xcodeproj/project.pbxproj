@@ -14,6 +14,9 @@
 		0F486EA4155CBD1A004502C4 /* dotred.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F486EA2155CBD1A004502C4 /* dotred.png */; };
 		0F486EA7155CC2CF004502C4 /* Sauce-Connect.jar in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F486EA6155CC2CF004502C4 /* Sauce-Connect.jar */; };
 		0F486EA8155CC5CA004502C4 /* Sauce-Connect.jar in Resources */ = {isa = PBXBuildFile; fileRef = 0F486EA6155CC2CF004502C4 /* Sauce-Connect.jar */; };
+		0F48D0C9157528950067B689 /* snapProgress.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F48D0C8157528950067B689 /* snapProgress.xib */; };
+		0F48D0CD157528C20067B689 /* SnapProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F48D0CB157528C20067B689 /* SnapProgress.h */; };
+		0F48D0CE157528C20067B689 /* SnapProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F48D0CC157528C20067B689 /* SnapProgress.m */; };
 		0F7BE39E1522183800B64686 /* LoginController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F7BE39C1522183800B64686 /* LoginController.h */; };
 		0F7BE39F1522183800B64686 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7BE39D1522183800B64686 /* LoginController.m */; };
 		0F7BF6F11523FEF400F1A478 /* LoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7BF6F01523FEF400F1A478 /* LoginController.xib */; };
@@ -318,6 +321,9 @@
 		0F486EA1155CBD1A004502C4 /* dotgreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dotgreen.png; path = Resources/dotgreen.png; sourceTree = "<group>"; };
 		0F486EA2155CBD1A004502C4 /* dotred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dotred.png; path = Resources/dotred.png; sourceTree = "<group>"; };
 		0F486EA6155CC2CF004502C4 /* Sauce-Connect.jar */ = {isa = PBXFileReference; lastKnownFileType = archive.jar; name = "Sauce-Connect.jar"; path = "Resources/Sauce-Connect.jar"; sourceTree = "<group>"; };
+		0F48D0C8157528950067B689 /* snapProgress.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = snapProgress.xib; path = Resources/snapProgress.xib; sourceTree = "<group>"; };
+		0F48D0CB157528C20067B689 /* SnapProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapProgress.h; sourceTree = "<group>"; };
+		0F48D0CC157528C20067B689 /* SnapProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapProgress.m; sourceTree = "<group>"; };
 		0F7BE39C1522183800B64686 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
 		0F7BE39D1522183800B64686 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
 		0F7BF6F01523FEF400F1A478 /* LoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginController.xib; path = Resources/LoginController.xib; sourceTree = "<group>"; };
@@ -731,6 +737,7 @@
 				0F99617815267C6C002657A9 /* windows_color.pdf */,
 				0F7BF6F01523FEF400F1A478 /* LoginController.xib */,
 				0F7C606C152A964900DA9A4A /* SessionController.xib */,
+				0F48D0C8157528950067B689 /* snapProgress.xib */,
 				0F3A18D015617D39007BAA78 /* tunnel.xib */,
 				0FD5668F1545B17B0007C94A /* BugInfo.xib */,
 				DAC8077D12FEC38400C4ADB6 /* ssh-helper.sh */,
@@ -1013,6 +1020,8 @@
 				0FD566921545B1A90007C94A /* BugInfoController.m */,
 				0F3DC43B155D6F760069F7AB /* TunnelController.h */,
 				0F3DC43C155D6F760069F7AB /* TunnelController.m */,
+				0F48D0CB157528C20067B689 /* SnapProgress.h */,
+				0F48D0CC157528C20067B689 /* SnapProgress.m */,
 				DA78379712DE159800F1893E /* SshWaiter.h */,
 				DA78379812DE159800F1893E /* SshWaiter.m */,
 				DAD6DEFC12DCF583001FD9D6 /* SshTunnel.h */,
@@ -1234,6 +1243,7 @@
 				0FD424F2153736AA00682AD6 /* ScoutWindowController.h in Headers */,
 				0FD566931545B1A90007C94A /* BugInfoController.h in Headers */,
 				0F3DC43D155D6F760069F7AB /* TunnelController.h in Headers */,
+				0F48D0CD157528C20067B689 /* SnapProgress.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1331,6 +1341,7 @@
 				0F486EA3155CBD1A004502C4 /* dotgreen.png in Resources */,
 				0F486EA4155CBD1A004502C4 /* dotred.png in Resources */,
 				0F3A18D115617D39007BAA78 /* tunnel.xib in Resources */,
+				0F48D0C9157528950067B689 /* snapProgress.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1485,6 +1496,7 @@
 				0FD424F3153736AA00682AD6 /* ScoutWindowController.m in Sources */,
 				0FD566941545B1A90007C94A /* BugInfoController.m in Sources */,
 				0F3DC43E155D6F760069F7AB /* TunnelController.m in Sources */,
+				0F48D0CE157528C20067B689 /* SnapProgress.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
