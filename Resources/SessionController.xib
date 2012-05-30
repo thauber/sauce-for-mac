@@ -1746,7 +1746,6 @@
 									<string key="NSFrame">{{549, 373}, {59, 17}}</string>
 									<reference key="NSSuperview" ref="277014095"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:1505</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="981366820">
@@ -2187,6 +2186,14 @@
 						<reference key="destination" ref="395266941"/>
 					</object>
 					<int key="connectionID">1239</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">initialFirstResponder</string>
+						<reference key="source" ref="698170591"/>
+						<reference key="destination" ref="824176155"/>
+					</object>
+					<int key="connectionID">1339</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3268,7 +3275,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1338</int>
+			<int key="maxID">1339</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3276,16 +3283,11 @@
 					<string key="className">SessionController</string>
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="cancelConnect:">id</string>
 						<string key="connect:">id</string>
 						<string key="performClose:">id</string>
 						<string key="selectBrowser:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="cancelConnect:">
-							<string key="name">cancelConnect:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="connect:">
 							<string key="name">connect:</string>
 							<string key="candidateClassName">id</string>
