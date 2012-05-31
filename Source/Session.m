@@ -549,15 +549,13 @@ enum {
 
 - (void)windowDidBecomeKey
 {
-	[connection installMouseMovedTrackingRect];
-	[connection setFrameBufferUpdateSeconds: [[PrefController sharedController] frontFrameBufferUpdateSeconds]];
+    [[RFBConnectionManager sharedManager] setSessionsUpdateIntervals];
     [rfbView setTint:[[connection profile] tintWhenFront:YES]];
 }
 
 - (void)windowDidResignKey
 {
-	[connection removeMouseMovedTrackingRect];
-	[connection setFrameBufferUpdateSeconds: [[PrefController sharedController] otherFrameBufferUpdateSeconds]];
+    [[RFBConnectionManager sharedManager] setSessionsUpdateIntervals];
     [rfbView setTint:[[connection profile] tintWhenFront:NO]];
 	
 	//Reset keyboard state on remote end
