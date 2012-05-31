@@ -340,10 +340,10 @@ static SaucePreconnect* _sharedPreconnect = nil;
     return str;
 }
 
--(void)startHeartbeat       // 1 minute is ok; at 2 minutes, server times out
+-(void)startHeartbeat       // has to be 30 seconds at most
 {    
     if(!self.timer)    
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(heartbeat:) userInfo:nil repeats:YES];
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(heartbeat:) userInfo:nil repeats:YES];
 }
 
 -(void)cancelHeartbeat
