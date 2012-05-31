@@ -181,10 +181,17 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
 	float       interval;
 	while (session = [enumerator nextObject])
     {
-		if ([[ScoutWindowController sharedScout] curSession] == session) 
+		if ([[ScoutWindowController sharedScout] curSession] == session)
+        {
             interval = [[PrefController sharedController] frontFrameBufferUpdateSeconds];
+            [[session connection] installMouseMovedTrackingRect];
+
+        }
         else
+        {
             interval = [[PrefController sharedController] otherFrameBufferUpdateSeconds];
+            [[session connection] removeMouseMovedTrackingRect];
+        }
             
         [session setFrameBufferUpdateSeconds: interval];
 	}
