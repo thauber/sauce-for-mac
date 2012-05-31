@@ -351,6 +351,8 @@ static ScoutWindowController* _sharedScout = nil;
             img = [NSImage imageNamed:@"chrome_color.pdf"];
         else if([str isEqualToString:@"safari"])
             img = [NSImage imageNamed:@"safari_color.icns"];
+        else if([str isEqualToString:@"safariproxy"])
+            img = [NSImage imageNamed:@"safari_color.icns"];
         else if([str isEqualToString:@"opera"])
             img = [NSImage imageNamed:@"opera_color.pdf"];
         if(img)
