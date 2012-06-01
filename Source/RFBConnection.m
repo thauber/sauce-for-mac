@@ -402,10 +402,12 @@
             _frameUpdateTimer = [[NSTimer scheduledTimerWithTimeInterval: _frameBufferUpdateSeconds target: self selector: @selector(requestFrameBufferUpdate:) userInfo: nil repeats: NO] retain];
         }
     } else {
+      if(0)   // any reason to not run without delay?
+      {
         NSTimeInterval delay;
 
         delay = [_lastUpdateRequestDate timeIntervalSinceNow] + 1.0/60.0;
-        if(0) // (_lastUpdateRequestDate && delay > 0.0)  // [rda] no reason to not run flat out, is there?
+        if(_lastUpdateRequestDate && delay > 0.0)  // [rda] no reason to not run flat out, is there?
         {
             /* Delays update request so that we send at most 60/second, which is
                fast as will be visible. Note that an NSTimer will be too slow to
@@ -415,7 +417,7 @@
             t.tv_nsec = (long) (delay * 1000.0 * 1000.0 * 1000.0);
             nanosleep(&t, NULL);
         }
-
+      }
         [self requestFrameBufferUpdate: nil];
     }
 
@@ -426,8 +428,8 @@
 	[_frameUpdateTimer invalidate];
 	[_frameUpdateTimer release];
 	_frameUpdateTimer = nil;
-
-    [self requestUpdate:[rfbView bounds] incremental:YES];
+    if(!sender)
+        [self requestUpdate:[rfbView bounds] incremental:YES];
 }
 
 - (void)requestUpdate:(NSRect)frame incremental:(BOOL)aFlag
