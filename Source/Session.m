@@ -401,8 +401,8 @@ enum {
 
 - (void)frameBufferUpdateComplete
 {
-    if ([optionPanel isVisible])
-        [statisticField setStringValue:[connection statisticsString]];
+//    if ([optionPanel isVisible])
+//        [statisticField setStringValue:[connection statisticsString]];
 }
 
 - (void)resize:(NSSize)size
