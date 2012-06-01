@@ -508,7 +508,7 @@ enum {
 
 - (void)windowDidDeminiaturize
 {
-    float s = [[PrefController sharedController] frontFrameBufferUpdateSeconds];
+    float s = [[PrefController sharedController] otherFrameBufferUpdateSeconds];
 
     [connection setFrameBufferUpdateSeconds:s];
 	[connection installMouseMovedTrackingRect];
