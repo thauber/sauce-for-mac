@@ -39,7 +39,7 @@ static int const kPrefsVersion = 0x00000002;
 		[NSNumber numberWithBool: NO],			kPrefs_FullscreenScrollbars_Key,
 		[NSNumber numberWithBool: NO],			kPrefs_UseRendezvous_Key,
 		[NSNumber numberWithFloat: 0],			kPrefs_FrontFrameBufferUpdateSeconds_Key,
-		[NSNumber numberWithFloat: 0.9],		kPrefs_OtherFrameBufferUpdateSeconds_Key, 
+		[NSNumber numberWithFloat: 4.0],		kPrefs_OtherFrameBufferUpdateSeconds_Key, 
 		[NSNumber numberWithBool: NO],			kPrefs_AutoReconnect_Key, 
 		[NSNumber numberWithDouble: 30.0],		kPrefs_IntervalBeforeReconnect_Key, 
 		nil,									nil];
@@ -54,7 +54,7 @@ static int const kPrefsVersion = 0x00000002;
 	[defaults registerDefaults: defaultDict];
     // force defaults
     [[NSUserDefaults standardUserDefaults] setFloat:0 forKey:kPrefs_FrontFrameBufferUpdateSeconds_Key];
-    [[NSUserDefaults standardUserDefaults] setFloat:0.9 forKey:kPrefs_OtherFrameBufferUpdateSeconds_Key];
+    [[NSUserDefaults standardUserDefaults] setFloat:4.0 forKey:kPrefs_OtherFrameBufferUpdateSeconds_Key];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -158,9 +158,10 @@ static int const kPrefsVersion = 0x00000002;
 - (float)maxPossibleFrameBufferUpdateSeconds;
 {
 	// this is a bit ugly - our window might not be loaded yet, so if it's not, hardcode the value, yick
-	if ( mWindow )
-		return [mFrontInverseCPUSlider maxValue];
-	return 1;
+//	if ( mWindow )
+//		return [mFrontInverseCPUSlider maxValue];
+//	return 1;
+    return [self otherFrameBufferUpdateSeconds];
 }
 
 
