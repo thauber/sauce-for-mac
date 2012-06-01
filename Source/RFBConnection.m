@@ -297,14 +297,12 @@
 
 - (BOOL)connectShared
 {
-//    return [server_ shared];
-    return YES;
+    return YES;     // [rda] forced
 }
 
 - (BOOL)viewOnly
 {
-//	return [server_ viewOnly];
-    return NO;
+    return NO;      // [rda] forced
 }
 
 - (void)invalidateRect:(NSRect)aRect
@@ -313,7 +311,8 @@
     NSRect r = aRect;
 
     r.origin.y = b.size.height - NSMaxY(r);
-    [rfbView setNeedsDisplayInRect: r];
+    if(_frameBufferUpdateSeconds == 0.0)      // [rda] only update front session
+        [rfbView setNeedsDisplayInRect: r];
 }
 
 - (void)frameBufferUpdateBeginning
@@ -398,7 +397,7 @@
 
 /* Request frame buffer update, possibly after a delay */
 - (void)queueUpdateRequest {
-    if (_frameBufferUpdateSeconds > 0.0) {
+    if (_frameBufferUpdateSeconds > 0.0) {  
         if (_frameUpdateTimer == nil) {
             _frameUpdateTimer = [[NSTimer scheduledTimerWithTimeInterval: _frameBufferUpdateSeconds target: self selector: @selector(requestFrameBufferUpdate:) userInfo: nil repeats: NO] retain];
         }
@@ -406,7 +405,8 @@
         NSTimeInterval delay;
 
         delay = [_lastUpdateRequestDate timeIntervalSinceNow] + 1.0/60.0;
-        if (_lastUpdateRequestDate && delay > 0.0) {
+        if(0) // (_lastUpdateRequestDate && delay > 0.0)  // [rda] no reason to not run flat out, is there?
+        {
             /* Delays update request so that we send at most 60/second, which is
                fast as will be visible. Note that an NSTimer will be too slow to
                be responsive here. */
@@ -895,7 +895,7 @@ static NSString* byteString(double d)
 
 - (void)setFrameBufferUpdateSeconds: (float)seconds {
     int     hadManualUpdates = _hasManualFrameBufferUpdates;
-
+    
 	_frameBufferUpdateSeconds = seconds;
 	_hasManualFrameBufferUpdates = _frameBufferUpdateSeconds >= [[PrefController sharedController] maxPossibleFrameBufferUpdateSeconds];
 
