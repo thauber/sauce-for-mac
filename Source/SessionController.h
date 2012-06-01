@@ -38,6 +38,7 @@
 - (void)terminateApp;
 - (void)runSheet;
 - (IBAction)connect:(id)sender;
+- (void)startConnecting;
 - (IBAction)selectBrowser:(id)sender;
 - (void)connectionSucceeded;
 - (void)showError:(NSString *)errStr;

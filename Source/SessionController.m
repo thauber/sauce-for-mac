@@ -162,35 +162,60 @@
     NSString *browser = [self selected:@"browser"];
     NSString *version = [self selected:@"version"];
     NSString *urlstr = [self.url stringValue];
-            
-    [connectBtn setState:NSOffState];
-    if([os length])
-    {
-        [url setEnabled:NO];
-        [connectIndicator startAnimation:self];
-        [connectIndicatorText setStringValue:@"Connecting..."];
-        
-        [connectIndicatorText display];
-        [cancelBtn setAction:@selector(performClose:)];
-        [cancelBtn setHidden:NO];
-        [connectBtn setEnabled:NO];
-	    [[SaucePreconnect sharedPreconnect] setOptions:os browser:browser browserVersion:version url:urlstr];
-        [NSApp endSheet:panel];
-
-        [NSThread detachNewThreadSelector:@selector(preAuthorize:) toTarget:[SaucePreconnect sharedPreconnect] withObject:nil];
-    }
-    else 
-    {
-        NSBeginAlertSheet(@"Session Options Error", @"Okay", nil, nil, [NSApp keyWindow], self,nil, NULL, NULL, @"User Needs to select a browser");    
-    }
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:urlstr  forKey:kSessionURL];
     [defaults setInteger:selectedTag  forKey:kSessionTag];
     NSString *frStr = NSStringFromRect(selectedFrame);
     [defaults setObject:frStr  forKey:kSessionFrame];
+
+    [[SaucePreconnect sharedPreconnect] setOptions:os browser:browser browserVersion:version url:urlstr];
+    [NSApp endSheet:panel];
+
+    if(urlstr)
+    {
+        NSURL *uurl = [NSURL URLWithString:urlstr];
+        if(uurl)        // check for localhost
+        {
+            NSString *uhost = [uurl host];
+            BOOL isLocalURL = ![uhost length] || [uhost isEqualToString:@"localhost"] || [uhost isEqualToString:@"127.0.0.1"];
+            if(![[NSApp delegate] tunnelCtrlr] && isLocalURL)       // prompt for opening tunnel
+            {
+                NSBeginAlertSheet(@"Could Want Tunnel", @"Okay", @"No Tunnel", nil, [NSApp keyWindow], self,nil, @selector(tunnelDidDismiss:returnCode:contextInfo:), NULL, @"Do you want to connect using a tunnel?");    
+            }
+            else 
+                [self startConnecting];
+        }
+    }
 }
 
+- (void)tunnelDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+    switch (returnCode)
+    {
+        case NSAlertDefaultReturn:
+            [[NSApp delegate] doTunnel:self];
+            return;
+        case NSAlertAlternateReturn:
+            [self startConnecting];
+            return;
+    }
+}
+   
+- (void)startConnecting
+{
+    [connectBtn setState:NSOffState];
+    [url setEnabled:NO];
+    [connectIndicator startAnimation:self];
+    [connectIndicatorText setStringValue:@"Connecting..."];
+    
+    [connectIndicatorText display];
+    [cancelBtn setAction:@selector(performClose:)];
+    [cancelBtn setHidden:NO];
+    [connectBtn setEnabled:NO];
+    [NSThread detachNewThreadSelector:@selector(preAuthorize:) toTarget:[SaucePreconnect sharedPreconnect] withObject:nil];
+}
+                                  
 -(void)connectionSucceeded
 {
     [panel orderOut:nil];
