@@ -212,12 +212,16 @@ static ScoutWindowController* _sharedScout = nil;
         [curSession windowDidMiniaturize];    
 }
 
+- (BOOL)windowShouldClose:(id)sender
+{
+    [NSApp terminate:nil];
+    return NO;
+}
+
 - (void)windowWillClose:(NSNotification *)aNotification
 {
     if(curSession)
         [curSession windowWillClose];
-    [self autorelease];
-    [NSApp terminate:nil];
 }
 
 - (void)windowDidResize:(NSNotification *)aNotification
