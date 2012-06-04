@@ -45,6 +45,7 @@
 	// Preferences Window
 - (void)showWindow;
 
+#if 0
 	// Action Methods
 - (IBAction)frontInverseCPUSliderChanged: (NSSlider *)sender;
 - (IBAction)otherInverseCPUSliderChanged: (NSSlider *)sender;
@@ -52,5 +53,6 @@
 - (IBAction)toggleFullscreenScrollbars: (NSButton *)sender;
 - (IBAction)toggleFullscreenWarning: (NSButton *)sender;
 - (IBAction)toggleUseRendezvous: (id)sender;
+#endif
 
 @end

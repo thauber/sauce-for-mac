@@ -209,7 +209,7 @@ static int const kPrefsVersion = 0x00000002;
 	[mWindow makeKeyAndOrderFront: nil];
 }
 
-
+#if 0
 #pragma mark -
 #pragma mark Action Methods
 
@@ -219,7 +219,7 @@ static int const kPrefsVersion = 0x00000002;
 	float updateDelay = [sender floatValue];
 	updateDelay = (float)[sender maxValue] - updateDelay;
 	[[NSUserDefaults standardUserDefaults] setFloat: updateDelay forKey: kPrefs_FrontFrameBufferUpdateSeconds_Key];
-//	[[RFBConnectionManager sharedManager] setFrontWindowUpdateInterval: updateDelay];
+	[[RFBConnectionManager sharedManager] setFrontWindowUpdateInterval: updateDelay];
 }
 
 - (IBAction)otherInverseCPUSliderChanged: (NSSlider *)sender
@@ -227,7 +227,7 @@ static int const kPrefsVersion = 0x00000002;
 	float updateDelay = [sender floatValue];
 	updateDelay = (float)[sender maxValue] - updateDelay;
 	[[NSUserDefaults standardUserDefaults] setFloat: updateDelay forKey: kPrefs_OtherFrameBufferUpdateSeconds_Key];
-//	[[RFBConnectionManager sharedManager] setOtherWindowUpdateInterval: updateDelay];
+	[[RFBConnectionManager sharedManager] setOtherWindowUpdateInterval: updateDelay];
 }
 
 
@@ -260,5 +260,6 @@ static int const kPrefsVersion = 0x00000002;
 
 	[[RFBConnectionManager sharedManager] useRendezvous: use];
 }
+#endif
 
 @end
