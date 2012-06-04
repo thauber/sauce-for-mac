@@ -148,8 +148,6 @@
 		7F7A945B05E71B5C00E20416 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F48D78040EDD5100BD55BA /* Carbon.framework */; };
 		7F7DE7D6080F39DF006BF1DF /* ServerStandAlone.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F7DE7D4080F39DF006BF1DF /* ServerStandAlone.h */; };
 		7F7DE7D7080F39DF006BF1DF /* ServerStandAlone.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7DE7D5080F39DF006BF1DF /* ServerStandAlone.m */; };
-		7FB3EA1B0804E758003757C9 /* URLHandlerCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F088F2805E1DA4800336456 /* URLHandlerCommand.h */; };
-		7FB3EA1C0804E75E003757C9 /* URLHandlerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F088F2905E1DA4800336456 /* URLHandlerCommand.m */; };
 		7FB3EA8D0804ECDB003757C9 /* CotVNC.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = 7FF0C9A705CDC9A0008E39DD /* CotVNC.scriptTerminology */; };
 		7FB3EA8E0804ECE0003757C9 /* CotVNC.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = 7FF0C9A305CDBDCE008E39DD /* CotVNC.scriptSuite */; };
 		7FB6A8D1068AB5E3005E5E49 /* ServerFromRendezvous.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC6DF6D05C31B0D0028A970 /* ServerFromRendezvous.h */; };
@@ -285,7 +283,6 @@
 		E2B083E30763AA7D00CE24C1 /* ServerFromConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = E2B083E10763AA7D00CE24C1 /* ServerFromConnection.h */; };
 		E2B083EF0763AA9A00CE24C1 /* ListenerController.h in Headers */ = {isa = PBXBuildFile; fileRef = E2B083ED0763AA9A00CE24C1 /* ListenerController.h */; };
 		E2B083F00763AA9A00CE24C1 /* ListenerController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B083EE0763AA9A00CE24C1 /* ListenerController.m */; };
-		E2B083F90763AAC200CE24C1 /* ListenDialog.nib in Resources */ = {isa = PBXBuildFile; fileRef = E2B083F70763AAC200CE24C1 /* ListenDialog.nib */; };
 		E2CA651806DA451600B70BDF /* help in Resources */ = {isa = PBXBuildFile; fileRef = E2CA650906DA451500B70BDF /* help */; };
 		E2F3A2CB06D44755005EB917 /* PrefController.h in Headers */ = {isa = PBXBuildFile; fileRef = E2F3A2C906D44755005EB917 /* PrefController.h */; };
 		E2F3A2CC06D44755005EB917 /* PrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F3A2CA06D44755005EB917 /* PrefController.m */; };
@@ -356,8 +353,6 @@
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		7F088F2405E1D81100336456 /* ServerDataManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ServerDataManager.h; sourceTree = "<group>"; };
 		7F088F2505E1D81100336456 /* ServerDataManager.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ServerDataManager.m; sourceTree = "<group>"; };
-		7F088F2805E1DA4800336456 /* URLHandlerCommand.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = URLHandlerCommand.h; sourceTree = "<group>"; };
-		7F088F2905E1DA4800336456 /* URLHandlerCommand.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = URLHandlerCommand.m; sourceTree = "<group>"; };
 		7F7DE7D4080F39DF006BF1DF /* ServerStandAlone.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ServerStandAlone.h; sourceTree = "<group>"; };
 		7F7DE7D5080F39DF006BF1DF /* ServerStandAlone.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ServerStandAlone.m; sourceTree = "<group>"; };
 		7FBB0A6605F5BC9700F716C4 /* ServerDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ServerDataViewController.h; sourceTree = "<group>"; };
@@ -383,7 +378,6 @@
 		DA231DF512BD562100D3AD44 /* Keymap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Keymap.h; sourceTree = "<group>"; };
 		DA335CCD12DA4A6C00C70987 /* Session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Session.h; sourceTree = "<group>"; };
 		DA335CCE12DA4A6C00C70987 /* Session.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Session.m; sourceTree = "<group>"; };
-		DA5B896C11E193A6004F9B7B /* Japanese */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Japanese; path = Resources/Japanese.lproj/ListenDialog.nib; sourceTree = "<group>"; };
 		DA5B896D11E193B6004F9B7B /* Japanese */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Japanese; path = Resources/Japanese.lproj/Preferences.nib; sourceTree = "<group>"; };
 		DA5B896E11E193C6004F9B7B /* Japanese */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Japanese; path = Resources/Japanese.lproj/ProfileManager.nib; sourceTree = "<group>"; };
 		DA5B896F11E193D3004F9B7B /* Japanese */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Japanese; path = Resources/Japanese.lproj/OSX_RFBViewer.nib; sourceTree = "<group>"; };
@@ -543,8 +537,6 @@
 		E2B083E10763AA7D00CE24C1 /* ServerFromConnection.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ServerFromConnection.h; sourceTree = "<group>"; };
 		E2B083ED0763AA9A00CE24C1 /* ListenerController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ListenerController.h; sourceTree = "<group>"; };
 		E2B083EE0763AA9A00CE24C1 /* ListenerController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ListenerController.m; sourceTree = "<group>"; };
-		E2B083F80763AAC200CE24C1 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = Resources/English.lproj/ListenDialog.nib; sourceTree = "<group>"; };
-		E2B084000763ABD300CE24C1 /* French */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = French; path = Resources/French.lproj/ListenDialog.nib; sourceTree = "<group>"; };
 		E2CA650906DA451500B70BDF /* help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = help; path = Resources/help; sourceTree = "<group>"; };
 		E2F3A2C906D44755005EB917 /* PrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefController.h; sourceTree = "<group>"; };
 		E2F3A2CA06D44755005EB917 /* PrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrefController.m; sourceTree = "<group>"; };
@@ -568,7 +560,6 @@
 		E2F546510768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/ServerDisplay.nib; sourceTree = "<group>"; };
 		E2F546520768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/ProfileManager.nib; sourceTree = "<group>"; };
 		E2F546530768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/OSX_RFBViewer.nib; sourceTree = "<group>"; };
-		E2F546540768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/ListenDialog.nib; sourceTree = "<group>"; };
 		F52128E40368AF9F01F702E0 /* GNU Public License.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "GNU Public License.txt"; sourceTree = "<group>"; };
 		F536C26603937E5301178D82 /* ZlibHexEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ZlibHexEncodingReader.h; sourceTree = "<group>"; };
 		F536C26703937E5301178D82 /* ZlibHexEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ZlibHexEncodingReader.m; sourceTree = "<group>"; };
@@ -755,7 +746,6 @@
 				F5DC7172033DB3DC01A8010C /* InfoPlist.strings */,
 				E2F3A33E06D44E0E005EB917 /* Preferences.nib */,
 				E2F3A99C06D4BFD8005EB917 /* ProfileManager.nib */,
-				E2B083F70763AAC200CE24C1 /* ListenDialog.nib */,
 				F5DC7187033DB44301A8010C /* OSX_RFBViewer.nib */,
 				F5DC7185033DB44301A8010C /* RFBConnection.nib */,
 				7FFA903B062BA74F0008D381 /* ServerDisplay.nib */,
@@ -776,8 +766,6 @@
 			children = (
 				7FF0C9A305CDBDCE008E39DD /* CotVNC.scriptSuite */,
 				7FF0C9A705CDC9A0008E39DD /* CotVNC.scriptTerminology */,
-				7F088F2805E1DA4800336456 /* URLHandlerCommand.h */,
-				7F088F2905E1DA4800336456 /* URLHandlerCommand.m */,
 			);
 			name = "AppleScript Processing";
 			sourceTree = "<group>";
@@ -1209,7 +1197,6 @@
 				E2B083E30763AA7D00CE24C1 /* ServerFromConnection.h in Headers */,
 				E2B083EF0763AA9A00CE24C1 /* ListenerController.h in Headers */,
 				E2929DD507675DE800190669 /* MyApp.h in Headers */,
-				7FB3EA1B0804E758003757C9 /* URLHandlerCommand.h in Headers */,
 				7F7DE7D6080F39DF006BF1DF /* ServerStandAlone.h in Headers */,
 				E291FA1508815A950061216E /* EventFilter.h in Headers */,
 				E291FB23088168E20061216E /* QueuedEvent.h in Headers */,
@@ -1315,7 +1302,6 @@
 				E2F3A34006D44E0E005EB917 /* Preferences.nib in Resources */,
 				E2F3A99E06D4BFD8005EB917 /* ProfileManager.nib in Resources */,
 				E2CA651806DA451600B70BDF /* help in Resources */,
-				E2B083F90763AAC200CE24C1 /* ListenDialog.nib in Resources */,
 				7FB3EA8D0804ECDB003757C9 /* CotVNC.scriptTerminology in Resources */,
 				7FB3EA8E0804ECE0003757C9 /* CotVNC.scriptSuite in Resources */,
 				E291FAD5088161DA0061216E /* cursors.plist in Resources */,
@@ -1414,7 +1400,6 @@
 				E2B083E20763AA7D00CE24C1 /* ServerFromConnection.m in Sources */,
 				E2B083F00763AA9A00CE24C1 /* ListenerController.m in Sources */,
 				E2929DD607675DE800190669 /* MyApp.m in Sources */,
-				7FB3EA1C0804E75E003757C9 /* URLHandlerCommand.m in Sources */,
 				7F7DE7D7080F39DF006BF1DF /* ServerStandAlone.m in Sources */,
 				E291FB1B088168BB0061216E /* EventFilter.m in Sources */,
 				E291FB24088168E20061216E /* QueuedEvent.m in Sources */,
@@ -1531,17 +1516,6 @@
 				DA5B897411E1940A004F9B7B /* Japanese */,
 			);
 			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		E2B083F70763AAC200CE24C1 /* ListenDialog.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E2B083F80763AAC200CE24C1 /* English */,
-				E2B084000763ABD300CE24C1 /* French */,
-				E2F546540768C79D00AB2600 /* Italian */,
-				DA5B896C11E193A6004F9B7B /* Japanese */,
-			);
-			name = ListenDialog.nib;
 			sourceTree = "<group>";
 		};
 		E2F3A33E06D44E0E005EB917 /* Preferences.nib */ = {
