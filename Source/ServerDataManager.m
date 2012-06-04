@@ -560,7 +560,7 @@ static ServerDataManager* gInstance = nil;
 		   didFindService:(NSNetService *)aNetService
 			   moreComing:(BOOL)moreComing
 {
-	ServerFromRendezvous* newServer = [ServerFromRendezvous createWithNetService:aNetService];
+	ServerFromRendezvous* newServer = (ServerFromRendezvous*)[ServerFromRendezvous createWithNetService:aNetService];
 	
 	// store a quick lookup list that connects the rendezvous name to the server class
 	// because the server name will not necessarily match that of the service published
