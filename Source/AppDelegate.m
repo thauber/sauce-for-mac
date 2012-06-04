@@ -169,6 +169,7 @@
 	return YES;
 }
 
+#if 0
 - (IBAction)changeRendezvousUse:(id)sender
 {
 	PrefController *prefs = [PrefController sharedController];
@@ -176,7 +177,7 @@
 	
 	[mRendezvousMenuItem setState: [prefs usesRendezvous] ? NSOnState : NSOffState];
 }
-
+#endif
 
 - (IBAction)showConnectionDialog: (id)sender
 {  [[RFBConnectionManager sharedManager] showConnectionDialog: nil];  }

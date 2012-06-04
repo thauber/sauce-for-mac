@@ -43,7 +43,7 @@
 - (IBAction)showLoginDlg:(id)sender;
 
 - (IBAction)showPreferences: (id)sender;
-- (IBAction)changeRendezvousUse:(id)sender;
+//- (IBAction)changeRendezvousUse:(id)sender;
 - (IBAction)showNewConnectionDialog:(id)sender;
 - (IBAction)showConnectionDialog: (id)sender;
 //- (IBAction)showListenerDialog: (id)sender;
