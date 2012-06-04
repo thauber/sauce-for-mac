@@ -11,7 +11,7 @@
 #import "PrefController.h"
 #import "ProfileManager.h"
 #import "RFBConnectionManager.h"
-#import "ListenerController.h"
+//#import "ListenerController.h"
 #import "LoginController.h"
 #import "SaucePreconnect.h"
 #import "SessionController.h"
@@ -184,8 +184,8 @@
 - (IBAction)showNewConnectionDialog:(id)sender
 {  [[RFBConnectionManager sharedManager] showNewConnectionDialog: nil];  }
 
-- (IBAction)showListenerDialog: (id)sender
-{  [[ListenerController sharedController] showWindow: nil];  }
+//- (IBAction)showListenerDialog: (id)sender
+//{  [[ListenerController sharedController] showWindow: nil];  }
 
 
 - (IBAction)showProfileManager: (id)sender
