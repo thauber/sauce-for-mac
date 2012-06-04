@@ -148,8 +148,6 @@
 		7F7A945B05E71B5C00E20416 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F48D78040EDD5100BD55BA /* Carbon.framework */; };
 		7F7DE7D6080F39DF006BF1DF /* ServerStandAlone.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F7DE7D4080F39DF006BF1DF /* ServerStandAlone.h */; };
 		7F7DE7D7080F39DF006BF1DF /* ServerStandAlone.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7DE7D5080F39DF006BF1DF /* ServerStandAlone.m */; };
-		7FB3EA8D0804ECDB003757C9 /* CotVNC.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = 7FF0C9A705CDC9A0008E39DD /* CotVNC.scriptTerminology */; };
-		7FB3EA8E0804ECE0003757C9 /* CotVNC.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = 7FF0C9A305CDBDCE008E39DD /* CotVNC.scriptSuite */; };
 		7FB6A8D1068AB5E3005E5E49 /* ServerFromRendezvous.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC6DF6D05C31B0D0028A970 /* ServerFromRendezvous.h */; };
 		7FB6A8D2068AB5E7005E5E49 /* ServerFromRendezvous.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC6DF6E05C31B0D0028A970 /* ServerFromRendezvous.m */; };
 		7FBB0A6A05F5BC9700F716C4 /* ServerDataViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FBB0A6605F5BC9700F716C4 /* ServerDataViewController.h */; };
@@ -365,8 +363,6 @@
 		7FD35C1806CC583A00648090 /* ProfileDataManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ProfileDataManager.h; sourceTree = "<group>"; };
 		7FD35C1906CC583A00648090 /* ProfileDataManager.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ProfileDataManager.m; sourceTree = "<group>"; };
 		7FD66F5805E9E2B500229E5C /* scout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = scout.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7FF0C9A305CDBDCE008E39DD /* CotVNC.scriptSuite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.scriptSuite; name = CotVNC.scriptSuite; path = Resources/CotVNC.scriptSuite; sourceTree = SOURCE_ROOT; };
-		7FF0C9A705CDC9A0008E39DD /* CotVNC.scriptTerminology */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.scriptTerminology; name = CotVNC.scriptTerminology; path = Resources/CotVNC.scriptTerminology; sourceTree = SOURCE_ROOT; };
 		7FFA8FE9062BA6330008D381 /* ServerBase.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ServerBase.h; sourceTree = "<group>"; };
 		7FFA8FEA062BA6330008D381 /* ServerBase.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ServerBase.m; sourceTree = "<group>"; };
 		7FFA903C062BA74F0008D381 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = Resources/English.lproj/ServerDisplay.nib; sourceTree = "<group>"; };
@@ -761,15 +757,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		7FB3EA1D0804E77F003757C9 /* AppleScript Processing */ = {
-			isa = PBXGroup;
-			children = (
-				7FF0C9A305CDBDCE008E39DD /* CotVNC.scriptSuite */,
-				7FF0C9A705CDC9A0008E39DD /* CotVNC.scriptTerminology */,
-			);
-			name = "AppleScript Processing";
-			sourceTree = "<group>";
-		};
 		7FC6DF2405C315680028A970 /* Server Management */ = {
 			isa = PBXGroup;
 			children = (
@@ -1029,7 +1016,6 @@
 				E21FE439062B79940059585C /* KeyEquivalents */,
 				7FD35C1706CC57FB00648090 /* Profiles */,
 				7FC6DF2405C315680028A970 /* Server Management */,
-				7FB3EA1D0804E77F003757C9 /* AppleScript Processing */,
 				E2F3A2E306D4483D005EB917 /* AppDelegate.h */,
 				E2F3A2E406D4483D005EB917 /* AppDelegate.m */,
 				F5DC719B033DB4A801A8010C /* ByteBlockReader.h */,
@@ -1302,8 +1288,6 @@
 				E2F3A34006D44E0E005EB917 /* Preferences.nib in Resources */,
 				E2F3A99E06D4BFD8005EB917 /* ProfileManager.nib in Resources */,
 				E2CA651806DA451600B70BDF /* help in Resources */,
-				7FB3EA8D0804ECDB003757C9 /* CotVNC.scriptTerminology in Resources */,
-				7FB3EA8E0804ECE0003757C9 /* CotVNC.scriptSuite in Resources */,
 				E291FAD5088161DA0061216E /* cursors.plist in Resources */,
 				DAFB492212944331008C6FC4 /* dsa_pub.pem in Resources */,
 				DAD6DEEA12DCF4A3001FD9D6 /* AuthPrompt.nib in Resources */,
