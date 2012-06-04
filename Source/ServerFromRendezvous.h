@@ -25,7 +25,8 @@
 
 #define RFB_SAVED_RENDEZVOUS_SERVERS @"RFB_SAVED_RENDEZVOUS_SERVERS"
 
-@interface ServerFromRendezvous : PersistentServer {
+@interface ServerFromRendezvous : PersistentServer <NSNetServiceDelegate>
+{
 	NSNetService* service_;
 	bool bHasResolved;
 	bool bResloveSucceeded;
