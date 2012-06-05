@@ -23,14 +23,12 @@
     TunnelController *tunnelCtrlr;
     BugInfoController *bugCtrlr;
     NSMenuItem *tunnelMenuItem;
-    NSMenuItem *tunnelDspMenuItem;
 }
 @property (assign) IBOutlet NSMenuItem *tunnelMenuItem;
-@property (assign) IBOutlet NSMenuItem *tunnelDspMenuItem;
+- (IBAction)doStopSession:(id)sender;
 
 - (IBAction)toggleToolbar:(id)sender;
 - (IBAction)doTunnel:(id)sender;
-- (IBAction)doTunnelDisplay:(id)sender;
 - (void)toggleTunnelDisplay;
 
 @property (retain)SessionController *optionsCtrlr;

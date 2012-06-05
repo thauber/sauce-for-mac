@@ -11,7 +11,6 @@
 #import "PrefController.h"
 #import "ProfileManager.h"
 #import "RFBConnectionManager.h"
-//#import "ListenerController.h"
 #import "LoginController.h"
 #import "SaucePreconnect.h"
 #import "SessionController.h"
@@ -21,7 +20,6 @@
 
 
 @implementation AppDelegate
-@synthesize tunnelDspMenuItem;
 @synthesize tunnelMenuItem;
 
 @synthesize optionsCtrlr;
@@ -37,8 +35,6 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    [tunnelDspMenuItem setHidden:YES];
-    
     [[ScoutWindowController sharedScout] showWindow:nil];
     
     
@@ -158,6 +154,8 @@
 	[[PrefController sharedController] showWindow];
 }
 
+
+
 - (BOOL) applicationShouldHandleReopen: (NSApplication *) app hasVisibleWindows: (BOOL) visibleWindows
 {
 	if(!visibleWindows)
@@ -169,24 +167,12 @@
 	return YES;
 }
 
-#if 0
-- (IBAction)changeRendezvousUse:(id)sender
-{
-	PrefController *prefs = [PrefController sharedController];
-	[prefs toggleUseRendezvous: sender];
-	
-	[mRendezvousMenuItem setState: [prefs usesRendezvous] ? NSOnState : NSOffState];
-}
-#endif
 
 - (IBAction)showConnectionDialog: (id)sender
 {  [[RFBConnectionManager sharedManager] showConnectionDialog: nil];  }
 
 - (IBAction)showNewConnectionDialog:(id)sender
 {  [[RFBConnectionManager sharedManager] showNewConnectionDialog: nil];  }
-
-//- (IBAction)showListenerDialog: (id)sender
-//{  [[ListenerController sharedController] showWindow: nil];  }
 
 
 - (IBAction)showProfileManager: (id)sender
@@ -203,24 +189,17 @@
     return fullScreenMenuItem;
 }
 
+- (IBAction)doStopSession:(id)sender
+{
+    [[ScoutWindowController sharedScout] doPlayStop:self];
+}
+
 - (IBAction)toggleToolbar:(id)sender
 {
     [[ScoutWindowController sharedScout] toggleToolbar];
 }
 
 - (IBAction)doTunnel:(id)sender
-{
-    if(tunnelCtrlr)       // it's running, so user is asking to disconnect   
-    {
-        [tunnelCtrlr doClose:nil];       // close the jar task and nil the object
-        return;
-    }
-    [self doTunnelDisplay:self];
-    if(tunnelCtrlr)     // tunnel sheet exists now, but wasn't before
-        [tunnelCtrlr doTunnel];     // so start up the jar task
-}
-
-- (IBAction)doTunnelDisplay:(id)sender
 {
     if(self.optionsCtrlr)       // close the options sheet
     {
@@ -230,36 +209,23 @@
     }
         
     NSWindow *win = [[ScoutWindowController sharedScout] window];
-    if(tunnelCtrlr && ![tunnelCtrlr hiddenDisplay])
-    {
-        [tunnelCtrlr doHide:self];
-    }
-    else        // tunnel is running but sheet is not shown
-    {
-        if(!tunnelCtrlr)    // need to create the tunnel object
-            self.tunnelCtrlr = [[TunnelController alloc] init];
-        [tunnelCtrlr runSheetOnWindow:win];
-        [self toggleTunnelDisplay];
-    }
+    
+    if(!tunnelCtrlr)    // need to create the tunnel object
+        self.tunnelCtrlr = [[TunnelController alloc] init];
+    [tunnelCtrlr runSheetOnWindow:win];
+    [self toggleTunnelDisplay];
 }
 
 - (void)toggleTunnelDisplay
 {
     if(tunnelCtrlr)
     {
-        [tunnelMenuItem setTitle:@"Disconnect"];
-        [tunnelDspMenuItem setHidden:NO];
-        [tunnelDspMenuItem setEnabled:YES];
-        if([tunnelCtrlr hiddenDisplay])
-            [tunnelDspMenuItem setTitle:@"Show display"];
-        else 
-            [tunnelDspMenuItem setTitle:@"Hide display"];
+        [tunnelMenuItem setTitle:@"Disable Intranet Scouting..."];
     }
     else    // no tunnel
     {
         [[ScoutWindowController sharedScout] tunnelConnected:NO];
-        [tunnelDspMenuItem setHidden:YES];
-        [tunnelMenuItem setTitle:@"Connect"];
+        [tunnelMenuItem setTitle:@"Enable Intranet Scouting..."];
         [self showOptionsIfNoTabs];
     }
 }
