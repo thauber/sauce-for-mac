@@ -25,6 +25,7 @@
     if (self = [super init])
     {
         [NSBundle loadNibNamed:@"tunnel" owner:self];
+        hiddenDisplay = NO;    
     }
     return self;
 }
@@ -37,21 +38,22 @@
 
 - (void)runSheetOnWindow:(NSWindow *)window
 {
-    NSString *str = @"Please wait while we launch Sauce Connect, (which allows testing local websites) ...\n\n";
-    [[[infoTV textStorage] mutableString] appendString: str];
+    if(!hiddenDisplay)           // tunnel is not connected
+    {
+        NSString *str = @"Please wait while we launch Sauce Connect, (which allows testing local websites) ...\n\n";
+        [[[infoTV textStorage] mutableString] appendString: str];
+        [hideButton setHidden:YES];      // don't show b/c we are not connected
+        [self doTunnel];
+    }
+
+    hiddenDisplay = NO;
     [NSApp beginSheet:panel modalForWindow:window modalDelegate:self
        didEndSelector:nil   contextInfo:nil];
-    hiddenDisplay = NO;    
 }
 
 - (BOOL)hiddenDisplay
 {
     return hiddenDisplay;
-}
-
-- (void)setHiddenDisplay:(BOOL)hidden;
-{
-    hiddenDisplay = hidden;
 }
 
 -(void)displayInfo:(NSString *)str
@@ -64,6 +66,7 @@
         NSRange textRange =[str rangeOfString:@"Connected!"];        
         if(textRange.location != NSNotFound)    //Does contain the substring
         {
+            [self doHide:self];
             [[ScoutWindowController sharedScout] tunnelConnected:YES];            
         }           
     }
@@ -132,7 +135,6 @@
 
 -(void)endTunnel: (NSNotification *) notif
 {
-//    [self doClose:self];
 }
 
 
