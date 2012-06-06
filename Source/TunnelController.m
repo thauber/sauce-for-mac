@@ -15,6 +15,7 @@
 @synthesize panel;
 @synthesize closeButton;
 @synthesize hideButton;
+@synthesize hiddenDisplay;
 @synthesize infoTV;
 @synthesize ftask;
 @synthesize fhand;
