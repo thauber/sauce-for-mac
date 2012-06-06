@@ -110,31 +110,23 @@ static ScoutWindowController* _sharedScout = nil;
 
 - (IBAction)doBugCamera:(id)sender
 {
+    BOOL snap;
     int sel = [sender selectedSegment];
     if(sel==0)      // bug
     {
-        // modal dlg for title and description
-        BugInfoController *bugCtrl = [[BugInfoController alloc] init];
-        [[NSApp delegate] setBugCtrlr:bugCtrl];
         [bugcamera setSelected:NO forSegment:0];
-        [bugCtrl runSheetOnWindow:[self window]];                
+        snap = NO;
     }
     else if(sel==1)     // snapshot
     {
-        NSString *title = @"Snapshot";
-
-        int hrs, mins;
-        time_t rawtime;
-        struct tm * ptm;    
-        time(&rawtime);    
-        ptm = localtime(&rawtime);
-        hrs = ptm->tm_hour;
-        mins = ptm->tm_min;
-        NSString *desc = [NSString stringWithFormat:@"A%%20snapshot%%20taken%%20at%%20%d:%d",hrs,mins];
         [bugcamera setSelected:NO forSegment:1];
-        self.snapProgress = [[SnapProgress alloc] init];
-        [[SaucePreconnect sharedPreconnect] snapshotBug:title desc:desc];
+        snap = YES;
+
     }
+    // sheet for title and description
+    BugInfoController *bugCtrl = [[BugInfoController alloc] init:snap];
+    [[NSApp delegate] setBugCtrlr:bugCtrl];
+    [bugCtrl runSheetOnWindow:[self window]];                
 }
 
 -(void)submitBug        // after user submits from buginfo sheet
