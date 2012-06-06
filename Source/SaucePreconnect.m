@@ -132,6 +132,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
 // retrieve value for a key out of json formatted data
 -(NSString *)jsonVal:(NSString *)json key:(NSString *)key
 {
+    if([json hasPrefix:@"<html>"])
+        return @"";
     const char *str = [json UTF8String];
     const char *kk = [key UTF8String];
     const char *kstr = strstr(str,kk);
@@ -535,7 +537,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 
 - (void)postSnapshotBug:(NSString *)snapName title:(NSString *)title desc:(NSString *)desc
 { 
-    NSView *view = [[[[ScoutWindowController sharedScout] tabView] selectedTabViewItem] view];
+    NSView *view = [[[ScoutWindowController sharedScout] curSession] view];
 
     NSDictionary *sdict = [self sessionInfo:view];
     NSString *aliveid = [sdict objectForKey:@"liveId"];
@@ -543,8 +545,10 @@ static SaucePreconnect* _sharedPreconnect = nil;
     NSString *akey = [sdict objectForKey:@"ukey"];
     NSString *ajobid = [sdict objectForKey:@"jobId"];
 
+    NSString* escTitle = [title stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+    NSString* escDesc  = [desc stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
 
-    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/scout/live/%@/reportbug?&ssname=%@&title=%@&description=%@'", auser, akey, aliveid, snapName, title, desc];
+    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/scout/live/%@/reportbug?&ssname=%@&title=%@&description=%@'", auser, akey, aliveid, snapName, escTitle, escDesc];
     
     self.errStr = nil;
     NSString *surl;
