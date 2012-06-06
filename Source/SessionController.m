@@ -179,9 +179,16 @@
         {
             NSString *uhost = [uurl host];
             BOOL isLocalURL = ![uhost length] || [uhost isEqualToString:@"localhost"] || [uhost isEqualToString:@"127.0.0.1"];
+            isLocalURL = isLocalURL || [uhost hasPrefix:@"192.168."] || [uhost hasPrefix:@"10."];
             if(![[NSApp delegate] tunnelCtrlr] && isLocalURL)       // prompt for opening tunnel
             {
-                NSBeginAlertSheet(@"Could Want Tunnel", @"Okay", @"No Tunnel", nil, [NSApp keyWindow], self,nil, @selector(tunnelDidDismiss:returnCode:contextInfo:), NULL, @"Do you want to connect using a tunnel?");    
+                if([uhost length] && [self canReachIP:uhost])
+                {
+                    NSBeginAlertSheet(@"Requires Intranet Access", @"Okay", @"No Tunnel", nil, [NSApp keyWindow], self,nil, @selector(tunnelDidDismiss:returnCode:contextInfo:), NULL, @"Do you want to connect using a tunnel?"); 
+                }
+                else {
+                    NSBeginAlertSheet(@"Can't Reach IP", @"Okay", nil, nil, [NSApp keyWindow], self,nil, nil, NULL, @"Check connection and IP address"); 
+                }
             }
             else 
                 [self startConnecting];
@@ -200,6 +207,39 @@
             [self startConnecting];
             return;
     }
+}
+
+-(BOOL)canReachIP:(NSString*)host
+{
+    NSTask *ftask = [[NSTask alloc] init];
+    NSPipe *fpipe = [NSPipe pipe];
+    [ftask setStandardOutput:fpipe];
+    [ftask setStandardError:fpipe];
+    [ftask setLaunchPath:@"/bin/bash"];
+    NSString *arg = [NSString stringWithFormat:@"ping %@",host];
+    [ftask setArguments:[NSArray arrayWithObjects:@"-c", arg, nil]];
+    NSFileHandle *fhand = [fpipe fileHandleForReading];        
+    [ftask launch];
+    while(10)       // just a guess to give enough attempts to get yes/no result
+    {
+        NSData *data = [fhand availableData];		 
+        NSString *retStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        if([retStr length])
+        {
+            unichar ch = [retStr characterAtIndex:0];
+            if(ch >= '1' && ch <= '9')
+                return YES;
+            if(ch == 'R')      // Request timeout
+                return NO;
+            else
+            {
+                NSRange r = [retStr rangeOfString:@"down"];
+                if(r.location != NSNotFound)
+                    return NO;
+            }
+        }
+    }
+    return NO;
 }
    
 - (void)startConnecting
