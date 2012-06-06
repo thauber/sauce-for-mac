@@ -182,9 +182,9 @@
             isLocalURL = isLocalURL || [uhost hasPrefix:@"192.168."] || [uhost hasPrefix:@"10."];
             if(![[NSApp delegate] tunnelCtrlr] && isLocalURL)       // prompt for opening tunnel
             {
-                if([uhost length] && [self canReachIP:uhost])
+                if(![uhost length] || [self canReachIP:uhost])
                 {
-                    NSBeginAlertSheet(@"Requires Intranet Access", @"Okay", @"No Tunnel", nil, [NSApp keyWindow], self,nil, @selector(tunnelDidDismiss:returnCode:contextInfo:), NULL, @"Do you want to connect using a tunnel?"); 
+                    NSBeginAlertSheet(@"Requires Intranet Access", @"Okay", @"No Tunnel", @"Cancel", [NSApp keyWindow], self,nil, @selector(tunnelDidDismiss:returnCode:contextInfo:), NULL, @"Do you want to connect using a tunnel?"); 
                 }
                 else {
                     NSBeginAlertSheet(@"Can't Reach IP", @"Okay", nil, nil, [NSApp keyWindow], self,nil, nil, NULL, @"Check connection and IP address"); 
@@ -205,6 +205,9 @@
             return;
         case NSAlertAlternateReturn:
             [self startConnecting];
+            return;
+        case NSAlertOtherReturn:
+            [self runSheet];
             return;
     }
 }
