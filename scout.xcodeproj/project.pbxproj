@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F392220158190350065C018 /* OptionBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F39221E158190350065C018 /* OptionBox.h */; };
+		0F392221158190350065C018 /* OptionBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F39221F158190350065C018 /* OptionBox.m */; };
 		0F3A18D115617D39007BAA78 /* tunnel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3A18D015617D39007BAA78 /* tunnel.xib */; };
 		0F3DC43D155D6F760069F7AB /* TunnelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F3DC43B155D6F760069F7AB /* TunnelController.h */; };
 		0F3DC43E155D6F760069F7AB /* TunnelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3DC43C155D6F760069F7AB /* TunnelController.m */; };
@@ -310,6 +312,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0F39221E158190350065C018 /* OptionBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionBox.h; sourceTree = "<group>"; };
+		0F39221F158190350065C018 /* OptionBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionBox.m; sourceTree = "<group>"; };
 		0F3A18D015617D39007BAA78 /* tunnel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = tunnel.xib; path = Resources/tunnel.xib; sourceTree = "<group>"; };
 		0F3DC43B155D6F760069F7AB /* TunnelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TunnelController.h; sourceTree = "<group>"; };
 		0F3DC43C155D6F760069F7AB /* TunnelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TunnelController.m; sourceTree = "<group>"; };
@@ -814,6 +818,8 @@
 				0F7BE39D1522183800B64686 /* LoginController.m */,
 				0F7C6064152A8F8700DA9A4A /* SessionController.h */,
 				0F7C6065152A8F8700DA9A4A /* SessionController.m */,
+				0F39221E158190350065C018 /* OptionBox.h */,
+				0F39221F158190350065C018 /* OptionBox.m */,
 			);
 			name = "GUI Controller";
 			sourceTree = "<group>";
@@ -1217,6 +1223,7 @@
 				0FD566931545B1A90007C94A /* BugInfoController.h in Headers */,
 				0F3DC43D155D6F760069F7AB /* TunnelController.h in Headers */,
 				0F48D0CD157528C20067B689 /* SnapProgress.h in Headers */,
+				0F392220158190350065C018 /* OptionBox.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1466,6 +1473,7 @@
 				0FD566941545B1A90007C94A /* BugInfoController.m in Sources */,
 				0F3DC43E155D6F760069F7AB /* TunnelController.m in Sources */,
 				0F48D0CE157528C20067B689 /* SnapProgress.m in Sources */,
+				0F392221158190350065C018 /* OptionBox.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
