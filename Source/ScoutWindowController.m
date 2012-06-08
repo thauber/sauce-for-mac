@@ -36,6 +36,7 @@
 @synthesize osbrowser;
 @synthesize curSession;
 @synthesize snapProgress;
+@synthesize tunnelButton;
 
 static ScoutWindowController* _sharedScout = nil;
 
@@ -66,7 +67,7 @@ static ScoutWindowController* _sharedScout = nil;
 
 - (void)awakeFromNib 
 {
-    [toolbar setVisible:NO];
+//    [toolbar setVisible:NO];
     [tabView setTabViewType:NSNoTabsNoBorder];
     [tabBar setStyleNamed:@"Unified"];
     [tabBar setSizeCellsToFit:YES];
@@ -168,6 +169,11 @@ static ScoutWindowController* _sharedScout = nil;
 - (IBAction)newSession:(id)sender
 {
     [[NSApp delegate] showOptionsDlg:nil];
+}
+
+- (IBAction)doTunnel:(id)sender
+{
+    [[NSApp delegate] doTunnel:self]; 
 }
 
 -(void)closeAllTabs

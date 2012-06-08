@@ -36,6 +36,7 @@ typedef enum { login,options,session } tabType;
     NSToolbar *toolbar;
     NSImageView *tunnelImage;
     SnapProgress *snapProgress;
+    NSButton *tunnelButton;
     
 }
 @property (assign) IBOutlet NSTabView *tabView;
@@ -55,9 +56,11 @@ typedef enum { login,options,session } tabType;
 @property (assign)IBOutlet NSTextField *osbrowser;
 @property (assign) Session *curSession;
 @property (retain) SnapProgress *snapProgress;
+@property (assign) IBOutlet NSButton *tunnelButton;
 
 +(ScoutWindowController*)sharedScout;
 - (IBAction)addNewTab:(id)sender;
+- (IBAction)doTunnel:(id)sender;
 
 - (IBAction)doPlayStop:(id)sender;
 - (IBAction)doBugCamera:(id)sender;
