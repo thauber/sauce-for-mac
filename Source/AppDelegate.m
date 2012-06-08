@@ -220,12 +220,14 @@
 {
     if(tunnelCtrlr)
     {
-        [tunnelMenuItem setTitle:@"Disable Intranet Scouting..."];
+        [tunnelMenuItem setTitle:@"Stop Scout Connect"];
+        [[[ScoutWindowController sharedScout] tunnelButton] setTitle:@"Stop Scout Connect"];
     }
     else    // no tunnel
     {
         [[ScoutWindowController sharedScout] tunnelConnected:NO];
-        [tunnelMenuItem setTitle:@"Enable Intranet Scouting..."];
+        [tunnelMenuItem setTitle:@"Start Scout Connect"];
+        [[[ScoutWindowController sharedScout] tunnelButton] setTitle:@"Start Scout Connect"];
         [self showOptionsIfNoTabs];
     }
 }
