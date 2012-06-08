@@ -42,7 +42,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{196, 240}, {480, 270}}</string>
 				<int key="NSWTFlags">1618478080</int>
-				<string key="NSWindowTitle">Tunnel</string>
+				<string key="NSWindowTitle">Scout Connect</string>
 				<string key="NSWindowClass">NSPanel</string>
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
@@ -81,7 +81,7 @@
 						<object class="NSButton" id="442764229">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">292</int>
-							<string key="NSFrame">{{307, 12}, {148, 32}}</string>
+							<string key="NSFrame">{{303, 12}, {163, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView"/>
@@ -90,7 +90,7 @@
 							<object class="NSButtonCell" key="NSCell" id="191743179">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Disconnect Tunnel</string>
+								<string key="NSContents">Stop Scout Connect</string>
 								<reference key="NSSupport" ref="906070346"/>
 								<string key="NSCellIdentifier">_NS:9</string>
 								<reference key="NSControlView" ref="442764229"/>
@@ -243,7 +243,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="1008483733"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1366, 746}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
