@@ -11,9 +11,22 @@
 
 @implementation OptionBox
 
+- (void)settracker:(NSRect)rr
+{
+    NSTrackingArea *ta = [[NSTrackingArea alloc] initWithRect:rr options:NSTrackingMouseEnteredAndExited+NSTrackingCursorUpdate+NSTrackingActiveAlways owner:self userInfo:nil];
+    [self addTrackingArea:ta];    
+}
+
+- (void) cursorUpdate:(NSEvent *)theEvent
+{
+    if([sessionCtlr hoverIndx]>=0 && [sessionCtlr hoverIndx]<30)
+        [[NSCursor pointingHandCursor] set];
+    else
+        [[NSCursor arrowCursor] set];
+}
+
 -(void)mouseUp:(NSEvent *)theEvent
 {
-    NSLog(@"click");
     [sessionCtlr selectBrowser:self];      // handle click if in a tracking rect
 }
 

@@ -71,6 +71,8 @@
 - (IBAction)selectBrowser:(id)sender;
 - (void)connectionSucceeded;
 - (void)showError:(NSString *)errStr;
+- (int)hoverIndx;
+
 
 @end
 

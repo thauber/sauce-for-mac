@@ -51,7 +51,6 @@
     sessionIndx = [defs integerForKey:kSessionIndx];
     if(!sessionIndx)
         sessionIndx = 3;           // default is windows 9
-    hoverIndx = sessionIndx;
     
     // create hoverbox
     frame = NSMakeRect(0,0,0,0);
@@ -91,7 +90,13 @@
     }
     
     [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];
+    hoverIndx = sessionIndx;
 
+}
+
+- (int)hoverIndx
+{
+    return hoverIndx;
 }
 
 - (void)addTrackingAreas
@@ -106,8 +111,10 @@
         rr.origin.x -= 4;
         rr.size.width = 80;     // trackingrect width - NB: careful, 84 is too big
         tag = [box2 addTrackingRect:rr owner:self userData:nil assumeInside:NO];
-        trarr[i] = tag;    
+        trarr[i] = tag;
+        [box2 settracker:rr];
     }
+    [[NSCursor pointingHandCursor] setOnMouseEntered:YES];
     hoverFrame.size.width = 0;      // mouse is not within a rect(?guaranteed on startup?)
 }
 
@@ -139,6 +146,7 @@
 
 - (void)mouseExited:(NSEvent *)theEvent
 {
+    [[NSCursor arrowCursor] set];
     hoverFrame.size.width = 0;
     [hoverBox setFrame:hoverFrame];
     hoverIndx = -1;
