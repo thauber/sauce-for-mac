@@ -48,30 +48,13 @@
         [connectBtn setEnabled:NO];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(textDidChange:) name: NSTextDidChangeNotification object: nil];
     NSRect frame;
-    selectedTag = [defs integerForKey:kSessionTag];
-    if(selectedTag)
-    {
-        
-        NSString *str = [defs stringForKey:kSessionFrame];
-        if(str)
-            selectedFrame = NSRectFromString(str);
-        else
-        {
-            NSView *vv = (NSView*)defaultBrowser;
-            NSRect frame = [vv frame];
-            NSPoint pt = [vv.superview convertPoint:vv.frame.origin toView:[self view]];
-            pt.x -= 4;
-            frame.origin = pt;
-            frame.size.width = 84;
-            selectedFrame = frame;
-        }
-        [self selectBrowser:self];
-    }
-    
-    [box2 setSessionCtlr:self];     // pass mouseclick in box here
+    sessionIndx = [defs integerForKey:kSessionIndx];
+    if(!sessionIndx)
+        sessionIndx = 3;           // default is windows 9
+    hoverIndx = sessionIndx;
     
     // create hoverbox
-    frame = NSMakeRect(0,0,22,0);
+    frame = NSMakeRect(0,0,0,0);
     hoverBox = [[NSView alloc ] initWithFrame:frame];
     [[self view] addSubview:hoverBox];
     CALayer *viewLayer = [CALayer layer];
@@ -80,6 +63,11 @@
     [hoverBox setLayer:viewLayer];
     
     [self addTrackingAreas];
+
+    [self mouseEntered:nil];
+    [self selectBrowser:nil];       // get last selection or default selected
+    [box2 setSessionCtlr:self];     // pass mouseclick to 'selectBrowser' method 
+    
     NSTextField *tf = [[ScoutWindowController sharedScout] userStat];
     NSString *uname = [[SaucePreconnect sharedPreconnect] user];
     [tf setStringValue:uname];
@@ -127,6 +115,9 @@
 - (void)mouseEntered:(NSEvent *)theEvent
 {
     int tn = [theEvent trackingNumber];
+    if(!theEvent)       // on initial call
+        tn = trarr[hoverIndx];
+    
     for(int i=0; i < kNumTrackItems; i++)
     {
         if(tn == trarr[i])
@@ -137,17 +128,20 @@
             NSPoint pt = [box2 convertPoint:hoverFrame.origin toView:[self view]];
             hoverFrame.origin = pt;
             [hoverBox setFrame:hoverFrame];
+            hoverIndx = i;
             return;
         }
     }
     hoverFrame.size.width = 0;
     [hoverBox setFrame:hoverFrame];
+    hoverIndx = -1;
 }
 
 - (void)mouseExited:(NSEvent *)theEvent
 {
     hoverFrame.size.width = 0;
-    [hoverBox setFrame:hoverFrame];    
+    [hoverBox setFrame:hoverFrame];
+    hoverIndx = -1;
 }
 
 -(void)terminateApp
@@ -180,9 +174,9 @@
 {
     NSRect frame;
     
-    if(sender == (id)self)
+    if(sender == (id)self)      // on init
         frame = selectedFrame;
-    else
+    else                        // from mouseEntered
         frame = hoverFrame;
     
     if(!selectBox)
@@ -198,6 +192,7 @@
     else 
     {
         // move selected box over this sender
+        sessionIndx = hoverIndx;
         [selectBox setFrame:frame];
     }
     
@@ -212,7 +207,7 @@
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:urlstr  forKey:kSessionURL];
-    [defaults setInteger:selectedTag  forKey:kSessionTag];
+    [defaults setInteger:sessionIndx  forKey:kSessionIndx];
     NSString *frStr = NSStringFromRect(selectedFrame);
     [defaults setObject:frStr  forKey:kSessionFrame];
 
@@ -323,41 +318,43 @@
     NSString *browser=@"";
     NSString *version=@"";
     
-    switch(selectedTag)
+    switch(sessionIndx)
     {
-        case 201: os = @"OSX"; browser = @"firefox"; version = @"3.6"; break;
-        case 202: os = @"OSX"; browser = @"firefox"; version = @"8"; break;
-        case 203: os = @"OSX"; browser = @"firefox"; version = @"9"; break;
-        case 204: os = @"OSX"; browser = @"firefox"; version = @"10"; break;
-        case 301: os = @"OSX"; browser = @"safari"; version = @"3"; break;
-        case 302: os = @"OSX"; browser = @"safari"; version = @"4"; break;
-        case 303: os = @"OSX"; browser = @"safari"; version = @"5"; break;
-        case 401: os = @"OSX"; browser = @"opera"; version = @"9"; break;
-        case 402: os = @"OSX"; browser = @"opera"; version = @"10"; break;                        
-        case 403: os = @"OSX"; browser = @"opera"; version = @"11"; break;                        
-        case 501: os = @"OSX"; browser = @"googlechrome"; version = @""; break;
+#if 0
+        case 0: os = @"OSX"; browser = @"firefox"; version = @"3.6"; break;
+        case 1: os = @"OSX"; browser = @"firefox"; version = @"8"; break;
+        case 2: os = @"OSX"; browser = @"firefox"; version = @"9"; break;
+        case 3: os = @"OSX"; browser = @"firefox"; version = @"10"; break;
+        case 4: os = @"OSX"; browser = @"safari"; version = @"3"; break;
+        case 5: os = @"OSX"; browser = @"safari"; version = @"4"; break;
+        case 6: os = @"OSX"; browser = @"safari"; version = @"5"; break;
+        case 7: os = @"OSX"; browser = @"opera"; version = @"9"; break;
+        case 8: os = @"OSX"; browser = @"opera"; version = @"10"; break;                        
+        case 9: os = @"OSX"; browser = @"opera"; version = @"11"; break;                        
+        case 10: os = @"OSX"; browser = @"googlechrome"; version = @""; break;
+#endif
 
-        case 105: os = @"Windows 2003"; browser = @"iexplore"; version = @"6"; break;
-        case 106: os = @"Windows 2003"; browser = @"iexplore"; version = @"7"; break;
-        case 107: os = @"Windows 2003"; browser = @"iexplore"; version = @"8"; break;
-        case 108: os = @"Windows 2008"; browser = @"iexplore"; version = @"9"; break;
-        case 205: os = @"Windows 2003"; browser = @"firefox"; version = @"3.6"; break;
-        case 206: os = @"Windows 2003"; browser = @"firefox"; version = @"8"; break;
-        case 207: os = @"Windows 2003"; browser = @"firefox"; version = @"9"; break;
-        case 208: os = @"Windows 2008"; browser = @"firefox"; version = @"10"; break;
-        case 305: os = @"Windows 2003"; browser = @"safari"; version = @"3"; break;
-        case 306: os = @"Windows 2003"; browser = @"safari"; version = @"4"; break;
-        case 307: os = @"Windows 2008"; browser = @"safariproxy"; version = @"5"; break;
-        case 405: os = @"Windows 2003"; browser = @"opera"; version = @"9"; break;
-        case 406: os = @"Windows 2003"; browser = @"opera"; version = @"10"; break;                        
-        case 407: os = @"Windows 2003"; browser = @"opera"; version = @"11"; break;                        
-        case 505: os = @"Windows 2008"; browser = @"googlechrome"; version = @""; break;
+        case 0: os = @"Windows 2003"; browser = @"iexplore"; version = @"6"; break;
+        case 1: os = @"Windows 2003"; browser = @"iexplore"; version = @"7"; break;
+        case 2: os = @"Windows 2003"; browser = @"iexplore"; version = @"8"; break;
+        case 3: os = @"Windows 2008"; browser = @"iexplore"; version = @"9"; break;
+        case 4: os = @"Windows 2003"; browser = @"firefox"; version = @"3.6"; break;
+        case 5: os = @"Windows 2003"; browser = @"firefox"; version = @"8"; break;
+        case 6: os = @"Windows 2003"; browser = @"firefox"; version = @"9"; break;
+        case 7: os = @"Windows 2008"; browser = @"firefox"; version = @"10"; break;
+        case 8: os = @"Windows 2003"; browser = @"safari"; version = @"3"; break;
+        case 9: os = @"Windows 2003"; browser = @"safari"; version = @"4"; break;
+        case 10: os = @"Windows 2008"; browser = @"safariproxy"; version = @"5"; break;
+        case 11: os = @"Windows 2003"; browser = @"opera"; version = @"9"; break;
+        case 12: os = @"Windows 2003"; browser = @"opera"; version = @"10"; break;                        
+        case 13: os = @"Windows 2003"; browser = @"opera"; version = @"11"; break;                        
+        case 14: os = @"Windows 2008"; browser = @"googlechrome"; version = @""; break;
 
-        case 209: os = @"Linux"; browser = @"firefox"; version = @"3.6"; break;
-        case 210: os = @"Linux"; browser = @"firefox"; version = @"9"; break;
-        case 211: os = @"Linux"; browser = @"firefox"; version = @"10"; break;
-        case 409: os = @"Linux"; browser = @"opera"; version = @"11"; break;                        
-        case 509: os = @"Linux"; browser = @"googlechrome"; version = @""; break;
+        case 15: os = @"Linux"; browser = @"firefox"; version = @"3.6"; break;
+        case 16: os = @"Linux"; browser = @"firefox"; version = @"9"; break;
+        case 17: os = @"Linux"; browser = @"firefox"; version = @"10"; break;
+        case 18: os = @"Linux"; browser = @"opera"; version = @"11"; break;                        
+        case 19: os = @"Linux"; browser = @"googlechrome"; version = @""; break;
     }
     if([type isEqualToString:@"os"])
         return os;

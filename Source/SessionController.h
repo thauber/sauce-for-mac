@@ -14,7 +14,8 @@
 
 @interface SessionController : NSObject
 {
-    int selectedTag;
+    int sessionIndx;
+    int hoverIndx;
     NSRect selectedFrame;
     NSRect hoverFrame;
     NSView *selectBox;
