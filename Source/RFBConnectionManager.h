@@ -30,7 +30,7 @@
 extern NSString *kUsername;
 extern NSString *kAccountkey;
 extern NSString *kSessionURL;
-extern NSString *kSessionTag;
+extern NSString *kSessionIndx;
 extern NSString *kSessionFrame;
 extern NSString *kSauceLabsHost;        // fixed host for connection
 extern int kPort;
