@@ -11,6 +11,7 @@
 #import "RFBConnectionManager.h"
 #import "ScoutWindowController.h"
 #import "AppDelegate.h"
+#import "OptionBox.h"
 
 @implementation SessionController
 
@@ -45,7 +46,8 @@
         [self.url setStringValue:urlstr];
     else
         [connectBtn setEnabled:NO];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(textDidChange:) name: NSTextDidChangeNotification object: nil];    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(textDidChange:) name: NSTextDidChangeNotification object: nil];
+    NSRect frame;
     selectedTag = [defs integerForKey:kSessionTag];
     if(selectedTag)
     {
@@ -58,12 +60,26 @@
             NSView *vv = (NSView*)defaultBrowser;
             NSRect frame = [vv frame];
             NSPoint pt = [vv.superview convertPoint:vv.frame.origin toView:[self view]];
+            pt.x -= 4;
             frame.origin = pt;
-            frame.size.width += frame.size.width + 4;
+            frame.size.width = 84;
             selectedFrame = frame;
         }
         [self selectBrowser:self];
     }
+    
+    [box2 setSessionCtlr:self];     // pass mouseclick in box here
+    
+    // create hoverbox
+    frame = NSMakeRect(0,0,22,0);
+    hoverBox = [[NSView alloc ] initWithFrame:frame];
+    [[self view] addSubview:hoverBox];
+    CALayer *viewLayer = [CALayer layer];
+    [viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.0, 0.0, 0.0, 0.1)]; //RGB plus Alpha Channel
+    [hoverBox setWantsLayer:YES]; // view's backing store is using a Core Animation Layer
+    [hoverBox setLayer:viewLayer];
+    
+    [self addTrackingAreas];
     NSTextField *tf = [[ScoutWindowController sharedScout] userStat];
     NSString *uname = [[SaucePreconnect sharedPreconnect] user];
     [tf setStringValue:uname];
@@ -88,6 +104,50 @@
     
     [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];
 
+}
+
+- (void)addTrackingAreas
+{
+    int indx = 0;
+    NSRect rr;
+    NSTrackingRectTag tag;
+    id xarr[kNumTrackItems] = {b0,b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19};
+    for(int i=0;i < kNumTrackItems; i++) // track mouse in/out over all buttons and included area
+    {
+        barr[i] = xarr[i];      // copy nsimageview objects to ivar array
+        rr = [xarr[indx] frame];
+        rr.origin.x -= 4;
+        rr.size.width = 84;
+        tag = [box2 addTrackingRect:rr owner:self userData:nil assumeInside:NO];
+        trarr[indx++] = tag;    
+    }
+    hoverFrame.size.width = 0;      // mouse is not within a rect(?guaranteed on startup?)
+}
+
+- (void)mouseEntered:(NSEvent *)theEvent
+{
+    int tn = [theEvent trackingNumber];
+    for(int i=0; i < kNumTrackItems; i++)
+    {
+        if(tn == trarr[i])
+        {
+            hoverFrame = ((NSView*)barr[i]).frame;
+            hoverFrame.origin.x -= 4;
+            hoverFrame.size.width = 84;            
+            NSPoint pt = [box2 convertPoint:hoverFrame.origin toView:[self view]];
+            hoverFrame.origin = pt;
+            [hoverBox setFrame:hoverFrame];
+            return;
+        }
+    }
+    hoverFrame.size.width = 0;
+    [hoverBox setFrame:hoverFrame];
+}
+
+- (void)mouseExited:(NSEvent *)theEvent
+{
+    hoverFrame.size.width = 0;
+    [hoverBox setFrame:hoverFrame];    
 }
 
 -(void)terminateApp
@@ -115,6 +175,7 @@
     [connectBtn setEnabled:bchars];
 }
 
+
 - (IBAction)selectBrowser:(id)sender 
 {
     NSRect frame;
@@ -122,21 +183,7 @@
     if(sender == (id)self)
         frame = selectedFrame;
     else
-    {
-        selectedTag = [sender tag];
-        // compute new position and width for selection box
-        frame = [sender frame];
-        NSView *vv = (NSView*)sender;
-        NSPoint pt = [vv.superview convertPoint:vv.frame.origin toView:[self view]];
-        frame.origin = pt;
-        if(selectedTag > 1000)      // version#
-        {
-            selectedTag -= 1000;
-            frame.origin.x -= 30;       // move back to icon position
-        }
-        frame.size.width = 64;
-        selectedFrame = frame;
-    }
+        frame = hoverFrame;
     
     if(!selectBox)
     {
