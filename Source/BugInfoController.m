@@ -15,7 +15,6 @@
 @synthesize panel;
 @synthesize description;
 @synthesize title;
-@synthesize toFld;
 
 -(id)init:(BOOL)snap
 {

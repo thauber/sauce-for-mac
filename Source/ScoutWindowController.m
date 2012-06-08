@@ -144,23 +144,6 @@ static ScoutWindowController* _sharedScout = nil;
 
 -(void)snapshotDone
 {    
-    if([[NSApp delegate] bugCtrlr])
-    {
-        BugInfoController *bugctrlr = [[NSApp delegate] bugCtrlr];
-        NSString *str = [[bugctrlr toFld] stringValue];
-        if([str length])
-        {
-            // send email
-            NSString *encodedSubject = [NSString stringWithFormat:@"SUBJECT=%@", [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-            str = [[bugctrlr description] stringValue];
-            NSString *encodedBody = [NSString stringWithFormat:@"BODY=%@", [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-            str = [[bugctrlr title] stringValue];            
-            NSString *encodedTo = [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            NSString *encodedURLString = [NSString stringWithFormat:@"mailto:%@?%@&%@", encodedTo, encodedSubject, encodedBody];
-            NSURL *mailtoURL = [NSURL URLWithString:encodedURLString];
-            [[NSWorkspace sharedWorkspace] openURL:mailtoURL];
-        }
-    }
     self.snapProgress = nil;
     [[NSApp delegate] setBugCtrlr:nil];
     [[NSApp delegate] showOptionsIfNoTabs];        // in case last session timed out or internet connection lost

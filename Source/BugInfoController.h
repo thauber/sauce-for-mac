@@ -11,7 +11,6 @@
 @interface BugInfoController : NSObject
 {
     NSTextField *title;
-    NSTextField *toFld;
     NSTextField *description;
     NSPanel *panel;
     BOOL bSnap;      // we're doing a snapshot, not a bug
@@ -21,7 +20,6 @@
 - (IBAction)cancel:(id)sender;
 @property (assign) IBOutlet NSTextField *description;
 @property (assign) IBOutlet NSTextField *title;
-@property (assign) IBOutlet NSTextField *toFld;
 
 - (id)init:(BOOL)snap;
 - (void)runSheetOnWindow:(NSWindow *)window;
