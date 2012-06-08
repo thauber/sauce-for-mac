@@ -365,7 +365,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 
 - (void)heartbeat:(NSTimer*)tm
 {    
-    if(delayedSession == 1)     // about to add a sesson
+    if(delayedSession == 1)     // about to add a session
         return;
 
 	NSEnumerator *credEnumerator = [credArr objectEnumerator];
@@ -386,6 +386,11 @@ static SaucePreconnect* _sharedPreconnect = nil;
         
         while(1)    
         {
+            if(![credArr count])        // if all sessions closed while in heartbeat
+            {
+                [self cancelHeartbeat];
+                return;        
+            }
             NSTask *ftask = [[NSTask alloc] init];
             NSPipe *fpipe = [NSPipe pipe];
             [ftask setStandardOutput:fpipe];
