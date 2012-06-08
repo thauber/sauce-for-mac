@@ -52,11 +52,6 @@
        didEndSelector:nil   contextInfo:nil];
 }
 
-- (BOOL)hiddenDisplay
-{
-    return hiddenDisplay;
-}
-
 -(void)displayInfo:(NSString *)str
 {
     if([str length])
