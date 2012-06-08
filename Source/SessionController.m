@@ -96,18 +96,17 @@
 
 - (void)addTrackingAreas
 {
-    int indx = 0;
     NSRect rr;
     NSTrackingRectTag tag;
     id xarr[kNumTrackItems] = {b0,b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19};
     for(int i=0;i < kNumTrackItems; i++) // track mouse in/out over all buttons and included area
     {
         barr[i] = xarr[i];      // copy nsimageview objects to ivar array
-        rr = [xarr[indx] frame];
+        rr = [xarr[i] frame];
         rr.origin.x -= 4;
-        rr.size.width = 84;
+        rr.size.width = 80;     // trackingrect width - NB: careful, 84 is too big
         tag = [box2 addTrackingRect:rr owner:self userData:nil assumeInside:NO];
-        trarr[indx++] = tag;    
+        trarr[i] = tag;    
     }
     hoverFrame.size.width = 0;      // mouse is not within a rect(?guaranteed on startup?)
 }
@@ -124,7 +123,7 @@
         {
             hoverFrame = ((NSView*)barr[i]).frame;
             hoverFrame.origin.x -= 4;
-            hoverFrame.size.width = 84;            
+            hoverFrame.size.width = 80;            
             NSPoint pt = [box2 convertPoint:hoverFrame.origin toView:[self view]];
             hoverFrame.origin = pt;
             [hoverBox setFrame:hoverFrame];
@@ -132,6 +131,7 @@
             return;
         }
     }
+    // didn't enter a trackingrect
     hoverFrame.size.width = 0;
     [hoverBox setFrame:hoverFrame];
     hoverIndx = -1;
