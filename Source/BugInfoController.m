@@ -44,7 +44,7 @@
         mins = ptm->tm_min;
         NSString *timeStr = [NSString stringWithFormat:@"Time:%d:%d",hrs,mins];
         
-        NSView *view = [[[ScoutWindowController sharedScout] curSession] scrollView];
+        NSView *view = [[[ScoutWindowController sharedScout] curSession] view];
         NSDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:view];
         NSString *browserStr = [sdict valueForKey:@"browser"];
         browserStr = [NSString stringWithFormat:@"Browser:%@",browserStr];
