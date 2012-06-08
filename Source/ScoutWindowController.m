@@ -369,7 +369,7 @@ static ScoutWindowController* _sharedScout = nil;
         // use last remaining time value for this session
         str = [sdict objectForKey:@"remainingTime"];
         [self.timeRemainingStat setStringValue:str];
-        str = [NSString stringWithFormat:@"%@ rem.",str];
+        str = [NSString stringWithFormat:@"%@ remaining",str];
         [self.timeRemainingMsg setStringValue:str];
 
         RFBConnection *rfbcon = [sdict objectForKey:@"connection"];
