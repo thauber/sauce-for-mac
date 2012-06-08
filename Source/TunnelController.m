@@ -46,6 +46,8 @@
         [hideButton setHidden:YES];      // don't show b/c we are not connected
         [self doTunnel];
     }
+    else
+        [hideButton setHidden:NO];      // show b/c we are connected
 
     hiddenDisplay = NO;
     [NSApp beginSheet:panel modalForWindow:window modalDelegate:self
