@@ -11,10 +11,13 @@
 
 @implementation OptionBox
 
-- (void)settracker:(NSRect)rr
+- (id)settracker:(NSRect)rr
 {
     NSTrackingArea *ta = [[NSTrackingArea alloc] initWithRect:rr options:NSTrackingMouseEnteredAndExited+NSTrackingCursorUpdate+NSTrackingActiveAlways owner:self userInfo:nil];
-    [self addTrackingArea:ta];    
+    [self addTrackingArea:ta]; 
+    [[NSCursor pointingHandCursor] setOnMouseEntered:YES];
+
+    return ta;
 }
 
 - (void) cursorUpdate:(NSEvent *)theEvent
@@ -23,6 +26,18 @@
         [[NSCursor pointingHandCursor] set];
     else
         [[NSCursor arrowCursor] set];
+}
+
+- (void)mouseEntered:(NSEvent *)theEvent
+{
+    id tn = [theEvent trackingArea];
+    if(sessionCtlr)
+        [sessionCtlr handleMouseEntered:tn]; 
+}
+
+- (void)mouseExited:(NSEvent *)theEvent
+{
+    [sessionCtlr handleMouseExited];
 }
 
 -(void)mouseUp:(NSEvent *)theEvent

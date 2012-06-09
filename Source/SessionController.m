@@ -63,8 +63,6 @@
     
     [self addTrackingAreas];
 
-    [self mouseEntered:nil];
-    [self selectBrowser:nil];       // get last selection or default selected
     [box2 setSessionCtlr:self];     // pass mouseclick to 'selectBrowser' method 
     
     NSTextField *tf = [[ScoutWindowController sharedScout] userStat];
@@ -91,6 +89,8 @@
     
     [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];
     hoverIndx = sessionIndx;
+    [self handleMouseEntered:nil];
+    [self selectBrowser:nil];       // get last selection or default selected
 
 }
 
@@ -102,7 +102,6 @@
 - (void)addTrackingAreas
 {
     NSRect rr;
-    NSTrackingRectTag tag;
     id xarr[kNumTrackItems] = {b0,b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19};
     for(int i=0;i < kNumTrackItems; i++) // track mouse in/out over all buttons and included area
     {
@@ -110,18 +109,15 @@
         rr = [xarr[i] frame];
         rr.origin.x -= 4;
         rr.size.width = 80;     // trackingrect width - NB: careful, 84 is too big
-        tag = [box2 addTrackingRect:rr owner:self userData:nil assumeInside:NO];
-        trarr[i] = tag;
-        [box2 settracker:rr];
+        trarr[i] = [box2 settracker:rr];
     }
-    [[NSCursor pointingHandCursor] setOnMouseEntered:YES];
     hoverFrame.size.width = 0;      // mouse is not within a rect(?guaranteed on startup?)
 }
 
-- (void)mouseEntered:(NSEvent *)theEvent
+// called from box2 optionBox mouseEntered
+- (void)handleMouseEntered:(id)tn
 {
-    int tn = [theEvent trackingNumber];
-    if(!theEvent)       // on initial call
+    if(!tn)
         tn = trarr[hoverIndx];
     
     for(int i=0; i < kNumTrackItems; i++)
@@ -144,7 +140,8 @@
     hoverIndx = -1;
 }
 
-- (void)mouseExited:(NSEvent *)theEvent
+// called from box2 optionBox mouseExited
+- (void)handleMouseExited
 {
     [[NSCursor arrowCursor] set];
     hoverFrame.size.width = 0;

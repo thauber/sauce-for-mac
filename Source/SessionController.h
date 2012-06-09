@@ -29,7 +29,7 @@
     NSView *view;
     NSButton *cancelBtn;
     NSButton *defaultBrowser;
-    int trarr[kNumTrackItems];      // tracking rect tags
+    id trarr[kNumTrackItems];      // tracking rect tags
     id barr[kNumTrackItems];        // buttons
     IBOutlet NSImageView *b0;
     IBOutlet NSImageView *b1;
@@ -66,6 +66,8 @@
 - (void)quitSheet;
 - (void)terminateApp;
 - (void)runSheet;
+- (void)handleMouseEntered:(id)tn;
+- (void)handleMouseExited;
 - (IBAction)connect:(id)sender;
 - (void)startConnecting;
 - (IBAction)selectBrowser:(id)sender;

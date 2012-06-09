@@ -16,6 +16,6 @@
 }
 
 - (void)setSessionCtlr:(SessionController *)sc;
-- (void)settracker:(NSRect)rr;
+- (id)settracker:(NSRect)rr;
 
 @end
