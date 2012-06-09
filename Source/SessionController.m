@@ -117,16 +117,14 @@
 // called from box2 optionBox mouseEntered
 - (void)handleMouseEntered:(id)tn
 {
-    if(!tn)
+    if(!tn)     // initial setting
         tn = trarr[hoverIndx];
     
     for(int i=0; i < kNumTrackItems; i++)
     {
         if(tn == trarr[i])
         {
-            hoverFrame = ((NSView*)barr[i]).frame;
-            hoverFrame.origin.x -= 4;
-            hoverFrame.size.width = 80;            
+            hoverFrame = [(NSTrackingArea *)tn rect];
             NSPoint pt = [box2 convertPoint:hoverFrame.origin toView:[self view]];
             hoverFrame.origin = pt;
             [hoverBox setFrame:hoverFrame];
