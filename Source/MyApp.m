@@ -49,7 +49,7 @@
     NSEventType eventType = [anEvent type];
     Session *cs = [[ScoutWindowController sharedScout] curSession];
     RFBView *rfbView = [cs rfbView];
-    BOOL noModal = [[NSApp delegate] VMinFront];
+    BOOL noModal = [[[ScoutWindowController sharedScout] window] attachedSheet] ? NO : YES;  
 	if(rfbView && noModal)
 	{
 		// we only care about keyboard events.  flagsChanged events get passed fine, so we'll 
