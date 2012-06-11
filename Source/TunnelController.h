@@ -18,6 +18,8 @@
     NSTask *ftask;
     NSFileHandle *fhand;
     NSPipe *fpipe;
+    IBOutlet NSProgressIndicator *indicator;    
+    IBOutlet NSTextField *connectLabel;
 }
 @property (assign) IBOutlet NSPanel *panel;
 @property (assign) IBOutlet NSButton *closeButton;

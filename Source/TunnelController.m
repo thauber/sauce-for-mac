@@ -44,6 +44,8 @@
         NSString *str = @"Please wait while we launch Sauce Connect, (which allows testing local websites) ...\n\n";
         [[[infoTV textStorage] mutableString] appendString: str];
         [hideButton setHidden:YES];      // don't show b/c we are not connected
+        [indicator startAnimation:self];
+
         [self doTunnel];
     }
     else
@@ -64,6 +66,9 @@
         NSRange textRange =[str rangeOfString:@"Connected!"];        
         if(textRange.location != NSNotFound)    //Does contain the substring
         {
+            [indicator stopAnimation:self];
+            [indicator setHidden:YES];
+            [connectLabel setHidden:YES];
             [self doHide:self];
             [[ScoutWindowController sharedScout] tunnelConnected:YES];            
         }           
