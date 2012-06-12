@@ -156,7 +156,7 @@
 
 - (IBAction)performClose:(id)sender
 {
-    [[SaucePreconnect sharedPreconnect] setErrStr:@"User cancelled"];
+    [[SaucePreconnect sharedPreconnect] setErrStr:nil];
     [[NSApp delegate] cancelOptionsConnect:self];
 }
 
