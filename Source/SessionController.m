@@ -345,19 +345,18 @@
         case 5: os = @"Windows 2003"; browser = @"firefox"; version = @"8"; break;
         case 6: os = @"Windows 2003"; browser = @"firefox"; version = @"9"; break;
         case 7: os = @"Windows 2008"; browser = @"firefox"; version = @"10"; break;
-        case 8: os = @"Windows 2003"; browser = @"safari"; version = @"3"; break;
-        case 9: os = @"Windows 2003"; browser = @"safari"; version = @"4"; break;
-        case 10: os = @"Windows 2008"; browser = @"safariproxy"; version = @"5"; break;
-        case 11: os = @"Windows 2003"; browser = @"opera"; version = @"9"; break;
-        case 12: os = @"Windows 2003"; browser = @"opera"; version = @"10"; break;                        
-        case 13: os = @"Windows 2003"; browser = @"opera"; version = @"11"; break;                        
-        case 14: os = @"Windows 2008"; browser = @"googlechrome"; version = @""; break;
-
-        case 15: os = @"Linux"; browser = @"firefox"; version = @"3.6"; break;
-        case 16: os = @"Linux"; browser = @"firefox"; version = @"9"; break;
-        case 17: os = @"Linux"; browser = @"firefox"; version = @"10"; break;
-        case 18: os = @"Linux"; browser = @"opera"; version = @"11"; break;                        
-        case 19: os = @"Linux"; browser = @"googlechrome"; version = @""; break;
+        case 8: os = @"Linux"; browser = @"firefox"; version = @"3.6"; break;
+        case 9: os = @"Linux"; browser = @"firefox"; version = @"9"; break;
+        case 10: os = @"Linux"; browser = @"firefox"; version = @"10"; break;
+        case 11: os = @"Windows 2003"; browser = @"safari"; version = @"3"; break;
+        case 12: os = @"Windows 2003"; browser = @"safari"; version = @"4"; break;
+        case 13: os = @"Windows 2008"; browser = @"safariproxy"; version = @"5"; break;
+        case 14: os = @"Windows 2003"; browser = @"opera"; version = @"9"; break;
+        case 15: os = @"Windows 2003"; browser = @"opera"; version = @"10"; break;                        
+        case 16: os = @"Windows 2003"; browser = @"opera"; version = @"11"; break;                        
+        case 17: os = @"Linux"; browser = @"opera"; version = @"11"; break;                        
+        case 18: os = @"Windows 2008"; browser = @"googlechrome"; version = @""; break;
+		case 19: os = @"Linux"; browser = @"googlechrome"; version = @""; break;
     }
     if([type isEqualToString:@"os"])
         return os;
