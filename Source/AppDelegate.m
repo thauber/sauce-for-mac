@@ -119,10 +119,15 @@
     self.optionsCtrlr = nil;    
 
     NSString *errMsg = [[SaucePreconnect sharedPreconnect] errStr];
-    [[SaucePreconnect sharedPreconnect] setErrStr:nil];         // clear error string
-    NSString *header = NSLocalizedString( @"Connection Status", nil );
-    NSString *okayButton = NSLocalizedString( @"Ok", nil );
-    NSBeginAlertSheet(header, okayButton, nil, nil, [[ScoutWindowController sharedScout] window], self, nil, @selector(errDidDismiss:returnCode:contextInfo:), nil, errMsg);
+    if(errMsg)
+    {
+        [[SaucePreconnect sharedPreconnect] setErrStr:nil];         // clear error string
+        NSString *header = NSLocalizedString( @"Connection Status", nil );
+        NSString *okayButton = NSLocalizedString( @"Ok", nil );
+        NSBeginAlertSheet(header, okayButton, nil, nil, [[ScoutWindowController sharedScout] window], self, nil, @selector(errDidDismiss:returnCode:contextInfo:), nil, errMsg);
+    }
+    else
+        [self showOptionsIfNoTabs];
 }
 
 - (void)errDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
