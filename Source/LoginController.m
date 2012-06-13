@@ -48,13 +48,25 @@
         [accountKey setStringValue:akey];
         if(!uname || !akey)     // can't cancel login if we don't have username/acctkey
             [cancelLogin setHidden:YES];
-        [panel setOpaque:YES];
-        [panel setAlphaValue:1.0];
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(textDidChange:) name:NSControlTextDidChangeNotification object:user];
+        [center addObserver:self selector:@selector(textDidChange:) name:NSControlTextDidChangeNotification object:accountKey];
+        [center addObserver:self selector:@selector(textDidChange:) name:NSControlTextDidChangeNotification object:aNewUsername];
+        [center addObserver:self selector:@selector(textDidChange:) name:NSControlTextDidChangeNotification object:aNewPassword];
+    
         [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];
     }
     return self;
 }
     
+- (void)textDidChange:(NSNotification *)aNotification
+{
+    BOOL bEmpty = [[user stringValue] isEqualToString: @""] || [[accountKey stringValue] isEqualToString: @""];
+    [loginButton setEnabled: !bEmpty];
+    bEmpty = [[aNewUsername stringValue] isEqualToString: @""] || [[aNewPassword stringValue] isEqualToString: @""];
+    [signupButton setEnabled: !bEmpty];
+}
+
 -(void)terminateApp
 {
     [NSApp endSheet:panel];

@@ -29,6 +29,8 @@
     IBOutlet NSTextField *aNewUsername;
     IBOutlet NSSecureTextField *aNewPassword;
     IBOutlet NSTextField *aNewEmail;
+    IBOutlet NSButton *loginButton;
+    IBOutlet NSButton *signupButton;
     NSPanel *panel;
     NSButton *cancelLogin;
 }
