@@ -24,6 +24,8 @@
     BugInfoController *bugCtrlr;
     NSMenuItem *tunnelMenuItem;
 }
+- (IBAction)bugsAccount:(id)sender;
+- (IBAction)myAccount:(id)sender;
 @property (assign) IBOutlet NSMenuItem *tunnelMenuItem;
 - (IBAction)doStopSession:(id)sender;
 

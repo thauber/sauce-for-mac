@@ -229,4 +229,15 @@
         [self showOptionsIfNoTabs];
     }
 }
+
+- (IBAction)myAccount:(id)sender 
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.saucelabs.com/account"]];
+}
+
+- (IBAction)bugsAccount:(id)sender 
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.saucelabs.com/bugs"]];
+}
+
 @end
