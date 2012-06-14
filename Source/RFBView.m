@@ -82,6 +82,7 @@
 - (void)dealloc
 {
     [fbuf release];
+    fbuf = nil;
     [_serverCursor release];
     [_modifierCursor release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -141,16 +142,26 @@
 #endif
     int             i;
 
-    if (drawTint)
-        [tint setFill];
+//    if (drawTint)
+//        [tint setFill];
 
     [self getRectsBeingDrawn:&rects count:&numRects];
     for (i = 0; i < numRects; i++) {
         NSRect      r = rects[i];
         r.origin.y = b.size.height - NSMaxY(r);
+        @try 
+        {
         [fbuf drawRect:r at:rects[i].origin];
-        if (drawTint)
-            NSRectFillUsingOperation(rects[i], NSCompositeSourceOver);
+//        if (drawTint)
+//            NSRectFillUsingOperation(rects[i], NSCompositeSourceOver);
+        }
+        @catch(id ue) {
+            NSLog(@"exception in rbfview:drawRect");
+        }
+        @catch(...) {
+            NSLog(@"non obj-c exception in rbfview:drawRect");
+        }
+
     }
 }
 

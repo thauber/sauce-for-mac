@@ -550,13 +550,13 @@ enum {
 - (void)windowDidBecomeKey
 {
     [[RFBConnectionManager sharedManager] setSessionsUpdateIntervals];
-    [rfbView setTint:[[connection profile] tintWhenFront:YES]];
+//    [rfbView setTint:[[connection profile] tintWhenFront:YES]];
 }
 
 - (void)windowDidResignKey
 {
     [[RFBConnectionManager sharedManager] setSessionsUpdateIntervals];
-    [rfbView setTint:[[connection profile] tintWhenFront:NO]];
+//    [rfbView setTint:[[connection profile] tintWhenFront:NO]];
 	
 	//Reset keyboard state on remote end
 	[[connection eventFilter] clearAllEmulationStates];
@@ -564,7 +564,7 @@ enum {
 
 - (void)tintChanged:(NSNotification *)notif
 {
-    [rfbView setTint:[[connection profile] tintWhenFront:[window isKeyWindow]]];
+//    [rfbView setTint:[[connection profile] tintWhenFront:[window isKeyWindow]]];
 }
 
 - (void)openOptions:(id)sender
