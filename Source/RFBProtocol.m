@@ -77,21 +77,39 @@
  * subsequent message will be written without buffering. */
 - (void)setEncodings
 {
+    // [rda] fix encoding to 1 preferred value
+#if 0
     //Profile* profile = [connection profile];
     Profile* profile = nil;     // [rda] slows mouse tracking when encodings are used
     CARD16 i;
     CARD16 l = [profile numEnabledEncodingsIfViewOnly:[connection viewOnly]];
+#endif
+    Profile* profile = [connection profile];
     rfbSetEncodingsMsg msg;
 
     msg.type = rfbSetEncodings;
-    msg.nEncodings = htons(l);
+    msg.nEncodings = htons(1);    //  'l' when using profile
     [connection writeBufferedBytes:(unsigned char*)&msg length:sizeof(msg)];
 
+#if 0
     for(i=0; i<l; i++) {
         CARD32  enc = htonl([profile encodingAtIndex:i]);
         [connection writeBufferedBytes:(unsigned char*)&enc
                                 length:sizeof(CARD32)];
     }
+#else
+/*  all seem better than raw
+ 1 rfbEncodingZRLE
+ 2 rfbEncodingTight
+ 3? -> raw
+ 4 rfbEncodingZlib,
+ 5 rfbEncodingZlibHex,
+ 6 rfbEncodingHextile,
+*/
+    CARD32  enc = htonl([profile encodingAtIndex:2]);       // Tight looks good
+    [connection writeBufferedBytes:(unsigned char*)&enc
+                            length:sizeof(CARD32)];
+#endif
 }
 
 - (void)encodingsChanged:(NSNotification *)notif
