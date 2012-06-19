@@ -106,7 +106,7 @@
  5 rfbEncodingZlibHex,
  6 rfbEncodingHextile,
 */
-    CARD32  enc = htonl([profile encodingAtIndex:2]);       // Tight looks good
+    CARD32  enc = htonl([profile encodingAtIndex:6]);       // Tight maybe not good?
     [connection writeBufferedBytes:(unsigned char*)&enc
                             length:sizeof(CARD32)];
 #endif
