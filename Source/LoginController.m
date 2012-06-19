@@ -130,7 +130,7 @@
 
 - (IBAction)forgotKey:(id)sender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.saucelabs.com/send-password-reset"]];    
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://saucelabs.com/account/key"]];    
 }
 
 - (IBAction)signUp:(id)sender
