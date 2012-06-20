@@ -382,7 +382,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     {
         NSString *aliveid = [sdict objectForKey:@"liveId"];
                              
-        NSString *farg = [NSString stringWithFormat:@"curl 'https://saucelabs.com/scout/live/%@/status?auth_username=%@&auth_access_key=%@'", aliveid, self.user, self.ukey];
+        NSString *farg = [NSString stringWithFormat:@"curl 'https://saucelabs.com/scout/live/%@/status?auth_username=%@&auth_access_key=%@' 2>/dev/null", aliveid, self.user, self.ukey];
         
         while(1)    
         {
