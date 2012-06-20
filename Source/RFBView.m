@@ -135,25 +135,17 @@
 {
     NSRect          b = [self bounds];
     const NSRect    *rects;
-#if  __LP64__
-    long             numRects;   //[rda] needs to be int or long for 32bit; long for 64bit
-#else
-    int             numRects;
-#endif
+    NSInteger       numRects;
     int             i;
 
-//    if (drawTint)
-//        [tint setFill];
-
     [self getRectsBeingDrawn:&rects count:&numRects];
-    for (i = 0; i < numRects; i++) {
+    for (i = 0; i < numRects; i++)
+    {
         NSRect      r = rects[i];
         r.origin.y = b.size.height - NSMaxY(r);
         @try 
         {
-        [fbuf drawRect:r at:rects[i].origin];
-//        if (drawTint)
-//            NSRectFillUsingOperation(rects[i], NSCompositeSourceOver);
+            [fbuf drawRect:r at:rects[i].origin];
         }
         @catch(id ue) {
             NSLog(@"exception in rbfview:drawRect");
