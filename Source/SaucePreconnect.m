@@ -428,7 +428,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
                             NSTextField *tf = [[ScoutWindowController sharedScout] timeRemainingStat];
                             [tf setStringValue:str];
                             tf = [[ScoutWindowController sharedScout] timeRemainingMsg];
-                            str = [NSString stringWithFormat:@"%@ rem.",str];
+                            str = [NSString stringWithFormat:@"%@ remaining",str];
                             [tf setStringValue:str];                        
                         }
                     }
