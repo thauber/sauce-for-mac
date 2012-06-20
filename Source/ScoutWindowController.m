@@ -83,6 +83,11 @@ static ScoutWindowController* _sharedScout = nil;
     [[self window] setDelegate:self];
 }
 
+- (BOOL)canBecomeKeyWindow
+{
+    return YES;
+}
+
 - (IBAction)doPlayStop:(id)sender
 {
     NSString *header = NSLocalizedString( @"Stop Session", nil );
