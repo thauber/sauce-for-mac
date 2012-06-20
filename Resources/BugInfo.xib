@@ -52,7 +52,7 @@
 						<object class="NSTextField" id="859223840">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{28, 383}, {86, 25}}</string>
+							<string key="NSFrame">{{28, 383}, {184, 25}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="923787595"/>
@@ -178,7 +178,6 @@
 							<string key="NSFrame">{{137, 114}, {274, 155}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<string key="NSAntiCompressionPriority">{250, 750}</string>
 							<bool key="NSEnabled">YES</bool>
@@ -314,6 +313,14 @@
 						<reference key="destination" ref="1005"/>
 					</object>
 					<int key="connectionID">342</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">header</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="859223840"/>
+					</object>
+					<int key="connectionID">2219</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -516,7 +523,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2218</int>
+			<int key="maxID">2219</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -539,13 +546,17 @@
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="description">NSTextField</string>
+						<string key="header">NSTextField</string>
 						<string key="panel">NSPanel</string>
 						<string key="title">NSTextField</string>
-						<string key="toFld">NSTextField</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="description">
 							<string key="name">description</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="header">
+							<string key="name">header</string>
 							<string key="candidateClassName">NSTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="panel">
@@ -554,10 +565,6 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="title">
 							<string key="name">title</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="toFld">
-							<string key="name">toFld</string>
 							<string key="candidateClassName">NSTextField</string>
 						</object>
 					</dictionary>
