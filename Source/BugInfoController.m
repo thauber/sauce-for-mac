@@ -12,6 +12,7 @@
 #import "Session.h"
 
 @implementation BugInfoController
+@synthesize header;
 @synthesize panel;
 @synthesize description;
 @synthesize title;
@@ -54,6 +55,8 @@
         NSString *user = [sdict valueForKey:@"user"];
         NSString *userStr = [NSString stringWithFormat:@"User:%@",user];
         [description setStringValue:[NSString stringWithFormat:@"%@\n%@\n%@\n%@\n%@",dateStr,timeStr,osStr,urlStr,userStr]];
+        if(bSnap)
+            [header setStringValue:@"Take a Snapshot"];
         [title setStringValue:[NSString stringWithFormat:@"%@-snapshot-%@",dateStr,user]];
         
     }

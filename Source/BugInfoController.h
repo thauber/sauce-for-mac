@@ -14,7 +14,9 @@
     NSTextField *description;
     NSPanel *panel;
     BOOL bSnap;      // we're doing a snapshot, not a bug
+    NSTextField *header;
 }
+@property (assign) IBOutlet NSTextField *header;
 @property (assign) IBOutlet NSPanel *panel;
 - (IBAction)submit:(id)sender;
 - (IBAction)cancel:(id)sender;
