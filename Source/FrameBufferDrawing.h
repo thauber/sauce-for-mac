@@ -460,7 +460,6 @@ printf("draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
         FBColor* sp = scratchpad;
         int lines = r.size.height;
         int stride = (unsigned int)size.width - (unsigned int)r.size.width;
-        NSLog(@"sizeof(sp):%ld",sizeof(sp));
         while(lines--) {
 //            memcpy(sp, start, r.size.width * sizeof(sp));     // [rda] bad for 64bit
             memcpy(sp, start, r.size.width * 4);    // avoid using 64-bit pointer=8bytes
