@@ -23,6 +23,7 @@
     TunnelController *tunnelCtrlr;
     BugInfoController *bugCtrlr;
     NSMenuItem *tunnelMenuItem;
+    BOOL noTunnel;      // set true after user says no to prompt for tunnel
 }
 - (IBAction)bugsAccount:(id)sender;
 - (IBAction)myAccount:(id)sender;
@@ -37,6 +38,7 @@
 @property (retain)LoginController *loginCtrlr;
 @property (retain)TunnelController *tunnelCtrlr;
 @property (retain)BugInfoController *bugCtrlr;
+@property  (assign)BOOL noTunnel;
 
 - (IBAction)showOptionsDlg:(id)sender;
 - (void)showOptionsIfNoTabs;

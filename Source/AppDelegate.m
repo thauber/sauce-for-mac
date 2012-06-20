@@ -21,11 +21,13 @@
 
 @implementation AppDelegate
 @synthesize tunnelMenuItem;
+@synthesize noTunnel;
 
 @synthesize optionsCtrlr;
 @synthesize loginCtrlr;
 @synthesize tunnelCtrlr;
 @synthesize bugCtrlr;
+
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification
 {

@@ -217,28 +217,28 @@
     [[SaucePreconnect sharedPreconnect] setOptions:os browser:browser browserVersion:version url:urlstr];
     [NSApp endSheet:panel];
 
-    if(urlstr)
+    NSURL *uurl = [NSURL URLWithString:urlstr];
+    BOOL noTunnel = [[NSApp delegate] noTunnel];
+    if(uurl && !noTunnel)        // check for localhost
     {
-        NSURL *uurl = [NSURL URLWithString:urlstr];
-        if(uurl)        // check for localhost
+        NSString *uhost = [uurl host];
+        BOOL isLocalURL = ![uhost length] || [uhost isEqualToString:@"localhost"] || [uhost isEqualToString:@"127.0.0.1"];
+        isLocalURL = isLocalURL || [uhost hasPrefix:@"192.168."] || [uhost hasPrefix:@"10."];
+        if(![[NSApp delegate] tunnelCtrlr] && isLocalURL)       // prompt for opening tunnel
         {
-            NSString *uhost = [uurl host];
-            BOOL isLocalURL = ![uhost length] || [uhost isEqualToString:@"localhost"] || [uhost isEqualToString:@"127.0.0.1"];
-            isLocalURL = isLocalURL || [uhost hasPrefix:@"192.168."] || [uhost hasPrefix:@"10."];
-            if(![[NSApp delegate] tunnelCtrlr] && isLocalURL)       // prompt for opening tunnel
+            if(![uhost length] || [self canReachIP:uhost])
             {
-                if(![uhost length] || [self canReachIP:uhost])
-                {
-                    NSBeginAlertSheet(@"Requires Intranet Access", @"Okay", @"No Tunnel", @"Cancel", [NSApp keyWindow], self,nil, @selector(tunnelDidDismiss:returnCode:contextInfo:), NULL, @"Do you want to connect using a tunnel?"); 
-                }
-                else {
-                    NSBeginAlertSheet(@"Can't Reach IP", @"Okay", nil, nil, [NSApp keyWindow], self,nil, nil, NULL, @"Check connection and IP address"); 
-                }
+                NSBeginAlertSheet(@"Requires Intranet Access", @"Okay", @"No Tunnel", @"Cancel", [NSApp keyWindow], self,nil, @selector(tunnelDidDismiss:returnCode:contextInfo:), NULL, @"Do you want to connect using a tunnel?"); 
             }
-            else 
-                [self startConnecting];
+            else {
+                NSBeginAlertSheet(@"Can't Reach IP", @"Okay", nil, nil, [NSApp keyWindow], self,nil, nil, NULL, @"Check connection and IP address"); 
+            }
         }
+        else 
+            [self startConnecting];
     }
+    else 
+        [self startConnecting];
 }
 
 - (void)tunnelDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
@@ -249,6 +249,7 @@
             [[NSApp delegate] doTunnel:self];
             return;
         case NSAlertAlternateReturn:
+            [[NSApp delegate] setNoTunnel:YES];
             [self startConnecting];
             return;
         case NSAlertOtherReturn:
