@@ -325,6 +325,7 @@ enum {
     
     winframe = [window frame];
     winframe.size = maxviewsize;
+
     winframe = [NSWindow frameRectForContentRect:winframe styleMask:[window styleMask]];
 
     return winframe.size;
@@ -371,12 +372,12 @@ enum {
 	
 	[scrollView setHasHorizontalScroller:horizontalScroll];
 	[scrollView setHasVerticalScroller:verticalScroll];
-    [window setFrame:wf display:NO];
 	contentView = [scrollView contentView];
-    NSPoint pt = NSMakePoint(0.0,_maxSize.height  - [scrollView contentSize].height);
-    [contentView scrollToPoint: [contentView constrainScrollPoint:pt]];
+    NSRect fr = [contentView frame];
+    fr.size.height = _maxSize.height;
+    [contentView setFrame:fr];
+    [window setFrame:wf display:NO];
 
-    [scrollView reflectScrolledClipView: contentView];
     [window makeFirstResponder:rfbView];
     [window display];
 }
