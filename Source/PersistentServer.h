@@ -33,10 +33,10 @@
 
 - (NSMutableDictionary *)propertyDict;
 
-- (BOOL)rememberPassword;
+//- (BOOL)rememberPassword;
 
 - (void)setName: (NSString *)name;
-- (void)setRememberPassword: (BOOL)rememberPassword;
+//- (void)setRememberPassword: (BOOL)rememberPassword;
 
 - (NSString *)keychainServiceName;
 - (NSString *)saveName;

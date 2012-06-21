@@ -30,7 +30,7 @@
 #import "KeyEquivalentManager.h"
 #import "KeyEquivalentScenario.h"
 #import "Keymap.h"
-#import "PersistentServer.h"
+//#import "PersistentServer.h"
 #import "PrefController.h"
 #import "Profile.h"
 #import "ProfileManager.h"

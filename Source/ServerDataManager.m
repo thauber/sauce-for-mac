@@ -65,6 +65,7 @@ static ServerDataManager* gInstance = nil;
 	return self;
 }
 
+#if 0
 /* Initialize from some old format for the preferences. Not sure when this was
  * used, but it pre-dates version 2.0b4. */
 - (id)initWithOriginalPrefs
@@ -89,6 +90,7 @@ static ServerDataManager* gInstance = nil;
 	
 	return self;
 }
+#endif
 
 /* Initialize from servers as stored by versions 2.2 and later */
 - (id)initFromDictionary:(NSDictionary *)servers
@@ -162,6 +164,7 @@ static ServerDataManager* gInstance = nil;
 			
 			gInstance = [NSKeyedUnarchiver unarchiveObjectWithFile:storePath];
 			[gInstance retain];
+#if 0
 			if( nil == gInstance )
 			{
 				// Didn't find any preferences under the new serialization system,
@@ -170,6 +173,7 @@ static ServerDataManager* gInstance = nil;
 				
 				[gInstance save];
 			}
+#endif
 		}
 		
 		if( 0 == [gInstance serverCount] )
@@ -246,11 +250,13 @@ static ServerDataManager* gInstance = nil;
 
 - (void)putServers:(NSArray *)servers inDictionary:(NSMutableDictionary *)dict
 {
+#if 0
     NSEnumerator        *en = [servers objectEnumerator];
     PersistentServer    *server;
 
     while ((server = [en nextObject]) != nil)
         [dict setObject:[server propertyDict] forKey:[server saveName]];
+#endif
 }
 
 - (void)saveStandardServers
@@ -278,9 +284,10 @@ static ServerDataManager* gInstance = nil;
 - (void)save
 {
     [self saveStandardServers];
-    [self saveRendezvousServers];
+//    [self saveRendezvousServers];
 }
 
+#if 0
 - (void)saveRendezvousServer: (PersistentServer *)server
 {
     NSUserDefaults      *defaults = [NSUserDefaults standardUserDefaults];
@@ -293,6 +300,7 @@ static ServerDataManager* gInstance = nil;
     [servers setObject:[server propertyDict] forKey:[server saveName]];
 	[defaults setObject:servers forKey:RFB_SAVED_RENDEZVOUS_SERVERS];
 }
+#endif
 
 - (unsigned) serverCount
 {
@@ -302,6 +310,7 @@ static ServerDataManager* gInstance = nil;
 /* Returns the number of saveable servers, i.e. excluding Rendezvous servers */
 - (unsigned)saveableCount
 {
+#if 0
     NSEnumerator    *servers = [mServers objectEnumerator];
     ServerBase      *server;
     unsigned        count = 0;
@@ -311,6 +320,9 @@ static ServerDataManager* gInstance = nil;
             count++;
     }
     return count;
+#else
+    return 0;
+#endif
 }
 
 /* Returns an array of the server names, sorted alphabetically */
@@ -597,7 +609,7 @@ static ServerDataManager* gInstance = nil;
 	[[mGroups objectForKey:@"Rendezvous"] removeObjectForKey:[serverToRemove name]];
     [mServers removeObjectForKey:[serverToRemove name]];
 
-    [self saveRendezvousServer:serverToRemove];
+//    [self saveRendezvousServer:serverToRemove];
 	
 	[serverToRemove release];
     

@@ -84,6 +84,7 @@
 	return _name;
 }
 
+#if 0
 - (NSString *)password
 {
     if (_rememberPassword) {
@@ -107,6 +108,7 @@
 {
 	return _rememberPassword;
 }
+#endif
 
 - (void)setName: (NSString*)name
 {
@@ -133,6 +135,8 @@
 
     [self setRememberPassword:rememberPassword];
 }
+
+#if 0
 - (void)setPassword: (NSString*)password
 {
 	if (_rememberPassword) {
@@ -166,6 +170,7 @@
         _rememberPassword = NO;
 	}
 }
+#endif
 
 - (void)copyServer:(PersistentServer *)server
 {
