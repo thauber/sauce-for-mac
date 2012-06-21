@@ -117,8 +117,8 @@
 
     // we do this so that the password gets deleted from the old name and
     // created at the new name
-    BOOL    rememberPassword = _rememberPassword;
-    [self setRememberPassword:NO];
+//    BOOL    rememberPassword = _rememberPassword;
+//    [self setRememberPassword:NO];
 
 	[_name autorelease];
 
@@ -133,7 +133,7 @@
 		_name = @"localhost";
 	}
 
-    [self setRememberPassword:rememberPassword];
+//    [self setRememberPassword:rememberPassword];
 }
 
 #if 0
@@ -177,7 +177,7 @@
 	// remember password must come after setting the password so that the
     // appropriate save logic works
     [super copyServer:server];
-	[self setRememberPassword:[server rememberPassword]];
+//	[self setRememberPassword:[server rememberPassword]];
 }
 
 - (NSString *)keychainServiceName
