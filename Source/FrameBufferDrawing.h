@@ -461,10 +461,9 @@ printf("draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
         int lines = r.size.height;
         int stride = (unsigned int)size.width - (unsigned int)r.size.width;
         while(lines--) {
-//            memcpy(sp, start, r.size.width * sizeof(sp));     // [rda] bad for 64bit
-            memcpy(sp, start, r.size.width * 4);    // avoid using 64-bit pointer=8bytes
-            start += (unsigned int) r.size.width;
-            sp += (unsigned int) r.size.width;
+            memcpy(sp, start, r.size.width * sizeof(sp));
+            start += (NSInteger) r.size.width;
+            sp += (NSInteger) r.size.width;
             start += stride;
         }
         bpr = r.size.width * sizeof(FBColor);
