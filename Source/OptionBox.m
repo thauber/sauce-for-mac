@@ -43,6 +43,8 @@
 -(void)mouseUp:(NSEvent *)theEvent
 {
     [sessionCtlr selectBrowser:self];      // handle click if in a tracking rect
+    if([theEvent clickCount] > 1)
+        [sessionCtlr doubleClick];
 }
 
 - (void)setSessionCtlr:(SessionController *)sc

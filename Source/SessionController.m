@@ -181,6 +181,9 @@
         frame = selectedFrame;
     else                        // from mouseEntered
         frame = hoverFrame;
+
+    if(hoverIndx== -1)
+        return;
     
     if(!selectBox)
     {
@@ -199,6 +202,16 @@
         [selectBox setFrame:frame];
     }
     
+}
+
+- (void)doubleClick        // from optionBox
+{
+    if(hoverIndx== -1)
+        return;
+
+    NSString *urlstr = [self.url stringValue];
+    if(urlstr)
+        [self connect:self];
 }
 
 -(IBAction)connect:(id)sender 

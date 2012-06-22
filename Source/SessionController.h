@@ -68,6 +68,7 @@
 - (void)runSheet;
 - (void)handleMouseEntered:(id)tn;
 - (void)handleMouseExited;
+- (void) doubleClick;
 - (IBAction)connect:(id)sender;
 - (void)startConnecting;
 - (IBAction)selectBrowser:(id)sender;
