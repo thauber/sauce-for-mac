@@ -15,6 +15,7 @@
 
 @implementation SessionController
 
+@synthesize osTabs;
 @synthesize defaultBrowser;
 @synthesize panel;
 @synthesize view;
@@ -22,8 +23,9 @@
 @synthesize connectBtn;
 @synthesize connectIndicatorText;
 @synthesize connectIndicator;
-@synthesize box2;
 @synthesize url;
+@synthesize boxWindows;
+@synthesize boxLinux;
 
 - (id)init
 {
@@ -36,9 +38,9 @@
 }
 
 -(void)runSheet
-{
-    [connectIndicatorText setStringValue:@""];
-        
+{        
+    selectedFrames = [[[NSMutableArray alloc] initWithCapacity:kNumTabs] retain];    
+    
     // use last used values from prefs
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
     NSString *urlstr = [defs stringForKey:kSessionURL];
@@ -47,23 +49,27 @@
     else
         [connectBtn setEnabled:NO];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(textDidChange:) name: NSTextDidChangeNotification object: nil];
-    NSRect frame;
+    curTabIndx = [defs integerForKey:kCurTab];
     sessionIndx = [defs integerForKey:kSessionIndx];
     if(!sessionIndx)
         sessionIndx = 3;           // default is windows 9
     
     // create hoverbox
-    frame = NSMakeRect(0,0,0,0);
+    NSRect frame = NSMakeRect(0,0,0,0);
     hoverBox = [[NSView alloc ] initWithFrame:frame];
-    [[self view] addSubview:hoverBox];
+    NSTabViewItem *ti = [osTabs  tabViewItemAtIndex:curTabIndx];
+    [self tabView:osTabs didSelectTabViewItem:ti];
+    [curBox addSubview:hoverBox];
     CALayer *viewLayer = [CALayer layer];
     [viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.0, 0.0, 0.0, 0.1)]; //RGB plus Alpha Channel
     [hoverBox setWantsLayer:YES]; // view's backing store is using a Core Animation Layer
     [hoverBox setLayer:viewLayer];
     
-    [self addTrackingAreas];
+    for(NSInteger i=0;i<1;i++)      // TODO: fix to do multiple tabs
+        [self addTrackingAreas:(enum TabType)i];
 
-    [box2 setSessionCtlr:self];     // pass mouseclick to 'selectBrowser' method 
+    [boxLinux setSessionCtlr:self];     // pass mouseclick to 'selectBrowser' method 
+    [boxWindows setSessionCtlr:self];     // pass mouseclick to 'selectBrowser' method 
     
     NSTextField *tf = [[ScoutWindowController sharedScout] userStat];
     NSString *uname = [[SaucePreconnect sharedPreconnect] user];
@@ -94,38 +100,61 @@
 
 }
 
-- (int)hoverIndx
+- (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem
+{
+    curTabIndx = [tabView indexOfTabViewItem:tabViewItem];
+    switch((enum TabType)curTabIndx)
+    {
+        case tt_windows: curBox = boxWindows; break;
+        case tt_linux:   curBox = boxLinux;    break;
+        case tt_apple:   break;
+        case tt_mobile:  break;
+    }
+}
+
+- (NSInteger)hoverIndx
 {
     return hoverIndx;
 }
 
-- (void)addTrackingAreas
+- (void)addTrackingAreas:(enum TabType)tabIndex
 {
     NSRect rr;
-    id xarr[kNumTrackItems] = {b0,b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19};
-    for(int i=0;i < kNumTrackItems; i++) // track mouse in/out over all buttons and included area
+    id xarr[kNumTrackItems] = {b0,b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16};
+
+    OptionBox *obox;
+    switch(tabIndex)
+    {
+        case tt_windows: obox = boxWindows; break;
+        case tt_linux:   obox = boxLinux;    break;
+        case tt_apple:  break;
+        case tt_mobile: break;
+    }
+    
+    for(NSInteger i=0;i < kNumTrackItems; i++) // track mouse in/out over all buttons and included area
     {
         barr[i] = xarr[i];      // copy nsimageview objects to ivar array
         rr = [xarr[i] frame];
         rr.origin.x -= 4;
         rr.size.width = 80;     // trackingrect width - NB: careful, 84 is too big
-        trarr[i] = [box2 settracker:rr];
+        trarr[i] = [obox settracker:rr];
     }
     hoverFrame.size.width = 0;      // mouse is not within a rect(?guaranteed on startup?)
 }
 
-// called from box2 optionBox mouseEntered
+// called from optionBox mouseEntered
 - (void)handleMouseEntered:(id)tn
 {
     if(!tn)     // initial setting
         tn = trarr[hoverIndx];
     
-    for(int i=0; i < kNumTrackItems; i++)
+    for(NSInteger i=0; i < kNumTrackItems; i++)
     {
         if(tn == trarr[i])
         {
             hoverFrame = [(NSTrackingArea *)tn rect];
-            NSPoint pt = [box2 convertPoint:hoverFrame.origin toView:[self view]];
+            NSPoint pt = [curBox convertPoint:hoverFrame.origin toView:[curBox superview]];
+                
             hoverFrame.origin = pt;
             [hoverBox setFrame:hoverFrame];
             hoverIndx = i;
@@ -138,7 +167,7 @@
     hoverIndx = -1;
 }
 
-// called from box2 optionBox mouseExited
+// called from optionBox mouseExited
 - (void)handleMouseExited
 {
     [[NSCursor arrowCursor] set];
@@ -177,10 +206,7 @@
 {
     NSRect frame;
     
-    if(sender == (id)self)      // on init
-        frame = selectedFrame;
-    else                        // from mouseEntered
-        frame = hoverFrame;
+    frame = hoverFrame;
 
     if(hoverIndx== -1)
         return;
@@ -188,8 +214,8 @@
     if(!selectBox)
     {
         // create box
-        selectBox = [[NSView alloc ] initWithFrame:frame];
-        [[self view] addSubview:selectBox];
+        selectBox = [[NSView alloc] initWithFrame:frame];
+        [curBox addSubview:selectBox];
         CALayer *viewLayer = [CALayer layer];
         [viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.0, 0.0, 0.0, 0.3)]; //RGB plus Alpha Channel
         [selectBox setWantsLayer:YES]; // view's backing store is using a Core Animation Layer
@@ -200,6 +226,8 @@
         // move selected box over this sender
         sessionIndx = hoverIndx;
         [selectBox setFrame:frame];
+        NSValue *vv = [NSValue valueWithRect:frame];
+        [selectedFrames insertObject:vv atIndex:curTabIndx];
     }
     
 }
@@ -224,7 +252,10 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:urlstr  forKey:kSessionURL];
     [defaults setInteger:sessionIndx  forKey:kSessionIndx];
-    NSString *frStr = NSStringFromRect(selectedFrame);
+    [defaults setInteger:curTabIndx forKey:kCurTab];
+    // TODO: save selected item in all tabs
+    NSRect fr = [[selectedFrames objectAtIndex:curTabIndx] rectValue];
+    NSString *frStr = NSStringFromRect(fr);
     [defaults setObject:frStr  forKey:kSessionFrame];
 
     [[SaucePreconnect sharedPreconnect] setOptions:os browser:browser browserVersion:version url:urlstr];

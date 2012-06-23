@@ -8,20 +8,27 @@
 
 #import <Cocoa/Cocoa.h>
 
-#define kNumTrackItems 20
+#define kNumTrackItems 17
+#define kNumTabs 4
 
 @class OptionBox;
 
+enum TabType {tt_windows, tt_linux, tt_apple, tt_mobile};
+
 @interface SessionController : NSObject
 {
-    int sessionIndx;
-    int hoverIndx;
-    NSRect selectedFrame;
-    NSRect hoverFrame;
+    NSInteger curTabIndx;
+    NSInteger sessionIndx;
+    NSInteger hoverIndx;
+    NSMutableArray *selectedFrames;     // each tab its own selected browser
     NSView *selectBox;
+    NSRect hoverFrame;
     NSView *hoverBox;
     NSTextField *url;
-    OptionBox *box2;
+    OptionBox *boxWindows;
+    OptionBox *boxLinux;
+    OptionBox *curBox;
+    NSArray *optionBoxen;
     NSProgressIndicator *connectIndicator;
     NSTextField *connectIndicatorText;
     NSButton *connectBtn;
@@ -48,10 +55,9 @@
     IBOutlet NSImageView *b14;
     IBOutlet NSImageView *b15;
     IBOutlet NSImageView *b16;
-    IBOutlet NSImageView *b17;
-    IBOutlet NSImageView *b18;
-    IBOutlet NSImageView *b19;
+    NSTabView *osTabs;
 }
+@property (assign) IBOutlet NSTabView *osTabs;
 @property (assign) IBOutlet NSButton *defaultBrowser;
 @property (assign) IBOutlet NSPanel *panel;
 @property (assign) IBOutlet NSView *view;
@@ -60,8 +66,9 @@
 @property (assign) IBOutlet NSButton *connectBtn;
 @property (assign) IBOutlet NSTextField *connectIndicatorText;
 @property (assign) IBOutlet NSProgressIndicator *connectIndicator;
-@property (assign) IBOutlet OptionBox *box2;
 @property (assign) IBOutlet NSTextField *url;
+@property (assign) IBOutlet OptionBox *boxWindows;
+@property (assign) IBOutlet OptionBox *boxLinux;
 - (IBAction)performClose:(id)sender;
 - (void)quitSheet;
 - (void)terminateApp;
@@ -74,7 +81,7 @@
 - (IBAction)selectBrowser:(id)sender;
 - (void)connectionSucceeded;
 - (void)showError:(NSString *)errStr;
-- (int)hoverIndx;
+- (NSInteger)hoverIndx;
 
 
 @end
