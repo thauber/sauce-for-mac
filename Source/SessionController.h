@@ -8,7 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-#define kNumTrackItems 17
+#define kNumWindowsTrackers 17
+#define kNumLinuxTrackers 5
 #define kNumTabs 4
 
 @class OptionBox;
@@ -17,10 +18,9 @@ enum TabType {tt_windows, tt_linux, tt_apple, tt_mobile};
 
 @interface SessionController : NSObject
 {
-    NSInteger curTabIndx;
-    NSInteger sessionIndx;
+    enum TabType curTabIndx;
+    NSInteger sessionIndxs[kNumTabs];
     NSInteger hoverIndx;
-    NSMutableArray *selectedFrames;     // each tab its own selected browser
     NSView *selectBox;
     NSRect hoverFrame;
     NSView *hoverBox;
@@ -36,8 +36,8 @@ enum TabType {tt_windows, tt_linux, tt_apple, tt_mobile};
     NSView *view;
     NSButton *cancelBtn;
     NSButton *defaultBrowser;
-    id trarr[kNumTrackItems];      // tracking rect tags
-    id barr[kNumTrackItems];        // buttons
+    id trarrWin[kNumWindowsTrackers];      // tracking rect tags
+    id trarrLnx[kNumLinuxTrackers];      // tracking rect tags
     IBOutlet NSImageView *b0;
     IBOutlet NSImageView *b1;
     IBOutlet NSImageView *b2;
@@ -53,8 +53,11 @@ enum TabType {tt_windows, tt_linux, tt_apple, tt_mobile};
     IBOutlet NSImageView *b12;
     IBOutlet NSImageView *b13;
     IBOutlet NSImageView *b14;
-    IBOutlet NSImageView *b15;
-    IBOutlet NSImageView *b16;
+    IBOutlet NSImageView *b100;
+    IBOutlet NSImageView *b101;
+    IBOutlet NSImageView *b102;
+    IBOutlet NSImageView *b103;
+    IBOutlet NSImageView *b104;
     NSTabView *osTabs;
 }
 @property (assign) IBOutlet NSTabView *osTabs;

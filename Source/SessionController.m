@@ -38,9 +38,7 @@
 }
 
 -(void)runSheet
-{        
-    selectedFrames = [[[NSMutableArray alloc] initWithCapacity:kNumTabs] retain];    
-    
+{            
     // use last used values from prefs
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
     NSString *urlstr = [defs stringForKey:kSessionURL];
@@ -50,9 +48,13 @@
         [connectBtn setEnabled:NO];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(textDidChange:) name: NSTextDidChangeNotification object: nil];
     curTabIndx = [defs integerForKey:kCurTab];
-    sessionIndx = [defs integerForKey:kSessionIndx];
-    if(!sessionIndx)
-        sessionIndx = 3;           // default is windows 9
+    sessionIndxs[tt_windows] = [defs integerForKey:kSessionIndxWin];
+    sessionIndxs[tt_linux] = [defs integerForKey:kSessionIndxLnx];
+    sessionIndxs[tt_apple] = [defs integerForKey:kSessionIndxMac];
+    sessionIndxs[tt_mobile] = [defs integerForKey:kSessionIndxMbl];
+    
+    if(!sessionIndxs[curTabIndx])
+        sessionIndxs[curTabIndx] = 3;           // default is windows 9
     
     // create hoverbox
     NSRect frame = NSMakeRect(0,0,0,0);
@@ -65,16 +67,12 @@
     [hoverBox setWantsLayer:YES]; // view's backing store is using a Core Animation Layer
     [hoverBox setLayer:viewLayer];
     
-    for(NSInteger i=0;i<1;i++)      // TODO: fix to do multiple tabs
-        [self addTrackingAreas:(enum TabType)i];
+    for(enum TabType i=0;i<2;i++)      // setup tracking rects for multiple tabs
+        [self addTrackingAreas:i];
 
-    [boxLinux setSessionCtlr:self];     // pass mouseclick to 'selectBrowser' method 
+    [boxLinux setSessionCtlr:self];       // pass mouseclick to 'selectBrowser' method 
     [boxWindows setSessionCtlr:self];     // pass mouseclick to 'selectBrowser' method 
     
-    NSTextField *tf = [[ScoutWindowController sharedScout] userStat];
-    NSString *uname = [[SaucePreconnect sharedPreconnect] user];
-    [tf setStringValue:uname];
-
     [connectBtn setTitle:@"Scout!"];
     [connectBtn setAction: @selector(connect:)];
     [connectBtn setKeyEquivalent:@"\r"];
@@ -94,7 +92,7 @@
     }
     
     [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];
-    hoverIndx = sessionIndx;
+    hoverIndx = sessionIndxs[curTabIndx];
     [self handleMouseEntered:nil];
     [self selectBrowser:nil];       // get last selection or default selected
 
@@ -102,14 +100,22 @@
 
 - (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem
 {
+    [hoverBox removeFromSuperview];
+    [selectBox removeFromSuperview];
     curTabIndx = [tabView indexOfTabViewItem:tabViewItem];
+    id *trarr;
     switch((enum TabType)curTabIndx)
     {
-        case tt_windows: curBox = boxWindows; break;
-        case tt_linux:   curBox = boxLinux;    break;
+        case tt_windows: curBox = boxWindows; trarr = trarrWin ; break;
+        case tt_linux:   curBox = boxLinux;  trarr = trarrLnx;  break;
         case tt_apple:   break;
         case tt_mobile:  break;
     }
+    [curBox addSubview:hoverBox];
+    [curBox addSubview:selectBox];
+    NSTrackingArea *ta = trarr[sessionIndxs[curTabIndx]];
+    NSRect rr = [ta rect];
+    [selectBox setFrame:rr];
 }
 
 - (NSInteger)hoverIndx
@@ -120,20 +126,23 @@
 - (void)addTrackingAreas:(enum TabType)tabIndex
 {
     NSRect rr;
-    id xarr[kNumTrackItems] = {b0,b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16};
+    id xarrwin[kNumWindowsTrackers] = {b0,b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14};
+    id xarrlnx[kNumLinuxTrackers] = {b100,b101,b102,b103,b104};
 
+    id *xarr;
+    id *trarr;
+    NSInteger num;
     OptionBox *obox;
     switch(tabIndex)
     {
-        case tt_windows: obox = boxWindows; break;
-        case tt_linux:   obox = boxLinux;    break;
+        case tt_windows: obox = boxWindows; xarr = xarrwin; trarr = trarrWin; num = kNumWindowsTrackers; break;
+        case tt_linux:   obox = boxLinux;  xarr = xarrlnx; trarr = trarrLnx; num = kNumLinuxTrackers; break;
         case tt_apple:  break;
         case tt_mobile: break;
     }
     
-    for(NSInteger i=0;i < kNumTrackItems; i++) // track mouse in/out over all buttons and included area
+    for(NSInteger i=0;i < num; i++) // track mouse in/out over all buttons and included area
     {
-        barr[i] = xarr[i];      // copy nsimageview objects to ivar array
         rr = [xarr[i] frame];
         rr.origin.x -= 4;
         rr.size.width = 80;     // trackingrect width - NB: careful, 84 is too big
@@ -145,17 +154,24 @@
 // called from optionBox mouseEntered
 - (void)handleMouseEntered:(id)tn
 {
+    id *trarr;
+    NSInteger num;
+    switch(curTabIndx)
+    {
+        case tt_windows: trarr = trarrWin; num = kNumWindowsTrackers; break;
+        case tt_linux: trarr = trarrLnx; num = kNumLinuxTrackers;  break;
+        case tt_apple:  break;
+        case tt_mobile: break;
+    }
+
     if(!tn)     // initial setting
         tn = trarr[hoverIndx];
     
-    for(NSInteger i=0; i < kNumTrackItems; i++)
+    for(NSInteger i=0; i < num; i++)
     {
         if(tn == trarr[i])
         {
             hoverFrame = [(NSTrackingArea *)tn rect];
-            NSPoint pt = [curBox convertPoint:hoverFrame.origin toView:[curBox superview]];
-                
-            hoverFrame.origin = pt;
             [hoverBox setFrame:hoverFrame];
             hoverIndx = i;
             return;
@@ -224,10 +240,8 @@
     else 
     {
         // move selected box over this sender
-        sessionIndx = hoverIndx;
+        sessionIndxs[curTabIndx] = hoverIndx;
         [selectBox setFrame:frame];
-        NSValue *vv = [NSValue valueWithRect:frame];
-        [selectedFrames insertObject:vv atIndex:curTabIndx];
     }
     
 }
@@ -251,12 +265,12 @@
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:urlstr  forKey:kSessionURL];
-    [defaults setInteger:sessionIndx  forKey:kSessionIndx];
     [defaults setInteger:curTabIndx forKey:kCurTab];
-    // TODO: save selected item in all tabs
-    NSRect fr = [[selectedFrames objectAtIndex:curTabIndx] rectValue];
-    NSString *frStr = NSStringFromRect(fr);
-    [defaults setObject:frStr  forKey:kSessionFrame];
+    // save selected item in all tabs
+    [defaults setInteger:sessionIndxs[tt_windows] forKey:kSessionIndxWin];
+    [defaults setInteger:sessionIndxs[tt_linux] forKey:kSessionIndxLnx];
+    [defaults setInteger:sessionIndxs[tt_apple] forKey:kSessionIndxMac];
+    [defaults setInteger:sessionIndxs[tt_mobile] forKey:kSessionIndxMbl];
 
     [[SaucePreconnect sharedPreconnect] setOptions:os browser:browser browserVersion:version url:urlstr];
     [NSApp endSheet:panel];
@@ -366,43 +380,61 @@
     NSString *browser=@"";
     NSString *version=@"";
     
-    switch(sessionIndx)
+    int indx = sessionIndxs[curTabIndx];
+    
+    if(curTabIndx==tt_apple)
     {
-#if 0
-        case 0: os = @"OSX"; browser = @"firefox"; version = @"3.6"; break;
-        case 1: os = @"OSX"; browser = @"firefox"; version = @"8"; break;
-        case 2: os = @"OSX"; browser = @"firefox"; version = @"9"; break;
-        case 3: os = @"OSX"; browser = @"firefox"; version = @"10"; break;
-        case 4: os = @"OSX"; browser = @"safari"; version = @"3"; break;
-        case 5: os = @"OSX"; browser = @"safari"; version = @"4"; break;
-        case 6: os = @"OSX"; browser = @"safari"; version = @"5"; break;
-        case 7: os = @"OSX"; browser = @"opera"; version = @"9"; break;
-        case 8: os = @"OSX"; browser = @"opera"; version = @"10"; break;                        
-        case 9: os = @"OSX"; browser = @"opera"; version = @"11"; break;                        
-        case 10: os = @"OSX"; browser = @"googlechrome"; version = @""; break;
-#endif
-
-        case 0: os = @"Windows 2003"; browser = @"iexplore"; version = @"6"; break;
-        case 1: os = @"Windows 2003"; browser = @"iexplore"; version = @"7"; break;
-        case 2: os = @"Windows 2003"; browser = @"iexplore"; version = @"8"; break;
-        case 3: os = @"Windows 2008"; browser = @"iexplore"; version = @"9"; break;
-        case 4: os = @"Windows 2003"; browser = @"firefox"; version = @"3.6"; break;
-        case 5: os = @"Windows 2003"; browser = @"firefox"; version = @"8"; break;
-        case 6: os = @"Windows 2003"; browser = @"firefox"; version = @"9"; break;
-        case 7: os = @"Windows 2008"; browser = @"firefox"; version = @"10"; break;
-        case 8: os = @"Linux"; browser = @"firefox"; version = @"3.6"; break;
-        case 9: os = @"Linux"; browser = @"firefox"; version = @"9"; break;
-        case 10: os = @"Linux"; browser = @"firefox"; version = @"10"; break;
-        case 11: os = @"Windows 2003"; browser = @"safari"; version = @"3"; break;
-        case 12: os = @"Windows 2003"; browser = @"safari"; version = @"4"; break;
-        case 13: os = @"Windows 2008"; browser = @"safariproxy"; version = @"5"; break;
-        case 14: os = @"Windows 2003"; browser = @"opera"; version = @"9"; break;
-        case 15: os = @"Windows 2003"; browser = @"opera"; version = @"10"; break;                        
-        case 16: os = @"Windows 2003"; browser = @"opera"; version = @"11"; break;                        
-        case 17: os = @"Linux"; browser = @"opera"; version = @"11"; break;                        
-        case 18: os = @"Windows 2008"; browser = @"googlechrome"; version = @""; break;
-		case 19: os = @"Linux"; browser = @"googlechrome"; version = @""; break;
+        os = @"OSX";
+        switch(indx)
+        {
+            case 0: browser = @"firefox"; version = @"3.6"; break;
+            case 1: browser = @"firefox"; version = @"8"; break;
+            case 2: browser = @"firefox"; version = @"9"; break;
+            case 3: browser = @"firefox"; version = @"10"; break;
+            case 4: browser = @"safari"; version = @"3"; break;
+            case 5: browser = @"safari"; version = @"4"; break;
+            case 6: browser = @"safari"; version = @"5"; break;
+            case 7: browser = @"opera"; version = @"9"; break;
+            case 8: browser = @"opera"; version = @"10"; break;                        
+            case 9: browser = @"opera"; version = @"11"; break;                        
+            case 10: browser = @"googlechrome"; version = @""; break;
+        }
     }
+    else if(curTabIndx==tt_windows)
+    {
+        os = @"Windows 2003";
+        switch(indx)
+        {
+            case 0: browser = @"iexplore"; version = @"6"; break;
+            case 1: browser = @"iexplore"; version = @"7"; break;
+            case 2: browser = @"iexplore"; version = @"8"; break;
+            case 3: os = @"Windows 2008"; browser = @"iexplore"; version = @"9"; break;
+            case 4: browser = @"firefox"; version = @"3.6"; break;
+            case 5: browser = @"firefox"; version = @"8"; break;
+            case 6: browser = @"firefox"; version = @"9"; break;
+            case 7: os = @"Windows 2008"; browser = @"firefox"; version = @"10"; break;
+            case 8: browser = @"safari"; version = @"3"; break;
+            case 9: browser = @"safari"; version = @"4"; break;
+            case 10: os = @"Windows 2008"; browser = @"safariproxy"; version = @"5"; break;
+            case 11: browser = @"opera"; version = @"9"; break;
+            case 12: browser = @"opera"; version = @"10"; break;                        
+            case 13: browser = @"opera"; version = @"11"; break;                        
+            case 14: os = @"Windows 2008"; browser = @"googlechrome"; version = @""; break;
+        }
+    }
+    else if(curTabIndx==tt_linux)
+    {
+        os = @"Linux";
+        switch(indx)
+        {
+            case 0: browser = @"firefox"; version = @"3.6"; break;
+            case 1: browser = @"firefox"; version = @"9"; break;
+            case 2: browser = @"firefox"; version = @"10"; break;
+            case 3: browser = @"opera"; version = @"11"; break;                        
+            case 4: browser = @"googlechrome"; version = @""; break;
+        }
+    }
+    
     if([type isEqualToString:@"os"])
         return os;
     if([type isEqualToString:@"browser"])        

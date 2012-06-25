@@ -40,8 +40,10 @@
 NSString *kUsername = @"username";
 NSString *kAccountkey = @"accountkey";
 NSString *kSessionURL = @"sessionURL";
-NSString *kSessionIndx = @"sessionIndx";
-NSString *kSessionFrame = @"sessionFrame";
+NSString *kSessionIndxWin = @"sessionIndxWin";
+NSString *kSessionIndxLnx = @"sessionIndxLnx";
+NSString *kSessionIndxMac = @"sessionIndxMac";
+NSString *kSessionIndxMbl = @"sessionIndxMbl";
 NSString *kCurTab = @"lastCurrentTab";
 NSString *kSauceLabsHost = @"tv1.saucelabs.com";    // fixed host for connection
 int kPort = 5901;                                   // fixed port for connection
