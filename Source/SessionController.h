@@ -36,28 +36,11 @@ enum TabType {tt_windows, tt_linux, tt_apple, tt_mobile};
     NSView *view;
     NSButton *cancelBtn;
     NSButton *defaultBrowser;
-    id trarrWin[kNumWindowsTrackers];      // tracking rect tags
-    id trarrLnx[kNumLinuxTrackers];      // tracking rect tags
-    IBOutlet NSImageView *b0;
-    IBOutlet NSImageView *b1;
-    IBOutlet NSImageView *b2;
-    IBOutlet NSImageView *b3;
-    IBOutlet NSImageView *b4;
-    IBOutlet NSImageView *b5;
-    IBOutlet NSImageView *b6;
-    IBOutlet NSImageView *b7;
-    IBOutlet NSImageView *b8;
-    IBOutlet NSImageView *b9;
-    IBOutlet NSImageView *b10;
-    IBOutlet NSImageView *b11;
-    IBOutlet NSImageView *b12;
-    IBOutlet NSImageView *b13;
-    IBOutlet NSImageView *b14;
-    IBOutlet NSImageView *b100;
-    IBOutlet NSImageView *b101;
-    IBOutlet NSImageView *b102;
-    IBOutlet NSImageView *b103;
-    IBOutlet NSImageView *b104;
+    id trarrWin[kNumWindowsTrackers];       // tracking rect areas
+    id trarrLnx[kNumLinuxTrackers];         // tracking rect areas
+    NSMutableArray *configWindows;     // os/browsers for windows
+    NSMutableArray *configLinux;       // os/browsers for linux
+    NSMutableArray *configOSX;         // os/browsers for osx
     NSTabView *osTabs;
 }
 @property (assign) IBOutlet NSTabView *osTabs;

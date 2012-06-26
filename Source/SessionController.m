@@ -12,6 +12,7 @@
 #import "ScoutWindowController.h"
 #import "AppDelegate.h"
 #import "OptionBox.h"
+#import "RegexKitLite.h"
 
 @implementation SessionController
 
@@ -38,7 +39,8 @@
 }
 
 -(void)runSheet
-{            
+{
+    
     // use last used values from prefs
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
     NSString *urlstr = [defs stringForKey:kSessionURL];
@@ -59,8 +61,7 @@
     // create hoverbox
     NSRect frame = NSMakeRect(0,0,0,0);
     hoverBox = [[NSView alloc ] initWithFrame:frame];
-    NSTabViewItem *ti = [osTabs  tabViewItemAtIndex:curTabIndx];
-    [self tabView:osTabs didSelectTabViewItem:ti];
+    [osTabs selectTabViewItemAtIndex:curTabIndx];
     [curBox addSubview:hoverBox];
     CALayer *viewLayer = [CALayer layer];
     [viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.0, 0.0, 0.0, 0.1)]; //RGB plus Alpha Channel
@@ -116,6 +117,7 @@
     NSTrackingArea *ta = trarr[sessionIndxs[curTabIndx]];
     NSRect rr = [ta rect];
     [selectBox setFrame:rr];
+    [hoverBox setFrame:rr];
 }
 
 - (NSInteger)hoverIndx
@@ -123,30 +125,85 @@
     return hoverIndx;
 }
 
+// read config to get os/browsers; create rects; store it all
 - (void)addTrackingAreas:(enum TabType)tabIndex
 {
-    NSRect rr;
-    id xarrwin[kNumWindowsTrackers] = {b0,b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14};
-    id xarrlnx[kNumLinuxTrackers] = {b100,b101,b102,b103,b104};
-
-    id *xarr;
+    NSInteger xcols[5] = {145, 244, 339, 420, 500};
+    NSInteger xrows[4] = {127,  105,  83,  60};
+    NSImage *ximages[5];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"ie_color" ofType:@"pdf"];
+    ximages[0] = [[NSImage alloc] initByReferencingFile:path];
+    path = [[NSBundle mainBundle] pathForResource:@"firefox_color" ofType:@"icns"];
+    ximages[1] = [[NSImage alloc] initByReferencingFile:path];
+    path = [[NSBundle mainBundle] pathForResource:@"safari_color" ofType:@"icns"];
+    ximages[2] = [[NSImage alloc] initByReferencingFile:path];
+    path = [[NSBundle mainBundle] pathForResource:@"opera_color" ofType:@"pdf"];
+    ximages[3] = [[NSImage alloc] initByReferencingFile:path];
+    path = [[NSBundle mainBundle] pathForResource:@"chrome_color" ofType:@"pdf"];
+    ximages[4] = [[NSImage alloc] initByReferencingFile:path];
+    
+    [self readConfig];      // fill config arrays with data from config file
+    
     id *trarr;
-    NSInteger num;
     OptionBox *obox;
+    NSMutableArray *configArr;
     switch(tabIndex)
     {
-        case tt_windows: obox = boxWindows; xarr = xarrwin; trarr = trarrWin; num = kNumWindowsTrackers; break;
-        case tt_linux:   obox = boxLinux;  xarr = xarrlnx; trarr = trarrLnx; num = kNumLinuxTrackers; break;
+        case tt_windows: obox = boxWindows; configArr = configWindows; trarr = trarrWin; break;
+        case tt_linux:   obox = boxLinux;  configArr = configLinux; trarr = trarrLnx; break;
         case tt_apple:  break;
         case tt_mobile: break;
     }
     
+    NSInteger num = [configArr count];
+    NSRect rr;
+    NSInteger row=0, col=0;
+    NSString *lastBrowser = @"ie";      // initial column
+    
     for(NSInteger i=0;i < num; i++) // track mouse in/out over all buttons and included area
     {
-        rr = [xarr[i] frame];
+        // check for moving to next column/browser
+        NSArray *llArr = [configArr objectAtIndex:i];
+        NSString *browser = [[llArr objectAtIndex:1] substringToIndex:2];       // 2 chars to identify browser
+        if(![browser isEqualToString:lastBrowser])      // new column
+        {            
+            if([browser isEqualToString:@"fi"])         // firefox
+                col=1;
+            else if([browser isEqualToString:@"sa"])    // safari
+                col=2;
+            else if([browser isEqualToString:@"op"])    // opera
+                col=3;
+            else if([browser isEqualToString:@"go"])    // google chrome
+                col=4;
+            
+            row=0;
+            lastBrowser = [browser substringToIndex:2];
+        }
+        
+        // create image views
+        rr = NSMakeRect(xcols[col], xrows[row], 30,20);
+        NSImageView *vv = [[NSImageView alloc] initWithFrame:rr];
+        [vv setImage:ximages[col]];     // set icon
+        [obox addSubview:vv];
+        
+        // create text view
+        NSRect txtrr = NSMakeRect(rr.origin.x + 30, rr.origin.y + 3, 26, 17); 
+        NSTextField *tv = [[NSTextField alloc] initWithFrame:txtrr];
+        [tv setBordered:NO];
+        [tv setFont:[NSFont fontWithName:@"Arial" size:13]];
+        NSString *txt = [llArr objectAtIndex:2];      // version
+        [tv setStringValue:txt];
+        [tv setBackgroundColor:[NSColor clearColor]];
+        [tv setRefusesFirstResponder:YES];
+        // TODO: no draw bkgrnd; move text up a few pix
+        [obox addSubview:tv];
+        
+        // add tracking area
         rr.origin.x -= 4;
         rr.size.width = 80;     // trackingrect width - NB: careful, 84 is too big
         trarr[i] = [obox settracker:rr];
+        
+        row++;
     }
     hoverFrame.size.width = 0;      // mouse is not within a rect(?guaranteed on startup?)
 }
@@ -444,5 +501,47 @@
     return @"";    
 }
 
+// read data in config file into a dictionary
+// NB:  assumes so curly braces wrapping the lines; 
+//      assumes sorted by os, and all same browsers grouped together
+- (void)readConfig
+{
+    configOSX     = [[[NSMutableArray alloc] init] retain];     // os/browsers for osx
+    configWindows = [[[NSMutableArray alloc] init] retain];     // os/browsers for windows
+    configLinux   = [[[NSMutableArray alloc] init] retain];     // os/browsers for linux
+
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"scout" ofType:@"conf"];
+    NSData *fdata = [[NSFileManager defaultManager] contentsAtPath:path];
+    NSString *jsonStr = [[NSString alloc] initWithData:fdata encoding:NSUTF8StringEncoding];
+    // pull out the lines into an array
+    NSArray *linesArr = [jsonStr arrayOfCaptureComponentsMatchedByRegex:@"\\{(.*?)\\}"];
+    
+    NSString *osStr, *ll;
+    NSString *browser;
+    NSString *version;
+    NSString *active;
+    for(NSArray *arr in linesArr)
+    {
+        ll = [arr objectAtIndex:0];
+        osStr   = [[SaucePreconnect sharedPreconnect] jsonVal:ll key:@"os"];
+        browser = [[SaucePreconnect sharedPreconnect] jsonVal:ll key:@"browser"];
+        version = [[SaucePreconnect sharedPreconnect] jsonVal:ll key:@"version"];
+        if(![version length])
+            version=@"*";
+        active  = [[SaucePreconnect sharedPreconnect] jsonVal:ll key:@"active"];
+        NSMutableArray *obarr = [NSMutableArray arrayWithCapacity:4];
+        [obarr  addObject:osStr];
+        [obarr  addObject:browser];
+        [obarr  addObject:version];
+        [obarr  addObject:active];
+        if([osStr hasPrefix:@"Windows"])
+            [configWindows addObject:obarr];
+        else if([osStr hasPrefix:@"Linux"])
+            [configLinux addObject:obarr];            
+        else if([osStr hasPrefix:@"OSX"])
+            [configOSX addObject:obarr];
+    }
+    
+}
 
 @end
