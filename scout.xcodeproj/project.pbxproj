@@ -12,6 +12,10 @@
 		0F3A18D115617D39007BAA78 /* tunnel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3A18D015617D39007BAA78 /* tunnel.xib */; };
 		0F3DC43D155D6F760069F7AB /* TunnelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F3DC43B155D6F760069F7AB /* TunnelController.h */; };
 		0F3DC43E155D6F760069F7AB /* TunnelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3DC43C155D6F760069F7AB /* TunnelController.m */; };
+		0F40B21B1598ED6400E6311E /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F40B2191598ED6400E6311E /* RegexKitLite.h */; };
+		0F40B21C1598ED6400E6311E /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F40B21A1598ED6400E6311E /* RegexKitLite.m */; };
+		0F40B21F1598F14600E6311E /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F40B21E1598F14600E6311E /* libicucore.dylib */; };
+		0F40B2211599233800E6311E /* scout.conf in Resources */ = {isa = PBXBuildFile; fileRef = 0F40B2201599233800E6311E /* scout.conf */; };
 		0F486EA3155CBD1A004502C4 /* dotgreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F486EA1155CBD1A004502C4 /* dotgreen.png */; };
 		0F486EA4155CBD1A004502C4 /* dotred.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F486EA2155CBD1A004502C4 /* dotred.png */; };
 		0F486EA7155CC2CF004502C4 /* Sauce-Connect.jar in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F486EA6155CC2CF004502C4 /* Sauce-Connect.jar */; };
@@ -314,6 +318,10 @@
 		0F3A18D015617D39007BAA78 /* tunnel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = tunnel.xib; path = Resources/tunnel.xib; sourceTree = "<group>"; };
 		0F3DC43B155D6F760069F7AB /* TunnelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TunnelController.h; sourceTree = "<group>"; };
 		0F3DC43C155D6F760069F7AB /* TunnelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TunnelController.m; sourceTree = "<group>"; };
+		0F40B2191598ED6400E6311E /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
+		0F40B21A1598ED6400E6311E /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
+		0F40B21E1598F14600E6311E /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		0F40B2201599233800E6311E /* scout.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = scout.conf; path = Resources/scout.conf; sourceTree = "<group>"; };
 		0F486EA1155CBD1A004502C4 /* dotgreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dotgreen.png; path = Resources/dotgreen.png; sourceTree = "<group>"; };
 		0F486EA2155CBD1A004502C4 /* dotred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dotred.png; path = Resources/dotred.png; sourceTree = "<group>"; };
 		0F486EA6155CC2CF004502C4 /* Sauce-Connect.jar */ = {isa = PBXFileReference; lastKnownFileType = archive.jar; name = "Sauce-Connect.jar"; path = "Resources/Sauce-Connect.jar"; sourceTree = "<group>"; };
@@ -653,6 +661,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F40B21F1598F14600E6311E /* libicucore.dylib in Frameworks */,
 				0FD6E34D15364A090028C9B3 /* PSMTabBarControl.framework in Frameworks */,
 				0F7C605D152A279A00DA9A4A /* Quartz.framework in Frameworks */,
 				7F7A945905E71B5C00E20416 /* Cocoa.framework in Frameworks */,
@@ -688,6 +697,7 @@
 		29B97314FDCFA39411CA2CEA /* Chicken of the VNC */ = {
 			isa = PBXGroup;
 			children = (
+				0F40B21E1598F14600E6311E /* libicucore.dylib */,
 				0FD6E35915366CBB0028C9B3 /* PSMTabBarControl.framework */,
 				F5DC718B033DB45F01A8010C /* Documentation */,
 				F5DC7198033DB4A801A8010C /* Source */,
@@ -702,6 +712,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0F40B2201599233800E6311E /* scout.conf */,
 				0F7CE3CC152F6C2800068464 /* bug.pdf */,
 				F536C26803937E5301178D82 /* ZRLEEncodingReader.h */,
 				0F7CE3CD152F6C2800068464 /* camera.pdf */,
@@ -812,6 +823,8 @@
 				0F7C6065152A8F8700DA9A4A /* SessionController.m */,
 				0F39221E158190350065C018 /* OptionBox.h */,
 				0F39221F158190350065C018 /* OptionBox.m */,
+				0F40B2191598ED6400E6311E /* RegexKitLite.h */,
+				0F40B21A1598ED6400E6311E /* RegexKitLite.m */,
 			);
 			name = "GUI Controller";
 			sourceTree = "<group>";
@@ -1213,6 +1226,7 @@
 				0F3DC43D155D6F760069F7AB /* TunnelController.h in Headers */,
 				0F48D0CD157528C20067B689 /* SnapProgress.h in Headers */,
 				0F392220158190350065C018 /* OptionBox.h in Headers */,
+				0F40B21B1598ED6400E6311E /* RegexKitLite.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1308,6 +1322,7 @@
 				0F486EA4155CBD1A004502C4 /* dotred.png in Resources */,
 				0F3A18D115617D39007BAA78 /* tunnel.xib in Resources */,
 				0F48D0C9157528950067B689 /* snapProgress.xib in Resources */,
+				0F40B2211599233800E6311E /* scout.conf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1462,6 +1477,7 @@
 				0F3DC43E155D6F760069F7AB /* TunnelController.m in Sources */,
 				0F48D0CE157528C20067B689 /* SnapProgress.m in Sources */,
 				0F392221158190350065C018 /* OptionBox.m in Sources */,
+				0F40B21C1598ED6400E6311E /* RegexKitLite.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
