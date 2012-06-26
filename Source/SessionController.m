@@ -118,6 +118,14 @@
     NSRect rr = [ta rect];
     [selectBox setFrame:rr];
     [hoverBox setFrame:rr];
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setInteger:curTabIndx forKey:kCurTab];
+    // save selected item in all tabs
+    [defaults setInteger:sessionIndxs[tt_windows] forKey:kSessionIndxWin];
+    [defaults setInteger:sessionIndxs[tt_linux] forKey:kSessionIndxLnx];
+    [defaults setInteger:sessionIndxs[tt_apple] forKey:kSessionIndxMac];
+    [defaults setInteger:sessionIndxs[tt_mobile] forKey:kSessionIndxMbl];
 }
 
 - (NSInteger)hoverIndx
@@ -184,6 +192,9 @@
         rr = NSMakeRect(xcols[col], xrows[row], 30,20);
         NSImageView *vv = [[NSImageView alloc] initWithFrame:rr];
         [vv setImage:ximages[col]];     // set icon
+        BOOL enabled = [[llArr objectAtIndex:3] isEqualToString:@"YES"];
+        if(!enabled)
+            [vv setEnabled:NO];
         [obox addSubview:vv];
         
         // create text view
@@ -195,13 +206,17 @@
         [tv setStringValue:txt];
         [tv setBackgroundColor:[NSColor clearColor]];
         [tv setRefusesFirstResponder:YES];
-        // TODO: no draw bkgrnd; move text up a few pix
+        if(!enabled)
+            [tv setEnabled:NO];
         [obox addSubview:tv];
         
         // add tracking area
-        rr.origin.x -= 4;
-        rr.size.width = 80;     // trackingrect width - NB: careful, 84 is too big
-        trarr[i] = [obox settracker:rr];
+        if(enabled)
+        {
+            rr.origin.x -= 4;
+            rr.size.width = 80;     // trackingrect width - NB: careful, 84 is too big
+            trarr[i] = [obox settracker:rr];
+        }
         
         row++;
     }
