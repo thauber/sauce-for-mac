@@ -61,12 +61,14 @@
     // create hoverbox
     NSRect frame = NSMakeRect(0,0,0,0);
     hoverBox = [[NSView alloc ] initWithFrame:frame];
-    [osTabs selectTabViewItemAtIndex:curTabIndx];
     [curBox addSubview:hoverBox];
     CALayer *viewLayer = [CALayer layer];
     [viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.0, 0.0, 0.0, 0.1)]; //RGB plus Alpha Channel
     [hoverBox setWantsLayer:YES]; // view's backing store is using a Core Animation Layer
     [hoverBox setLayer:viewLayer];
+    [osTabs selectTabViewItemAtIndex:curTabIndx];
+    NSTabViewItem *tvi = [osTabs tabViewItemAtIndex:curTabIndx];
+    [self tabView:osTabs didSelectTabViewItem:tvi];
     
     for(enum TabType i=0;i<2;i++)      // setup tracking rects for multiple tabs
         [self addTrackingAreas:i];
