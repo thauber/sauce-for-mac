@@ -16,6 +16,9 @@
 		0F40B21C1598ED6400E6311E /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F40B21A1598ED6400E6311E /* RegexKitLite.m */; };
 		0F40B21F1598F14600E6311E /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F40B21E1598F14600E6311E /* libicucore.dylib */; };
 		0F40B2211599233800E6311E /* scout.conf in Resources */ = {isa = PBXBuildFile; fileRef = 0F40B2201599233800E6311E /* scout.conf */; };
+		0F463B33159B5E8A0055B790 /* history.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F463B32159B5E8A0055B790 /* history.xib */; };
+		0F463B37159BB82F0055B790 /* GradientView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F463B35159BB82F0055B790 /* GradientView.h */; };
+		0F463B38159BB82F0055B790 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F463B36159BB82F0055B790 /* GradientView.m */; };
 		0F486EA3155CBD1A004502C4 /* dotgreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F486EA1155CBD1A004502C4 /* dotgreen.png */; };
 		0F486EA4155CBD1A004502C4 /* dotred.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F486EA2155CBD1A004502C4 /* dotred.png */; };
 		0F486EA7155CC2CF004502C4 /* Sauce-Connect.jar in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F486EA6155CC2CF004502C4 /* Sauce-Connect.jar */; };
@@ -322,6 +325,9 @@
 		0F40B21A1598ED6400E6311E /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		0F40B21E1598F14600E6311E /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		0F40B2201599233800E6311E /* scout.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = scout.conf; path = Resources/scout.conf; sourceTree = "<group>"; };
+		0F463B32159B5E8A0055B790 /* history.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = history.xib; sourceTree = "<group>"; };
+		0F463B35159BB82F0055B790 /* GradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
+		0F463B36159BB82F0055B790 /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
 		0F486EA1155CBD1A004502C4 /* dotgreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dotgreen.png; path = Resources/dotgreen.png; sourceTree = "<group>"; };
 		0F486EA2155CBD1A004502C4 /* dotred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dotred.png; path = Resources/dotred.png; sourceTree = "<group>"; };
 		0F486EA6155CC2CF004502C4 /* Sauce-Connect.jar */ = {isa = PBXFileReference; lastKnownFileType = archive.jar; name = "Sauce-Connect.jar"; path = "Resources/Sauce-Connect.jar"; sourceTree = "<group>"; };
@@ -731,6 +737,7 @@
 				0F99617815267C6C002657A9 /* windows_color.pdf */,
 				0F7BF6F01523FEF400F1A478 /* LoginController.xib */,
 				0F7C606C152A964900DA9A4A /* SessionController.xib */,
+				0F463B32159B5E8A0055B790 /* history.xib */,
 				0F48D0C8157528950067B689 /* snapProgress.xib */,
 				0F3A18D015617D39007BAA78 /* tunnel.xib */,
 				0FD5668F1545B17B0007C94A /* BugInfo.xib */,
@@ -825,6 +832,8 @@
 				0F39221F158190350065C018 /* OptionBox.m */,
 				0F40B2191598ED6400E6311E /* RegexKitLite.h */,
 				0F40B21A1598ED6400E6311E /* RegexKitLite.m */,
+				0F463B35159BB82F0055B790 /* GradientView.h */,
+				0F463B36159BB82F0055B790 /* GradientView.m */,
 			);
 			name = "GUI Controller";
 			sourceTree = "<group>";
@@ -1227,6 +1236,7 @@
 				0F48D0CD157528C20067B689 /* SnapProgress.h in Headers */,
 				0F392220158190350065C018 /* OptionBox.h in Headers */,
 				0F40B21B1598ED6400E6311E /* RegexKitLite.h in Headers */,
+				0F463B37159BB82F0055B790 /* GradientView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1323,6 +1333,7 @@
 				0F3A18D115617D39007BAA78 /* tunnel.xib in Resources */,
 				0F48D0C9157528950067B689 /* snapProgress.xib in Resources */,
 				0F40B2211599233800E6311E /* scout.conf in Resources */,
+				0F463B33159B5E8A0055B790 /* history.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1478,6 +1489,7 @@
 				0F48D0CE157528C20067B689 /* SnapProgress.m in Sources */,
 				0F392221158190350065C018 /* OptionBox.m in Sources */,
 				0F40B21C1598ED6400E6311E /* RegexKitLite.m in Sources */,
+				0F463B38159BB82F0055B790 /* GradientView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
