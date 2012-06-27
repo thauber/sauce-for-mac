@@ -21,11 +21,7 @@
 
 @synthesize tabView;
 @synthesize urlmsg;
-@synthesize osmsg;
-@synthesize osversionmsg;
-@synthesize browsermsg;
-@synthesize browserversmsg;
-@synthesize timeRemainingMsg;
+@synthesize osbrowserMsg;
 @synthesize vmsize;
 @synthesize tunnelImage;
 @synthesize toolbar;
@@ -67,7 +63,6 @@ static ScoutWindowController* _sharedScout = nil;
 
 - (void)awakeFromNib 
 {
-//    [toolbar setVisible:NO];
     [tabView setTabViewType:NSNoTabsNoBorder];
     [tabBar setStyleNamed:@"Unified"];
     [tabBar setSizeCellsToFit:YES];
@@ -307,10 +302,13 @@ static ScoutWindowController* _sharedScout = nil;
                 
         str = [sdict objectForKey:@"osbv"];
         [self.osbrowser setStringValue:str];
+        [self.osbrowserMsg setStringValue:str];
         
-        [self.statusMessage setStringValue:@"now scouting: "];
         str = [sdict objectForKey:@"url"];
         [self.urlmsg  setStringValue:str];
+
+        [nowscout setStringValue:@"Now Scouting:"];
+        /*
         str = [sdict objectForKey:@"os"];
         
         // get correct image based on os string
@@ -329,7 +327,6 @@ static ScoutWindowController* _sharedScout = nil;
             [self.osmsg  setImage:img];
         }
         
-        [self.osversionmsg  setStringValue:@""];    // TODO: figure out if and what
 
         str = [sdict objectForKey:@"browser"];        
         // get correct image based on browser string
@@ -352,13 +349,13 @@ static ScoutWindowController* _sharedScout = nil;
         }
         
         str = [sdict objectForKey:@"browserVersion"];
-        [self.browserversmsg  setStringValue:str];
+        [self.osbrowser  setStringValue:str];
+*/        
+        
         
         // use last remaining time value for this session
         str = [sdict objectForKey:@"remainingTime"];
         [self.timeRemainingStat setStringValue:str];
-        str = [NSString stringWithFormat:@"%@ remaining",str];
-        [self.timeRemainingMsg setStringValue:str];
 
         RFBConnection *rfbcon = [sdict objectForKey:@"connection"];
         curSession = [rfbcon session];
