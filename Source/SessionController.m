@@ -43,11 +43,6 @@
     
     // use last used values from prefs
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
-    NSString *urlstr = [defs stringForKey:kSessionURL];
-    if(urlstr)
-        [self.url setStringValue:urlstr];
-    else
-        [connectBtn setEnabled:NO];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(textDidChange:) name: NSTextDidChangeNotification object: nil];
     curTabIndx = [defs integerForKey:kCurTab];
     sessionIndxs[tt_windows] = [defs integerForKey:kSessionIndxWin];
@@ -55,9 +50,15 @@
     sessionIndxs[tt_apple] = [defs integerForKey:kSessionIndxMac];
     sessionIndxs[tt_mobile] = [defs integerForKey:kSessionIndxMbl];
     
-    if(!sessionIndxs[curTabIndx])
-        sessionIndxs[curTabIndx] = 3;           // default is windows 9
-    
+    NSString *urlstr = [defs stringForKey:kSessionURL];
+    if(urlstr)
+        [self.url setStringValue:urlstr];
+    else        // never connected
+    {
+        [connectBtn setEnabled:NO];
+        sessionIndxs[curTabIndx] = 3;           // default is windows 9    
+    }
+
     // create hoverbox
     NSRect frame = NSMakeRect(0,0,0,0);
     hoverBox = [[NSView alloc ] initWithFrame:frame];
