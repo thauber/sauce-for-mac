@@ -220,14 +220,14 @@
 {
     if(tunnelCtrlr)
     {
-        [tunnelMenuItem setTitle:@"Stop Scout Connect"];
-        [[[ScoutWindowController sharedScout] tunnelButton] setTitle:@"Stop Scout Connect"];
+        [tunnelMenuItem setTitle:@"Stop Sauce Connect"];
+        [[[ScoutWindowController sharedScout] tunnelButton] setTitle:@"Stop Sauce Connect"];
     }
     else    // no tunnel
     {
         [[ScoutWindowController sharedScout] tunnelConnected:NO];
-        [tunnelMenuItem setTitle:@"Start Scout Connect"];
-        [[[ScoutWindowController sharedScout] tunnelButton] setTitle:@"Start Scout Connect"];
+        [tunnelMenuItem setTitle:@"Start Sauce Connect"];
+        [[[ScoutWindowController sharedScout] tunnelButton] setTitle:@"Start Sauce Connect"];
         [self showOptionsIfNoTabs];
     }
 }
