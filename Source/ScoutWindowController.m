@@ -299,9 +299,56 @@ static ScoutWindowController* _sharedScout = nil;
         NSString *str = [sdict objectForKey:@"size"];
         if(str)
             [self.vmsize setStringValue:str];
+        str = [sdict objectForKey:@"user"];
+            [self.userStat setStringValue:str];
                 
         str = [sdict objectForKey:@"osbv"];
         [self.osbrowser setStringValue:str];
+        
+        NSString *s1, *s2, *s3, *s4;
+        NSArray *sarr = [str componentsSeparatedByString:@" "];
+        if([str hasPrefix:@"Win"])
+        {
+            s1 = @"Win";
+            if(![[sarr objectAtIndex:2] length])     // assume no version b/c it is googlechrome
+            {
+                s3 = @"chrome";
+                s4 = @"";
+            }
+            else 
+                s4 = [sarr objectAtIndex:2];        // version
+            sarr = [[sarr objectAtIndex:1] componentsSeparatedByString:@"/"];
+            s2 = [sarr objectAtIndex:0];            // windows year
+            if([s2 isEqualToString:@"2003"])
+                s2 = @"3";
+            else if([s2 isEqualToString:@"2007"])
+               s2 = @"7";
+            else
+               s2 = @"8";
+            if(![[sarr objectAtIndex:1] hasPrefix:@"goo"])
+            {                
+                if([[sarr objectAtIndex:1] hasPrefix:@"ie"])
+                    s3 = @"ie";
+                else
+                    s3 = [sarr objectAtIndex:1];
+            }
+            str = [NSString stringWithFormat:@"%@ %@ / %@%@",s1,s2,s3,s4];
+        }
+        else
+        {
+            if(![[sarr objectAtIndex:1] length])     // assume no version b/c it is googlechrome
+            {
+                s2 = @"chrome";
+                s3 = @"";
+            }
+            else 
+                s3 = [sarr objectAtIndex:1];        // version
+            sarr = [[sarr objectAtIndex:0] componentsSeparatedByString:@"/"];
+            s1 = [sarr objectAtIndex:0];
+            if(![[sarr objectAtIndex:1] hasPrefix:@"goo"])
+                s2 = [sarr objectAtIndex:1];
+            str = [NSString stringWithFormat:@"%@ / %@%@",s1,s2,s3];
+        }                                 
         [self.osbrowserMsg setStringValue:str];
         
         str = [sdict objectForKey:@"url"];
