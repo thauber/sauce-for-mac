@@ -453,22 +453,25 @@ printf("draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
     }
     start = pixels + (int)(aRect.origin.y * size.width) + (int)aRect.origin.x;
     r.origin = aPoint;
-    if((aRect.size.width * aRect.size.height) > SCRATCHPAD_SIZE) {
+//    if((aRect.size.width * aRect.size.height) > SCRATCHPAD_SIZE)
+    {
         bpr = size.width * sizeof(FBColor);
         NSDrawBitmap(r, r.size.width, r.size.height, bitsPerColor, samplesPerPixel, sizeof(FBColor) * 8, bpr, NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&start);
-    } else {
+    } 
+    // [rda] what is the idea with following code? how does it even work?
+    /* else {
         FBColor* sp = scratchpad;
         int lines = r.size.height;
         int stride = (unsigned int)size.width - (unsigned int)r.size.width;
         while(lines--) {
-            memcpy(sp, start, r.size.width * sizeof(sp));
+            memcpy(sp, start, r.size.width * sizeof(FBColor));
             start += (NSInteger) r.size.width;
             sp += (NSInteger) r.size.width;
             start += stride;
         }
         bpr = r.size.width * sizeof(FBColor);
         NSDrawBitmap(r, r.size.width, r.size.height, bitsPerColor, samplesPerPixel, sizeof(FBColor) * 8, bpr, NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&scratchpad);
-    }
+    } */
 }
 
 /*
