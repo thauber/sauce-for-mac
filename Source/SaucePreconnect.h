@@ -74,6 +74,7 @@
         emailNew:(NSString*)uemailNew;
 - (void)postSnapshotBug:(NSString *)snapName title:(NSString *)title desc:(NSString *)desc;
 - (void)snapshotBug:(NSString *)title desc:(NSString *)desc;
+- (BOOL)checkAccountOk:(BOOL)bSubscribed;       // 0=return minutes ok; 1=return true if subscribed
 
 
 @end

@@ -155,7 +155,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
             indx++; kstr++;
         }
     }
-    else    // value is an int 
+    else    // value is an int or boolean (true/false)
     {
         // gather chars up to end comma or right brace
         while(*kstr != ',' && *kstr != '}')
@@ -645,5 +645,41 @@ static SaucePreconnect* _sharedPreconnect = nil;
     }    
 }
 
+- (BOOL)checkAccountOk:(BOOL)bSubscribed
+{
+    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/rest/v1/users/%@'", 
+                      self.user, self.ukey, self.user];
+
+    NSTask *ftask = [[NSTask alloc] init];
+    NSPipe *fpipe = [NSPipe pipe];
+    [ftask setStandardOutput:fpipe];
+    [ftask setLaunchPath:@"/bin/bash"];
+    [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+    [ftask launch];		// fetch job-id and secret server
+    [ftask waitUntilExit];
+    if([ftask terminationStatus])
+    {
+        NSLog(@"failed NSTask");
+        self.errStr =  @"Failed to request accountOk";
+    }
+    else
+    {
+        NSFileHandle *fhand = [fpipe fileHandleForReading];
+        
+        NSData *data = [fhand readDataToEndOfFile];		 
+        [ftask release];
+        NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        if(bSubscribed)
+        {
+            NSString *subscribedStr = [self jsonVal:jsonString key:@"subscribed"];
+            return [subscribedStr isEqualToString:@"true"];
+        }
+        
+        NSString *minStr = [self jsonVal:jsonString key:@"minutes"];
+        return ([minStr length] > 1);     // assume 0-9 minutes isn't enough
+        
+    }
+    return NO;      // i suppose caller should check for errStr
+}
 
 @end

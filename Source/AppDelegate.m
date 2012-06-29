@@ -78,6 +78,22 @@
     loginCtrlr = nil;
     if(!optionsCtrlr)
     {
+        if([[ScoutWindowController sharedScout] tabCount] > 1)      // user has to be subscribed
+        {
+            BOOL bSubscribed = [[SaucePreconnect sharedPreconnect] checkAccountOk:YES];  // ask if user is subscribed
+            if(!bSubscribed)
+            {
+                [self promptForSubscribing:YES];   // prompt for subscribing to get more tabs
+                return;
+            }
+        }
+        BOOL bMinutes = [[SaucePreconnect sharedPreconnect] checkAccountOk:NO];  // ask if user has minutes
+        if(!bMinutes)
+        {
+            [self promptForSubscribing:NO];   // prompt for subscribing to get more minutes
+            return;
+        }
+        
         self.optionsCtrlr = [[SessionController alloc] init];
         [optionsCtrlr runSheet];
     }
@@ -240,6 +256,28 @@
 - (IBAction)bugsAccount:(id)sender 
 {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.saucelabs.com/bugs"]];
+}
+
+- (void)promptForSubscribing:(BOOL)bCause        // 0=needs more minutes; 1=to get more tabs
+{
+    NSString *header = NSLocalizedString( @"Should Subscribe", nil );
+    NSString *okayStr = NSLocalizedString( @"Subscribe", nil );
+    NSString *noStr = NSLocalizedString( @"Continue Scouting", nil );
+    NSString *subscribeMsg;
+    if(bCause)
+        subscribeMsg = @"You need to subscribe to have more than 2 sessions open";
+    else
+        subscribeMsg = @"You need to subscribe to have enough minutes for more sessions";
+    
+    NSBeginAlertSheet(header, okayStr, noStr, nil, [[ScoutWindowController sharedScout] window], self, nil, @selector(subscribeDidDismiss:returnCode:contextInfo:), nil, subscribeMsg);
+    
+}
+
+- (void)subscribeDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+    if(returnCode == NSAlertDefaultReturn)      // go to subscribe page
+        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.saucelabs.com/pricing"]];
+
 }
 
 @end
