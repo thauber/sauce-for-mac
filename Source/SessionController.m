@@ -16,17 +16,13 @@
 
 @implementation SessionController
 
-@synthesize osTabs;
 @synthesize defaultBrowser;
 @synthesize panel;
 @synthesize view;
-@synthesize cancelBtn;
 @synthesize connectBtn;
 @synthesize connectIndicatorText;
 @synthesize connectIndicator;
 @synthesize url;
-@synthesize boxWindows;
-@synthesize boxLinux;
 
 - (id)init
 {
@@ -39,16 +35,15 @@
 }
 
 -(void)runSheet
-{
-    
+{    
     // use last used values from prefs
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(textDidChange:) name: NSTextDidChangeNotification object: nil];
     curTabIndx = [defs integerForKey:kCurTab];
     sessionIndxs[tt_windows] = [defs integerForKey:kSessionIndxWin];
-    sessionIndxs[tt_linux] = [defs integerForKey:kSessionIndxLnx];
-    sessionIndxs[tt_apple] = [defs integerForKey:kSessionIndxMac];
-    sessionIndxs[tt_mobile] = [defs integerForKey:kSessionIndxMbl];
+    sessionIndxs[tt_linux] =   [defs integerForKey:kSessionIndxLnx];
+    sessionIndxs[tt_apple] =   [defs integerForKey:kSessionIndxMac];
+    sessionIndxs[tt_mobile] =  [defs integerForKey:kSessionIndxMbl];
     
     NSString *urlstr = [defs stringForKey:kSessionURL];
     if(urlstr)
@@ -59,6 +54,7 @@
         sessionIndxs[curTabIndx] = 3;           // default is windows 9    
     }
 
+/*
     // create hoverbox
     NSRect frame = NSMakeRect(0,0,0,0);
     hoverBox = [[NSView alloc ] initWithFrame:frame];
@@ -71,11 +67,11 @@
     NSTabViewItem *tvi = [osTabs tabViewItemAtIndex:curTabIndx];
     [self tabView:osTabs didSelectTabViewItem:tvi];
     
-    for(enum TabType i=0;i<2;i++)      // setup tracking rects for multiple tabs
-        [self addTrackingAreas:i];
 
     [boxLinux setSessionCtlr:self];       // pass mouseclick to 'selectBrowser' method 
     [boxWindows setSessionCtlr:self];     // pass mouseclick to 'selectBrowser' method 
+*/
+    [self setupFromConfig];
     
     [connectBtn setTitle:@"Scout!"];
     [connectBtn setAction: @selector(connect:)];
@@ -85,6 +81,7 @@
     [connectIndicator stopAnimation:self];
     [connectIndicatorText setStringValue:@""];
     
+/*
     if([[ScoutWindowController sharedScout] tabCount])      // allow cancel if at least 1 tab running
     {
         [cancelBtn setHidden:NO];
@@ -94,20 +91,39 @@
     {
         [cancelBtn setHidden:YES];
     }
+ */
     
     [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];
-    hoverIndx = sessionIndxs[curTabIndx];
-    [self handleMouseEntered:nil];
-    [self selectBrowser:nil];       // get last selection or default selected
+
+    // size column 0 row heights
+    NSMatrix *mm = [browserTbl matrixInColumn:0];
+    NSSize sz = [mm cellSize];
+    sz.height = 40;
+    [mm setCellSize:sz];
+    sz.width=0; sz.height = 8;
+    [mm setIntercellSpacing:sz];
+    [mm sizeToCells];
+        
+    [self doBrowserClick:nil];
+    [browserTbl selectRow:curTabIndx inColumn:0];
+    [self doBrowserClick:nil];      // set browser cells height
+
+
+//    hoverIndx = sessionIndxs[curTabIndx];
+//    [self handleMouseEntered:nil];
+//    [self selectBrowser:nil];       // get last selection or default selected
 
 }
 
+#if 0
 - (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem
 {
     [hoverBox removeFromSuperview];
     [selectBox removeFromSuperview];
     curTabIndx = [tabView indexOfTabViewItem:tabViewItem];
+
     id *trarr;
+
     switch((enum TabType)curTabIndx)
     {
         case tt_windows: curBox = boxWindows; trarr = trarrWin ; break;
@@ -117,6 +133,7 @@
     }
     [curBox addSubview:hoverBox];
     [curBox addSubview:selectBox];
+
     NSTrackingArea *ta = trarr[sessionIndxs[curTabIndx]];
     NSRect rr = [ta rect];
     [selectBox setFrame:rr];
@@ -130,6 +147,7 @@
     [defaults setInteger:sessionIndxs[tt_apple] forKey:kSessionIndxMac];
     [defaults setInteger:sessionIndxs[tt_mobile] forKey:kSessionIndxMbl];
 }
+#endif
 
 - (NSInteger)hoverIndx
 {
@@ -137,27 +155,134 @@
 }
 
 // read config to get os/browsers; create rects; store it all
-- (void)addTrackingAreas:(enum TabType)tabIndex
+- (void)setupFromConfig
 {
-    NSInteger xcols[5] = {145, 244, 339, 420, 500};
-    NSInteger xrows[4] = {127,  105,  83,  60};
-    NSImage *ximages[5];
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"ie_color" ofType:@"pdf"];
-    ximages[0] = [[NSImage alloc] initByReferencingFile:path];
-    path = [[NSBundle mainBundle] pathForResource:@"firefox_color" ofType:@"icns"];
-    ximages[1] = [[NSImage alloc] initByReferencingFile:path];
-    path = [[NSBundle mainBundle] pathForResource:@"safari_color" ofType:@"icns"];
-    ximages[2] = [[NSImage alloc] initByReferencingFile:path];
-    path = [[NSBundle mainBundle] pathForResource:@"opera_color" ofType:@"pdf"];
-    ximages[3] = [[NSImage alloc] initByReferencingFile:path];
-    path = [[NSBundle mainBundle] pathForResource:@"chrome_color" ofType:@"pdf"];
-    ximages[4] = [[NSImage alloc] initByReferencingFile:path];
-    
     [self readConfig];      // fill config arrays with data from config file
     
-    id *trarr;
-    OptionBox *obox;
+    // create attributed strings for os's (column 0)    
+    // os images
+    NSImage *oimgs[4];
+    NSSize isz = NSMakeSize(40,40);
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"windows_color" ofType:@"pdf"];
+    oimgs[0] = [[NSImage alloc] initByReferencingFile:path];
+    [oimgs[0] setSize:isz];
+    path = [[NSBundle mainBundle] pathForResource:@"linux_color" ofType:@"pdf"];
+    oimgs[1] = [[NSImage alloc] initByReferencingFile:path];
+    [oimgs[1] setSize:isz];
+    path = [[NSBundle mainBundle] pathForResource:@"apple_color" ofType:@"pdf"];
+    oimgs[2] = [[NSImage alloc] initByReferencingFile:path];
+    [oimgs[2] setSize:isz];
+    path = [[NSBundle mainBundle] pathForResource:@"apple_color" ofType:@"pdf"];
+    oimgs[3] = [[NSImage alloc] initByReferencingFile:path];
+    [oimgs[3] setSize:isz];
+    
+    NSString *osStr[4] = {@"Windows", @"Linux", @"Mac", @"Mobile"};
+
+    for(int i=0; i < 4; i++)
+    {
+        NSTextAttachment* ta = [[NSTextAttachment alloc] init];
+        NSTextAttachmentCell* tac = [[NSTextAttachmentCell alloc] init];
+        [tac setImage: oimgs[i]];
+        [oimgs[i] release];
+        [ta setAttachmentCell: tac];
+        NSAttributedString* as = [NSAttributedString attributedStringWithAttachment: ta];
+        [ta release];
+        [tac release];
+        // NSBaselineOffsetAttributeName
+        NSNumber *nn = [NSNumber numberWithInteger:8]; 
+        NSDictionary *asdict = [NSDictionary dictionaryWithObjectsAndKeys:nn,NSBaselineOffsetAttributeName, nil];
+        NSMutableAttributedString* mas = [[[NSMutableAttributedString alloc] initWithAttributedString:as ] retain];    
+        NSAttributedString *osAStr = [[NSAttributedString alloc] initWithString:osStr[i] attributes:asdict]; 
+        [mas appendAttributedString: osAStr];
+        [osAStr release];
+        osAStrs[i] = mas;
+     }
+
+    // browser images for column 1    
+    NSImage *bimgs[5];
+    isz = NSMakeSize(18,18);
+    path = [[NSBundle mainBundle] pathForResource:@"ie_color" ofType:@"pdf"];
+    bimgs[0] = [[NSImage alloc] initByReferencingFile:path];
+    [bimgs[0] setSize:isz];
+    path = [[NSBundle mainBundle] pathForResource:@"firefox_color" ofType:@"icns"];
+    bimgs[1] = [[NSImage alloc] initByReferencingFile:path];
+    [bimgs[1] setSize:isz];
+    path = [[NSBundle mainBundle] pathForResource:@"safari_color" ofType:@"icns"];
+    bimgs[2] = [[NSImage alloc] initByReferencingFile:path];
+    [bimgs[2] setSize:isz];
+    path = [[NSBundle mainBundle] pathForResource:@"opera_color" ofType:@"pdf"];
+    bimgs[3] = [[NSImage alloc] initByReferencingFile:path];
+    [bimgs[3] setSize:isz];
+    path = [[NSBundle mainBundle] pathForResource:@"chrome_color" ofType:@"pdf"];
+    bimgs[4] = [[NSImage alloc] initByReferencingFile:path];
+    [bimgs[4] setSize:isz];
+        
     NSMutableArray *configArr;
+    NSMutableArray *brAStrs;
+    
+    for(int i=0; i < 2; i++)    // setup browsers for each os
+    {
+        switch(i)
+        {
+            case tt_windows: 
+                brAStrsWindows = [[[NSMutableArray alloc] init] retain];     // os/browsers for windows
+                brAStrs = brAStrsWindows;
+                configArr = configWindows; 
+                break;
+            case tt_linux:   
+                brAStrsLinux = [[[NSMutableArray alloc] init] retain];     // os/browsers for windows
+                brAStrs = brAStrsLinux;
+                configArr = configLinux; break;
+            case tt_apple:  break;
+            case tt_mobile: break;
+        }
+        NSInteger num = [configArr count];
+
+        NSString *lastBrowser = @"ie";      // initial column
+        NSImage *bimg = bimgs[0];
+
+        for(NSInteger i=0;i < num; i++)     // setup browsers
+        {
+            NSArray *llArr = [configArr objectAtIndex:i];
+            NSString *browser = [llArr objectAtIndex:1];
+            NSString *version = [llArr objectAtIndex:2];
+            NSString *twoch = [browser substringToIndex:2];     // 2 chars to identify browser
+            if(![twoch isEqualToString:lastBrowser])            // different browser than previous
+            {            
+                if([twoch isEqualToString:@"fi"])         // firefox
+                    bimg = bimgs[1];
+                else if([twoch isEqualToString:@"sa"])    // safari
+                    bimg = bimgs[2];
+                else if([twoch isEqualToString:@"op"])    // opera
+                    bimg = bimgs[3];
+                else if([twoch isEqualToString:@"go"])    // google chrome
+                    bimg = bimgs[4];
+                lastBrowser = [browser substringToIndex:2];
+            }
+
+            NSTextAttachment* ta = [[NSTextAttachment alloc] init];
+            NSTextAttachmentCell* tac = [[NSTextAttachmentCell alloc] init];
+            [tac setImage: bimg];
+            [ta setAttachmentCell: tac];
+            NSAttributedString* as = [NSAttributedString attributedStringWithAttachment: ta];
+            [ta release];
+            [tac release];
+            NSMutableAttributedString* mas = [[[NSMutableAttributedString alloc] initWithAttributedString: as] retain]; 
+            NSString *brver = [NSString stringWithFormat:@" %@ %@",browser, version];
+            NSNumber *nn = [NSNumber numberWithInteger:6]; 
+            NSDictionary *asdict = [NSDictionary dictionaryWithObjectsAndKeys:nn,NSBaselineOffsetAttributeName, nil];
+            NSAttributedString *bAStr = [[NSAttributedString alloc] initWithString:brver attributes:asdict]; 
+            [mas appendAttributedString:bAStr];
+            [bAStr release];
+            [brAStrs addObject:mas];
+        }
+    }
+
+    
+/*
+    id *trarr;
+    NSMutableArray *configArr;
+
     switch(tabIndex)
     {
         case tt_windows: obox = boxWindows; configArr = configWindows; trarr = trarrWin; break;
@@ -166,53 +291,12 @@
         case tt_mobile: break;
     }
     
-    NSInteger num = [configArr count];
     NSRect rr;
     NSInteger row=0, col=0;
     NSString *lastBrowser = @"ie";      // initial column
     
     for(NSInteger i=0;i < num; i++) // track mouse in/out over all buttons and included area
-    {
-        // check for moving to next column/browser
-        NSArray *llArr = [configArr objectAtIndex:i];
-        NSString *browser = [[llArr objectAtIndex:1] substringToIndex:2];       // 2 chars to identify browser
-        if(![browser isEqualToString:lastBrowser])      // new column
-        {            
-            if([browser isEqualToString:@"fi"])         // firefox
-                col=1;
-            else if([browser isEqualToString:@"sa"])    // safari
-                col=2;
-            else if([browser isEqualToString:@"op"])    // opera
-                col=3;
-            else if([browser isEqualToString:@"go"])    // google chrome
-                col=4;
-            
-            row=0;
-            lastBrowser = [browser substringToIndex:2];
-        }
-        
-        // create image views
-        rr = NSMakeRect(xcols[col], xrows[row], 30,20);
-        NSImageView *vv = [[NSImageView alloc] initWithFrame:rr];
-        [vv setImage:ximages[col]];     // set icon
-        BOOL enabled = [[llArr objectAtIndex:3] isEqualToString:@"YES"];
-        if(!enabled)
-            [vv setEnabled:NO];
-        [obox addSubview:vv];
-        
-        // create text view
-        NSRect txtrr = NSMakeRect(rr.origin.x + 30, rr.origin.y + 3, 26, 17); 
-        NSTextField *tv = [[NSTextField alloc] initWithFrame:txtrr];
-        [tv setBordered:NO];
-        [tv setFont:[NSFont fontWithName:@"Arial" size:13]];
-        NSString *txt = [llArr objectAtIndex:2];      // version
-        [tv setStringValue:txt];
-        [tv setBackgroundColor:[NSColor clearColor]];
-        [tv setRefusesFirstResponder:YES];
-        if(!enabled)
-            [tv setEnabled:NO];
-        [obox addSubview:tv];
-        
+    {                        
         // add tracking area
         if(enabled)
         {
@@ -220,12 +304,12 @@
             rr.size.width = 80;     // trackingrect width - NB: careful, 84 is too big
             trarr[i] = [obox settracker:rr];
         }
-        
-        row++;
     }
     hoverFrame.size.width = 0;      // mouse is not within a rect(?guaranteed on startup?)
+*/
 }
 
+/*
 // called from optionBox mouseEntered
 - (void)handleMouseEntered:(id)tn
 {
@@ -266,6 +350,7 @@
     [hoverBox setFrame:hoverFrame];
     hoverIndx = -1;
 }
+*/
 
 -(void)terminateApp
 {
@@ -292,7 +377,7 @@
     [connectBtn setEnabled:bchars];
 }
 
-
+/*
 - (IBAction)selectBrowser:(id)sender 
 {
     NSRect frame;
@@ -306,7 +391,7 @@
     {
         // create box
         selectBox = [[NSView alloc] initWithFrame:frame];
-        [curBox addSubview:selectBox];
+//        [curBox addSubview:selectBox];
         CALayer *viewLayer = [CALayer layer];
         [viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.0, 0.0, 0.0, 0.3)]; //RGB plus Alpha Channel
         [selectBox setWantsLayer:YES]; // view's backing store is using a Core Animation Layer
@@ -330,18 +415,29 @@
     if(urlstr)
         [self connect:self];
 }
+*/
 
 -(IBAction)connect:(id)sender 
-{
-    NSString *os = [self selected:@"os"];
-    NSString *browser = [self selected:@"browser"];
-    NSString *version = [self selected:@"version"];
+{        
+    NSInteger rr = [browserTbl selectedRowInColumn:1];
+    NSArray *brarr;
+    switch(curTabIndx)
+    {
+        case tt_windows: brarr = [configWindows objectAtIndex:rr]; break;
+        case tt_linux: brarr = [configLinux objectAtIndex:rr]; break;
+        case tt_apple:
+        case tt_mobile: return;     // TODO: not implemented, yet
+    }
+    NSString *os      = [brarr objectAtIndex:0];
+    NSString *browser = [brarr objectAtIndex:1];
+    NSString *version = [brarr objectAtIndex:2];
+
     NSString *urlstr = [self.url stringValue];
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:urlstr  forKey:kSessionURL];
     [defaults setInteger:curTabIndx forKey:kCurTab];
-    // save selected item in all tabs
+    // save selected browser for all os's
     [defaults setInteger:sessionIndxs[tt_windows] forKey:kSessionIndxWin];
     [defaults setInteger:sessionIndxs[tt_linux] forKey:kSessionIndxLnx];
     [defaults setInteger:sessionIndxs[tt_apple] forKey:kSessionIndxMac];
@@ -432,9 +528,8 @@
     [connectIndicatorText setStringValue:@"Connecting..."];
     
     [connectIndicatorText display];
-    [cancelBtn setAction:@selector(performClose:)];
-    [cancelBtn setHidden:NO];
-    [connectBtn setEnabled:NO];
+    [connectBtn setAction:@selector(performClose:)];
+    [connectBtn setTitle:@"Cancel"];
     [NSThread detachNewThreadSelector:@selector(preAuthorize:) toTarget:[SaucePreconnect sharedPreconnect] withObject:nil];
 }
                                   
@@ -449,79 +544,10 @@
                       NULL, NULL, errStr);    
 }
 
-- (NSString *)selected:(NSString*)type      // 'browser', 'version' or 'os'
-{
-    NSString *os=@"";
-    NSString *browser=@"";
-    NSString *version=@"";
-    
-    int indx = sessionIndxs[curTabIndx];
-    
-    if(curTabIndx==tt_apple)
-    {
-        os = @"OSX";
-        switch(indx)
-        {
-            case 0: browser = @"firefox"; version = @"3.6"; break;
-            case 1: browser = @"firefox"; version = @"8"; break;
-            case 2: browser = @"firefox"; version = @"9"; break;
-            case 3: browser = @"firefox"; version = @"10"; break;
-            case 4: browser = @"safari"; version = @"3"; break;
-            case 5: browser = @"safari"; version = @"4"; break;
-            case 6: browser = @"safari"; version = @"5"; break;
-            case 7: browser = @"opera"; version = @"9"; break;
-            case 8: browser = @"opera"; version = @"10"; break;                        
-            case 9: browser = @"opera"; version = @"11"; break;                        
-            case 10: browser = @"googlechrome"; version = @""; break;
-        }
-    }
-    else if(curTabIndx==tt_windows)
-    {
-        os = @"Windows 2003";
-        switch(indx)
-        {
-            case 0: browser = @"iexplore"; version = @"6"; break;
-            case 1: browser = @"iexplore"; version = @"7"; break;
-            case 2: browser = @"iexplore"; version = @"8"; break;
-            case 3: os = @"Windows 2008"; browser = @"iexplore"; version = @"9"; break;
-            case 4: browser = @"firefox"; version = @"3.6"; break;
-            case 5: browser = @"firefox"; version = @"8"; break;
-            case 6: browser = @"firefox"; version = @"9"; break;
-            case 7: os = @"Windows 2008"; browser = @"firefox"; version = @"10"; break;
-            case 8: browser = @"safari"; version = @"3"; break;
-            case 9: browser = @"safari"; version = @"4"; break;
-            case 10: os = @"Windows 2008"; browser = @"safariproxy"; version = @"5"; break;
-            case 11: browser = @"opera"; version = @"9"; break;
-            case 12: browser = @"opera"; version = @"10"; break;                        
-            case 13: browser = @"opera"; version = @"11"; break;                        
-            case 14: os = @"Windows 2008"; browser = @"googlechrome"; version = @""; break;
-        }
-    }
-    else if(curTabIndx==tt_linux)
-    {
-        os = @"Linux";
-        switch(indx)
-        {
-            case 0: browser = @"firefox"; version = @"3.6"; break;
-            case 1: browser = @"firefox"; version = @"9"; break;
-            case 2: browser = @"firefox"; version = @"10"; break;
-            case 3: browser = @"opera"; version = @"11"; break;                        
-            case 4: browser = @"googlechrome"; version = @""; break;
-        }
-    }
-    
-    if([type isEqualToString:@"os"])
-        return os;
-    if([type isEqualToString:@"browser"])        
-        return browser;
-    if([type isEqualToString:@"version"]) 
-        return version;
-    return @"";    
-}
 
 // read data in config file into a dictionary
-// NB:  assumes so curly braces wrapping the lines; 
-//      assumes sorted by os, and all same browsers grouped together
+// NB:  assumes no curly braces wrapping the lines; 
+//      assumes sorted by os, and all the same browsers for an os are grouped together
 - (void)readConfig
 {
     configOSX     = [[[NSMutableArray alloc] init] retain];     // os/browsers for osx
@@ -558,8 +584,74 @@
             [configLinux addObject:obarr];            
         else if([osStr hasPrefix:@"OSX"])
             [configOSX addObject:obarr];
+    }    
+}
+
+// browser delegate methods
+- (void)browser:(NSBrowser *)sender willDisplayCell:(id)cell atRow:(NSInteger)row column:(NSInteger)column
+{
+    if(column==0)
+    {
+        [cell setAttributedStringValue:osAStrs[row]];
     }
+    else
+    {
+        NSAttributedString *brAStr;
+        switch(curTabIndx)
+        {
+            case tt_windows: brAStr = [brAStrsWindows objectAtIndex:row]; break;
+            case tt_linux:   brAStr = [brAStrsLinux   objectAtIndex:row]; break;
+            case tt_apple:
+            case tt_mobile:;
+        }
+        if(brAStr)
+        {
+            [cell setLeaf:YES];        
+            [cell setAttributedStringValue:brAStr];
+        }
+    }
+}
+
+- (NSInteger)browser:(NSBrowser *)sender numberOfRowsInColumn:(NSInteger)column
+{
+    if(column==0)   // size column 0 row heights
+    {        
+        return 4;
+    }
+    else    // size column 1 row heights
+    {
+        curTabIndx = [sender selectedRowInColumn:0];    // os selected in column 0
+        curNumBrowsers = 0;
+        switch(curTabIndx)
+        {
+            case tt_windows: curNumBrowsers = [brAStrsWindows count]; break;
+            case tt_linux:   curNumBrowsers = [brAStrsLinux   count]; break;
+            case tt_apple:
+            case tt_mobile:;
+        }
+        return curNumBrowsers;       // num browsers for selected os
+    }
+}
+
+- (IBAction)doBrowserClick:(NSBrowser *)sender
+{
+    // size column 1 row heights
+    NSMatrix *mm = [browserTbl matrixInColumn:1];
+    NSSize sz = [mm cellSize];
+    sz.height = 18;
+    [mm setCellSize:sz];
+    sz.width=0; sz.height = 4;
+    [mm setIntercellSpacing:sz];
+    [mm sizeToCells];
     
+    sessionIndxs[curTabIndx] = [sender selectedRowInColumn:1];      // remember selected index for each os
+
+}
+
+- (IBAction)doDoubleClick:(id)sender
+{
+   if([browserTbl selectedRowInColumn:1] != -1)
+    [self connect:self];
 }
 
 @end
