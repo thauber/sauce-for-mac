@@ -597,16 +597,22 @@
     else
     {
         NSAttributedString *brAStr;
+        NSArray *obarr;
         switch(curTabIndx)
         {
-            case tt_windows: brAStr = [brAStrsWindows objectAtIndex:row]; break;
-            case tt_linux:   brAStr = [brAStrsLinux   objectAtIndex:row]; break;
+            case tt_windows: brAStr = [brAStrsWindows objectAtIndex:row]; 
+                obarr = [configWindows objectAtIndex:row]; break;
+            case tt_linux:   brAStr = [brAStrsLinux   objectAtIndex:row]; 
+                obarr = [configLinux objectAtIndex:row]; break;
             case tt_apple:
             case tt_mobile:;
         }
         if(brAStr)
         {
-            [cell setLeaf:YES];        
+            NSString *active = [obarr objectAtIndex:3];
+            BOOL enbld = [active isEqualToString:@"YES"];
+            [cell setEnabled:enbld]; 
+            [cell setLeaf:YES];
             [cell setAttributedStringValue:brAStr];
         }
     }
