@@ -18,6 +18,7 @@ enum TabType {tt_windows, tt_linux, tt_apple, tt_mobile};
 {
     enum TabType curTabIndx;
     NSInteger curNumBrowsers;
+    BOOL lastpop1;
     NSInteger sessionIndxs[kNumTabs];
     NSInteger hoverIndx;
     NSView *selectBox;

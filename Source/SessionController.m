@@ -104,9 +104,9 @@
     [mm setIntercellSpacing:sz];
     [mm sizeToCells];
         
-    [self doBrowserClick:nil];
     [browserTbl selectRow:curTabIndx inColumn:0];
     [self doBrowserClick:nil];      // set browser cells height
+    [browserTbl selectRow:sessionIndxs[curTabIndx] inColumn:1];
 
 
 //    hoverIndx = sessionIndxs[curTabIndx];
@@ -615,7 +615,8 @@
 - (NSInteger)browser:(NSBrowser *)sender numberOfRowsInColumn:(NSInteger)column
 {
     if(column==0)   // size column 0 row heights
-    {        
+    {
+        lastpop1 = NO;
         return 4;
     }
     else    // size column 1 row heights
@@ -629,6 +630,7 @@
             case tt_apple:
             case tt_mobile:;
         }
+        lastpop1 = YES;
         return curNumBrowsers;       // num browsers for selected os
     }
 }
@@ -644,7 +646,16 @@
     [mm setIntercellSpacing:sz];
     [mm sizeToCells];
     
-    sessionIndxs[curTabIndx] = [sender selectedRowInColumn:1];      // remember selected index for each os
+    if(sender)      // a real click, not during initialization
+    {
+        if(lastpop1)        // repopulated -> changed os selection
+            [sender selectRow:sessionIndxs[curTabIndx] inColumn:1];
+        else 
+        {
+            sessionIndxs[curTabIndx] = [sender selectedRowInColumn:1];
+        }
+        lastpop1 = NO;
+    }
 
 }
 
