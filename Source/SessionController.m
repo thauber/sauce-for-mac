@@ -51,7 +51,7 @@
     else        // never connected
     {
         [connectBtn setEnabled:NO];
-        sessionIndxs[curTabIndx] = 3;           // default is windows 9    
+        sessionIndxs[curTabIndx] = 6;           // default is firefox 9    
     }
 
 /*
