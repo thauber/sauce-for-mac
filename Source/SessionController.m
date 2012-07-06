@@ -73,6 +73,7 @@
 */
     [self setupFromConfig];
     
+    [browserTbl setDoubleAction:@selector(doDoubleClick:)];
     [connectBtn setTitle:@"Scout!"];
     [connectBtn setAction: @selector(connect:)];
     [connectBtn setKeyEquivalent:@"\r"];
@@ -107,6 +108,7 @@
     [browserTbl selectRow:curTabIndx inColumn:0];
     [self doBrowserClick:nil];      // set browser cells height
     [browserTbl selectRow:sessionIndxs[curTabIndx] inColumn:1];
+    lastpop1 = NO;
 
 
 //    hoverIndx = sessionIndxs[curTabIndx];
@@ -392,6 +394,8 @@
     NSString *browser = [brarr objectAtIndex:1];
     NSString *version = [brarr objectAtIndex:2];
 
+    if([version isEqualToString:@"*"])
+        version = @"";
     NSString *urlstr = [self.url stringValue];
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
