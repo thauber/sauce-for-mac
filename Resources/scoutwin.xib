@@ -314,6 +314,7 @@
 																<string key="NSFrame">{{498, 0}, {148, 17}}</string>
 																<reference key="NSSuperview" ref="614375098"/>
 																<reference key="NSWindow"/>
+																<reference key="NSNextKeyView"/>
 																<string key="NSReuseIdentifierKey">_NS:1505</string>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSTextFieldCell" key="NSCell" id="674840728">
@@ -480,12 +481,13 @@
 												<string key="NSFrame">{{93, 6}, {154, 32}}</string>
 												<reference key="NSSuperview" ref="615921065"/>
 												<reference key="NSWindow"/>
+												<reference key="NSNextKeyView"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="509900856">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">134217728</int>
-													<string key="NSContents">Start Scout Connect</string>
+													<string key="NSContents">Start Sauce Connect</string>
 													<reference key="NSSupport" ref="27866589"/>
 													<string key="NSCellIdentifier">_NS:9</string>
 													<reference key="NSControlView" ref="412138101"/>
@@ -817,6 +819,7 @@
 											<string key="NSFrame">{{925, 4}, {16, 16}}</string>
 											<reference key="NSSuperview" ref="836382187"/>
 											<reference key="NSWindow"/>
+											<reference key="NSNextKeyView"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSImageCell" key="NSCell" id="542892157">
