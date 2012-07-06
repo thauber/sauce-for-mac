@@ -357,6 +357,7 @@ enum {
     {
         verticalScroll = YES;
         wf.size.height = NSHeight(screenRect);
+        wf.size.width += 15;    // add scroller size to width
     }
     
 	// According to the Human Interface Guidelines, new windows should be "visually centered"
