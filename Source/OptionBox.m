@@ -3,7 +3,7 @@
 //  scout
 //
 //  Created by ackerman dudley on 6/7/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 Sauce Labs. All rights reserved.
 //
 
 #import "OptionBox.h"
@@ -30,16 +30,19 @@
 
 - (void)mouseEntered:(NSEvent *)theEvent
 {
+/*
     id tn = [theEvent trackingArea];
     if(sessionCtlr)
-        [sessionCtlr handleMouseEntered:tn]; 
+        [sessionCtlr handleMouseEntered:tn];
+*/
 }
 
 - (void)mouseExited:(NSEvent *)theEvent
 {
-    [sessionCtlr handleMouseExited];
+//    [sessionCtlr handleMouseExited];
 }
 
+/*
 -(void)mouseUp:(NSEvent *)theEvent
 {
     if([theEvent clickCount] > 1)               // double click
@@ -47,6 +50,7 @@
     else
         [sessionCtlr selectBrowser:self];      // select currently hovered over item
 }
+*/
 
 - (void)setSessionCtlr:(SessionController *)sc
 {
