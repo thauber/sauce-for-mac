@@ -148,10 +148,10 @@
             [fbuf drawRect:r at:rects[i].origin];
         }
         @catch(id ue) {
-            NSLog(@"exception in rbfview:drawRect");
+            NSLog(@"exception in rfbview:drawRect");
         }
         @catch(...) {
-            NSLog(@"non obj-c exception in rbfview:drawRect");
+            NSLog(@"non obj-c exception in rfbview:drawRect");
         }
 
     }
