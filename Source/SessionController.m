@@ -377,46 +377,6 @@
     [connectBtn setEnabled:bchars];
 }
 
-/*
-- (IBAction)selectBrowser:(id)sender 
-{
-    NSRect frame;
-    
-    frame = hoverFrame;
-
-    if(hoverIndx== -1)
-        return;
-    
-    if(!selectBox)
-    {
-        // create box
-        selectBox = [[NSView alloc] initWithFrame:frame];
-//        [curBox addSubview:selectBox];
-        CALayer *viewLayer = [CALayer layer];
-        [viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.0, 0.0, 0.0, 0.3)]; //RGB plus Alpha Channel
-        [selectBox setWantsLayer:YES]; // view's backing store is using a Core Animation Layer
-        [selectBox setLayer:viewLayer];
-    }
-    else 
-    {
-        // move selected box over this sender
-        sessionIndxs[curTabIndx] = hoverIndx;
-        [selectBox setFrame:frame];
-    }
-    
-}
-
-- (void)doubleClick        // from optionBox
-{
-    if(hoverIndx== -1)
-        return;
-
-    NSString *urlstr = [self.url stringValue];
-    if(urlstr)
-        [self connect:self];
-}
-*/
-
 -(IBAction)connect:(id)sender 
 {        
     NSInteger rr = [browserTbl selectedRowInColumn:1];
