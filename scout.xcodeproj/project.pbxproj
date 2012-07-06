@@ -53,6 +53,8 @@
 		0FD566941545B1A90007C94A /* BugInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD566921545B1A90007C94A /* BugInfoController.m */; };
 		0FD6E34D15364A090028C9B3 /* PSMTabBarControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FD6E34C15364A090028C9B3 /* PSMTabBarControl.framework */; };
 		0FD6E35A15366CBC0028C9B3 /* PSMTabBarControl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0FD6E35915366CBB0028C9B3 /* PSMTabBarControl.framework */; };
+		0FDA1D1215A5648300ECBF59 /* HistoryViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FDA1D1015A5648300ECBF59 /* HistoryViewController.h */; };
+		0FDA1D1315A5648300ECBF59 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FDA1D1115A5648300ECBF59 /* HistoryViewController.m */; };
 		0FDB429E1511459A00841EE9 /* SaucePreconnect.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FDB429C1511459A00841EE9 /* SaucePreconnect.h */; };
 		0FDB429F1511459A00841EE9 /* SaucePreconnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FDB429D1511459A00841EE9 /* SaucePreconnect.m */; };
 		7F7A93E505E71B5C00E20416 /* ByteBlockReader.h in Headers */ = {isa = PBXBuildFile; fileRef = F5DC719B033DB4A801A8010C /* ByteBlockReader.h */; };
@@ -361,6 +363,8 @@
 		0FD566921545B1A90007C94A /* BugInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BugInfoController.m; sourceTree = "<group>"; };
 		0FD6E34C15364A090028C9B3 /* PSMTabBarControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PSMTabBarControl.framework; sourceTree = "<group>"; };
 		0FD6E35915366CBB0028C9B3 /* PSMTabBarControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PSMTabBarControl.framework; sourceTree = "<group>"; };
+		0FDA1D1015A5648300ECBF59 /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
+		0FDA1D1115A5648300ECBF59 /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
 		0FDB429C1511459A00841EE9 /* SaucePreconnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaucePreconnect.h; sourceTree = "<group>"; };
 		0FDB429D1511459A00841EE9 /* SaucePreconnect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaucePreconnect.m; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -834,6 +838,8 @@
 				0F40B21A1598ED6400E6311E /* RegexKitLite.m */,
 				0F463B35159BB82F0055B790 /* GradientView.h */,
 				0F463B36159BB82F0055B790 /* GradientView.m */,
+				0FDA1D1015A5648300ECBF59 /* HistoryViewController.h */,
+				0FDA1D1115A5648300ECBF59 /* HistoryViewController.m */,
 			);
 			name = "GUI Controller";
 			sourceTree = "<group>";
@@ -1237,6 +1243,7 @@
 				0F392220158190350065C018 /* OptionBox.h in Headers */,
 				0F40B21B1598ED6400E6311E /* RegexKitLite.h in Headers */,
 				0F463B37159BB82F0055B790 /* GradientView.h in Headers */,
+				0FDA1D1215A5648300ECBF59 /* HistoryViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1269,6 +1276,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = "Sauce Labs";
 			};
 			buildConfigurationList = E20426EA087531990026AA26 /* Build configuration list for PBXProject "scout" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1490,6 +1498,7 @@
 				0F392221158190350065C018 /* OptionBox.m in Sources */,
 				0F40B21C1598ED6400E6311E /* RegexKitLite.m in Sources */,
 				0F463B38159BB82F0055B790 /* GradientView.m in Sources */,
+				0FDA1D1315A5648300ECBF59 /* HistoryViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
