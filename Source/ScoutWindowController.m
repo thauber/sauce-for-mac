@@ -16,6 +16,7 @@
 #import "RFBConnectionManager.h"
 #import "RFBConnection.h"
 #import "Session.h"
+#import "HistoryViewController.h"
 
 @implementation ScoutWindowController
 
@@ -35,6 +36,7 @@
 @synthesize tunnelButton;
 
 static ScoutWindowController* _sharedScout = nil;
+NSString *kHistoryTabLabel = @"Session History";
 
 +(ScoutWindowController*)sharedScout
 {
@@ -67,12 +69,18 @@ static ScoutWindowController* _sharedScout = nil;
     [tabBar setStyleNamed:@"Unified"];
     [tabBar setSizeCellsToFit:YES];
     [tabBar setCellMaxWidth:500];       // allow longer tab labels
-    [tabBar setCanCloseOnlyTab:YES];
+    [tabBar setCanCloseOnlyTab:NO];
 
     // set up add tab button
     [tabBar setShowAddTabButton:YES];
 	[[tabBar addTabButton] setTarget:self];
 	[[tabBar addTabButton] setAction:@selector(addNewTab:)];
+    
+    NSTabViewItem *newItem = [[(NSTabViewItem*)[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
+    hviewCtlr = [[[HistoryViewController alloc] init] retain];
+    [newItem setView:[hviewCtlr view]];
+	[newItem setLabel:kHistoryTabLabel];
+	[tabView addTabViewItem:newItem];
 
     [self showWindow:self];
     [[self window] setDelegate:self];
@@ -243,6 +251,7 @@ static ScoutWindowController* _sharedScout = nil;
     NSString *os = [sdict  objectForKey:@"os"];
     NSString *browser = [sdict objectForKey:@"browser"];
     NSString *bvers = [sdict objectForKey:@"browserVersion"];
+    NSString *url = [sdict objectForKey:@"url"];
     tstr = [NSString stringWithFormat:@"%@/%@%@",os,browser,bvers];
 
     [toolbar setVisible:YES];
@@ -255,6 +264,32 @@ static ScoutWindowController* _sharedScout = nil;
 	[newItem setLabel:tstr];
 	[tabView addTabViewItem:newItem];
 	[tabView selectTabViewItem:newItem];
+    
+    // put info into history view tab0
+    NSMutableArray *rarr = [NSMutableArray arrayWithCapacity:0];
+    [rarr addObject:@"A"];      // active ('A'/'x')         index = 0
+    [rarr addObject:url];       // initial requested url    index = 1
+    [rarr addObject:tstr];      // os/browser/version       index = 2
+    [rarr addObject:@""];       // bugs                     index = 3
+    int hrs, mins, secs;
+    time_t rawtime;
+    struct tm *ptm;    
+    time(&rawtime);    
+    ptm = localtime(&rawtime);
+    hrs = ptm->tm_hour;
+    mins = ptm->tm_min;
+    secs = ptm->tm_sec;
+    NSString *timeStr = [NSString stringWithFormat:@"%02d:%02d:%02d",hrs,mins,secs];
+    [rarr addObject:timeStr];       // start time           index = 4
+    [rarr addObject:@"00:00:00"];      // run time             index = 5
+    [rarr addObject:[NSNumber numberWithLong:rawtime]];     // index = 6 need value to compute run time of a session
+    [rarr addObject:view];          // need identifier to be able to update its row  index = 7
+    [hviewCtlr addRow:rarr];    
+}
+
+- (void)updateHistoryRunTime:(NSView*)view
+{
+    [hviewCtlr updateRuntime:view];
 }
 
 - (IBAction)closeTab:(id)sender 
@@ -265,7 +300,9 @@ static ScoutWindowController* _sharedScout = nil;
         [[RFBConnectionManager sharedManager] removeConnection:[curSession connection]];
         curSession = nil;
     }
-	[tabView removeTabViewItem:[tabView selectedTabViewItem]];    
+    NSTabViewItem *tvi = [tabView selectedTabViewItem];
+    [hviewCtlr updateActive:[tvi view]];
+	[tabView removeTabViewItem:tvi]; 
 }
 
 - (void)setTabLabel:(NSString*)lbl
@@ -290,7 +327,11 @@ static ScoutWindowController* _sharedScout = nil;
 #pragma mark ---- tabview delegate ----
 
 - (void)tabView:(NSTabView *)aTabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem 
-{    
+{
+    NSString *label = [tabViewItem label];
+    if( [label isEqualToString:kHistoryTabLabel])      // history tab not a session
+        return;
+    
     NSDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:[tabViewItem view]];
     if(sdict)
     {
@@ -374,7 +415,6 @@ static ScoutWindowController* _sharedScout = nil;
             [self.osmsg  setImage:img];
         }
         
-
         str = [sdict objectForKey:@"browser"];        
         // get correct image based on browser string
         if([str isEqualToString:@"iexplore"])
@@ -398,8 +438,7 @@ static ScoutWindowController* _sharedScout = nil;
         str = [sdict objectForKey:@"browserVersion"];
         [self.osbrowser  setStringValue:str];
 */        
-        
-        
+                
         // use last remaining time value for this session
         str = [sdict objectForKey:@"remainingTime"];
         [self.timeRemainingStat setStringValue:str];
@@ -412,7 +451,12 @@ static ScoutWindowController* _sharedScout = nil;
     }
 }
 
-- (BOOL)tabView:(NSTabView *)aTabView shouldCloseTabViewItem:(NSTabViewItem *)tabViewItem {
+- (BOOL)tabView:(NSTabView *)aTabView shouldCloseTabViewItem:(NSTabViewItem *)tabViewItem
+{
+    NSString *label = [tabViewItem label];
+    if( [label isEqualToString:kHistoryTabLabel])      // can't close history tab
+        return NO;
+    [aTabView selectTabViewItem:tabViewItem];
     [self doPlayStop:self];
 	return NO;
 }
@@ -447,7 +491,6 @@ static ScoutWindowController* _sharedScout = nil;
 
 - (void)tabView:(NSTabView*)aTabView didDropTabViewItem:(NSTabViewItem *)tabViewItem inTabBar:(PSMTabBarControl *)tabBarControl 
 {
-	NSLog(@"didDropTabViewItem: %@ inTabBar: %@", [tabViewItem label], tabBarControl);
 }
 
 - (NSImage *)tabView:(NSTabView *)aTabView imageForTabViewItem:(NSTabViewItem *)tabViewItem offset:(NSSize *)offset styleMask:(NSUInteger *)styleMask 

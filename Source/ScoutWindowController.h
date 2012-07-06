@@ -14,6 +14,8 @@ typedef enum { login,options,session } tabType;
 @class PSMTabBarControl;
 @class Session;
 @class SnapProgress;
+@class HistoryViewController;
+@class RFBView;
 
 @interface ScoutWindowController : NSWindowController <NSToolbarDelegate, NSWindowDelegate> {
 	IBOutlet NSTabView					*tabView;
@@ -24,6 +26,7 @@ typedef enum { login,options,session } tabType;
     IBOutlet NSTextField *timeRemainingStat;
     IBOutlet NSTextField *osbrowser;
     IBOutlet NSTextField *userStat;
+    HistoryViewController *hviewCtlr;
     NSTextField *urlmsg;
     NSTextField *osbrowserMsg;
     NSTextField *vmsize;
@@ -60,6 +63,7 @@ typedef enum { login,options,session } tabType;
 - (void)snapshotDone;
 - (IBAction)newSession:(id)sender;
 - (void)tunnelConnected:(BOOL)is;     // tunnel is ready to use - or not
+- (void)updateHistoryRunTime:(NSView*)view;
 
 // UI
 - (void)toggleToolbar;
