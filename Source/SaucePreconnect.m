@@ -9,6 +9,7 @@
 #import "SaucePreconnect.h"
 #import "SBJson.h"
 #import "RFBConnectionManager.h"
+#import "RFBConnection.h"
 #import "ScoutWindowController.h"
 #import "Session.h"
 #import "TunnelController.h"
@@ -441,6 +442,10 @@ static SaucePreconnect* _sharedPreconnect = nil;
         }
         if(delayedSession)
             break;
+        // update run time for session in history tab view
+        NSView *vv = [sdict objectForKey:@"view"];
+        [[ScoutWindowController sharedScout] performSelectorOnMainThread:@selector(updateHistoryRunTime:) withObject:vv waitUntilDone:NO];
+
     }
     if(delayedSession == 2)     // done adding, so clear flag
         delayedSession = 0;
