@@ -78,7 +78,7 @@
     loginCtrlr = nil;
     if(!optionsCtrlr)
     {
-        if([[ScoutWindowController sharedScout] tabCount] > 1)      // user has to be subscribed
+        if([[ScoutWindowController sharedScout] tabCount] > 2)      // user has to be subscribed
         {
             BOOL bSubscribed = [[SaucePreconnect sharedPreconnect] checkAccountOk:YES];  // ask if user is subscribed
             if(!bSubscribed)
@@ -101,7 +101,7 @@
 
 -(void)showOptionsIfNoTabs
 {
-    if(![[ScoutWindowController sharedScout] tabCount])
+    if([[ScoutWindowController sharedScout] tabCount] == 1)     // just history tab; no sessions
     {
         [[[ScoutWindowController sharedScout] toolbar] setVisible:NO];
         [self showOptionsDlg:self];
