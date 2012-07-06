@@ -82,15 +82,14 @@
 						<object class="NSButton" id="442764229">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">292</int>
-							<string key="NSFrame">{{22, 12}, {163, 32}}</string>
+							<string key="NSFrame">{{21, 12}, {165, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="191743179">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Stop Scout Connect</string>
+								<string key="NSContents">Stop Sauce Connect</string>
 								<reference key="NSSupport" ref="906070346"/>
 								<string key="NSCellIdentifier">_NS:9</string>
 								<reference key="NSControlView" ref="442764229"/>
@@ -115,7 +114,7 @@
 											<int key="NSvFlags">2322</int>
 											<string key="NSFrameSize">{422, 133}</string>
 											<reference key="NSSuperview" ref="511619594"/>
-											<reference key="NSNextKeyView" ref="167748379"/>
+											<reference key="NSNextKeyView" ref="879360182"/>
 											<string key="NSReuseIdentifierKey">_NS:13</string>
 											<object class="NSTextContainer" key="NSTextContainer" id="28329876">
 												<object class="NSLayoutManager" key="NSLayoutManager">
@@ -192,7 +191,7 @@
 									<reference key="NSDocView" ref="379631765"/>
 									<reference key="NSBGColor" ref="1057107969"/>
 									<object class="NSCursor" key="NSCursor">
-										<string key="NSHotSpot">{5, 5}</string>
+										<string key="NSHotSpot">{1, -1}</string>
 										<int key="NSCursorType">0</int>
 									</object>
 									<int key="NScvFlags">4</int>
@@ -225,7 +224,7 @@
 							</array>
 							<string key="NSFrame">{{25, 65}, {424, 191}}</string>
 							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSNextKeyView" ref="879360182"/>
+							<reference key="NSNextKeyView" ref="511619594"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<int key="NSsFlags">198674</int>
 							<reference key="NSVScroller" ref="167748379"/>
