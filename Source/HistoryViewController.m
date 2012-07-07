@@ -82,9 +82,8 @@
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
-{
+{    
     NSCell *cell = [aTableColumn dataCell];
-    
     NSArray *rr = [rowArr objectAtIndex:rowIndex];
     NSString *colId = [aTableColumn identifier];
     if ([colId isEqualToString:@"active"])      // index=0 ->active
@@ -94,7 +93,17 @@
     if ([colId isEqualToString:@"osbrver"])     // index=2 -> os/browser/version
         return [rr objectAtIndex:2];
     if ([colId isEqualToString:@"bugs"])        // index=3 -> bugs; TODO: should be a popup with selectable(?) urls
-        return [rr objectAtIndex:3];
+    {
+        NSPopUpButtonCell *popcell = (NSPopUpButtonCell *)cell;
+        [popcell removeAllItems];
+        NSArray *barr = [rr objectAtIndex:3];   // array of bug urls
+        NSInteger count = [barr count]-1;
+        for(NSInteger i=1; i <= count; i++)
+        {
+            [popcell addItemWithTitle:[barr objectAtIndex:i]]; 
+        }
+        return [NSNumber numberWithInt:[[barr objectAtIndex:0] intValue]];   // return selected popup item
+    }
     if ([colId isEqualToString:@"start_time"])  // index=4 -> start time
     {
         [cell setAlignment:NSCenterTextAlignment];
@@ -107,6 +116,17 @@
     }
     
     return @"";
+}
+
+- (void)tableView:(NSTableView *)aTableView setObjectValue:(id)anObject forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+{
+    NSArray *rr = [rowArr objectAtIndex:rowIndex];
+    NSString *colId = [aTableColumn identifier];
+    NSMutableArray *barr = [rr objectAtIndex:3];   // array of bug urls
+    if ([colId isEqualToString:@"bugs"])        // index=3 -> bugs; TODO: should be a popup with selectable(?) urls
+    {
+        [barr replaceObjectAtIndex:0 withObject:anObject]; 
+    }
 }
 
 @end
