@@ -26,6 +26,7 @@
 {
     NSNumber *index = [NSNumber numberWithInteger:[rowDict count]];
     [indxDict setObject:view forKey:index];     // will return a view given a row#
+    [rarr addObject:index];     // so we know what row the info is in;    index=7
     [rowDict setObject:rarr forKey:[NSNumber numberWithInteger:(NSInteger)view]];       // will return an info array given a view
     [tableView reloadData];
 }
