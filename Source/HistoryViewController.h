@@ -11,11 +11,13 @@
 
 @interface HistoryViewController : NSViewController
 {
-    NSMutableArray *rowArr;
+    NSMutableDictionary *rowDict;
+    NSMutableDictionary *indxDict;
     IBOutlet NSTableView *tableView;
 }
-- (void)addRow:(NSArray*)rarr;
+- (void)addRow:(NSView*)view rowArr:(NSArray*)rarr;
 - (void)updateRuntime:(NSView*)view;
 - (void)updateActive:(NSView*)view;     // set not active; assumes we can only deactivate an active session
+- (void)addSnapbug:(NSView*)view bug:(NSString*)bugUrl;
 
 @end
