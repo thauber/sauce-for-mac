@@ -34,6 +34,7 @@
 @synthesize curSession;
 @synthesize snapProgress;
 @synthesize tunnelButton;
+@synthesize hviewCtlr;
 
 static ScoutWindowController* _sharedScout = nil;
 NSString *kHistoryTabLabel = @"Session History";
@@ -157,6 +158,12 @@ NSString *kHistoryTabLabel = @"Session History";
     [[NSApp delegate] showOptionsIfNoTabs];        // in case last session timed out or internet connection lost
 }
 
+- (void)addBugToHistory:(NSString*)bugUrl
+{
+    NSTabViewItem *tvi = [tabView selectedTabViewItem];
+    [hviewCtlr addSnapbug:[tvi view] bug:bugUrl];
+}
+
 - (IBAction)newSession:(id)sender
 {
     [[NSApp delegate] showOptionsDlg:nil];
@@ -267,10 +274,13 @@ NSString *kHistoryTabLabel = @"Session History";
     
     // put info into history view tab0
     NSMutableArray *rarr = [NSMutableArray arrayWithCapacity:0];
-    [rarr addObject:@"A"];      // active ('A'/'x')         index = 0
-    [rarr addObject:url];       // initial requested url    index = 1
-    [rarr addObject:tstr];      // os/browser/version       index = 2
-    [rarr addObject:@""];       // bugs                     index = 3
+    [rarr addObject:@"A"];      // active ('A'/'x')          index = 0
+    [rarr addObject:url];       // initial requested url     index = 1
+    [rarr addObject:tstr];      // os/browser/version        index = 2
+    NSMutableArray *bdict = [NSMutableArray arrayWithCapacity:0];
+    [bdict addObject:[NSNumber numberWithInteger:0]];       // initial popup selection
+    [bdict addObject:@"Bugs and Snapshots"]; 
+    [rarr addObject:bdict];     // bugs                      index = 3
     int hrs, mins, secs;
     time_t rawtime;
     struct tm *ptm;    
@@ -280,11 +290,10 @@ NSString *kHistoryTabLabel = @"Session History";
     mins = ptm->tm_min;
     secs = ptm->tm_sec;
     NSString *timeStr = [NSString stringWithFormat:@"%02d:%02d:%02d",hrs,mins,secs];
-    [rarr addObject:timeStr];       // start time           index = 4
-    [rarr addObject:@"00:00:00"];      // run time             index = 5
-    [rarr addObject:[NSNumber numberWithLong:rawtime]];     // index = 6 need value to compute run time of a session
-    [rarr addObject:view];          // need identifier to be able to update its row  index = 7
-    [hviewCtlr addRow:rarr];    
+    [rarr addObject:timeStr];          // start time          index = 4
+    [rarr addObject:@"00:00:00"];      // run time            index = 5
+    [rarr addObject:[NSNumber numberWithLong:rawtime]];    // index = 6 start value to compute session run time
+    [hviewCtlr addRow:view rowArr:rarr];    
 }
 
 - (void)updateHistoryRunTime:(NSView*)view

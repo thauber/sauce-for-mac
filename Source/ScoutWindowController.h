@@ -52,6 +52,7 @@ typedef enum { login,options,session } tabType;
 @property (assign) Session *curSession;
 @property (retain) SnapProgress *snapProgress;
 @property (assign) IBOutlet NSButton *tunnelButton;
+@property (assign) HistoryViewController *hviewCtlr;
 
 +(ScoutWindowController*)sharedScout;
 - (IBAction)addNewTab:(id)sender;
@@ -64,6 +65,7 @@ typedef enum { login,options,session } tabType;
 - (IBAction)newSession:(id)sender;
 - (void)tunnelConnected:(BOOL)is;     // tunnel is ready to use - or not
 - (void)updateHistoryRunTime:(NSView*)view;
+- (void)addBugToHistory:(NSString*)bugUrl;
 
 // UI
 - (void)toggleToolbar;

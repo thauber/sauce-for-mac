@@ -55,6 +55,7 @@
         [takingTxt setStringValue:tstr];
         [indicator stopAnimation:self];
         [indicator setHidden:YES];
+        [[ScoutWindowController sharedScout] addBugToHistory:surl];
     }
 }
 @end
