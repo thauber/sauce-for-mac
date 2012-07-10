@@ -194,8 +194,7 @@ enum {
 			NSLog(@"Unknown alert returnvalue: %d", returnCode);
 			break;
 	}
-    [[RFBConnectionManager sharedManager] removeConnection:self];
-    [[NSApp delegate] performSelectorOnMainThread:@selector(showOptionsIfNoTabs) withObject:nil waitUntilDone:NO];
+    [[ScoutWindowController sharedScout] closeTabWithSession:self];
 }
 
 - (void)connectionProblem
@@ -209,8 +208,7 @@ enum {
 - (void)endSession
 {
     [sshTunnel close];
-    [[RFBConnectionManager sharedManager] removeConnection:self];
-    [[ScoutWindowController sharedScout] setCurSession:nil];
+    [[ScoutWindowController sharedScout] closeTabWithSession:self];
 }
 
 /* Some kind of connection failure. ([rda] don't) Decide whether to try to reconnect. */
@@ -242,7 +240,7 @@ enum {
         }
     } else 
     {
-        [[RFBConnectionManager sharedManager] removeConnection:self];
+        [[ScoutWindowController sharedScout] closeTabWithSession:self];
     }
 }
 

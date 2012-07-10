@@ -308,10 +308,38 @@ NSString *kHistoryTabLabel = @"Session History";
         [[SaucePreconnect sharedPreconnect] sessionClosed:[curSession connection]];
         [[RFBConnectionManager sharedManager] removeConnection:[curSession connection]];
         curSession = nil;
+        NSTabViewItem *tvi = [tabView selectedTabViewItem];
+        [hviewCtlr updateActive:[tvi view]];
+        [tabView removeTabViewItem:tvi]; 
     }
-    NSTabViewItem *tvi = [tabView selectedTabViewItem];
-    [hviewCtlr updateActive:[tvi view]];
-	[tabView removeTabViewItem:tvi]; 
+}
+
+- (void)closeTabWithSession:(Session*)session
+{
+    Session *osess = curSession;
+    NSView *vv = [session view];
+    NSArray *tabitems = [tabView tabViewItems];
+    NSInteger numitems = [tabitems count];
+    NSTabViewItem *seltvi = [tabView selectedTabViewItem];
+    curSession = nil;
+    NSTabViewItem *deltvi;
+    for(NSInteger i=0;i<numitems;i++)
+    {
+        NSTabViewItem *tvi = [tabitems objectAtIndex:i];
+        if([tvi view] == vv)
+        {
+            deltvi = tvi;
+            break;
+        }        
+    }
+    [tabView selectTabViewItem:deltvi];
+    curSession = session;
+    [self closeTab:self];
+    if(session != osess)
+    {
+        curSession = osess;
+        [tabView selectTabViewItem:seltvi];
+    }
 }
 
 - (void)setTabLabel:(NSString*)lbl
@@ -339,7 +367,10 @@ NSString *kHistoryTabLabel = @"Session History";
 {
     NSString *label = [tabViewItem label];
     if( [label isEqualToString:kHistoryTabLabel])      // history tab not a session
+    {
+        curSession = nil;
         return;
+    }
     
     NSDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:[tabViewItem view]];
     if(sdict)
