@@ -3,7 +3,7 @@
 //  scout
 //
 //  Created by ackerman dudley on 6/27/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 Sauce Labs. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
@@ -19,5 +19,7 @@
 @property(nonatomic, retain) NSColor *startingColor;
 @property(nonatomic, retain) NSColor *endingColor;
 @property(assign) int angle;
+
+- (void)setColor:(float)start end:(float)end startAlpha:(float)startAlpha endAlpha:(float)endAlpha;
 
 @end
