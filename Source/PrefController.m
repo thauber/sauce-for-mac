@@ -161,7 +161,7 @@ static int const kPrefsVersion = 0x00000002;
 //	if ( mWindow )
 //		return [mFrontInverseCPUSlider maxValue];
 //	return 1;
-    return [self otherFrameBufferUpdateSeconds];
+    return [self otherFrameBufferUpdateSeconds]+1;
 }
 
 
