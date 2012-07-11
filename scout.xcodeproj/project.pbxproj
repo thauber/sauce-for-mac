@@ -37,7 +37,6 @@
 		0F3BBDD515AB5EC7006EDB74 /* PSMTabStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F3BBDB215AB5EC7006EDB74 /* PSMTabStyle.h */; };
 		0F3BBDD615AB5EC7006EDB74 /* PSMUnifiedTabStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F3BBDB315AB5EC7006EDB74 /* PSMUnifiedTabStyle.h */; };
 		0F3BBDD715AB5EC7006EDB74 /* PSMUnifiedTabStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3BBDB415AB5EC7006EDB74 /* PSMUnifiedTabStyle.m */; };
-		0F3BBDF615AB5FDF006EDB74 /* AdiumGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3BBDD915AB5FDF006EDB74 /* AdiumGradient.png */; };
 		0F3BBDF715AB5FDF006EDB74 /* AquaTabClose_Front.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3BBDDA15AB5FDF006EDB74 /* AquaTabClose_Front.png */; };
 		0F3BBDF815AB5FDF006EDB74 /* AquaTabClose_Front_Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3BBDDB15AB5FDF006EDB74 /* AquaTabClose_Front_Pressed.png */; };
 		0F3BBDF915AB5FDF006EDB74 /* AquaTabClose_Front_Rollover.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3BBDDC15AB5FDF006EDB74 /* AquaTabClose_Front_Rollover.png */; };
@@ -401,7 +400,6 @@
 		0F3BBDB215AB5EC7006EDB74 /* PSMTabStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSMTabStyle.h; sourceTree = "<group>"; };
 		0F3BBDB315AB5EC7006EDB74 /* PSMUnifiedTabStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSMUnifiedTabStyle.h; sourceTree = "<group>"; };
 		0F3BBDB415AB5EC7006EDB74 /* PSMUnifiedTabStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSMUnifiedTabStyle.m; sourceTree = "<group>"; };
-		0F3BBDD915AB5FDF006EDB74 /* AdiumGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AdiumGradient.png; sourceTree = "<group>"; };
 		0F3BBDDA15AB5FDF006EDB74 /* AquaTabClose_Front.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AquaTabClose_Front.png; sourceTree = "<group>"; };
 		0F3BBDDB15AB5FDF006EDB74 /* AquaTabClose_Front_Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AquaTabClose_Front_Pressed.png; sourceTree = "<group>"; };
 		0F3BBDDC15AB5FDF006EDB74 /* AquaTabClose_Front_Rollover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AquaTabClose_Front_Rollover.png; sourceTree = "<group>"; };
@@ -827,7 +825,6 @@
 		0F3BBDD815AB5FDF006EDB74 /* psmtabbar */ = {
 			isa = PBXGroup;
 			children = (
-				0F3BBDD915AB5FDF006EDB74 /* AdiumGradient.png */,
 				0F3BBDDA15AB5FDF006EDB74 /* AquaTabClose_Front.png */,
 				0F3BBDDB15AB5FDF006EDB74 /* AquaTabClose_Front_Pressed.png */,
 				0F3BBDDC15AB5FDF006EDB74 /* AquaTabClose_Front_Rollover.png */,
@@ -1533,7 +1530,6 @@
 				0F48D0C9157528950067B689 /* snapProgress.xib in Resources */,
 				0F40B2211599233800E6311E /* scout.conf in Resources */,
 				0F463B33159B5E8A0055B790 /* history.xib in Resources */,
-				0F3BBDF615AB5FDF006EDB74 /* AdiumGradient.png in Resources */,
 				0F3BBDF715AB5FDF006EDB74 /* AquaTabClose_Front.png in Resources */,
 				0F3BBDF815AB5FDF006EDB74 /* AquaTabClose_Front_Pressed.png in Resources */,
 				0F3BBDF915AB5FDF006EDB74 /* AquaTabClose_Front_Rollover.png in Resources */,
