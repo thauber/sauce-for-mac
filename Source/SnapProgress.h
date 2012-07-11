@@ -16,6 +16,7 @@
     NSTextField *url;
     NSProgressIndicator *indicator;
     NSButton *cancelButton;
+    NSButton *viewSnapshotButton;
 }
 @property (assign) IBOutlet NSPanel *panel;
 @property (assign) IBOutlet NSTextField *takingTxt;
@@ -23,8 +24,10 @@
 @property (assign) IBOutlet NSTextField *url;
 @property (assign) IBOutlet NSProgressIndicator *indicator;
 @property (assign) IBOutlet NSButton *cancelButton;
+@property (assign) IBOutlet NSButton *viewSnapshotButton;
 
 - (IBAction)OkBtutton:(id)sender;
+- (IBAction)viewSnapshot:(id)sender;
 - (void)setServerURL:(NSString*)surl;
 
 @end
