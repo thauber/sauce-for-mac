@@ -11,11 +11,7 @@
 #import "PSMOverflowPopUpButton.h"
 #import "PSMRolloverButton.h"
 #import "PSMTabStyle.h"
-//#import "PSMMetalTabStyle.h"
-#import "PSMAquaTabStyle.h"
 #import "PSMUnifiedTabStyle.h"
-#import "PSMAdiumTabStyle.h"
-#import "PSMLiveChatTabStyle.h"
 #import "PSMTabDragAssistant.h"
 #import "PSMTabBarController.h"
 
