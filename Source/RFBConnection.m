@@ -46,6 +46,7 @@
 #include <libc.h>
 #include <netinet/ip.h>
 #include <netinet/tcp.h>
+#include "ScoutWindowController.h"
 
 // size of write buffer
 #define BUFFER_SIZE 2048
@@ -402,12 +403,12 @@
             _frameUpdateTimer = [[NSTimer scheduledTimerWithTimeInterval: _frameBufferUpdateSeconds target: self selector: @selector(requestFrameBufferUpdate:) userInfo: nil repeats: NO] retain];
         }
     } else {
-      if(0)   // any reason to not run without delay?
+      if(0)   // [rda] any reason to not run without delay?
       {
         NSTimeInterval delay;
 
         delay = [_lastUpdateRequestDate timeIntervalSinceNow] + 1.0/60.0;
-        if(_lastUpdateRequestDate && delay > 0.0)  // [rda] no reason to not run flat out, is there?
+        if(_lastUpdateRequestDate && delay > 0.0)
         {
             /* Delays update request so that we send at most 60/second, which is
                fast as will be visible. Note that an NSTimer will be too slow to
@@ -428,8 +429,7 @@
 	[_frameUpdateTimer invalidate];
 	[_frameUpdateTimer release];
 	_frameUpdateTimer = nil;
-    if(!sender)
-        [self requestUpdate:[rfbView bounds] incremental:YES];
+    [self requestUpdate:[rfbView bounds] incremental:YES];
 }
 
 - (void)requestUpdate:(NSRect)frame incremental:(BOOL)aFlag
@@ -454,6 +454,8 @@
 {
 //    if ([session hasKeyWindow] && -[lastMouseMovement timeIntervalSinceNow] > 0.5)
 //            && ![server_ viewOnly])
+    BOOL isCur = (session == [[ScoutWindowController sharedScout] curSession]);
+    if(isCur && -[lastMouseMovement timeIntervalSinceNow] > 0.5)
     {
         NSSize  size = [frameBuffer size];
         CGPoint screenCoords;
@@ -902,7 +904,9 @@ static NSString* byteString(double d)
 	_hasManualFrameBufferUpdates = _frameBufferUpdateSeconds >= [[PrefController sharedController] maxPossibleFrameBufferUpdateSeconds];
 
     if (hadManualUpdates && !_hasManualFrameBufferUpdates)
+    {
         [self requestFrameBufferUpdate:nil];
+    }
 }
 
 @end
