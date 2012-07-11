@@ -273,7 +273,8 @@
 	attrStr = [[[NSMutableAttributedString alloc] initWithString:contents] autorelease];
 	NSRange range = NSMakeRange(0, [contents length]);
 
-	[attrStr addAttribute:NSFontAttributeName value:[NSFont systemFontOfSize:11.0] range:range];
+//	[attrStr addAttribute:NSFontAttributeName value:[NSFont systemFontOfSize:11.0] range:range];
+    [attrStr addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"LucidaGrande" size:11.0] range:range];
 
 	// Paragraph Style for Truncating Long Text
 	static NSMutableParagraphStyle *TruncatingTailParagraphStyle = nil;
