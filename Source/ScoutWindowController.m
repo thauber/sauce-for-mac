@@ -69,7 +69,7 @@ NSString *kHistoryTabLabel = @"Session History";
     [tabView setTabViewType:NSNoTabsNoBorder];
     [tabBar setStyleNamed:@"Unified"];
     [tabBar setSizeCellsToFit:YES];
-    [tabBar setCellMaxWidth:500];       // allow longer tab labels
+    [tabBar setCellMaxWidth:300];       // allow longer tab labels
     [tabBar setCanCloseOnlyTab:NO];
 
     // set up add tab button
@@ -255,11 +255,28 @@ NSString *kHistoryTabLabel = @"Session History";
 {
     NSString *tstr;
     NSDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:view];
+    NSString *url = [sdict  objectForKey:@"url"];    
     NSString *os = [sdict  objectForKey:@"os"];
     NSString *browser = [sdict objectForKey:@"browser"];
     NSString *bvers = [sdict objectForKey:@"browserVersion"];
-    NSString *url = [sdict objectForKey:@"url"];
-    tstr = [NSString stringWithFormat:@"%@/%@%@",os,browser,bvers];
+    // what attributes?
+    NSDictionary *udict = [NSDictionary dictionaryWithObjectsAndKeys:nil];
+    NSString *osbrv = [NSString stringWithFormat:@"%C%C%@/%@%@", 0x232A, 0x232A, os, browser, bvers];
+    NSSize sz = [osbrv sizeWithAttributes:udict];
+    float urlwid = 300 - sz.width;
+    NSString *truncurl = url;
+    sz = [url sizeWithAttributes:udict];
+    if(sz.width > urlwid)   // truncate and add '...'
+    {
+        NSInteger numchars = (urlwid-2)/8 -2;   // guess 8 pixels average for characters
+        NSInteger offset = 0;
+        if([url hasPrefix:@"http://"])          // remove schema prefix
+            offset = 7;
+        NSRange rng = NSMakeRange(offset, numchars);
+        truncurl = [truncurl substringWithRange:rng];
+        truncurl = [truncurl stringByAppendingFormat:@"%C",0x2026];       // add ellipsis
+    }
+    tstr = [NSString stringWithFormat:@"%@%@",truncurl, osbrv];
 
     [toolbar setVisible:YES];
     [bugcamera setEnabled:YES forSegment:0];
