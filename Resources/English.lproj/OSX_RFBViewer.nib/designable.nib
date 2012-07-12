@@ -360,7 +360,6 @@
 									<reference key="NSMixedImage" ref="368837609"/>
 								</object>
 							</object>
-							<bool key="NSMenuExcludeMarkColumn">YES</bool>
 						</object>
 					</object>
 					<object class="NSMenuItem" id="956700113">
@@ -621,7 +620,6 @@ ZXIgYnkgSGVsbXV0IE1haWVyaG9mZXI</string>
 							<string key="NSFrame">{{342, 20}, {203, 26}}</string>
 							<reference key="NSSuperview" ref="579117168"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="268387187">
 								<int key="NSCellFlags">69336577</int>
