@@ -246,11 +246,14 @@
         for(NSInteger i=0;i < num; i++)     // setup browsers
         {
             NSArray *llArr = [configArr objectAtIndex:i];
+            NSString *osstr = [llArr objectAtIndex:0];
             NSString *browser = [llArr objectAtIndex:1];
             NSString *version = [llArr objectAtIndex:2];
             NSString *twoch = [browser substringToIndex:2];     // 2 chars to identify browser
             if(![twoch isEqualToString:lastBrowser])            // different browser than previous
             {            
+                if([twoch isEqualToString:@"ie"])         // firefox
+                    bimg = bimgs[0];
                 if([twoch isEqualToString:@"fi"])         // firefox
                     bimg = bimgs[1];
                 else if([twoch isEqualToString:@"sa"])    // safari
@@ -269,8 +272,13 @@
             NSAttributedString* as = [NSAttributedString attributedStringWithAttachment: ta];
             [ta release];
             [tac release];
-            NSMutableAttributedString* mas = [[[NSMutableAttributedString alloc] initWithAttributedString: as] retain]; 
-            NSString *brver = [NSString stringWithFormat:@" %@ %@",browser, version];
+            NSMutableAttributedString* mas = [[[NSMutableAttributedString alloc] initWithAttributedString: as] retain];
+            NSString *winver = @"";     // windows version
+            if(configArr == configWindows)
+            {
+                winver = [[osstr componentsSeparatedByString:@" "] objectAtIndex:1];
+            }
+            NSString *brver = [NSString stringWithFormat:@"%@ %@ %@",winver, browser, version];
             NSNumber *nn = [NSNumber numberWithInteger:6]; 
             NSDictionary *asdict = [NSDictionary dictionaryWithObjectsAndKeys:nn,NSBaselineOffsetAttributeName, nil];
             NSAttributedString *bAStr = [[NSAttributedString alloc] initWithString:brver attributes:asdict]; 
