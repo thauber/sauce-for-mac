@@ -14,11 +14,13 @@
 @synthesize startingColor;
 @synthesize endingColor;
 @synthesize angle;
+@synthesize noDraw;
 
 - (id)initWithFrame:(NSRect)frame 
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.noDraw = NO;
         // initialize default for toolbar message gradient
         [self setStartingColor:[NSColor colorWithCalibratedWhite:0 alpha:.5]];      // half-transparent black
         [self setEndingColor:[NSColor colorWithCalibratedWhite:0 alpha:0]];         // transparent
@@ -35,6 +37,9 @@
 
 - (void)drawRect:(NSRect)rect 
 {
+    if(self.noDraw)
+        return;
+
     // Fill view with a top-down gradient
     // from startingColor to endingColor
     NSGradient* aGradient = [[NSGradient alloc]

@@ -13,12 +13,14 @@
     NSColor *startingColor;
     NSColor *endingColor;
     int angle;
+    BOOL noDraw;
 }
 
 // Define the variables as properties
 @property(nonatomic, retain) NSColor *startingColor;
 @property(nonatomic, retain) NSColor *endingColor;
 @property(assign) int angle;
+@property(assign) BOOL noDraw;
 
 - (void)setColor:(float)start end:(float)end startAlpha:(float)startAlpha endAlpha:(float)endAlpha;
 

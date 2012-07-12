@@ -16,6 +16,7 @@ typedef enum { login,options,session } tabType;
 @class SnapProgress;
 @class HistoryViewController;
 @class RFBView;
+@class GradientView;
 
 @interface ScoutWindowController : NSWindowController <NSToolbarDelegate, NSWindowDelegate> {
 	IBOutlet NSTabView					*tabView;
@@ -37,6 +38,8 @@ typedef enum { login,options,session } tabType;
     SnapProgress *snapProgress;
     NSButton *tunnelButton;    
     IBOutlet NSTextField *nowscout;
+    GradientView *msgGradient;
+    
 }
 @property (assign) IBOutlet NSTabView *tabView;
 @property (assign) IBOutlet NSImageView *tunnelImage;

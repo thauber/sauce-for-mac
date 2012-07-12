@@ -17,6 +17,7 @@
 #import "RFBConnection.h"
 #import "Session.h"
 #import "HistoryViewController.h"
+#import "GradientView.h"
 
 @implementation ScoutWindowController
 
@@ -82,6 +83,8 @@ NSString *kHistoryTabLabel = @"Session History";
     [newItem setView:[hviewCtlr view]];
 	[newItem setLabel:kHistoryTabLabel];
 	[tabView addTabViewItem:newItem];
+    
+    [msgGradient setNoDraw:YES];    // no draw gradient for now
 
     [self showWindow:self];
     [[self window] setDelegate:self];
