@@ -104,7 +104,8 @@
     if([[ScoutWindowController sharedScout] tabCount] == 1)     // just history tab; no sessions
     {
         [[[ScoutWindowController sharedScout] toolbar] setVisible:NO];
-        [self showOptionsDlg:self];
+// just show history tab. user has to use menu/shortcut key to start new session
+//        [self showOptionsDlg:self];
     }
 }
 
