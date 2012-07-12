@@ -171,8 +171,6 @@
 	[[PrefController sharedController] showWindow];
 }
 
-
-
 - (BOOL) applicationShouldHandleReopen: (NSApplication *) app hasVisibleWindows: (BOOL) visibleWindows
 {
 	if(!visibleWindows)
@@ -231,6 +229,20 @@
         self.tunnelCtrlr = [[TunnelController alloc] init];
     [tunnelCtrlr runSheetOnWindow:win];
     [self toggleTunnelDisplay];
+}
+
+- (void)escapeOptionDlg
+{
+    if(optionsCtrlr)
+    {
+        if([[[optionsCtrlr connectBtn] title] isEqualToString:@"Cancel"])
+            [self cancelOptionsConnect:self];
+        else
+        {
+            [optionsCtrlr quitSheet];
+            self.optionsCtrlr = nil;
+        }
+    }
 }
 
 - (void)toggleTunnelDisplay

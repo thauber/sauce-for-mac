@@ -97,6 +97,16 @@
 			return;
 		}
 	}
+    else if(!noModal)       // modal is up, so handle escape
+    {
+        if(NSKeyUp == eventType)
+        {
+            NSString *chars = [anEvent charactersIgnoringModifiers];
+            if((int)[chars characterAtIndex:0] == 27)
+                [[NSApp delegate] escapeOptionDlg];
+        }
+    }
+
 	[super sendEvent: anEvent];
 }
 
