@@ -565,6 +565,8 @@
     if(column==0)
     {
         [cell setAttributedStringValue:osAStrs[row]];
+        if(row>1)
+            [cell setEnabled:NO];
     }
     else
     {
