@@ -296,7 +296,8 @@ NSString *kHistoryTabLabel = @"Session History";
     NSMutableArray *rarr = [NSMutableArray arrayWithCapacity:0];
     [rarr addObject:@"A"];      // active ('A'/'x')          index = 0
     [rarr addObject:url];       // initial requested url     index = 1
-    [rarr addObject:tstr];      // os/browser/version        index = 2
+    osbrv = [NSString stringWithFormat:@"%@/%@ %@",os, browser, bvers];
+    [rarr addObject:osbrv];      // os/browser/version        index = 2
     NSMutableArray *bdict = [NSMutableArray arrayWithCapacity:0];
     [bdict addObject:[NSNumber numberWithInteger:0]];       // initial popup selection
     [bdict addObject:@"Bugs and Snapshots"]; 
