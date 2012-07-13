@@ -11,12 +11,14 @@
 
 @implementation SnapProgress
 @synthesize viewSnapshotButton;
+@synthesize availableLbl;
 @synthesize panel;
 @synthesize takingTxt;
 @synthesize urlLabel;
 @synthesize url;
 @synthesize indicator;
 @synthesize cancelButton;
+@synthesize okEnableView;
 
 - (id)init
 {
@@ -29,6 +31,8 @@
         [cancelButton setFrame:NSMakeRect(0,0,0,0)];       // allow 'esc' to quit
         [indicator startAnimation:self];
         [viewSnapshotButton setEnabled:NO];
+        [availableLbl setHidden:YES];
+        okEnableView = NO;                      // default to not show 'view button'
         [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];
     }
     return self;
@@ -65,7 +69,13 @@
         [indicator setHidden:YES];
         if([surl length])
         {
-            [viewSnapshotButton setEnabled:YES];
+            [viewSnapshotButton setEnabled:okEnableView];
+            [availableLbl setHidden:NO];
+            if(okEnableView)
+                [availableLbl setStringValue:@"Snapshot may not be available"];
+            else
+                [availableLbl setStringValue:@"Snapshot is not available, yet"];
+            
             [[ScoutWindowController sharedScout] addBugToHistory:surl];
         }
     }
