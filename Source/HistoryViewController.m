@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Sauce Labs. All rights reserved.
 //
 
+#import "ScoutWindowController.h"
+#import "SnapProgress.h"
 #import "HistoryViewController.h"
 
 @implementation HistoryViewController
@@ -115,13 +117,22 @@
 - (void)tableView:(NSTableView *)aTableView setObjectValue:(id)anObject forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
     NSNumber *rindex = [NSNumber numberWithInteger:rowIndex];
-    NSView *view = [indxDict objectForKey:rindex];
-    NSArray *rr = [rowDict objectForKey:[NSNumber numberWithInteger:(NSInteger)view]];
+    NSView *view = [indxDict objectForKey:rindex];      // get view given row
+    NSArray *rr = [rowDict objectForKey:[NSNumber numberWithInteger:(NSInteger)view]];  // get row info
     NSString *colId = [aTableColumn identifier];
-    NSMutableArray *barr = [rr objectAtIndex:3];   // array of bug urls
-    if ([colId isEqualToString:@"bugs"])        // index=3 -> bugs; TODO: should be a popup with selectable(?) urls
+    NSMutableArray *barr = [rr objectAtIndex:3];        // array of bug urls
+    if ([colId isEqualToString:@"bugs"])                // index=3 -> bugs;
     {
-        [barr replaceObjectAtIndex:0 withObject:anObject]; 
+        [barr replaceObjectAtIndex:0 withObject:anObject];      // put index of selected item at index=0
+        NSInteger popindx = [anObject longValue];               // selected item
+        if(popindx > 0)       // popup index zero is the popup title
+        {
+            SnapProgress *sp = [[SnapProgress alloc] init];
+            [[ScoutWindowController sharedScout] setSnapProgress:sp];
+            NSString *surl = [barr objectAtIndex: popindx+1];
+            [sp setOkEnableView:YES];       // NB: no good way to know if snapshot is actually available
+            [sp setServerURL:surl];                     // give snapshot sheet the url
+        }
     }
 }
 
