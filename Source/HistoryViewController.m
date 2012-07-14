@@ -131,21 +131,25 @@
             SnapProgress *sp = [[SnapProgress alloc] init];
             [[ScoutWindowController sharedScout] setSnapProgress:sp];
             NSString *surl = [barr objectAtIndex: popindx+1];
-            NSArray *urlArr = [surl componentsSeparatedByString:@"/"];
-            NSString *fname = [urlArr lastObject];
-            [sp setOkEnableView:[self isAvailableSnap:view file:fname]];   // is snapshot actually available
-            [sp setServerURL:surl];                     // give snapshot sheet the url
+            BOOL isActive =  [[rr objectAtIndex:0] isEqualToString:@"A"];
+            if(isActive)
+                [sp setOkEnableView:NO];         // snapshot isn't available while job is active
+            else    // job is not active, so check if snapshot is available
+                [sp setOkEnableView:[self isAvailableSnap:surl]];
+            [sp setServerURL:surl];                 // give snapshot sheet the url
         }
     }
 }
 
+
 // https://<user>:<acctkey>@saucelabs.com/rest/<username>/jobs/<job_id>/results/<filename>
-- (BOOL)isAvailableSnap:(NSView*)view file:(NSString*)fname
+- (BOOL)isAvailableSnap:(NSString*)surl
 {
-    NSDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:view];
-    NSString *user = [sdict objectForKey:@"user"];
-    NSString *akey = [sdict objectForKey:@"ukey"];
-    NSString *jobid = [sdict objectForKey:@"jobId"];
+    NSArray *urlArr = [surl componentsSeparatedByString:@"/"];
+    NSString *fname = [urlArr lastObject];
+    NSString *jobid = [urlArr objectAtIndex:[urlArr count]-2];
+    NSString *user = [[SaucePreconnect sharedPreconnect] user];
+    NSString *akey = [[SaucePreconnect sharedPreconnect] ukey];
     NSString *farg = [NSString stringWithFormat:@"curl https://%@:%@@saucelabs.com/rest/%@/jobs/%@/results/%@",user, akey,user,jobid, fname];
 
     NSTask *ftask = [[NSTask alloc] init];
@@ -164,5 +168,6 @@
     [ftask release];
     return NO;
 }
+
 
 @end
