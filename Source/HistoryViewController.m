@@ -9,6 +9,7 @@
 #import "ScoutWindowController.h"
 #import "SnapProgress.h"
 #import "HistoryViewController.h"
+#import "SaucePreconnect.h"
 
 @implementation HistoryViewController
 
@@ -130,10 +131,38 @@
             SnapProgress *sp = [[SnapProgress alloc] init];
             [[ScoutWindowController sharedScout] setSnapProgress:sp];
             NSString *surl = [barr objectAtIndex: popindx+1];
-            [sp setOkEnableView:YES];       // NB: no good way to know if snapshot is actually available
+            NSArray *urlArr = [surl componentsSeparatedByString:@"/"];
+            NSString *fname = [urlArr lastObject];
+            [sp setOkEnableView:[self isAvailableSnap:view file:fname]];   // is snapshot actually available
             [sp setServerURL:surl];                     // give snapshot sheet the url
         }
     }
+}
+
+// https://<user>:<acctkey>@saucelabs.com/rest/<username>/jobs/<job_id>/results/<filename>
+- (BOOL)isAvailableSnap:(NSView*)view file:(NSString*)fname
+{
+    NSDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:view];
+    NSString *user = [sdict objectForKey:@"user"];
+    NSString *akey = [sdict objectForKey:@"ukey"];
+    NSString *jobid = [sdict objectForKey:@"jobId"];
+    NSString *farg = [NSString stringWithFormat:@"curl https://%@:%@@saucelabs.com/rest/%@/jobs/%@/results/%@",user, akey,user,jobid, fname];
+
+    NSTask *ftask = [[NSTask alloc] init];
+    NSPipe *fpipe = [NSPipe pipe];
+    [ftask setStandardOutput:fpipe];
+    [ftask setLaunchPath:@"/bin/bash"];
+    [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+    [ftask launch];		// fetch live id
+    NSFileHandle *fhand = [fpipe fileHandleForReading];        
+    NSData *data = [fhand availableData];		 
+    if([data length] > 10)
+    {
+        [ftask release];
+        return YES;
+    }
+    [ftask release];
+    return NO;
 }
 
 @end

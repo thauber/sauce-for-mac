@@ -72,7 +72,7 @@
             [viewSnapshotButton setEnabled:okEnableView];
             [availableLbl setHidden:NO];
             if(okEnableView)
-                [availableLbl setStringValue:@"Snapshot may not be available"];
+                [availableLbl setStringValue:@"Snapshot is available"];
             else
                 [availableLbl setStringValue:@"Snapshot is not available, yet"];
             
