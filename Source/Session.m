@@ -207,8 +207,9 @@ enum {
 
 - (void)endSession
 {
-    [sshTunnel close];
+//    [sshTunnel close];   //  [rda] not using chicken's tunnel
     [[ScoutWindowController sharedScout] closeTabWithSession:self];
+    [self connectionProblem];
 }
 
 /* Some kind of connection failure. ([rda] don't) Decide whether to try to reconnect. */
