@@ -279,7 +279,7 @@ NSString *kHistoryTabLabel = @"Session History";
         truncurl = [truncurl substringWithRange:rng];
         truncurl = [truncurl stringByAppendingFormat:@"%C",0x2026];       // add ellipsis
     }
-    tstr = [NSString stringWithFormat:@"%@%@",truncurl, osbrv];
+    tstr = [NSString stringWithFormat:@"%@ %@",truncurl, osbrv];
 
     [toolbar setVisible:YES];
     [bugcamera setEnabled:YES forSegment:0];
