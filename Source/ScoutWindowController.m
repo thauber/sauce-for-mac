@@ -391,6 +391,9 @@ NSString *kHistoryTabLabel = @"Session History";
     NSString *label = [tabViewItem label];
     if( [label isEqualToString:kHistoryTabLabel])      // history tab not a session
     {
+        [playstop setEnabled:NO forSegment:0];
+        [bugcamera setEnabled:NO forSegment:0];
+        [bugcamera setEnabled:NO forSegment:1];
         curSession = nil;
         return;
     }
@@ -510,6 +513,10 @@ NSString *kHistoryTabLabel = @"Session History";
         curSession = [rfbcon session];
         [[RFBConnectionManager sharedManager] setSessionsUpdateIntervals];
         
+        [bugcamera setEnabled:YES forSegment:0];
+        [bugcamera setEnabled:YES forSegment:1];
+        [playstop setEnabled:YES forSegment:0];
+
         [[self window] display];
     }
 }
