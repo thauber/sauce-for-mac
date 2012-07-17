@@ -246,6 +246,7 @@
 - (void)terminateConnection:(NSString *)reason
 {
     [self setReader:nil]; // causes readData to stop
+    [[RFBConnectionManager sharedManager] cancelConnection];
     [session terminateConnection:reason];
 }
 

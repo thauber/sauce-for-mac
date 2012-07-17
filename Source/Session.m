@@ -194,7 +194,7 @@ enum {
 			NSLog(@"Unknown alert returnvalue: %d", returnCode);
 			break;
 	}
-    [[ScoutWindowController sharedScout] closeTabWithSession:self];
+    [[ScoutWindowController sharedScout] performSelectorOnMainThread:@selector(closeTabWithSession:) withObject:self waitUntilDone:NO];
 }
 
 - (void)connectionProblem
@@ -241,7 +241,7 @@ enum {
         }
     } else 
     {
-        [[ScoutWindowController sharedScout] closeTabWithSession:self];
+        [[ScoutWindowController sharedScout] performSelectorOnMainThread:@selector(closeTabWithSession:) withObject:self waitUntilDone:NO];
     }
 }
 
