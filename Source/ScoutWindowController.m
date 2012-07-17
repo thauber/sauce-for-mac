@@ -327,7 +327,6 @@ NSString *kHistoryTabLabel = @"Session History";
     if(curSession)
     {
         [[SaucePreconnect sharedPreconnect] sessionClosed:[curSession connection]];
-//        [[RFBConnectionManager sharedManager] removeConnection:[curSession connection]];
         [[RFBConnectionManager sharedManager] cancelConnection];
         [curSession terminateConnection:nil];
         curSession = nil;
