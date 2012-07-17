@@ -360,7 +360,8 @@ NSString *kHistoryTabLabel = @"Session History";
     if(session != osess)
     {
         curSession = osess;
-        [tabView selectTabViewItem:seltvi];
+        if(deltvi != seltvi)    // don't select tab we just deleted
+            [tabView selectTabViewItem:seltvi];
     }
 }
 
