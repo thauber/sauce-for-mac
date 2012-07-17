@@ -420,7 +420,7 @@
 
     NSURL *uurl = [NSURL URLWithString:urlstr];
     BOOL noTunnel = [[NSApp delegate] noTunnel];
-    if(uurl && !noTunnel)        // check for localhost
+    if(uurl && !noTunnel && ![urlstr hasPrefix:@"www."])        // check for localhost
     {
         NSString *uhost = [uurl host];
         BOOL isLocalURL = ![uhost length] || [uhost isEqualToString:@"localhost"] || [uhost isEqualToString:@"127.0.0.1"];
