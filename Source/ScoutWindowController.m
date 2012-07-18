@@ -110,7 +110,7 @@ NSString *kHistoryTabLabel = @"Session History";
 	switch (returnCode)
     {
 		case NSAlertDefaultReturn:
-            [self closeTab:nil];
+            [self closeTab:self];
 			return;
 		case NSAlertAlternateReturn:
             return;
@@ -326,18 +326,21 @@ NSString *kHistoryTabLabel = @"Session History";
 {
     if(curSession)
     {
-        [[SaucePreconnect sharedPreconnect] sessionClosed:[curSession connection]];
-        [[RFBConnectionManager sharedManager] cancelConnection];
-        [curSession terminateConnection:nil];
-        curSession = nil;
+        Session *ss = curSession;
+        curSession = nil;        
         NSTabViewItem *tvi = [tabView selectedTabViewItem];
         [hviewCtlr updateActive:[tvi view]];
+        [[SaucePreconnect sharedPreconnect] sessionClosed:[ss connection]];
+        [[RFBConnectionManager sharedManager] cancelConnection];
+        [ss terminateConnection:nil];
         [tabView removeTabViewItem:tvi]; 
     }
 }
 
 - (void)closeTabWithSession:(Session*)session
 {
+    if(!curSession)
+        return;
     Session *osess = curSession;
     NSView *vv = [session view];
     NSArray *tabitems = [tabView tabViewItems];
