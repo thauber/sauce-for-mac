@@ -78,6 +78,7 @@
     loginCtrlr = nil;
     if(!optionsCtrlr)
     {
+        
         if([[ScoutWindowController sharedScout] tabCount] > 2)      // user has to be subscribed
         {
             BOOL bSubscribed = [[SaucePreconnect sharedPreconnect] checkAccountOk:YES];  // ask if user is subscribed
@@ -86,12 +87,14 @@
                 [self promptForSubscribing:YES];   // prompt for subscribing to get more tabs
                 return;
             }
-        }
-        BOOL bMinutes = [[SaucePreconnect sharedPreconnect] checkAccountOk:NO];  // ask if user has minutes
-        if(!bMinutes)
-        {
-            [self promptForSubscribing:NO];   // prompt for subscribing to get more minutes
-            return;
+            /*
+            BOOL bMinutes = [[SaucePreconnect sharedPreconnect] checkAccountOk:NO];  // ask if user has minutes
+            if(!bMinutes)
+            {
+                [self promptForSubscribing:NO];   // prompt for subscribing to get more minutes
+                return;
+            }
+            */
         }
         
         self.optionsCtrlr = [[SessionController alloc] init];
