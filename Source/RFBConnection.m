@@ -290,6 +290,7 @@
 
     [handshaker release];
     handshaker = nil;
+    [self dummyRequest];
 }
 
 - (NSString*)password
@@ -397,6 +398,17 @@
     free(buf);
 }
 
+- (void)dummyRequest
+{
+    // force activity
+    if(session)
+    {
+        NSPoint pt = NSMakePoint(lastMouseX, lastMouseY);
+        [self mouseAt:pt buttons:0];
+        [NSTimer scheduledTimerWithTimeInterval:10 target: self selector: @selector(dummyRequest) userInfo: nil repeats: NO];
+    }
+}
+
 /* Request frame buffer update, possibly after a delay */
 - (void)queueUpdateRequest {
     if (_frameBufferUpdateSeconds > 0.0) {  
@@ -447,7 +459,7 @@
     [self writeBytes:(unsigned char*)&msg length:sz_rfbFramebufferUpdateRequestMsg];
 
     [_lastUpdateRequestDate release];
-    _lastUpdateRequestDate = [[NSDate alloc] init];
+    _lastUpdateRequestDate = [[NSDate alloc] init];    
 }
 
 /* The server has moved the cursor to pos in RFB coordinates */
@@ -498,10 +510,17 @@
 
     msg.type = rfbPointerEvent;
     msg.buttonMask = mask;
-    [self putPosition:thePoint inPointerMessage:&msg];
+    if (thePoint.x == lastMouseX && thePoint.y == lastMouseY)
+    {
+        msg.x = lastMouseX;
+        msg.y = lastMouseY;
+    }
+    else {
+        [self putPosition:thePoint inPointerMessage:&msg];
+    }
 
-    if (msg.x == lastMouseX && msg.y == lastMouseY)
-        return;
+//    if (msg.x == lastMouseX && msg.y == lastMouseY)
+//        return;
 
     if (lastBufferedIsMouseMovement)
         bufferLen -= sizeof(msg); // coalesce successive mouse movements
