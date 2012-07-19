@@ -93,7 +93,7 @@
 - (void)authenticationFailed:(NSString *)aReason;
 - (IBAction)dontReconnect:(id)sender;
 - (IBAction)forceReconnect:(id)sender;
-
+- (void)connectionProblem;
 - (IBAction)requestFrameBufferUpdate:(id)sender;
 
     //window delegate messages
