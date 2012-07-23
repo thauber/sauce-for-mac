@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F32B49815B8C88900C0CFBF /* Subscriber.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F32B49615B8C88900C0CFBF /* Subscriber.h */; };
+		0F32B49915B8C88900C0CFBF /* Subscriber.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F32B49715B8C88900C0CFBF /* Subscriber.m */; };
+		0F32B49C15B8C91000C0CFBF /* subscriber.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F32B49B15B8C91000C0CFBF /* subscriber.xib */; };
+		0F32B49E15B8CD8200C0CFBF /* scottie.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F32B49D15B8CD8200C0CFBF /* scottie.png */; };
 		0F392220158190350065C018 /* OptionBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F39221E158190350065C018 /* OptionBox.h */; };
 		0F392221158190350065C018 /* OptionBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F39221F158190350065C018 /* OptionBox.m */; };
 		0F3A18D115617D39007BAA78 /* tunnel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3A18D015617D39007BAA78 /* tunnel.xib */; };
@@ -65,6 +69,7 @@
 		0F3BBE1015AB5FDF006EDB74 /* TabNewMetal.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3BBDF315AB5FDF006EDB74 /* TabNewMetal.png */; };
 		0F3BBE1115AB5FDF006EDB74 /* TabNewMetalPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3BBDF415AB5FDF006EDB74 /* TabNewMetalPressed.png */; };
 		0F3BBE1215AB5FDF006EDB74 /* TabNewMetalRollover.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3BBDF515AB5FDF006EDB74 /* TabNewMetalRollover.png */; };
+		0F3D2AC015B9BB8E00C216BE /* ssl-auth.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3D2ABF15B9BB8E00C216BE /* ssl-auth.png */; };
 		0F3DC43D155D6F760069F7AB /* TunnelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F3DC43B155D6F760069F7AB /* TunnelController.h */; };
 		0F3DC43E155D6F760069F7AB /* TunnelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3DC43C155D6F760069F7AB /* TunnelController.m */; };
 		0F40B21B1598ED6400E6311E /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F40B2191598ED6400E6311E /* RegexKitLite.h */; };
@@ -370,6 +375,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0F32B49615B8C88900C0CFBF /* Subscriber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Subscriber.h; sourceTree = "<group>"; };
+		0F32B49715B8C88900C0CFBF /* Subscriber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Subscriber.m; sourceTree = "<group>"; };
+		0F32B49B15B8C91000C0CFBF /* subscriber.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = subscriber.xib; sourceTree = "<group>"; };
+		0F32B49D15B8CD8200C0CFBF /* scottie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = scottie.png; path = Resources/scottie.png; sourceTree = "<group>"; };
 		0F39221E158190350065C018 /* OptionBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionBox.h; sourceTree = "<group>"; };
 		0F39221F158190350065C018 /* OptionBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionBox.m; sourceTree = "<group>"; };
 		0F3A18D015617D39007BAA78 /* tunnel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = tunnel.xib; path = Resources/tunnel.xib; sourceTree = "<group>"; };
@@ -428,6 +437,7 @@
 		0F3BBDF315AB5FDF006EDB74 /* TabNewMetal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TabNewMetal.png; sourceTree = "<group>"; };
 		0F3BBDF415AB5FDF006EDB74 /* TabNewMetalPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TabNewMetalPressed.png; sourceTree = "<group>"; };
 		0F3BBDF515AB5FDF006EDB74 /* TabNewMetalRollover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TabNewMetalRollover.png; sourceTree = "<group>"; };
+		0F3D2ABF15B9BB8E00C216BE /* ssl-auth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ssl-auth.png"; path = "Resources/ssl-auth.png"; sourceTree = "<group>"; };
 		0F3DC43B155D6F760069F7AB /* TunnelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TunnelController.h; sourceTree = "<group>"; };
 		0F3DC43C155D6F760069F7AB /* TunnelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TunnelController.m; sourceTree = "<group>"; };
 		0F40B2191598ED6400E6311E /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
@@ -910,6 +920,8 @@
 				0F99617515267C6B002657A9 /* firefox_color.icns */,
 				0F99617615267C6C002657A9 /* ie_color.pdf */,
 				0F99617715267C6C002657A9 /* safari_color.icns */,
+				0F3D2ABF15B9BB8E00C216BE /* ssl-auth.png */,
+				0F32B49D15B8CD8200C0CFBF /* scottie.png */,
 				0F486EA6155CC2CF004502C4 /* Sauce-Connect.jar */,
 				0F99617815267C6C002657A9 /* windows_color.pdf */,
 				0F7BF6F01523FEF400F1A478 /* LoginController.xib */,
@@ -918,6 +930,7 @@
 				0F48D0C8157528950067B689 /* snapProgress.xib */,
 				0F3A18D015617D39007BAA78 /* tunnel.xib */,
 				0FD5668F1545B17B0007C94A /* BugInfo.xib */,
+				0F32B49B15B8C91000C0CFBF /* subscriber.xib */,
 				DAC8077D12FEC38400C4ADB6 /* ssh-helper.sh */,
 				DAFB492112944331008C6FC4 /* dsa_pub.pem */,
 				E291FAD4088161DA0061216E /* cursors.plist */,
@@ -1013,6 +1026,8 @@
 				0F463B36159BB82F0055B790 /* GradientView.m */,
 				0FDA1D1015A5648300ECBF59 /* HistoryViewController.h */,
 				0FDA1D1115A5648300ECBF59 /* HistoryViewController.m */,
+				0F32B49615B8C88900C0CFBF /* Subscriber.h */,
+				0F32B49715B8C88900C0CFBF /* Subscriber.m */,
 			);
 			name = "GUI Controller";
 			sourceTree = "<group>";
@@ -1432,6 +1447,7 @@
 				0F3BBDD315AB5EC7006EDB74 /* PSMTabDragWindowController.h in Headers */,
 				0F3BBDD515AB5EC7006EDB74 /* PSMTabStyle.h in Headers */,
 				0F3BBDD615AB5EC7006EDB74 /* PSMUnifiedTabStyle.h in Headers */,
+				0F32B49815B8C88900C0CFBF /* Subscriber.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1558,6 +1574,9 @@
 				0F3BBE1015AB5FDF006EDB74 /* TabNewMetal.png in Resources */,
 				0F3BBE1115AB5FDF006EDB74 /* TabNewMetalPressed.png in Resources */,
 				0F3BBE1215AB5FDF006EDB74 /* TabNewMetalRollover.png in Resources */,
+				0F32B49C15B8C91000C0CFBF /* subscriber.xib in Resources */,
+				0F32B49E15B8CD8200C0CFBF /* scottie.png in Resources */,
+				0F3D2AC015B9BB8E00C216BE /* ssl-auth.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1728,6 +1747,7 @@
 				0F3BBDD215AB5EC7006EDB74 /* PSMTabDragWindow.m in Sources */,
 				0F3BBDD415AB5EC7006EDB74 /* PSMTabDragWindowController.m in Sources */,
 				0F3BBDD715AB5EC7006EDB74 /* PSMUnifiedTabStyle.m in Sources */,
+				0F32B49915B8C88900C0CFBF /* Subscriber.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
