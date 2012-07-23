@@ -17,6 +17,7 @@
 #import "ScoutWindowController.h"
 #import "Session.h"
 #import "RFBView.h"
+#import "Subscriber.h"
 
 
 @implementation MyApp
@@ -103,7 +104,7 @@
         {
             NSString *chars = [anEvent charactersIgnoringModifiers];
             if((int)[chars characterAtIndex:0] == 27)
-                [[NSApp delegate] escapeOptionDlg];
+                [[NSApp delegate] escapeDialog];
         }
     }
 
@@ -119,6 +120,9 @@
     else
     if([[NSApp delegate] loginCtrlr])
         [[[NSApp delegate] loginCtrlr] terminateApp];
+    else
+    if([[NSApp delegate] subscriberCtrl])
+        [[[NSApp delegate] subscriberCtrl] quitSheet];
 
     // Now call the normal implementation
     NSBeginAlertSheet(@"Quit Scout", @"Ok", @"Cancel", nil, [[ScoutWindowController sharedScout] window], self, @selector(quitDidDismiss:returnCode:contextInfo:),nil, nil, @"Do you really want to quit Scout?");    
