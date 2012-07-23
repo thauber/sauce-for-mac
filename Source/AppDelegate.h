@@ -13,6 +13,7 @@
 @class LoginController;
 @class TunnelController;
 @class BugInfoController;
+@class Subscriber;
 
 @interface AppDelegate : NSObject
 {
@@ -23,6 +24,7 @@
     LoginController *loginCtrlr;
     TunnelController *tunnelCtrlr;
     BugInfoController *bugCtrlr;
+    Subscriber *subscriberCtrl;
     NSMenuItem *tunnelMenuItem;
     BOOL noTunnel;      // set true after user says no to prompt for tunnel
 }
@@ -31,6 +33,7 @@
 @property (retain)LoginController *loginCtrlr;
 @property (retain)TunnelController *tunnelCtrlr;
 @property (retain)BugInfoController *bugCtrlr;
+@property (retain)Subscriber *subscriberCtrl;
 @property  (assign)BOOL noTunnel;
 
 - (IBAction)bugsAccount:(id)sender;
@@ -44,6 +47,7 @@
 - (IBAction)showOptionsDlg:(id)sender;
 - (void)showOptionsIfNoTabs;
 - (IBAction)showLoginDlg:(id)sender;
+- (IBAction)showSubscribeDlg:(id)sender;
 
 - (IBAction)showPreferences: (id)sender;
 - (IBAction)showNewConnectionDialog:(id)sender;
@@ -53,7 +57,7 @@
 
 - (void)connectionSucceeded;
 - (void)cancelOptionsConnect:(id)sender;
-- (void)escapeOptionDlg;
+- (void)escapeDialog;
 - (NSMenuItem *)getFullScreenMenuItem;
 
 - (void)promptForSubscribing:(BOOL)bCause;        // 0=needs more minutes; 1=to get more tabs

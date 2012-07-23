@@ -17,6 +17,7 @@
 #import "TunnelController.h"
 #import "BugInfoController.h"
 #import "ScoutWindowController.h"
+#import "Subscriber.h"
 
 
 @implementation AppDelegate
@@ -27,6 +28,7 @@
 @synthesize loginCtrlr;
 @synthesize tunnelCtrlr;
 @synthesize bugCtrlr;
+@synthesize subscriberCtrl;
 
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification
@@ -38,7 +40,6 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [[ScoutWindowController sharedScout] showWindow:nil];
-    
     
     // check for username/key in prefs
     NSUserDefaults* user = [NSUserDefaults standardUserDefaults];
@@ -71,6 +72,7 @@
         
 }
 
+ 
 - (IBAction)showOptionsDlg:(id)sender 
 {
     if(loginCtrlr)
@@ -167,6 +169,18 @@
     self.loginCtrlr = [[LoginController alloc] init];
 }
 
+- (IBAction)showSubscribeDlg:(id)sender
+{
+    if(self.optionsCtrlr)       // close the options sheet
+    {
+        [NSApp endSheet:[optionsCtrlr panel]];
+        [[optionsCtrlr panel] orderOut:nil];
+        self.optionsCtrlr = nil;    
+    }
+        
+    [self promptForSubscribing:0];
+}
+
 - (IBAction)showPreferences: (id)sender
 {
 	[[PrefController sharedController] showWindow];
@@ -232,7 +246,7 @@
     [self toggleTunnelDisplay];
 }
 
-- (void)escapeOptionDlg
+- (void)escapeDialog
 {
     if(optionsCtrlr)
     {
@@ -243,6 +257,11 @@
             [optionsCtrlr quitSheet];
             self.optionsCtrlr = nil;
         }
+    }
+    else if(subscriberCtrl)
+    {
+        [subscriberCtrl quitSheet];
+        self.subscriberCtrl = nil;
     }
 }
 
@@ -274,6 +293,9 @@
 
 - (void)promptForSubscribing:(BOOL)bCause        // 0=needs more minutes; 1=to get more tabs
 {
+    subscriberCtrl = [[[Subscriber alloc] init] retain];
+
+/*
     NSString *header = NSLocalizedString( @"Should Subscribe", nil );
     NSString *okayStr = NSLocalizedString( @"Subscribe", nil );
     NSString *noStr = NSLocalizedString( @"Continue Scouting", nil );
@@ -284,6 +306,7 @@
         subscribeMsg = @"You need to subscribe to have enough minutes for more sessions";
     
     NSBeginAlertSheet(header, okayStr, noStr, nil, [[ScoutWindowController sharedScout] window], self, nil, @selector(subscribeDidDismiss:returnCode:contextInfo:), nil, subscribeMsg);
+*/
     
 }
 
