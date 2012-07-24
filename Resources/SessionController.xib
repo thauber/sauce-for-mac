@@ -43,7 +43,7 @@
 			<object class="NSWindowTemplate" id="698170591">
 				<int key="NSWindowStyleMask">1</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{139, 81}, {606, 600}}</string>
+				<string key="NSWindowRect">{{139, 81}, {586, 600}}</string>
 				<int key="NSWTFlags">1685586944</int>
 				<string key="NSWindowTitle">Scout Options</string>
 				<string key="NSWindowClass">NSPanel</string>
@@ -62,7 +62,7 @@
 								<object class="NSButton" id="876828801">
 									<reference key="NSNextResponder" ref="277014095"/>
 									<int key="NSvFlags">289</int>
-									<string key="NSFrame">{{453, 30}, {114, 32}}</string>
+									<string key="NSFrame">{{487, 30}, {114, 32}}</string>
 									<reference key="NSSuperview" ref="277014095"/>
 									<reference key="NSWindow"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -141,7 +141,7 @@
 										<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
 										<string>NeXT TIFF v4.0 pasteboard type</string>
 									</set>
-									<string key="NSFrame">{{60, 496}, {105, 71}}</string>
+									<string key="NSFrame">{{24, 494}, {105, 71}}</string>
 									<reference key="NSSuperview" ref="277014095"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="911330322"/>
@@ -165,7 +165,7 @@
 								<object class="NSTextField" id="911330322">
 									<reference key="NSNextResponder" ref="277014095"/>
 									<int key="NSvFlags">268</int>
-									<string key="NSFrame">{{167, 544}, {218, 23}}</string>
+									<string key="NSFrame">{{134, 521}, {152, 23}}</string>
 									<reference key="NSSuperview" ref="277014095"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="939498792"/>
@@ -259,7 +259,7 @@
 								<object class="NSTextField" id="939498792">
 									<reference key="NSNextResponder" ref="277014095"/>
 									<int key="NSvFlags">268</int>
-									<string key="NSFrame">{{167, 491}, {301, 39}}</string>
+									<string key="NSFrame">{{134, 476}, {240, 39}}</string>
 									<reference key="NSSuperview" ref="277014095"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="476288794"/>
@@ -302,7 +302,8 @@
 									<int key="NSMaxNumberOfVisibleColumns">2</int>
 									<int key="NSColumnResizingType">2</int>
 									<double key="NSPreferedColumnWidth">275</double>
-									<int key="NSBrFlags">1275330562</int>
+									<bool key="NSAllowsTypeSelect">YES</bool>
+									<int key="NSBrFlags">1275346946</int>
 									<double key="NSBrowserRowHeight">17</double>
 								</object>
 								<object class="NSTextField" id="662472234">
@@ -328,7 +329,7 @@
 								<object class="NSTextField" id="267421706">
 									<reference key="NSNextResponder" ref="277014095"/>
 									<int key="NSvFlags">268</int>
-									<string key="NSFrame">{{301, 395}, {73, 17}}</string>
+									<string key="NSFrame">{{324, 395}, {73, 17}}</string>
 									<reference key="NSSuperview" ref="277014095"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="274426606"/>
@@ -346,13 +347,13 @@
 									</object>
 								</object>
 							</array>
-							<string key="NSFrameSize">{606, 600}</string>
+							<string key="NSFrame">{{-20, 0}, {606, 600}}</string>
 							<reference key="NSSuperview" ref="259890589"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="459495990"/>
 						</object>
 					</array>
-					<string key="NSFrameSize">{606, 600}</string>
+					<string key="NSFrameSize">{586, 600}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="277014095"/>
@@ -501,7 +502,6 @@
 						<int key="objectID">1021</int>
 						<reference key="object" ref="277014095"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="459495990"/>
 							<reference ref="476288794"/>
 							<reference ref="824176155"/>
 							<reference ref="939498792"/>
@@ -512,6 +512,7 @@
 							<reference ref="274426606"/>
 							<reference ref="662472234"/>
 							<reference ref="267421706"/>
+							<reference ref="459495990"/>
 						</array>
 						<reference key="parent" ref="259890589"/>
 					</object>
