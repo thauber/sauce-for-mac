@@ -63,7 +63,7 @@
     else if ([aNotification object] == cardNumber)
     {
         // card# has changed
-        if(len>19)          // can have 16 digits and 3 dashes
+        if(len>16)          // can have 16 digits
         {
             NSBeep();
             ss = [ss substringToIndex:19];
