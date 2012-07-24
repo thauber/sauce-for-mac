@@ -73,7 +73,7 @@
         for(NSInteger i=0;i<len;i++)
         {
             NSInteger vv = [ss characterAtIndex:i];
-            if((vv<48 || vv>57) && vv!=45)      // only digits and dashes allowed
+            if(vv<'0' || vv>'9')      // only digits allowed
             {
                 NSBeep();
                 ss = [ss substringToIndex:i];
@@ -92,6 +92,7 @@
 
 - (IBAction)doSubscribe:(id)sender
 {
+    [self quitSheet];
     NSLog(@"do subscribe");
 }
 
