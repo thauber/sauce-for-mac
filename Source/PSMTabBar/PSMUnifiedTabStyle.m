@@ -296,13 +296,16 @@
 	NSToolbar *toolbar = [[[cell controlView] window] toolbar];
 	BOOL showsBaselineSeparator = (toolbar && [toolbar respondsToSelector:@selector(showsBaselineSeparator)] && [toolbar showsBaselineSeparator]);
 	if(!showsBaselineSeparator) {
-		cellFrame.origin.y += 1.0;
-		cellFrame.size.height -= 1.0;
+//		cellFrame.origin.y += 1.0;
+//		cellFrame.size.height -= 1.0;
+		cellFrame.origin.y += 3.0;
+        cellFrame.size.height -= 4.0;
 	}
 
 	NSColor * lineColor = nil;
 	NSBezierPath* bezier = [NSBezierPath bezierPath];
-	lineColor = [NSColor colorWithCalibratedWhite:0.576 alpha:1.0];
+//	lineColor = [NSColor colorWithCalibratedWhite:0.576 alpha:1.0];
+	lineColor = [NSColor colorWithCalibratedWhite:0.4 alpha:1.0];
 
 	if(!showsBaselineSeparator || [cell state] == NSOnState) {
 		// selected tab
@@ -311,7 +314,7 @@
 		// frame
 		CGFloat radius = MIN(6.0, 0.5f * MIN(NSWidth(aRect), NSHeight(aRect)));
 		NSRect rect = NSInsetRect(aRect, radius, radius);
-
+/*
 		[bezier appendBezierPathWithArcWithCenter:NSMakePoint(NSMinX(rect), NSMinY(rect)) radius:radius startAngle:180.0 endAngle:270.0];
 
 		[bezier appendBezierPathWithArcWithCenter:NSMakePoint(NSMaxX(rect), NSMinY(rect)) radius:radius startAngle:270.0 endAngle:360.0];
@@ -321,11 +324,22 @@
 
 		cornerPoint = NSMakePoint(NSMinX(aRect), NSMaxY(aRect));
 		[bezier appendBezierPathWithPoints:&cornerPoint count:1];
+*/
+		[bezier appendBezierPathWithArcWithCenter:NSMakePoint(NSMinX(rect), NSMaxY(rect)) radius:radius startAngle:180.0 endAngle:90.0 clockwise:YES];
+        
+		[bezier appendBezierPathWithArcWithCenter:NSMakePoint(NSMaxX(rect), NSMaxY(rect)) radius:radius startAngle:90.0 endAngle:360.0 clockwise:YES];
+        
+		NSPoint cornerPoint = NSMakePoint(NSMaxX(aRect), NSMinY(aRect));
+		[bezier appendBezierPathWithPoints:&cornerPoint count:1];
+        
+		cornerPoint = NSMakePoint(NSMinX(aRect), NSMinY(aRect));
+		[bezier appendBezierPathWithPoints:&cornerPoint count:1];
 
 		[bezier closePath];
 
 		//[[NSColor windowBackgroundColor] set];
 		//[bezier fill];
+/*
 		if([NSApp isActive]) {
 			if([cell state] == NSOnState) {
 				[bezier linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.99 alpha:1.0]
@@ -338,9 +352,30 @@
 				 endColor:[NSColor colorWithCalibratedWhite:0.843 alpha:1.0]];
 			}
 		}
+ */
+		if([NSApp isActive]) {
+			if([cell state] == NSOnState) {
+				[bezier linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.63 alpha:1.0]
+                                                endColor:[NSColor colorWithCalibratedWhite:0.75 alpha:1.0]];
+			} else if([cell isHighlighted]) {
+				[bezier linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.55 alpha:1.0]
+                                                endColor:[NSColor colorWithCalibratedWhite:0.65 alpha:1.0]];
+			} else {
+				[bezier linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.50 alpha:1.0]
+                                                endColor:[NSColor colorWithCalibratedWhite:0.60 alpha:1.0]];
+			}
+		}
 
 		[lineColor set];
 		[bezier stroke];
+        
+        if([cell state] == NSOnState)        // [rda] extra rect on top to blend in with toolbar
+        {
+           	NSBezierPath *path = [NSBezierPath bezierPathWithRect:NSMakeRect(cellFrame.origin.x+.5, cellFrame.origin.y-3.0, NSWidth(cellFrame)-.1, 3.0)];
+            [[NSColor colorWithCalibratedWhite:0.63 alpha:1.0] set];
+            [path fill]; 
+        }
+        
 	}   else{
 		// unselected tab
 		NSRect aRect = NSMakeRect(cellFrame.origin.x, cellFrame.origin.y, cellFrame.size.width, cellFrame.size.height);
@@ -489,16 +524,25 @@
 	gradientRect.size.height -= 1.0;
 
 	NSBezierPath *path = [NSBezierPath bezierPathWithRect:gradientRect];
-	[path linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.835 alpha:1.0]
-	 endColor:[NSColor colorWithCalibratedWhite:0.843 alpha:1.0]];
-	[[NSColor colorWithCalibratedWhite:0.576 alpha:1.0] set];
-	[NSBezierPath strokeLineFromPoint:NSMakePoint(rect.origin.x, NSMaxY(rect) - 0.5)
-	 toPoint:NSMakePoint(NSMaxX(rect), NSMaxY(rect) - 0.5)];
+//	[path linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.835 alpha:1.0]
+//	 endColor:[NSColor colorWithCalibratedWhite:0.843 alpha:1.0]];
+	[path linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.5 alpha:1.0]
+                                  endColor:[NSColor colorWithCalibratedWhite:0.6 alpha:1.0]];
 
-	if(![[[tabBar tabView] window] isKeyWindow]) {
-		[[NSColor windowBackgroundColor] set];
-		NSRectFill(gradientRect);
-	}
+//	[[NSColor colorWithCalibratedWhite:0.576 alpha:1.0] set];
+//	[NSBezierPath strokeLineFromPoint:NSMakePoint(rect.origin.x, NSMaxY(rect) - 0.5)
+//	 toPoint:NSMakePoint(NSMaxX(rect), NSMaxY(rect) - 0.5)];
+    //	lineColor = [NSColor colorWithCalibratedWhite:0.576 alpha:1.0];
+    [[NSColor colorWithCalibratedWhite:0.1 alpha:1.0] set];	
+    [NSBezierPath setDefaultLineWidth:0];    
+    [NSBezierPath strokeLineFromPoint:NSMakePoint(rect.origin.x, NSMinY(rect) + 3.5)
+                              toPoint:NSMakePoint(NSMaxX(rect), NSMinY(rect) + 3.5)];
+
+
+//	if(![[[tabBar tabView] window] isKeyWindow]) {
+//		[[NSColor windowBackgroundColor] set];
+//		NSRectFill(gradientRect);
+//	}
 }
 
 - (void)drawTabBar:(PSMTabBarControl *)bar inRect:(NSRect)rect {
