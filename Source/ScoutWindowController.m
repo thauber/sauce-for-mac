@@ -264,7 +264,7 @@ NSString *kHistoryTabLabel = @"Session History";
     NSString *bvers = [sdict objectForKey:@"browserVersion"];
     // what attributes?
     NSDictionary *udict = [NSDictionary dictionaryWithObjectsAndKeys:nil];
-    NSString *osbrv = [NSString stringWithFormat:@"%C%C%@/%@%@", 0x232A, 0x232A, os, browser, bvers];
+    NSString *osbrv = [NSString stringWithFormat:@"%C %@/%@%@", 0x00bb, os, browser, bvers];
     NSSize sz = [osbrv sizeWithAttributes:udict];
     float urlwid = 300 - sz.width;
     NSString *truncurl = url;
