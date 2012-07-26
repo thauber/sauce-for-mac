@@ -10,6 +10,7 @@
 #import "ScoutWindowController.h"
 
 @implementation Subscriber
+@synthesize nextMonthLbl;
 @synthesize panel;
 @synthesize firstName;
 @synthesize lastName;
@@ -28,6 +29,17 @@
     if(self)
     {
         [NSBundle loadNibNamed:@"subscriber"  owner:self];
+        
+        // make string for next month
+        NSDateComponents *components = [[[NSDateComponents alloc] init] autorelease];
+        components.month = 7;
+        NSDate *oneMonthFromNow = [[NSCalendar currentCalendar] dateByAddingComponents:components toDate:[NSDate date] options:0];
+        NSDateFormatter *df = [[[NSDateFormatter alloc] init] autorelease];
+        [df setDateFormat:@"MMMM"]; // Full month
+        NSString *monthStr = [df stringFromDate:oneMonthFromNow];
+        NSString *msg = [NSString stringWithFormat:@"Wait until %@",monthStr];
+        [nextMonthLbl setStringValue:msg];
+        
         [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];
     }
     return self;
