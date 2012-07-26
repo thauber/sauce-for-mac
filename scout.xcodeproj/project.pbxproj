@@ -13,6 +13,9 @@
 		0F32B49E15B8CD8200C0CFBF /* scottie.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F32B49D15B8CD8200C0CFBF /* scottie.png */; };
 		0F392220158190350065C018 /* OptionBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F39221E158190350065C018 /* OptionBox.h */; };
 		0F392221158190350065C018 /* OptionBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F39221F158190350065C018 /* OptionBox.m */; };
+		0F39C51815C0C5B80023E7B8 /* scout_binos_sm.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F39C51715C0C5B70023E7B8 /* scout_binos_sm.pdf */; };
+		0F39C51C15C0C63F0023E7B8 /* readout_left.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F39C51A15C0C63F0023E7B8 /* readout_left.pdf */; };
+		0F39C51D15C0C63F0023E7B8 /* readout_right cap.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F39C51B15C0C63F0023E7B8 /* readout_right cap.pdf */; };
 		0F3A18D115617D39007BAA78 /* tunnel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3A18D015617D39007BAA78 /* tunnel.xib */; };
 		0F3BBDB515AB5EC7006EDB74 /* NSBezierPath_AMShading.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F3BBD9215AB5EC7006EDB74 /* NSBezierPath_AMShading.h */; };
 		0F3BBDB615AB5EC7006EDB74 /* NSBezierPath_AMShading.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3BBD9315AB5EC7006EDB74 /* NSBezierPath_AMShading.m */; };
@@ -381,6 +384,9 @@
 		0F32B49D15B8CD8200C0CFBF /* scottie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = scottie.png; path = Resources/scottie.png; sourceTree = "<group>"; };
 		0F39221E158190350065C018 /* OptionBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionBox.h; sourceTree = "<group>"; };
 		0F39221F158190350065C018 /* OptionBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionBox.m; sourceTree = "<group>"; };
+		0F39C51715C0C5B70023E7B8 /* scout_binos_sm.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = scout_binos_sm.pdf; path = Resources/scout_binos_sm.pdf; sourceTree = "<group>"; };
+		0F39C51A15C0C63F0023E7B8 /* readout_left.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = readout_left.pdf; path = Resources/readout_left.pdf; sourceTree = "<group>"; };
+		0F39C51B15C0C63F0023E7B8 /* readout_right cap.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "readout_right cap.pdf"; path = "Resources/readout_right cap.pdf"; sourceTree = "<group>"; };
 		0F3A18D015617D39007BAA78 /* tunnel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = tunnel.xib; path = Resources/tunnel.xib; sourceTree = "<group>"; };
 		0F3BBD9215AB5EC7006EDB74 /* NSBezierPath_AMShading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBezierPath_AMShading.h; sourceTree = "<group>"; };
 		0F3BBD9315AB5EC7006EDB74 /* NSBezierPath_AMShading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBezierPath_AMShading.m; sourceTree = "<group>"; };
@@ -922,6 +928,9 @@
 				0F99617715267C6C002657A9 /* safari_color.icns */,
 				0F3D2ABF15B9BB8E00C216BE /* ssl-auth.png */,
 				0F32B49D15B8CD8200C0CFBF /* scottie.png */,
+				0F39C51715C0C5B70023E7B8 /* scout_binos_sm.pdf */,
+				0F39C51A15C0C63F0023E7B8 /* readout_left.pdf */,
+				0F39C51B15C0C63F0023E7B8 /* readout_right cap.pdf */,
 				0F486EA6155CC2CF004502C4 /* Sauce-Connect.jar */,
 				0F99617815267C6C002657A9 /* windows_color.pdf */,
 				0F7BF6F01523FEF400F1A478 /* LoginController.xib */,
@@ -1577,6 +1586,9 @@
 				0F32B49C15B8C91000C0CFBF /* subscriber.xib in Resources */,
 				0F32B49E15B8CD8200C0CFBF /* scottie.png in Resources */,
 				0F3D2AC015B9BB8E00C216BE /* ssl-auth.png in Resources */,
+				0F39C51815C0C5B80023E7B8 /* scout_binos_sm.pdf in Resources */,
+				0F39C51C15C0C63F0023E7B8 /* readout_left.pdf in Resources */,
+				0F39C51D15C0C63F0023E7B8 /* readout_right cap.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
