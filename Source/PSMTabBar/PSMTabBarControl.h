@@ -15,7 +15,8 @@
 #define PSMTabDragDidEndNotification		@ "PSMTabDragDidEndNotification"
 #define PSMTabDragDidBeginNotification	@ "PSMTabDragDidBeginNotification"
 
-#define kPSMTabBarControlHeight			22
+//#define kPSMTabBarControlHeight			22
+#define kPSMTabBarControlHeight			28
 // internal cell border
 #define MARGIN_X								6
 #define MARGIN_Y								3

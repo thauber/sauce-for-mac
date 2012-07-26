@@ -299,7 +299,7 @@
 //		cellFrame.origin.y += 1.0;
 //		cellFrame.size.height -= 1.0;
 		cellFrame.origin.y += 3.0;
-        cellFrame.size.height -= 4.0;
+        cellFrame.size.height -= 8.0;
 	}
 
 	NSColor * lineColor = nil;
@@ -524,15 +524,9 @@
 	gradientRect.size.height -= 1.0;
 
 	NSBezierPath *path = [NSBezierPath bezierPathWithRect:gradientRect];
-//	[path linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.835 alpha:1.0]
-//	 endColor:[NSColor colorWithCalibratedWhite:0.843 alpha:1.0]];
 	[path linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.5 alpha:1.0]
                                   endColor:[NSColor colorWithCalibratedWhite:0.6 alpha:1.0]];
 
-//	[[NSColor colorWithCalibratedWhite:0.576 alpha:1.0] set];
-//	[NSBezierPath strokeLineFromPoint:NSMakePoint(rect.origin.x, NSMaxY(rect) - 0.5)
-//	 toPoint:NSMakePoint(NSMaxX(rect), NSMaxY(rect) - 0.5)];
-    //	lineColor = [NSColor colorWithCalibratedWhite:0.576 alpha:1.0];
     [[NSColor colorWithCalibratedWhite:0.1 alpha:1.0] set];	
     [NSBezierPath setDefaultLineWidth:0];    
     [NSBezierPath strokeLineFromPoint:NSMakePoint(rect.origin.x, NSMinY(rect) + 3.5)
@@ -552,7 +546,7 @@
 	// no tab view == not connected
 	if(![bar tabView]) {
 		NSRect labelRect = rect;
-		labelRect.size.height -= 4.0;
+		labelRect.size.height -= 10.0;
 		labelRect.origin.y += 4.0;
 		NSMutableAttributedString *attrStr;
 		NSString *contents = @"PSMTabBarControl";
