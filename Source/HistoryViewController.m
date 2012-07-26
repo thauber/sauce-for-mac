@@ -10,8 +10,10 @@
 #import "SnapProgress.h"
 #import "HistoryViewController.h"
 #import "SaucePreconnect.h"
+#import "AppDelegate.h"
 
 @implementation HistoryViewController
+@synthesize popbtn;
 
 - (id)init
 {
@@ -117,28 +119,31 @@
 
 - (void)tableView:(NSTableView *)aTableView setObjectValue:(id)anObject forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
+    NSString *colId = [aTableColumn identifier];
+    if ([colId isEqualToString:@"bugs"])                // index=3 -> bugs;
+        [self setObjectValue:aTableView newValue:anObject row:rowIndex];
+}
+
+- (void)setObjectValue:(NSTableView *)aTableView newValue:(id)anObject row:(NSInteger)rowIndex
+{
     NSNumber *rindex = [NSNumber numberWithInteger:rowIndex];
     NSView *view = [indxDict objectForKey:rindex];      // get view given row
     NSArray *rr = [rowDict objectForKey:[NSNumber numberWithInteger:(NSInteger)view]];  // get row info
-    NSString *colId = [aTableColumn identifier];
     NSMutableArray *barr = [rr objectAtIndex:3];        // array of bug urls
-    if ([colId isEqualToString:@"bugs"])                // index=3 -> bugs;
+    [barr replaceObjectAtIndex:0 withObject:anObject];      // put index of selected item at index=0
+    NSInteger popindx = [anObject longValue];               // selected item
+    if(popindx > 0)       // popup index zero is the popup title
     {
-        [barr replaceObjectAtIndex:0 withObject:anObject];      // put index of selected item at index=0
-        NSInteger popindx = [anObject longValue];               // selected item
-        if(popindx > 0)       // popup index zero is the popup title
-        {
-            SnapProgress *sp = [[SnapProgress alloc] init];
-            [[ScoutWindowController sharedScout] setSnapProgress:sp];
-            NSString *surl = [barr objectAtIndex: popindx+1];
-            BOOL isActive =  [[rr objectAtIndex:0] isEqualToString:@"A"];
-            if(isActive)
-                [sp setOkEnableView:NO];         // snapshot isn't available while job is active
-            else    // job is not active, so check if snapshot is available
-                [sp setOkEnableView:[self isAvailableSnap:surl]];
-            [sp setServerURL:surl];                 // give snapshot sheet the url
-        }
-    }
+        SnapProgress *sp = [[SnapProgress alloc] init];
+        [[ScoutWindowController sharedScout] setSnapProgress:sp];
+        NSString *surl = [barr objectAtIndex: popindx+1];
+        BOOL isActive =  [[rr objectAtIndex:0] isEqualToString:@"A"];
+        if(isActive)
+            [sp setOkEnableView:NO];         // snapshot isn't available while job is active
+        else    // job is not active, so check if snapshot is available
+            [sp setOkEnableView:[self isAvailableSnap:surl]];
+        [sp setServerURL:surl];                 // give snapshot sheet the url        
+    }    
 }
 
 
@@ -169,5 +174,29 @@
     return NO;
 }
 
+
+- (IBAction)doPopSelect:(id)sender 
+{
+    return; // not able to cause reselect of previous selected popup item
+// want to catch a re-selection of an item so we can show the snapprogress dialog again
+//  no good - can't get index of item that is being selected, here
+    NSTableView *tv = sender;
+    NSInteger row = [tv clickedRow];
+    NSIndexSet *rind = [NSIndexSet indexSetWithIndex:row];
+    NSIndexSet *cind = [NSIndexSet indexSetWithIndex:3];
+    [tv reloadDataForRowIndexes:rind columnIndexes:cind];
+//    NSPopUpButtonCell *pop = [tcol dataCellForRow:row];
+//    NSInteger sel = [pop indexOfSelectedItem];
+//    NSLog(@"select:%ld",sel);
+//    [self setObjectValue:sender newValue:[NSNumber numberWithInteger:0] row:[(NSTableView*)sender clickedRow]];
+
+
+}
+
+- (IBAction)doNewSession:(id)sender
+{
+    [[NSApp delegate] showOptionsDlg:self];
+    
+}
 
 @end
