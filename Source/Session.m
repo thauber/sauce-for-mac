@@ -307,19 +307,19 @@ enum {
     NSSize	maxviewsize;
 
     maxviewsize = _maxSize;
-    maxviewsize.height += 88;
+    maxviewsize.height += 106;
     
     horizontalScroll = verticalScroll = NO;
     if(aSize.width<maxviewsize.width)
     {
         horizontalScroll = YES;
-        maxviewsize.height += 15;
+        maxviewsize.height += 18;
     }
 
     if(aSize.height<maxviewsize.height)
     {
         verticalScroll = YES;            
-        maxviewsize.width += 15;
+        maxviewsize.width += 18;
     }
     
     winframe = [window frame];
@@ -339,11 +339,11 @@ enum {
     
     horizontalScroll = verticalScroll = NO;
 	screenRect = [[NSScreen mainScreen] visibleFrame];
-    if(screenRect.size.height == 874)       // cut off 4 pixies instead of having scrollbars
-        screenRect.size.height +=4; // kludge b/c we need a few more pixels than the screen gives us
+//    if(screenRect.size.height == 874)   // cut off 4 pixies instead of having scrollbars
+//        screenRect.size.height +=4;     // kludge b/c we need a few more pixels than the screen gives us
     wf.origin.x = wf.origin.y = 0;
     wf.size = _maxSize;
-    wf.size.height += 88;       // allow for statusbar(26) and tabbar(22) + toolbar(40)
+    wf.size.height += 106;       // allow for statusbar(26) and tabbar(28) + toolbar(43)
     
     wf = [NSWindow frameRectForContentRect:wf styleMask:[window styleMask]];
 
@@ -356,7 +356,7 @@ enum {
     {
         verticalScroll = YES;
         wf.size.height = NSHeight(screenRect);
-        wf.size.width += 15;    // add scroller size to width
+        wf.size.width += 18;    // add scroller size to width
     }
     
 	// According to the Human Interface Guidelines, new windows should be "visually centered"
