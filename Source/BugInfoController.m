@@ -17,12 +17,12 @@
 @synthesize description;
 @synthesize title;
 
--(id)init:(BOOL)snap
+-(id)init
 {
     if (self = [super init]) 
     {
         [NSBundle loadNibNamed:@"BugInfo" owner:self];
-        bSnap = snap;
+        bSnap = YES;
     }
     return self;
 }

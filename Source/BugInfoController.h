@@ -23,7 +23,7 @@
 @property (assign) IBOutlet NSTextField *description;
 @property (assign) IBOutlet NSTextField *title;
 
-- (id)init:(BOOL)snap;
+- (id)init;
 - (void)runSheetOnWindow:(NSWindow *)window;
 
 @end
