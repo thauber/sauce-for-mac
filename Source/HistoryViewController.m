@@ -142,7 +142,8 @@
             [sp setOkEnableView:NO];         // snapshot isn't available while job is active
         else    // job is not active, so check if snapshot is available
             [sp setOkEnableView:[self isAvailableSnap:surl]];
-        [sp setServerURL:surl];                 // give snapshot sheet the url        
+        [sp setServerURL:surl];                 // give snapshot sheet the url
+        [sp release];
     }    
 }
 
