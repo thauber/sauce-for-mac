@@ -105,7 +105,6 @@ static SaucePreconnect* _sharedPreconnect = nil;
             NSFileHandle *fhand = [fpipe fileHandleForReading];
             
             NSData *data = [fhand readDataToEndOfFile];	
-            [ftask release];
             NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             self.liveId = [self jsonVal:jsonString key:@"live-id"];
             [jsonString release];
@@ -410,9 +409,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 NSFileHandle *fhand = [fpipe fileHandleForReading];
                 
                 NSData *data = [fhand readDataToEndOfFile];		 
-                NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                NSString *jsonString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
                 NSString *status = [self jsonVal:jsonString key:@"status"];
-                [jsonString release];
                 if([status isEqualToString:@"in progress"])
                 {
                     id ssn = [sdict objectForKey:@"connection"];
@@ -470,7 +468,6 @@ static SaucePreconnect* _sharedPreconnect = nil;
         NSFileHandle *fhand = [fpipe fileHandleForReading];
         
         NSData *data = [fhand readDataToEndOfFile];		 
-        [ftask release];
         NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSRange range = [jsonString rangeOfString:@"error"];
         [jsonString release];
@@ -582,7 +579,6 @@ static SaucePreconnect* _sharedPreconnect = nil;
             NSFileHandle *fhand = [fpipe fileHandleForReading];
             
             NSData *data = [fhand readDataToEndOfFile];		 
-            [ftask release];
             NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             NSString *snapId = [self jsonVal:jsonString key:@"c"];
             [jsonString release];
