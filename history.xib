@@ -45,7 +45,7 @@
 			</object>
 			<object class="NSCustomView" id="1005">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">288</int>
+				<int key="NSvFlags">306</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSButton" id="283465232">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -77,7 +77,7 @@
 					</object>
 					<object class="NSScrollView" id="824694601">
 						<reference key="NSNextResponder" ref="1005"/>
-						<int key="NSvFlags">272</int>
+						<int key="NSvFlags">274</int>
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="NSClipView" id="205214676">
 								<reference key="NSNextResponder" ref="824694601"/>
@@ -102,10 +102,12 @@
 											<string key="NSReuseIdentifierKey">_NS:16</string>
 											<reference key="NSTableView" ref="1050960823"/>
 										</object>
-										<object class="_NSCornerView" key="NSCornerView">
-											<nil key="NSNextResponder"/>
+										<object class="_NSCornerView" key="NSCornerView" id="950498357">
+											<reference key="NSNextResponder" ref="824694601"/>
 											<int key="NSvFlags">-2147483392</int>
 											<string key="NSFrame">{{224, 0}, {16, 17}}</string>
+											<reference key="NSSuperview" ref="824694601"/>
+											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="205214676"/>
 											<string key="NSReuseIdentifierKey">_NS:19</string>
 										</object>
@@ -410,6 +412,7 @@
 								<reference key="NSBGColor" ref="1051575095"/>
 								<int key="NScvFlags">4</int>
 							</object>
+							<reference ref="950498357"/>
 						</array>
 						<string key="NSFrameSize">{1010, 292}</string>
 						<reference key="NSSuperview" ref="1005"/>
@@ -421,6 +424,7 @@
 						<reference key="NSHScroller" ref="609370286"/>
 						<reference key="NSContentView" ref="205214676"/>
 						<reference key="NSHeaderClipView" ref="835044840"/>
+						<reference key="NSCornerView" ref="950498357"/>
 						<bytes key="NSScrollAmts">QSAAAEEgAABBmAAAQZgAAA</bytes>
 					</object>
 					<object class="NSTextField" id="933561126">
