@@ -87,7 +87,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if(cancelled)
             break;
 
-        NSTask *ftask = [[NSTask alloc] init];
+        NSTask *ftask = [[[NSTask alloc] init] autorelease];
         NSPipe *fpipe = [NSPipe pipe];
         [ftask setStandardOutput:fpipe];
         [ftask setLaunchPath:@"/bin/bash"];
@@ -96,7 +96,6 @@ static SaucePreconnect* _sharedPreconnect = nil;
         [ftask waitUntilExit];
         if([ftask terminationStatus])
         {
-            [ftask release];
             NSLog(@"failed NSTask");
             self.errStr = @"Failed to send user options to server";
             break;;
@@ -109,6 +108,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
             [ftask release];
             NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             self.liveId = [self jsonVal:jsonString key:@"live-id"];
+            [jsonString release];
             if(self.liveId.length)
                 break;
             else 
@@ -210,7 +210,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     {
         if(cancelled)
             break;
-        NSTask *ftask = [[NSTask alloc] init];
+        NSTask *ftask = [[[NSTask alloc] init] autorelease];
         NSPipe *fpipe = [NSPipe pipe];
         [ftask setStandardOutput:fpipe];
         [ftask setLaunchPath:@"/bin/bash"];
@@ -231,10 +231,10 @@ static SaucePreconnect* _sharedPreconnect = nil;
             NSFileHandle *fhand = [fpipe fileHandleForReading];
             
             NSData *data = [fhand readDataToEndOfFile];		 
-            [ftask release];
             NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             self.secret = [self jsonVal:jsonString key:@"video-secret"];
             self.jobId  = [self jsonVal:jsonString key:@"job-id"];
+            [jsonString release];
             if(secret.length)
             {
                 [[RFBConnectionManager sharedManager] performSelectorOnMainThread:@selector(connectToServer)   withObject:nil  waitUntilDone:NO];
@@ -392,7 +392,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 [self cancelHeartbeat];
                 return;        
             }
-            NSTask *ftask = [[NSTask alloc] init];
+            NSTask *ftask = [[[NSTask alloc] init] autorelease];
             NSPipe *fpipe = [NSPipe pipe];
             [ftask setStandardOutput:fpipe];
             [ftask setLaunchPath:@"/bin/bash"];
@@ -403,7 +403,6 @@ static SaucePreconnect* _sharedPreconnect = nil;
             {
                 self.errStr = @"failed NSTask in heartbeat";
                 [self cancelHeartbeat];
-                [ftask release];
                 break;
             }
             else
@@ -411,9 +410,9 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 NSFileHandle *fhand = [fpipe fileHandleForReading];
                 
                 NSData *data = [fhand readDataToEndOfFile];		 
-                [ftask release];
                 NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                 NSString *status = [self jsonVal:jsonString key:@"status"];
+                [jsonString release];
                 if([status isEqualToString:@"in progress"])
                 {
                     id ssn = [sdict objectForKey:@"connection"];
@@ -455,7 +454,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 {
     NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/rest/v1/%@/jobs'", uuser, kkey, uuser];
     
-    NSTask *ftask = [[NSTask alloc] init];
+    NSTask *ftask = [[[NSTask alloc] init] autorelease];
     NSPipe *fpipe = [NSPipe pipe];
     [ftask setStandardOutput:fpipe];
     [ftask setLaunchPath:@"/bin/bash"];
@@ -474,6 +473,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         [ftask release];
         NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSRange range = [jsonString rangeOfString:@"error"];
+        [jsonString release];
         if(!range.length)
         {
             self.user = uuser;
@@ -503,7 +503,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if(cancelled)
             break;
 
-        NSTask *ftask = [[NSTask alloc] init];
+        NSTask *ftask = [[[NSTask alloc] init] autorelease];
         NSPipe *fpipe = [NSPipe pipe];
         [ftask setStandardOutput:fpipe];
         [ftask setLaunchPath:@"/bin/bash"];
@@ -513,7 +513,6 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if([ftask terminationStatus])
         {
             self.errStr = @"Failed NSTask in signupNew";
-            [ftask release];
             break;
         }
         else
@@ -524,9 +523,9 @@ static SaucePreconnect* _sharedPreconnect = nil;
             NSFileHandle *fhand = [fpipe fileHandleForReading];
             
             NSData *data = [fhand readDataToEndOfFile];		 
-            [ftask release];
             NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             NSString *akey = [self jsonVal:jsonString key:@"access_key"];
+            [jsonString release];
             if(akey.length)
             {
                 self.user = self.userNew;
@@ -565,7 +564,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if(cancelled)
             break;
         
-        NSTask *ftask = [[NSTask alloc] init];
+        NSTask *ftask = [[[NSTask alloc] init] autorelease];
         NSPipe *fpipe = [NSPipe pipe];
         [ftask setStandardOutput:fpipe];
         [ftask setLaunchPath:@"/bin/bash"];
@@ -586,6 +585,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
             [ftask release];
             NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             NSString *snapId = [self jsonVal:jsonString key:@"c"];
+            [jsonString release];
             if(snapId)  // QUERY: what is the id for?  jobId isn't always correct?
                 surl = [NSString stringWithFormat:@"https://saucelabs.com/jobs/%@/%@",ajobid,snapName];
             break;
@@ -612,7 +612,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if(cancelled)
             break;
         
-        NSTask *ftask = [[NSTask alloc] init];
+        NSTask *ftask = [[[NSTask alloc] init] autorelease];
         NSPipe *fpipe = [NSPipe pipe];
         [ftask setStandardOutput:fpipe];
         [ftask setLaunchPath:@"/bin/bash"];
@@ -631,8 +631,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
             NSFileHandle *fhand = [fpipe fileHandleForReading];
             
             NSData *data = [fhand readDataToEndOfFile];		 
-            [ftask release];
-            NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSString *jsonString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
             NSString *rstr = [self jsonVal:jsonString key:@"success"];            
             BOOL res = [rstr boolValue];
             if(res)
@@ -655,7 +654,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/rest/v1/users/%@'", 
                       self.user, self.ukey, self.user];
 
-    NSTask *ftask = [[NSTask alloc] init];
+    NSTask *ftask = [[[NSTask alloc] init] autorelease];
     NSPipe *fpipe = [NSPipe pipe];
     [ftask setStandardOutput:fpipe];
     [ftask setLaunchPath:@"/bin/bash"];
@@ -672,8 +671,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         NSFileHandle *fhand = [fpipe fileHandleForReading];
         
         NSData *data = [fhand readDataToEndOfFile];		 
-        [ftask release];
-        NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSString *jsonString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
         if(bSubscribed)
         {
             NSString *subscribedStr = [self jsonVal:jsonString key:@"subscribed"];

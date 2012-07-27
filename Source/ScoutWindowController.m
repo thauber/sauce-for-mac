@@ -139,7 +139,8 @@ NSString *kHistoryTabLabel = @"Session History";
     // sheet for title and description
     BugInfoController *bugCtrl = [[BugInfoController alloc] init:snap];
     [[NSApp delegate] setBugCtrlr:bugCtrl];
-    [bugCtrl runSheetOnWindow:[self window]];                
+    [bugCtrl runSheetOnWindow:[self window]];
+    [bugCtrl release];
 }
 
 -(void)submitBug        // after user submits from buginfo sheet

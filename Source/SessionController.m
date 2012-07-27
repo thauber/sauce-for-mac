@@ -54,23 +54,6 @@
         sessionIndxs[curTabIndx] = 6;           // default is firefox 9    
     }
 
-/*
-    // create hoverbox
-    NSRect frame = NSMakeRect(0,0,0,0);
-    hoverBox = [[NSView alloc ] initWithFrame:frame];
-    [curBox addSubview:hoverBox];
-    CALayer *viewLayer = [CALayer layer];
-    [viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.0, 0.0, 0.0, 0.1)]; //RGB plus Alpha Channel
-    [hoverBox setWantsLayer:YES]; // view's backing store is using a Core Animation Layer
-    [hoverBox setLayer:viewLayer];
-    [osTabs selectTabViewItemAtIndex:curTabIndx];
-    NSTabViewItem *tvi = [osTabs tabViewItemAtIndex:curTabIndx];
-    [self tabView:osTabs didSelectTabViewItem:tvi];
-    
-
-    [boxLinux setSessionCtlr:self];       // pass mouseclick to 'selectBrowser' method 
-    [boxWindows setSessionCtlr:self];     // pass mouseclick to 'selectBrowser' method 
-*/
     [self setupFromConfig];
     
     [browserTbl setDoubleAction:@selector(doDoubleClick:)];
@@ -81,19 +64,7 @@
     [connectBtn setState:NSOnState];
     [connectIndicator stopAnimation:self];
     [connectIndicatorText setStringValue:@""];
-    
-/*
-    if([[ScoutWindowController sharedScout] tabCount])      // allow cancel if at least 1 tab running
-    {
-        [cancelBtn setHidden:NO];
-        [cancelBtn setAction:@selector(performClose:)];
-    }
-    else
-    {
-        [cancelBtn setHidden:YES];
-    }
- */
-    
+        
     [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];
 
     // size column 0 row heights
@@ -109,47 +80,7 @@
     [self doBrowserClick:nil];      // set browser cells height
     [browserTbl selectRow:sessionIndxs[curTabIndx] inColumn:1];
     lastpop1 = NO;
-
-
-//    hoverIndx = sessionIndxs[curTabIndx];
-//    [self handleMouseEntered:nil];
-//    [self selectBrowser:nil];       // get last selection or default selected
-
 }
-
-#if 0
-- (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem
-{
-    [hoverBox removeFromSuperview];
-    [selectBox removeFromSuperview];
-    curTabIndx = [tabView indexOfTabViewItem:tabViewItem];
-
-    id *trarr;
-
-    switch((enum TabType)curTabIndx)
-    {
-        case tt_windows: curBox = boxWindows; trarr = trarrWin ; break;
-        case tt_linux:   curBox = boxLinux;  trarr = trarrLnx;  break;
-        case tt_apple:   break;
-        case tt_mobile:  break;
-    }
-    [curBox addSubview:hoverBox];
-    [curBox addSubview:selectBox];
-
-    NSTrackingArea *ta = trarr[sessionIndxs[curTabIndx]];
-    NSRect rr = [ta rect];
-    [selectBox setFrame:rr];
-    [hoverBox setFrame:rr];
-
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setInteger:curTabIndx forKey:kCurTab];
-    // save selected item in all tabs
-    [defaults setInteger:sessionIndxs[tt_windows] forKey:kSessionIndxWin];
-    [defaults setInteger:sessionIndxs[tt_linux] forKey:kSessionIndxLnx];
-    [defaults setInteger:sessionIndxs[tt_apple] forKey:kSessionIndxMac];
-    [defaults setInteger:sessionIndxs[tt_mobile] forKey:kSessionIndxMbl];
-}
-#endif
 
 - (NSInteger)hoverIndx
 {
@@ -268,6 +199,7 @@
             NSTextAttachment* ta = [[NSTextAttachment alloc] init];
             NSTextAttachmentCell* tac = [[NSTextAttachmentCell alloc] init];
             [tac setImage: bimg];
+            [bimg release];
             [ta setAttachmentCell: tac];
             NSAttributedString* as = [NSAttributedString attributedStringWithAttachment: ta];
             [ta release];
@@ -288,79 +220,8 @@
         }
     }
 
-    
-/*
-    id *trarr;
-    NSMutableArray *configArr;
-
-    switch(tabIndex)
-    {
-        case tt_windows: obox = boxWindows; configArr = configWindows; trarr = trarrWin; break;
-        case tt_linux:   obox = boxLinux;  configArr = configLinux; trarr = trarrLnx; break;
-        case tt_apple:  break;
-        case tt_mobile: break;
-    }
-    
-    NSRect rr;
-    NSInteger row=0, col=0;
-    NSString *lastBrowser = @"ie";      // initial column
-    
-    for(NSInteger i=0;i < num; i++) // track mouse in/out over all buttons and included area
-    {                        
-        // add tracking area
-        if(enabled)
-        {
-            rr.origin.x -= 4;
-            rr.size.width = 80;     // trackingrect width - NB: careful, 84 is too big
-            trarr[i] = [obox settracker:rr];
-        }
-    }
-    hoverFrame.size.width = 0;      // mouse is not within a rect(?guaranteed on startup?)
-*/
 }
 
-/*
-// called from optionBox mouseEntered
-- (void)handleMouseEntered:(id)tn
-{
-    id *trarr;
-    NSInteger num;
-    switch(curTabIndx)
-    {
-        case tt_windows: trarr = trarrWin; num = kNumWindowsTrackers; break;
-        case tt_linux: trarr = trarrLnx; num = kNumLinuxTrackers;  break;
-        case tt_apple:  break;
-        case tt_mobile: break;
-    }
-
-    if(!tn)     // initial setting
-        tn = trarr[hoverIndx];
-    
-    for(NSInteger i=0; i < num; i++)
-    {
-        if(tn == trarr[i])
-        {
-            hoverFrame = [(NSTrackingArea *)tn rect];
-            [hoverBox setFrame:hoverFrame];
-            hoverIndx = i;
-            return;
-        }
-    }
-    // didn't enter a trackingrect
-    hoverFrame.size.width = 0;
-    [hoverBox setFrame:hoverFrame];
-    hoverIndx = -1;
-}
-
-// called from optionBox mouseExited
-- (void)handleMouseExited
-{
-    [[NSCursor arrowCursor] set];
-    hoverFrame.size.width = 0;
-    [hoverBox setFrame:hoverFrame];
-    hoverIndx = -1;
-}
-*/
 
 -(void)terminateApp
 {
@@ -461,7 +322,7 @@
 
 -(BOOL)canReachIP:(NSString*)host
 {
-    NSTask *ftask = [[NSTask alloc] init];
+    NSTask *ftask = [[[NSTask alloc] init] autorelease];
     NSPipe *fpipe = [NSPipe pipe];
     [ftask setStandardOutput:fpipe];
     [ftask setStandardError:fpipe];
@@ -473,7 +334,7 @@
     while(10)       // just a guess to give enough attempts to get yes/no result
     {
         NSData *data = [fhand availableData];		 
-        NSString *retStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSString *retStr = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
         if([retStr length])
         {
             unichar ch = [retStr characterAtIndex:0];
@@ -531,7 +392,7 @@
     NSString *jsonStr = [[NSString alloc] initWithData:fdata encoding:NSUTF8StringEncoding];
     // pull out the lines into an array
     NSArray *linesArr = [jsonStr arrayOfCaptureComponentsMatchedByRegex:@"\\{(.*?)\\}"];
-    
+    [jsonStr release];
     NSString *osStr, *ll;
     NSString *browser;
     NSString *version;

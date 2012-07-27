@@ -108,7 +108,7 @@
     NSString *ukey = [[SaucePreconnect sharedPreconnect] ukey];
     NSString *farg = [NSString stringWithFormat:@"java -jar \"%@\" %@ %@", path, user, ukey];
     
-    self.ftask = [[NSTask alloc] init];
+    self.ftask = [[[NSTask alloc] init] autorelease];
     self.fpipe = [NSPipe pipe];
     [ftask setStandardOutput:fpipe];
     [ftask setLaunchPath:@"/bin/bash"];
@@ -133,6 +133,7 @@
     NSData *data = [[notif userInfo] objectForKey: NSFileHandleNotificationDataItem];    
     NSString *str = [[NSString alloc] initWithData: data encoding:NSASCIIStringEncoding];
     [self displayInfo:str];
+    [str release];
     [fhand readInBackgroundAndNotify];
 }
 
