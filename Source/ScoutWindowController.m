@@ -106,7 +106,7 @@ NSString *kHistoryTabLabel = @"Session History";
 - (void)stopSessionDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
 	/* One might reasonably argue that this should be handled by the connection manager. */
-    [playstop setSelected:NO forSegment:0];
+//    [playstop setSelected:NO forSegment:0];
 	switch (returnCode)
     {
 		case NSAlertDefaultReturn:
@@ -123,21 +123,9 @@ NSString *kHistoryTabLabel = @"Session History";
 
 - (IBAction)doBugCamera:(id)sender
 {
-    BOOL snap;
-    int sel = [sender selectedSegment];
-    if(sel==0)      // bug
-    {
-        [bugcamera setSelected:NO forSegment:0];
-        snap = NO;
-    }
-    else if(sel==1)     // snapshot
-    {
-        [bugcamera setSelected:NO forSegment:1];
-        snap = YES;
-
-    }
+//    [bugsnap setState:0];
     // sheet for title and description
-    BugInfoController *bugCtrl = [[BugInfoController alloc] init:snap];
+    BugInfoController *bugCtrl = [[BugInfoController alloc] init];
     [[NSApp delegate] setBugCtrlr:bugCtrl];
     [bugCtrl runSheetOnWindow:[self window]];
     [bugCtrl release];
@@ -283,9 +271,6 @@ NSString *kHistoryTabLabel = @"Session History";
     tstr = [NSString stringWithFormat:@"%@ %@",truncurl, osbrv];
 
     [toolbar setVisible:YES];
-    [bugcamera setEnabled:YES forSegment:0];
-    [bugcamera setEnabled:YES forSegment:1];
-    [playstop setEnabled:YES forSegment:0];
     
     NSTabViewItem *newItem = [[(NSTabViewItem*)[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
     [newItem setView:view];
@@ -393,9 +378,9 @@ NSString *kHistoryTabLabel = @"Session History";
     NSString *label = [tabViewItem label];
     if( [label isEqualToString:kHistoryTabLabel])      // history tab not a session
     {
-        [playstop setEnabled:NO forSegment:0];
-        [bugcamera setEnabled:NO forSegment:0];
-        [bugcamera setEnabled:NO forSegment:1];
+        [playstop setEnabled:NO];
+        [bugsnap setEnabled:NO];
+        [bugsnap setEnabled:NO];
         curSession = nil;
         return;
     }
@@ -473,9 +458,9 @@ NSString *kHistoryTabLabel = @"Session History";
         curSession = [rfbcon session];
         [[RFBConnectionManager sharedManager] setSessionsUpdateIntervals];
         
-        [bugcamera setEnabled:YES forSegment:0];
-        [bugcamera setEnabled:YES forSegment:1];
-        [playstop setEnabled:YES forSegment:0];
+        [bugsnap setEnabled:YES];
+        [bugsnap setEnabled:YES];
+        [playstop setEnabled:YES];
 
         [[self window] display];
     }
