@@ -80,6 +80,7 @@
     [self doBrowserClick:nil];      // set browser cells height
     [browserTbl selectRow:sessionIndxs[curTabIndx] inColumn:1];
     lastpop1 = NO;
+
 }
 
 - (NSInteger)hoverIndx
@@ -135,19 +136,19 @@
     NSImage *bimgs[5];
     isz = NSMakeSize(18,18);
     path = [[NSBundle mainBundle] pathForResource:@"ie_color" ofType:@"pdf"];
-    bimgs[0] = [[NSImage alloc] initByReferencingFile:path];
+    bimgs[0] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
     [bimgs[0] setSize:isz];
     path = [[NSBundle mainBundle] pathForResource:@"firefox_color" ofType:@"icns"];
-    bimgs[1] = [[NSImage alloc] initByReferencingFile:path];
+    bimgs[1] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
     [bimgs[1] setSize:isz];
     path = [[NSBundle mainBundle] pathForResource:@"safari_color" ofType:@"icns"];
-    bimgs[2] = [[NSImage alloc] initByReferencingFile:path];
+    bimgs[2] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
     [bimgs[2] setSize:isz];
     path = [[NSBundle mainBundle] pathForResource:@"opera_color" ofType:@"pdf"];
-    bimgs[3] = [[NSImage alloc] initByReferencingFile:path];
+    bimgs[3] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
     [bimgs[3] setSize:isz];
     path = [[NSBundle mainBundle] pathForResource:@"chrome_color" ofType:@"pdf"];
-    bimgs[4] = [[NSImage alloc] initByReferencingFile:path];
+    bimgs[4] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
     [bimgs[4] setSize:isz];
         
     NSMutableArray *configArr;
@@ -199,12 +200,11 @@
             NSTextAttachment* ta = [[NSTextAttachment alloc] init];
             NSTextAttachmentCell* tac = [[NSTextAttachmentCell alloc] init];
             [tac setImage: bimg];
-            [bimg release];
             [ta setAttachmentCell: tac];
             NSAttributedString* as = [NSAttributedString attributedStringWithAttachment: ta];
             [ta release];
             [tac release];
-            NSMutableAttributedString* mas = [[[NSMutableAttributedString alloc] initWithAttributedString: as] retain];
+            NSMutableAttributedString* mas = [[NSMutableAttributedString alloc] initWithAttributedString: as];
             NSString *winver = @"";     // windows version
             if(configArr == configWindows)
             {
