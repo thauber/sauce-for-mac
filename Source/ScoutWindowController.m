@@ -137,7 +137,7 @@ NSString *kHistoryTabLabel = @"Session History";
     if(bugctrlr)
     {
         NSString *title = [[bugctrlr title] stringValue];
-        NSString *description = [[bugctrlr description] stringValue];
+        NSString *description = [[[bugctrlr description] textStorage] string];
         self.snapProgress = [[SnapProgress alloc] init];
         [[SaucePreconnect sharedPreconnect] snapshotBug:title desc:description];
     }
