@@ -40,7 +40,7 @@
 			<object class="NSWindowTemplate" id="1005">
 				<int key="NSWindowStyleMask">1</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{196, 240}, {579, 188}}</string>
+				<string key="NSWindowRect">{{196, 240}, {700, 188}}</string>
 				<int key="NSWTFlags">544736256</int>
 				<string key="NSWindowTitle">Snapshot Progress</string>
 				<string key="NSWindowClass">NSPanel</string>
@@ -56,6 +56,7 @@
 							<object class="NSPSMatrix" key="NSDrawMatrix"/>
 							<string key="NSFrame">{{109, -20}, {16, 16}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="106107871"/>
 							<string key="NSReuseIdentifierKey">_NS:926</string>
 							<int key="NSpiFlags">20746</int>
@@ -64,8 +65,9 @@
 						<object class="NSButton" id="410292646">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">289</int>
-							<string key="NSFrame">{{507, 21}, {58, 32}}</string>
+							<string key="NSFrame">{{591, 24}, {58, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="215978896"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
@@ -93,6 +95,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{23, 69}, {40, 17}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="166402327"/>
 							<string key="NSReuseIdentifierKey">_NS:1505</string>
 							<bool key="NSEnabled">YES</bool>
@@ -126,8 +129,9 @@
 						<object class="NSTextField" id="40812705">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{17, 151}, {201, 17}}</string>
+							<string key="NSFrame">{{17, 151}, {260, 17}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="629531057"/>
 							<string key="NSReuseIdentifierKey">_NS:1505</string>
 							<bool key="NSEnabled">YES</bool>
@@ -149,14 +153,15 @@
 						<object class="NSTextField" id="166402327">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{68, 56}, {491, 43}}</string>
+							<string key="NSFrame">{{68, 56}, {598, 43}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="410292646"/>
 							<string key="NSReuseIdentifierKey">_NS:1505</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="953814734">
-								<int key="NSCellFlags">73530881</int>
-								<int key="NSCellFlags2">272633920</int>
+								<int key="NSCellFlags">74579521</int>
+								<int key="NSCellFlags2">272634944</int>
 								<string key="NSContents">waiting...</string>
 								<reference key="NSSupport" ref="929189980"/>
 								<string key="NSCellIdentifier">_NS:1505</string>
@@ -171,6 +176,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{32, -84}, {82, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="287342353"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
@@ -194,7 +200,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{113, -84}, {123, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSNextKeyView"/>
+							<reference key="NSWindow"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="965515065">
@@ -217,6 +223,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{17, 94}, {436, 51}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="145949288"/>
 							<string key="NSReuseIdentifierKey">_NS:1505</string>
 							<bool key="NSEnabled">YES</bool>
@@ -232,8 +239,9 @@
 							</object>
 						</object>
 					</array>
-					<string key="NSFrameSize">{579, 188}</string>
+					<string key="NSFrameSize">{700, 188}</string>
 					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="40812705"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
@@ -376,8 +384,8 @@
 							<reference ref="287342353"/>
 							<reference ref="106107871"/>
 							<reference ref="166402327"/>
-							<reference ref="410292646"/>
 							<reference ref="629531057"/>
+							<reference ref="410292646"/>
 						</array>
 						<reference key="parent" ref="1005"/>
 					</object>
@@ -509,7 +517,76 @@
 			<nil key="sourceID"/>
 			<int key="maxID">191</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">SnapProgress</string>
+					<string key="superclassName">NSObject</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="OkBtutton:">id</string>
+						<string key="viewSnapshot:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="OkBtutton:">
+							<string key="name">OkBtutton:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="viewSnapshot:">
+							<string key="name">viewSnapshot:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="availableLbl">NSTextField</string>
+						<string key="cancelButton">NSButton</string>
+						<string key="indicator">NSProgressIndicator</string>
+						<string key="panel">NSPanel</string>
+						<string key="takingTxt">NSTextField</string>
+						<string key="url">NSTextField</string>
+						<string key="urlLabel">NSTextField</string>
+						<string key="viewSnapshotButton">NSButton</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="availableLbl">
+							<string key="name">availableLbl</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cancelButton">
+							<string key="name">cancelButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="indicator">
+							<string key="name">indicator</string>
+							<string key="candidateClassName">NSProgressIndicator</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="panel">
+							<string key="name">panel</string>
+							<string key="candidateClassName">NSPanel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="takingTxt">
+							<string key="name">takingTxt</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="url">
+							<string key="name">url</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="urlLabel">
+							<string key="name">urlLabel</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="viewSnapshotButton">
+							<string key="name">viewSnapshotButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/SnapProgress.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
