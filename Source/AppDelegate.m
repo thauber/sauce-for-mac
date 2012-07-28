@@ -102,16 +102,6 @@
     }
 }
 
--(void)showOptionsIfNoTabs
-{
-    if([[ScoutWindowController sharedScout] tabCount] == 1)     // just history tab; no sessions
-    {
-        [[[ScoutWindowController sharedScout] toolbar] setVisible:NO];
-// just show history tab. user has to use menu/shortcut key to start new session
-//        [self showOptionsDlg:self];
-    }
-}
-
 -(void)connectionSucceeded
 {
     [optionsCtrlr connectionSucceeded];
@@ -149,12 +139,12 @@
         NSBeginAlertSheet(header, okayButton, nil, nil, [[ScoutWindowController sharedScout] window], self, nil, @selector(errDidDismiss:returnCode:contextInfo:), nil, errMsg);
     }
     else
-        [self showOptionsIfNoTabs];
+        [self showOptionsDlg];
 }
 
 - (void)errDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
-    [self showOptionsIfNoTabs];
+    [self showOptionsDlg];
 }
 
 
@@ -277,7 +267,7 @@
         [[ScoutWindowController sharedScout] tunnelConnected:NO];
         [tunnelMenuItem setTitle:@"Start Sauce Connect"];
         [[[ScoutWindowController sharedScout] tunnelButton] setTitle:@"Start Sauce Connect"];
-        [self showOptionsIfNoTabs];
+        [self showOptionsDlg];
     }
 }
 

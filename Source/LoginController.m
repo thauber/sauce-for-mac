@@ -108,7 +108,7 @@
             [tf setStringValue:uname];
 
             [[NSApp delegate] setLoginCtrlr:nil];
-            [[NSApp delegate] showOptionsIfNoTabs];
+            [[NSApp delegate] showOptionsDlg:nil];
         }
         else 
         {

@@ -45,7 +45,6 @@
 - (void)toggleTunnelDisplay;
 
 - (IBAction)showOptionsDlg:(id)sender;
-- (void)showOptionsIfNoTabs;
 - (IBAction)showLoginDlg:(id)sender;
 - (IBAction)showSubscribeDlg:(id)sender;
 
