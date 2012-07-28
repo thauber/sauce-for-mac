@@ -54,7 +54,7 @@
         urlStr = [NSString stringWithFormat:@"Start URL:%@",urlStr];
         NSString *user = [sdict valueForKey:@"user"];
         NSString *userStr = [NSString stringWithFormat:@"User:%@",user];
-        [description setStringValue:[NSString stringWithFormat:@"%@\n%@\n%@\n%@\n%@",dateStr,timeStr,osStr,urlStr,userStr]];
+        [description insertText:[NSString stringWithFormat:@"%@\n%@\n%@\n%@\n%@",dateStr,timeStr,osStr,urlStr,userStr]];
         if(bSnap)
             [header setStringValue:@"Take a Snapshot"];
         [title setStringValue:[NSString stringWithFormat:@"%@-snapshot-%@",dateStr,user]];

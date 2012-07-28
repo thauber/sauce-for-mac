@@ -11,7 +11,7 @@
 @interface BugInfoController : NSObject
 {
     NSTextField *title;
-    NSTextField *description;
+    NSTextView *description;
     NSPanel *panel;
     BOOL bSnap;      // we're doing a snapshot, not a bug
     NSTextField *header;
@@ -20,7 +20,7 @@
 @property (assign) IBOutlet NSPanel *panel;
 - (IBAction)submit:(id)sender;
 - (IBAction)cancel:(id)sender;
-@property (assign) IBOutlet NSTextField *description;
+@property (assign) IBOutlet NSTextView *description;
 @property (assign) IBOutlet NSTextField *title;
 
 - (id)init;
