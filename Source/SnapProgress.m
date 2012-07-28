@@ -67,17 +67,8 @@
         [takingTxt setStringValue:tstr];
         [indicator stopAnimation:self];
         [indicator setHidden:YES];
-        if([surl length])
-        {
-            [viewSnapshotButton setEnabled:okEnableView];
-            [availableLbl setHidden:NO];
-            if(okEnableView)
-                [availableLbl setStringValue:@"Snapshot is available"];
-            else
-                [availableLbl setStringValue:@"Snapshot is not available, yet"];
-            
+        if([surl length])           
             [[ScoutWindowController sharedScout] addBugToHistory:surl];
-        }
     }
 }
 @end
