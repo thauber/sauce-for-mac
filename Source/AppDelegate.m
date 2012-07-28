@@ -139,12 +139,12 @@
         NSBeginAlertSheet(header, okayButton, nil, nil, [[ScoutWindowController sharedScout] window], self, nil, @selector(errDidDismiss:returnCode:contextInfo:), nil, errMsg);
     }
     else
-        [self showOptionsDlg];
+        [self showOptionsDlg:nil];
 }
 
 - (void)errDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
-    [self showOptionsDlg];
+    [self showOptionsDlg:nil];
 }
 
 
@@ -267,7 +267,7 @@
         [[ScoutWindowController sharedScout] tunnelConnected:NO];
         [tunnelMenuItem setTitle:@"Start Sauce Connect"];
         [[[ScoutWindowController sharedScout] tunnelButton] setTitle:@"Start Sauce Connect"];
-        [self showOptionsDlg];
+        [self showOptionsDlg:nil];
     }
 }
 
