@@ -1237,8 +1237,6 @@
 				DAD6DEE012DCF37A001FD9D6 /* AuthPrompt.m */,
 				DA335CCD12DA4A6C00C70987 /* Session.h */,
 				DA335CCE12DA4A6C00C70987 /* Session.m */,
-				DA00481312CCF82E004E2C70 /* ZlibStreamReader.h */,
-				DA00481412CCF82E004E2C70 /* ZlibStreamReader.m */,
 				DAA91C8F1234319B000F1CCD /* DesktopNameEncodingReader.h */,
 				DAA91C901234319B000F1CCD /* DesktopNameEncodingReader.m */,
 				DA231DF512BD562100D3AD44 /* Keymap.h */,
@@ -1339,6 +1337,8 @@
 				F536C26703937E5301178D82 /* ZlibHexEncodingReader.m */,
 				F536C26803937E5301178D82 /* ZRLEEncodingReader.h */,
 				F536C26903937E5301178D82 /* ZRLEEncodingReader.m */,
+				DA00481312CCF82E004E2C70 /* ZlibStreamReader.h */,
+				DA00481412CCF82E004E2C70 /* ZlibStreamReader.m */,
 			);
 			path = Source;
 			sourceTree = "<group>";
