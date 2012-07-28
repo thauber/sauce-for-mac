@@ -382,6 +382,18 @@ NSString *kHistoryTabLabel = @"Session History";
         [bugsnap setEnabled:NO];
         [bugsnap setEnabled:NO];
         curSession = nil;
+        // hide text in statusbar and messagebox
+        [timeRemainingStat setStringValue:@""];
+        [vmsize setStringValue:@""];
+        [userStat setStringValue:@""];
+        [osbrowserMsg setStringValue:@""];        
+        [urlmsg  setStringValue:@" "];
+        [nowscout setStringValue:@" "];
+        [timeRemainingStat setStringValue:@""];
+        [osbrowser setStringValue:@""];
+        [msgBox needsDisplay];
+        [[self window] display];
+
         return;
     }
     
