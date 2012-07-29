@@ -86,7 +86,7 @@
             [NSApp endSheet:panel];
             [panel orderOut:nil];
             [[NSApp delegate] setLoginCtrlr:nil];
-            [[NSApp delegate] showOptionsDlg:nil];
+//            [[NSApp delegate] showOptionsDlg:nil];
         }
     }
 }

@@ -136,8 +136,6 @@
     {
         if(![[SaucePreconnect sharedPreconnect] user])
             [[NSApp delegate] performSelectorOnMainThread:@selector(showLoginDlg:) withObject:nil waitUntilDone:NO]; 
-        else
-            [[NSApp delegate] performSelectorOnMainThread:@selector(showOptionsDlg:) withObject:nil waitUntilDone:NO]; 
     }
 } 
 

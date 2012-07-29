@@ -138,13 +138,11 @@
         NSString *okayButton = NSLocalizedString( @"Ok", nil );
         NSBeginAlertSheet(header, okayButton, nil, nil, [[ScoutWindowController sharedScout] window], self, nil, @selector(errDidDismiss:returnCode:contextInfo:), nil, errMsg);
     }
-    else
-        [self showOptionsDlg:nil];
 }
 
 - (void)errDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
-    [self showOptionsDlg:nil];
+//    [self showOptionsDlg:nil];        // let user decide whether to show options sheet
 }
 
 
@@ -267,7 +265,7 @@
         [[ScoutWindowController sharedScout] tunnelConnected:NO];
         [tunnelMenuItem setTitle:@"Start Sauce Connect"];
         [[[ScoutWindowController sharedScout] tunnelButton] setTitle:@"Start Sauce Connect"];
-        [self showOptionsDlg:nil];
+//        [self showOptionsDlg:nil];      
     }
 }
 

@@ -98,7 +98,6 @@
     [panel orderOut:self];
     hiddenDisplay = YES;
     [[NSApp delegate] toggleTunnelDisplay];
-    [[NSApp delegate] showOptionsDlg:nil];
 }
 
 - (void)doTunnel
