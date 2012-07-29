@@ -147,7 +147,6 @@ NSString *kHistoryTabLabel = @"Session History";
 {    
     self.snapProgress = nil;
     [[NSApp delegate] setBugCtrlr:nil];
-    [[NSApp delegate] showOptionsDlg:nil];        // in case last session timed out or internet connection lost
 }
 
 - (void)addBugToHistory:(NSString*)bugUrl
@@ -490,7 +489,6 @@ NSString *kHistoryTabLabel = @"Session History";
 
 - (void)tabView:(NSTabView *)aTabView didCloseTabViewItem:(NSTabViewItem *)tabViewItem 
 {
-    [[NSApp delegate] showOptionsDlg:nil];
 }
 
 - (NSArray *)allowedDraggedTypesForTabView:(NSTabView *)aTabView {
