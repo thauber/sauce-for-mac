@@ -30,7 +30,7 @@
 @property (assign) IBOutlet NSButton *viewSnapshotButton;
 @property (assign) BOOL okEnableView;
 
-- (IBAction)OkBtutton:(id)sender;
+- (IBAction)OkButton:(id)sender;
 - (IBAction)viewSnapshot:(id)sender;
 - (void)setServerURL:(NSString*)surl;
 

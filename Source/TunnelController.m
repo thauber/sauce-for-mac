@@ -64,7 +64,7 @@
         NSRange range = NSMakeRange([[infoTV string] length], 0);
         [infoTV scrollRangeToVisible: range];
         NSRange textRange =[str rangeOfString:@"Connected!"];        
-        if(textRange.location != NSNotFound)    //Does contain the substring
+        if(textRange.location != NSNotFound)    // Does contain the substring
         {
             [indicator stopAnimation:self];
             [indicator setHidden:YES];

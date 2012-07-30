@@ -38,7 +38,7 @@
     return self;
 }
 
-- (IBAction)OkBtutton:(id)sender {
+- (IBAction)OkButton:(id)sender {
     [NSApp endSheet:panel];
     [panel orderOut:nil];
     panel = nil;

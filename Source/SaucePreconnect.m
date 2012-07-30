@@ -410,7 +410,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 self.errStr = @"failed NSTask in heartbeat";
                 internetOk = NO;
                 [self cancelHeartbeat];
-                break;
+                return;
             }
             else
             {
