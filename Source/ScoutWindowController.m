@@ -167,7 +167,7 @@ NSString *kHistoryTabLabel = @"Session History";
 
 -(void)closeAllTabs
 {
-   while([self tabCount])
+   while([self tabCount]>1)
        [self closeTab:nil];
 }
 
