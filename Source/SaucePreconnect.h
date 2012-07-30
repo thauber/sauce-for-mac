@@ -31,6 +31,7 @@
     NSString *errStr;
     BOOL cancelled;         // yes -> stop the presses!
     int delayedSession;     // 1->adding 2->done adding (but need to abort if in heartbeat loop
+    BOOL internetOk;
 }
 
 @property(nonatomic,copy) NSString *user;
@@ -49,6 +50,7 @@
 @property(nonatomic,retain) NSTimer *authTimer;
 @property(nonatomic,copy) NSString *errStr;
 @property(assign)BOOL cancelled;
+@property(assign)BOOL internetOk;
 
 +(SaucePreconnect*)sharedPreconnect;
 
@@ -69,12 +71,12 @@
 -(NSString*)remainingTimeStr:(int)remaining;
 -(void)startHeartbeat;
 -(void)cancelHeartbeat;
-- (BOOL)checkUserLogin:(NSString *)uuser  key:(NSString*)kkey;
+- (NSInteger)checkUserLogin:(NSString *)uuser  key:(NSString*)kkey;
 - (void)signupNew:(NSString*)uuserNew passNew:(NSString*)upassNew 
         emailNew:(NSString*)uemailNew;
 - (void)postSnapshotBug:(NSString *)snapName title:(NSString *)title desc:(NSString *)desc;
 - (void)snapshotBug:(NSString *)title desc:(NSString *)desc;
-- (BOOL)checkAccountOk:(BOOL)bSubscribed;       // 0=return minutes ok; 1=return true if subscribed
+- (NSInteger)checkAccountOk:(BOOL)bSubscribed;       // 0=return minutes ok; 1=return true if subscribed
 
 
 @end

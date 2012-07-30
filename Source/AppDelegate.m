@@ -41,27 +41,13 @@
 {
     [[ScoutWindowController sharedScout] showWindow:nil];
     
-    // check for username/key in prefs
-    NSUserDefaults* user = [NSUserDefaults standardUserDefaults];
-    NSString *uname = [user stringForKey:kUsername];
-    NSString *akey = [user stringForKey:kAccountkey];
-    BOOL bLoginDlg = YES;
-    
-    if([uname length] && [akey length])
-    {
-        if([[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:akey])
-        {
-            // good name/key, so go on to options dialog
-            [self showOptionsDlg:self];
-            bLoginDlg = NO;
-        }
-    }
-    if(bLoginDlg)
-    {
-        [self showLoginDlg:self];
-    }
-
     [mInfoVersionNumber setStringValue: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleVersion"]];
+
+    if([self checkUserOk])
+    {
+        // good name/key, so go on to options dialog
+        [self showOptionsDlg:self];
+    }
 }
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSNotification *)aNotification
@@ -72,20 +58,69 @@
         
 }
 
+// if internet had been down, check if it is back up; returns 0=no user, 1=ok
+- (BOOL)checkUserOk
+{
+   if([[SaucePreconnect sharedPreconnect] internetOk])
+       return YES;
+    
+    // check for username/key in prefs
+    NSUserDefaults* user = [NSUserDefaults standardUserDefaults];
+    NSString *uname = [user stringForKey:kUsername];
+    NSString *akey = [user stringForKey:kAccountkey];
+    
+    if([uname length] && [akey length])
+    {
+        NSInteger userOk = [[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:akey];
+        if(userOk == -1)
+        {
+            [self internetNotOkDlg];
+            return NO;      // still no connection
+        }
+        if(!userOk)
+            [self showLoginDlg:self];
+        return userOk;      // connection ok, but maybe no valid user
+    }
+    [self showLoginDlg:self];
+    return NO;              // no valid user
+}
+
+- (void)internetNotOkDlg
+{
+    NSString *header = NSLocalizedString( @"Connection Status", nil );
+    NSString *okayButton = NSLocalizedString( @"Ok", nil );
+    NSBeginAlertSheet(header, okayButton, nil, nil, [[ScoutWindowController sharedScout] window], self, nil, 
+                      nil, nil, @"Check your internet connection - or Sauce Labs server may be down");
+    
+}
  
 - (IBAction)showOptionsDlg:(id)sender 
 {
+    if(![self checkUserOk])
+        return;
+    
     if(loginCtrlr)
         [loginCtrlr doCancelLogin:self];
     loginCtrlr = nil;
     if(!optionsCtrlr)
     {
         
-        BOOL bSubscribed = [[SaucePreconnect sharedPreconnect] checkAccountOk:YES];  // ask if user is subscribed
-        if(!bSubscribed)
+        NSInteger subscribed = [[SaucePreconnect sharedPreconnect] checkAccountOk:YES];  // ask if user is subscribed
+        if(subscribed == -1)
         {
-             BOOL bMinutes = [[SaucePreconnect sharedPreconnect] checkAccountOk:NO];  // ask if user has minutes
-             if(!bMinutes)
+            [self internetNotOkDlg];
+            return;
+        }
+        if(!subscribed)
+        {
+             NSInteger minutesOk = [[SaucePreconnect sharedPreconnect] checkAccountOk:NO];  // ask if user has minutes
+            
+             if(minutesOk == -1)
+             {
+                [self internetNotOkDlg];
+                return;
+             }
+             if(!minutesOk)
              {
                  [self promptForSubscribing:NO];   // prompt for subscribing to get more minutes
                  return;
@@ -154,7 +189,8 @@
         [[optionsCtrlr panel] orderOut:nil]; 
         self.optionsCtrlr = nil;
     }
-    self.loginCtrlr = [[LoginController alloc] init];
+    if([self checkUserOk])
+        self.loginCtrlr = [[LoginController alloc] init];
 }
 
 - (IBAction)showSubscribeDlg:(id)sender
@@ -281,20 +317,8 @@
 
 - (void)promptForSubscribing:(BOOL)bCause        // 0=needs more minutes; 1=to get more tabs
 {
-    subscriberCtrl = [[[Subscriber alloc] init] retain];
-
-/*
-    NSString *header = NSLocalizedString( @"Should Subscribe", nil );
-    NSString *okayStr = NSLocalizedString( @"Subscribe", nil );
-    NSString *noStr = NSLocalizedString( @"Continue Scouting", nil );
-    NSString *subscribeMsg;
-    if(bCause)
-        subscribeMsg = @"You need to subscribe to have more than 2 sessions open";
-    else
-        subscribeMsg = @"You need to subscribe to have enough minutes for more sessions";
-    
-    NSBeginAlertSheet(header, okayStr, noStr, nil, [[ScoutWindowController sharedScout] window], self, nil, @selector(subscribeDidDismiss:returnCode:contextInfo:), nil, subscribeMsg);
-*/
+    if([self checkUserOk])
+        subscriberCtrl = [[[Subscriber alloc] init] retain];
     
 }
 

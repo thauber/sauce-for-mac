@@ -54,6 +54,7 @@
 - (IBAction)showProfileManager: (id)sender;
 - (IBAction)showHelp: (id)sender;
 
+- (BOOL)checkUserOk;
 - (void)connectionSucceeded;
 - (void)cancelOptionsConnect:(id)sender;
 - (void)escapeDialog;

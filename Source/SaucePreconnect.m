@@ -33,6 +33,7 @@
 @synthesize authTimer;
 @synthesize errStr;
 @synthesize cancelled;
+@synthesize internetOk;
 
 static SaucePreconnect* _sharedPreconnect = nil;
 
@@ -98,10 +99,12 @@ static SaucePreconnect* _sharedPreconnect = nil;
         {
             NSLog(@"failed NSTask");
             self.errStr = @"Failed to send user options to server";
+            internetOk = NO;
             break;;
         }
         else
         {
+            internetOk = YES;
             NSFileHandle *fhand = [fpipe fileHandleForReading];
             
             NSData *data = [fhand readDataToEndOfFile];	
@@ -220,26 +223,30 @@ static SaucePreconnect* _sharedPreconnect = nil;
         {
             NSLog(@"failed NSTask");
             self.errStr =  @"Failed to request job-id";
+            internetOk = NO;
             break;
         }
         else
-        if(cancelled)
-            break;
-        else
         {
-            NSFileHandle *fhand = [fpipe fileHandleForReading];
-            
-            NSData *data = [fhand readDataToEndOfFile];		 
-            NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            self.secret = [self jsonVal:jsonString key:@"video-secret"];
-            self.jobId  = [self jsonVal:jsonString key:@"job-id"];
-            [jsonString release];
-            if(secret.length)
-            {
-                [[RFBConnectionManager sharedManager] performSelectorOnMainThread:@selector(connectToServer)   withObject:nil  waitUntilDone:NO];
+            internetOk = YES;
+            if(cancelled)
                 break;
+            else
+            {
+                NSFileHandle *fhand = [fpipe fileHandleForReading];
+                
+                NSData *data = [fhand readDataToEndOfFile];		 
+                NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                self.secret = [self jsonVal:jsonString key:@"video-secret"];
+                self.jobId  = [self jsonVal:jsonString key:@"job-id"];
+                [jsonString release];
+                if(secret.length)
+                {
+                    [[RFBConnectionManager sharedManager] performSelectorOnMainThread:@selector(connectToServer)   withObject:nil  waitUntilDone:NO];
+                    break;
+                }
+                
             }
-            
         }
     }
 }
@@ -401,11 +408,13 @@ static SaucePreconnect* _sharedPreconnect = nil;
             if([ftask terminationStatus])
             {
                 self.errStr = @"failed NSTask in heartbeat";
+                internetOk = NO;
                 [self cancelHeartbeat];
                 break;
             }
             else
             {
+                internetOk = YES;
                 NSFileHandle *fhand = [fpipe fileHandleForReading];
                 
                 NSData *data = [fhand readDataToEndOfFile];		 
@@ -448,7 +457,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
         delayedSession = 0;
 }
 
-- (BOOL)checkUserLogin:(NSString *)uuser  key:(NSString*)kkey
+// 0->bad login 1->good user  -1->bad internet connection
+- (NSInteger)checkUserLogin:(NSString *)uuser  key:(NSString*)kkey
 {
     NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/rest/v1/%@/jobs'", uuser, kkey, uuser];
     
@@ -462,9 +472,12 @@ static SaucePreconnect* _sharedPreconnect = nil;
     if([ftask terminationStatus])
     {
         self.errStr = @"Failed NSTask in checkUserLogin";
+        internetOk = NO;
+        return -1;
     }
     else
     {
+        internetOk = YES;
         NSFileHandle *fhand = [fpipe fileHandleForReading];
         
         NSData *data = [fhand readDataToEndOfFile];		 
@@ -510,29 +523,33 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if([ftask terminationStatus])
         {
             self.errStr = @"Failed NSTask in signupNew";
+            internetOk = NO;
             break;
         }
         else
-        if(cancelled)
-            break;
-        else
         {
-            NSFileHandle *fhand = [fpipe fileHandleForReading];
-            
-            NSData *data = [fhand readDataToEndOfFile];		 
-            NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            NSString *akey = [self jsonVal:jsonString key:@"access_key"];
-            [jsonString release];
-            if(akey.length)
-            {
-                self.user = self.userNew;
-                self.ukey = akey;
-                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                [defaults setObject:self.user  forKey:kUsername];
-                [defaults setObject:self.ukey  forKey:kAccountkey];
-                [[NSApp delegate] performSelectorOnMainThread:@selector(newUserAuthorized:)   
-                                        withObject:nil  waitUntilDone:NO];
+            internetOk = YES;
+            if(cancelled)
                 break;
+            else
+            {
+                NSFileHandle *fhand = [fpipe fileHandleForReading];
+                
+                NSData *data = [fhand readDataToEndOfFile];		 
+                NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                NSString *akey = [self jsonVal:jsonString key:@"access_key"];
+                [jsonString release];
+                if(akey.length)
+                {
+                    self.user = self.userNew;
+                    self.ukey = akey;
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    [defaults setObject:self.user  forKey:kUsername];
+                    [defaults setObject:self.ukey  forKey:kAccountkey];
+                    [[NSApp delegate] performSelectorOnMainThread:@selector(newUserAuthorized:)   
+                                            withObject:nil  waitUntilDone:NO];
+                    break;
+                }
             }
         }
     }    
@@ -570,8 +587,10 @@ static SaucePreconnect* _sharedPreconnect = nil;
         [ftask waitUntilExit];
         if([ftask terminationStatus])
         {
+            internetOk = NO;
             break;
         }
+        internetOk = YES;
         if(cancelled)
             break;
         else
@@ -618,8 +637,10 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if([ftask terminationStatus])
         {
             self.errStr = @"Failed NSTask in snapshotBug";
+            internetOk = NO;
             break;
         }
+        internetOk = YES;
         if(cancelled)
             break;
         else
@@ -645,7 +666,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
     }    
 }
 
-- (BOOL)checkAccountOk:(BOOL)bSubscribed
+// 0->bad login 1->good user  -1->bad internet connection
+- (NSInteger)checkAccountOk:(BOOL)bSubscribed
 {
     NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/rest/v1/users/%@'", 
                       self.user, self.ukey, self.user];
@@ -661,9 +683,12 @@ static SaucePreconnect* _sharedPreconnect = nil;
     {
         NSLog(@"failed NSTask");
         self.errStr =  @"Failed to request accountOk";
+        internetOk = NO;
+        return -1;  // assume no internet connection
     }
     else
     {
+        internetOk = YES;
         NSFileHandle *fhand = [fpipe fileHandleForReading];
         
         NSData *data = [fhand readDataToEndOfFile];		 
@@ -678,7 +703,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         return ([minStr length] > 1);     // assume 0-9 minutes isn't enough
         
     }
-    return NO;      // i suppose caller should check for errStr
+    return NO;      // caller should check for errStr or -1 return
 }
 
 @end
