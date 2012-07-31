@@ -292,28 +292,12 @@
 					<int key="connectionID">177</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">OkBtutton:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="410292646"/>
-					</object>
-					<int key="connectionID">178</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">cancelButton</string>
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="106107871"/>
 					</object>
 					<int key="connectionID">181</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">OkBtutton:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="106107871"/>
-					</object>
-					<int key="connectionID">182</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -338,6 +322,14 @@
 						<reference key="destination" ref="629531057"/>
 					</object>
 					<int key="connectionID">191</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">OkButton:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="410292646"/>
+					</object>
+					<int key="connectionID">192</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -515,7 +507,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">191</int>
+			<int key="maxID">192</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -523,12 +515,12 @@
 					<string key="className">SnapProgress</string>
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="OkBtutton:">id</string>
+						<string key="OkButton:">id</string>
 						<string key="viewSnapshot:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="OkBtutton:">
-							<string key="name">OkBtutton:</string>
+						<object class="IBActionInfo" key="OkButton:">
+							<string key="name">OkButton:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="viewSnapshot:">
