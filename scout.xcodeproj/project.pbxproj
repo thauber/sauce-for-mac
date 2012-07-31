@@ -89,6 +89,7 @@
 		0F48D0C9157528950067B689 /* snapProgress.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F48D0C8157528950067B689 /* snapProgress.xib */; };
 		0F48D0CD157528C20067B689 /* SnapProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F48D0CB157528C20067B689 /* SnapProgress.h */; };
 		0F48D0CE157528C20067B689 /* SnapProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F48D0CC157528C20067B689 /* SnapProgress.m */; };
+		0F59372515C83B150024AB5A /* keysymdef.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59372415C83B150024AB5A /* keysymdef.h */; };
 		0F7BE39E1522183800B64686 /* LoginController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F7BE39C1522183800B64686 /* LoginController.h */; };
 		0F7BE39F1522183800B64686 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7BE39D1522183800B64686 /* LoginController.m */; };
 		0F7BF6F11523FEF400F1A478 /* LoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7BF6F01523FEF400F1A478 /* LoginController.xib */; };
@@ -462,6 +463,7 @@
 		0F48D0C8157528950067B689 /* snapProgress.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = snapProgress.xib; path = Resources/snapProgress.xib; sourceTree = "<group>"; };
 		0F48D0CB157528C20067B689 /* SnapProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapProgress.h; sourceTree = "<group>"; };
 		0F48D0CC157528C20067B689 /* SnapProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapProgress.m; sourceTree = "<group>"; };
+		0F59372415C83B150024AB5A /* keysymdef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keysymdef.h; sourceTree = "<group>"; };
 		0F7BE39C1522183800B64686 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
 		0F7BE39D1522183800B64686 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
 		0F7BF6F01523FEF400F1A478 /* LoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginController.xib; path = Resources/LoginController.xib; sourceTree = "<group>"; };
@@ -992,6 +994,7 @@
 		7FD35C1706CC57FB00648090 /* Profiles */ = {
 			isa = PBXGroup;
 			children = (
+				0F59372415C83B150024AB5A /* keysymdef.h */,
 				F5DC71D5033DB4A801A8010C /* Profile.h */,
 				F5DC71D6033DB4A801A8010C /* Profile.m */,
 				F5DC71D7033DB4A801A8010C /* ProfileManager.h */,
@@ -1466,6 +1469,7 @@
 				0F3BBDD515AB5EC7006EDB74 /* PSMTabStyle.h in Headers */,
 				0F3BBDD615AB5EC7006EDB74 /* PSMUnifiedTabStyle.h in Headers */,
 				0F32B49815B8C88900C0CFBF /* Subscriber.h in Headers */,
+				0F59372515C83B150024AB5A /* keysymdef.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
