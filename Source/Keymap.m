@@ -19,7 +19,7 @@
 
 #import "Keymap.h"
 #define XK_3270
-#import "X11/keysym.h"
+#import "keysym.h"
 
 /* Tables mapping from Unicode characters to X11 keysyms. Unicode characters
  * which have not been assigned a legacy keysym can use the Unicode value plus
