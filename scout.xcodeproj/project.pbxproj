@@ -82,6 +82,7 @@
 		0F463B33159B5E8A0055B790 /* history.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F463B32159B5E8A0055B790 /* history.xib */; };
 		0F463B37159BB82F0055B790 /* GradientView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F463B35159BB82F0055B790 /* GradientView.h */; };
 		0F463B38159BB82F0055B790 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F463B36159BB82F0055B790 /* GradientView.m */; };
+		0F46CA6C15CB3EA500A613A1 /* about-screen.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F46CA6B15CB3EA500A613A1 /* about-screen.png */; };
 		0F486EA3155CBD1A004502C4 /* dotgreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F486EA1155CBD1A004502C4 /* dotgreen.png */; };
 		0F486EA4155CBD1A004502C4 /* dotred.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F486EA2155CBD1A004502C4 /* dotred.png */; };
 		0F486EA7155CC2CF004502C4 /* Sauce-Connect.jar in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F486EA6155CC2CF004502C4 /* Sauce-Connect.jar */; };
@@ -458,6 +459,7 @@
 		0F463B32159B5E8A0055B790 /* history.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = history.xib; sourceTree = "<group>"; };
 		0F463B35159BB82F0055B790 /* GradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
 		0F463B36159BB82F0055B790 /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
+		0F46CA6B15CB3EA500A613A1 /* about-screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "about-screen.png"; path = "Resources/about-screen.png"; sourceTree = "<group>"; };
 		0F486EA1155CBD1A004502C4 /* dotgreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dotgreen.png; path = Resources/dotgreen.png; sourceTree = "<group>"; };
 		0F486EA2155CBD1A004502C4 /* dotred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dotred.png; path = Resources/dotred.png; sourceTree = "<group>"; };
 		0F486EA6155CC2CF004502C4 /* Sauce-Connect.jar */ = {isa = PBXFileReference; lastKnownFileType = archive.jar; name = "Sauce-Connect.jar"; path = "Resources/Sauce-Connect.jar"; sourceTree = "<group>"; };
@@ -928,6 +930,7 @@
 				0F7CE3CF152F6C2800068464 /* stop.pdf */,
 				0F9961841526AC06002657A9 /* linux_color.pdf */,
 				0F9961821526ABC2002657A9 /* apple_color.pdf */,
+				0F46CA6B15CB3EA500A613A1 /* about-screen.png */,
 				0F99617E15267CAF002657A9 /* opera_color.pdf */,
 				0F99617415267C6B002657A9 /* chrome_color.pdf */,
 				0FC861A615C3307F0035C02F /* connect_2.png */,
@@ -1609,6 +1612,7 @@
 				0FEDFA0D15C31B7900D61166 /* bugsnap.png in Resources */,
 				0FEDFA1215C31F5C00D61166 /* new.png in Resources */,
 				0FC861A715C3307F0035C02F /* connect_2.png in Resources */,
+				0F46CA6C15CB3EA500A613A1 /* about-screen.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
