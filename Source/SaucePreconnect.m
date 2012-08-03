@@ -454,6 +454,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 else
                 {
                     self.errStr = @"Heartbeat doesn't say 'in progress'";
+                    // TODO: call closetabwithsession
 //                    [self cancelHeartbeat];
                     break;
                 }
