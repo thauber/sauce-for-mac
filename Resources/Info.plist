@@ -5,9 +5,9 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>Scout</string>
+	<string>Sauce for Mac</string>
 	<key>CFBundleGetInfoString</key>
-	<string>Scout version 1.0, Copyright 2012 Sauce Labs</string>
+	<string>Sauce for Mac version 1.0, Copyright 2012 Sauce Labs</string>
 	<key>CFBundleIconFile</key>
 	<string>icon.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -15,7 +15,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Scout</string>
+	<string>SauceForMac</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
