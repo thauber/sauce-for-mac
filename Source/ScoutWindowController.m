@@ -477,7 +477,7 @@ NSString *kHistoryTabLabel = @"Session History";
         str = [sdict objectForKey:@"url"];
         [self.urlmsg  setStringValue:str];
 
-        [nowscout setStringValue:@"Now Scouting:"];        
+        [nowscout setStringValue:@"Now Navigating:"];        
                 
         // use last remaining time value for this session
         str = [sdict objectForKey:@"remainingTime"];
