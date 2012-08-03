@@ -9,7 +9,7 @@
 	<key>CFBundleGetInfoString</key>
 	<string>Sauce for Mac version 1.0, Copyright 2012 Sauce Labs</string>
 	<key>CFBundleIconFile</key>
-	<string>icon.icns</string>
+	<string>logo.icns</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.saucelabs.scout</string>
 	<key>CFBundleInfoDictionaryVersion</key>
