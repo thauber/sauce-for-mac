@@ -378,7 +378,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
     {
         [self cancelPreAuthorize:nil];
         // close all sessions
-        [[ScoutWindowController sharedScout] closeAllTabs];
+        
+        [[ScoutWindowController sharedScout] performSelectorOnMainThread:@selector(closeAllTabs) withObject:nil waitUntilDone:NO];
     }
 }
 
@@ -453,7 +454,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 else
                 {
                     self.errStr = @"Heartbeat doesn't say 'in progress'";
-                    [self cancelHeartbeat];
+//                    [self cancelHeartbeat];
                     break;
                 }
             }

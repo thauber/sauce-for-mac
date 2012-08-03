@@ -174,8 +174,19 @@ NSString *kHistoryTabLabel = @"Session History";
 
 -(void)closeAllTabs
 {
-   while([self tabCount]>1)
-       [self closeTab:nil];
+    curSession = nil;        
+    while([self tabCount]>1)
+    {
+        NSTabViewItem *tvi = [tabView tabViewItemAtIndex:1];
+        NSView *vv = [tvi view];
+        [hviewCtlr updateActive:vv];
+        NSDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:vv];
+        Session *ss = [[sdict objectForKey:@"connection"] session];
+        [[SaucePreconnect sharedPreconnect] sessionClosed:[ss connection]];
+        [[RFBConnectionManager sharedManager] cancelConnection];
+        [ss  connectionProblem];
+        [tabView removeTabViewItem:tvi]; 
+    }
 }
 
 #pragma mark -
