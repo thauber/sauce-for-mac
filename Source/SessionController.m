@@ -57,7 +57,7 @@
     [self setupFromConfig];
     
     [browserTbl setDoubleAction:@selector(doDoubleClick:)];
-    [connectBtn setTitle:@"Sauce for Mac!"];
+    [connectBtn setTitle:@"Navigate"];
     [connectBtn setAction: @selector(connect:)];
     [connectBtn setKeyEquivalent:@"\r"];
     [connectBtn setKeyEquivalentModifierMask:0]; 
