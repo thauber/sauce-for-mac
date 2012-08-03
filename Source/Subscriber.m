@@ -30,9 +30,9 @@
     {
         NSString *nibname;
         if(type==0)
-            nibname = @"subscribe3";
+            nibname = @"subscriber-3";
         else if(type==1)
-            nibname = @"subscribe5";
+            nibname = @"subscriber-5";
         else
             NSLog(@"bad subscribe type");
 
@@ -40,14 +40,17 @@
         [NSBundle loadNibNamed:nibname  owner:self];
         
         // make string for next month
-        NSDateComponents *components = [[[NSDateComponents alloc] init] autorelease];
-        components.month = 7;
-        NSDate *oneMonthFromNow = [[NSCalendar currentCalendar] dateByAddingComponents:components toDate:[NSDate date] options:0];
-        NSDateFormatter *df = [[[NSDateFormatter alloc] init] autorelease];
-        [df setDateFormat:@"MMMM"]; // Full month
-        NSString *monthStr = [df stringFromDate:oneMonthFromNow];
-        NSString *msg = [NSString stringWithFormat:@"Wait until %@",monthStr];
-        [nextMonthLbl setStringValue:msg];
+        if(type==1 || type==2 || type==4)
+        {
+            NSDateComponents *components = [[[NSDateComponents alloc] init] autorelease];
+            components.month = 7;
+            NSDate *oneMonthFromNow = [[NSCalendar currentCalendar] dateByAddingComponents:components toDate:[NSDate date] options:0];
+            NSDateFormatter *df = [[[NSDateFormatter alloc] init] autorelease];
+            [df setDateFormat:@"MMMM"]; // Full month
+            NSString *monthStr = [df stringFromDate:oneMonthFromNow];
+            NSString *msg = [NSString stringWithFormat:@"Wait until %@",monthStr];
+            [nextMonthLbl setStringValue:msg];
+        }
         
         [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];
     }
@@ -117,13 +120,19 @@
     NSLog(@"do subscribe");
 }
 
-- (IBAction)viewSite:(id)sender {
+- (IBAction)viewSite:(id)sender 
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://saucelabs.com"]]; 
 }
 
-- (IBAction)contactSauce:(id)sender {
+- (IBAction)contactSauce:(id)sender 
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"mailto:support@saucelabs.com"]];
 }
 
-- (IBAction)cancel:(id)sender {
+- (IBAction)cancel:(id)sender 
+{
+    [self quitSheet];
 }
 
 @end
