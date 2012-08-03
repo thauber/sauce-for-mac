@@ -23,12 +23,21 @@
 @synthesize expireYear;
 @synthesize subscribeBtn;
 
-- (id)init
+- (id)init:(NSInteger)type
 {
     self = [super init];
     if(self)
     {
-        [NSBundle loadNibNamed:@"subscriber"  owner:self];
+        NSString *nibname;
+        if(type==0)
+            nibname = @"subscribe3";
+        else if(type==1)
+            nibname = @"subscribe5";
+        else
+            NSLog(@"bad subscribe type");
+
+        
+        [NSBundle loadNibNamed:nibname  owner:self];
         
         // make string for next month
         NSDateComponents *components = [[[NSDateComponents alloc] init] autorelease];
@@ -106,6 +115,15 @@
 {
     [self quitSheet];
     NSLog(@"do subscribe");
+}
+
+- (IBAction)viewSite:(id)sender {
+}
+
+- (IBAction)contactSauce:(id)sender {
+}
+
+- (IBAction)cancel:(id)sender {
 }
 
 @end

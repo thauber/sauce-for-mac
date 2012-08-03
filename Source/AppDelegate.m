@@ -318,7 +318,7 @@
 - (void)promptForSubscribing:(BOOL)bCause        // 0=needs more minutes; 1=to get more tabs
 {
     if([self checkUserOk])
-        subscriberCtrl = [[[Subscriber alloc] init] retain];
+        subscriberCtrl = [[[Subscriber alloc] init:bCause] retain];
     
 }
 

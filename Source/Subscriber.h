@@ -34,7 +34,12 @@
 @property (assign) IBOutlet NSPopUpButton *expireMonth;
 @property (assign) IBOutlet NSPopUpButton *expireYear;
 @property (assign) IBOutlet NSButton *subscribeBtn;
+- (id)init:(NSInteger)type;     // instore no min=0, no tabs=5;
 - (IBAction)doSubscribe:(id)sender;
+- (IBAction)viewSite:(id)sender;
+- (IBAction)contactSauce:(id)sender;
+- (IBAction)cancel:(id)sender;
+
 - (void)quitSheet;
 
 @end
