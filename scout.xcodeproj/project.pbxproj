@@ -9,10 +9,14 @@
 /* Begin PBXBuildFile section */
 		0F32B49815B8C88900C0CFBF /* Subscriber.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F32B49615B8C88900C0CFBF /* Subscriber.h */; };
 		0F32B49915B8C88900C0CFBF /* Subscriber.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F32B49715B8C88900C0CFBF /* Subscriber.m */; };
-		0F32B49C15B8C91000C0CFBF /* subscriber.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F32B49B15B8C91000C0CFBF /* subscriber.xib */; };
 		0F32B49E15B8CD8200C0CFBF /* scottie.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F32B49D15B8CD8200C0CFBF /* scottie.png */; };
 		0F392220158190350065C018 /* OptionBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F39221E158190350065C018 /* OptionBox.h */; };
 		0F392221158190350065C018 /* OptionBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F39221F158190350065C018 /* OptionBox.m */; };
+		0F3957BD15CC4EE600C04D57 /* subscriber-2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3957BB15CC4EE600C04D57 /* subscriber-2.xib */; };
+		0F3957BE15CC4EE600C04D57 /* subscriber.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3957BC15CC4EE600C04D57 /* subscriber.xib */; };
+		0F3957C015CC4F4600C04D57 /* subscriber-3.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3957BF15CC4F4600C04D57 /* subscriber-3.xib */; };
+		0F3957C215CC560900C04D57 /* subscriber-4.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3957C115CC560900C04D57 /* subscriber-4.xib */; };
+		0F3957C415CC5AA000C04D57 /* subscriber-5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3957C315CC5AA000C04D57 /* subscriber-5.xib */; };
 		0F39C51815C0C5B80023E7B8 /* scout_binos_sm.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F39C51715C0C5B70023E7B8 /* scout_binos_sm.pdf */; };
 		0F39C51C15C0C63F0023E7B8 /* readout_left.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F39C51A15C0C63F0023E7B8 /* readout_left.pdf */; };
 		0F39C51D15C0C63F0023E7B8 /* readout_right cap.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F39C51B15C0C63F0023E7B8 /* readout_right cap.pdf */; };
@@ -386,10 +390,14 @@
 /* Begin PBXFileReference section */
 		0F32B49615B8C88900C0CFBF /* Subscriber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Subscriber.h; sourceTree = "<group>"; };
 		0F32B49715B8C88900C0CFBF /* Subscriber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Subscriber.m; sourceTree = "<group>"; };
-		0F32B49B15B8C91000C0CFBF /* subscriber.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = subscriber.xib; sourceTree = "<group>"; };
 		0F32B49D15B8CD8200C0CFBF /* scottie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = scottie.png; path = Resources/scottie.png; sourceTree = "<group>"; };
 		0F39221E158190350065C018 /* OptionBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionBox.h; sourceTree = "<group>"; };
 		0F39221F158190350065C018 /* OptionBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionBox.m; sourceTree = "<group>"; };
+		0F3957BB15CC4EE600C04D57 /* subscriber-2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "subscriber-2.xib"; path = "Resources/subscriber-2.xib"; sourceTree = "<group>"; };
+		0F3957BC15CC4EE600C04D57 /* subscriber.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = subscriber.xib; path = Resources/subscriber.xib; sourceTree = "<group>"; };
+		0F3957BF15CC4F4600C04D57 /* subscriber-3.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "subscriber-3.xib"; path = "Resources/subscriber-3.xib"; sourceTree = "<group>"; };
+		0F3957C115CC560900C04D57 /* subscriber-4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "subscriber-4.xib"; path = "Resources/subscriber-4.xib"; sourceTree = "<group>"; };
+		0F3957C315CC5AA000C04D57 /* subscriber-5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "subscriber-5.xib"; path = "Resources/subscriber-5.xib"; sourceTree = "<group>"; };
 		0F39C51715C0C5B70023E7B8 /* scout_binos_sm.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = scout_binos_sm.pdf; path = Resources/scout_binos_sm.pdf; sourceTree = "<group>"; };
 		0F39C51A15C0C63F0023E7B8 /* readout_left.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = readout_left.pdf; path = Resources/readout_left.pdf; sourceTree = "<group>"; };
 		0F39C51B15C0C63F0023E7B8 /* readout_right cap.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "readout_right cap.pdf"; path = "Resources/readout_right cap.pdf"; sourceTree = "<group>"; };
@@ -952,9 +960,13 @@
 				0F7C606C152A964900DA9A4A /* SessionController.xib */,
 				0F463B32159B5E8A0055B790 /* history.xib */,
 				0F48D0C8157528950067B689 /* snapProgress.xib */,
+				0F3957BB15CC4EE600C04D57 /* subscriber-2.xib */,
+				0F3957BF15CC4F4600C04D57 /* subscriber-3.xib */,
+				0F3957C115CC560900C04D57 /* subscriber-4.xib */,
+				0F3957C315CC5AA000C04D57 /* subscriber-5.xib */,
+				0F3957BC15CC4EE600C04D57 /* subscriber.xib */,
 				0F3A18D015617D39007BAA78 /* tunnel.xib */,
 				0FD5668F1545B17B0007C94A /* BugInfo.xib */,
-				0F32B49B15B8C91000C0CFBF /* subscriber.xib */,
 				DAC8077D12FEC38400C4ADB6 /* ssh-helper.sh */,
 				DAFB492112944331008C6FC4 /* dsa_pub.pem */,
 				E291FAD4088161DA0061216E /* cursors.plist */,
@@ -1603,7 +1615,6 @@
 				0F3BBE1015AB5FDF006EDB74 /* TabNewMetal.png in Resources */,
 				0F3BBE1115AB5FDF006EDB74 /* TabNewMetalPressed.png in Resources */,
 				0F3BBE1215AB5FDF006EDB74 /* TabNewMetalRollover.png in Resources */,
-				0F32B49C15B8C91000C0CFBF /* subscriber.xib in Resources */,
 				0F32B49E15B8CD8200C0CFBF /* scottie.png in Resources */,
 				0F3D2AC015B9BB8E00C216BE /* ssl-auth.png in Resources */,
 				0F39C51815C0C5B80023E7B8 /* scout_binos_sm.pdf in Resources */,
@@ -1613,6 +1624,11 @@
 				0FEDFA1215C31F5C00D61166 /* new.png in Resources */,
 				0FC861A715C3307F0035C02F /* connect_2.png in Resources */,
 				0F46CA6C15CB3EA500A613A1 /* about-screen.png in Resources */,
+				0F3957BD15CC4EE600C04D57 /* subscriber-2.xib in Resources */,
+				0F3957BE15CC4EE600C04D57 /* subscriber.xib in Resources */,
+				0F3957C015CC4F4600C04D57 /* subscriber-3.xib in Resources */,
+				0F3957C215CC560900C04D57 /* subscriber-4.xib in Resources */,
+				0F3957C415CC5AA000C04D57 /* subscriber-5.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
