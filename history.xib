@@ -50,7 +50,7 @@
 					<object class="NSButton" id="283465232">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{350, 304}, {157, 32}}</string>
+						<string key="NSFrame">{{257, 306}, {119, 32}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="824694601"/>
@@ -59,7 +59,7 @@
 						<object class="NSButtonCell" key="NSCell" id="818741318">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">134217728</int>
-							<string key="NSContents">New Scout Session</string>
+							<string key="NSContents">New Session</string>
 							<object class="NSFont" key="NSSupport" id="563525995">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">13</double>
@@ -102,12 +102,10 @@
 											<string key="NSReuseIdentifierKey">_NS:16</string>
 											<reference key="NSTableView" ref="1050960823"/>
 										</object>
-										<object class="_NSCornerView" key="NSCornerView" id="950498357">
-											<reference key="NSNextResponder" ref="824694601"/>
+										<object class="_NSCornerView" key="NSCornerView">
+											<nil key="NSNextResponder"/>
 											<int key="NSvFlags">-2147483392</int>
 											<string key="NSFrame">{{224, 0}, {16, 17}}</string>
-											<reference key="NSSuperview" ref="824694601"/>
-											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="205214676"/>
 											<string key="NSReuseIdentifierKey">_NS:19</string>
 										</object>
@@ -412,7 +410,6 @@
 								<reference key="NSBGColor" ref="1051575095"/>
 								<int key="NScvFlags">4</int>
 							</object>
-							<reference ref="950498357"/>
 						</array>
 						<string key="NSFrameSize">{1010, 292}</string>
 						<reference key="NSSuperview" ref="1005"/>
@@ -424,13 +421,12 @@
 						<reference key="NSHScroller" ref="609370286"/>
 						<reference key="NSContentView" ref="205214676"/>
 						<reference key="NSHeaderClipView" ref="835044840"/>
-						<reference key="NSCornerView" ref="950498357"/>
 						<bytes key="NSScrollAmts">QSAAAEEgAABBmAAAQZgAAA</bytes>
 					</object>
 					<object class="NSTextField" id="933561126">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{17, 309}, {420, 30}}</string>
+						<string key="NSFrame">{{17, 309}, {241, 30}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="283465232"/>
@@ -439,7 +435,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="419928942">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">4194304</int>
-							<string key="NSContents">Previous Scout Sessions</string>
+							<string key="NSContents">Previous Sessions</string>
 							<object class="NSFont" key="NSSupport">
 								<string key="NSName">Helvetica-Bold</string>
 								<double key="NSSize">24</double>

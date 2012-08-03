@@ -72,7 +72,7 @@
 									<object class="NSButtonCell" key="NSCell" id="799688050">
 										<int key="NSCellFlags">-2080244224</int>
 										<int key="NSCellFlags2">134217728</int>
-										<string key="NSContents">Scout!</string>
+										<string key="NSContents">Navigate</string>
 										<object class="NSFont" key="NSSupport">
 											<string key="NSName">LucidaGrande</string>
 											<double key="NSSize">15</double>
@@ -176,7 +176,7 @@
 									<object class="NSTextFieldCell" key="NSCell" id="928501887">
 										<int key="NSCellFlags">-2080244224</int>
 										<int key="NSCellFlags2">4194304</int>
-										<string key="NSContents">Start Scouting!</string>
+										<string key="NSContents">Start Navigating!</string>
 										<object class="NSFont" key="NSSupport">
 											<string key="NSName">Helvetica-Bold</string>
 											<double key="NSSize">24</double>
@@ -271,7 +271,7 @@
 									<object class="NSTextFieldCell" key="NSCell" id="921587581">
 										<int key="NSCellFlags">67239424</int>
 										<int key="NSCellFlags2">272629760</int>
-										<string key="NSContents">Select the browser you want to Scout.</string>
+										<string key="NSContents">Select the os and browser you want to use.</string>
 										<reference key="NSSupport" ref="770766460"/>
 										<string key="NSCellIdentifier">_NS:9</string>
 										<reference key="NSControlView" ref="939498792"/>
