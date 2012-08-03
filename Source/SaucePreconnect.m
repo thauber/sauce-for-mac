@@ -262,10 +262,22 @@ static SaucePreconnect* _sharedPreconnect = nil;
         sdict = [credArr objectAtIndex:i];
         if([sdict objectForKey:@"connection"] == connection)
         {
+            NSString *ajobid = [sdict objectForKey:@"jobId"];
             [credArr removeObjectAtIndex:i];
-            return;
+            NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@saucelabs.com/rest/v1/%@/jobs/%@' -H 'Content-Type: application/json' -d '{\"tags\":[\"test\",\"example\",taggable\"],\"public\":true,\"name\":\"changed-job-name\"}'", self.user, self.ukey, self.user, ajobid];
+            NSTask *ftask = [[[NSTask alloc] init] autorelease];
+            NSPipe *fpipe = [NSPipe pipe];
+            [ftask setStandardOutput:fpipe];
+            [ftask setLaunchPath:@"/bin/bash"];
+            [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+            [ftask launch];
+            // no need to check for success
+            [ftask waitUntilExit];
+            if([ftask terminationStatus])
+                NSLog(@"failed to close job");
         }
     }
+
 }
 
 // return get info for a view; also used to determine if tab has an active session
