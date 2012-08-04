@@ -8,6 +8,7 @@
 
 #import "Subscriber.h"
 #import "ScoutWindowController.h"
+#import "AppDelegate.h"
 
 @implementation Subscriber
 @synthesize nextMonthLbl;
@@ -29,12 +30,22 @@
     if(self)
     {
         NSString *nibname;
-        if(type==0)
-            nibname = @"subscriber-3";
-        else if(type==1)
-            nibname = @"subscriber-5";
+        if(INAPPSTORE)              // appstore version
+        {
+            if(type==0)
+                nibname = @"subscriber-3";      // out of minutes
+            else if(type==1)
+                nibname = @"subscriber-5";      // out of tabs
+        }
         else
-            NSLog(@"bad subscribe type");
+        {
+            if(type==0)             // non-appstore version
+                nibname = @"subscriber";        // out of minutes
+            else if(type==1)
+                nibname = @"subscriber-4";      // out of tabs
+            else if(type==2)
+                nibname = @"subscriber-2";      // subscribe (from menu)
+        }
 
         
         [NSBundle loadNibNamed:nibname  owner:self];

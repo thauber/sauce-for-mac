@@ -205,7 +205,7 @@
         self.optionsCtrlr = nil;    
     }
         
-    [self promptForSubscribing:0];
+    [self promptForSubscribing:2];
 }
 
 - (IBAction)showPreferences: (id)sender
