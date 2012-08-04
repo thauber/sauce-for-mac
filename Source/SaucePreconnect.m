@@ -432,10 +432,10 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 
                 NSData *data = [fhand readDataToEndOfFile];		 
                 NSString *jsonString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+                id cnctn = [sdict objectForKey:@"connection"];
                 NSString *status = [self jsonVal:jsonString key:@"status"];
                 if([status isEqualToString:@"in progress"])
                 {
-                    id ssn = [sdict objectForKey:@"connection"];
                     Session *session = [[ScoutWindowController sharedScout] curSession];
                     NSString *remaining = [self jsonVal:jsonString key:@"remaining-time"];
                     // show in status
@@ -443,7 +443,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
                     {
                         NSString *str = [self remainingTimeStr:[remaining intValue]];
                         [sdict setObject:str forKey:@"remainingTime"];
-                        if(ssn == [session connection])
+                        if(cnctn == [session connection])
                         {
                             NSTextField *tf = [[ScoutWindowController sharedScout] timeRemainingStat];
                             [tf setStringValue:str];
@@ -453,9 +453,9 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 }
                 else
                 {
-                    self.errStr = @"Heartbeat doesn't say 'in progress'";
-                    // TODO: call closetabwithsession
-//                    [self cancelHeartbeat];
+                    self.errStr = @"Heartbeat says session isn't in progress";
+                    // close the session
+                    [[ScoutWindowController sharedScout] performSelectorOnMainThread:@selector(closeTabWithSession:) withObject:[cnctn session] waitUntilDone:NO];
                     break;
                 }
             }
