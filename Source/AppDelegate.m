@@ -21,6 +21,7 @@
 
 
 @implementation AppDelegate
+@synthesize subscribeMenuItem;
 @synthesize tunnelMenuItem;
 @synthesize noTunnel;
 
@@ -39,6 +40,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    if(INAPPSTORE)
+        [subscribeMenuItem setHidden:YES];
     [[ScoutWindowController sharedScout] showWindow:nil];
     
     [mInfoVersionNumber setStringValue: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleVersion"]];

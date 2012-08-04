@@ -9,6 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #import "SaucePreconnect.h"
 
+#define INAPPSTORE 1
+
 @class SessionController;
 @class LoginController;
 @class TunnelController;
@@ -27,7 +29,9 @@
     Subscriber *subscriberCtrl;
     NSMenuItem *tunnelMenuItem;
     BOOL noTunnel;      // set true after user says no to prompt for tunnel
+    NSMenuItem *subscribeMenuItem;
 }
+@property (assign) IBOutlet NSMenuItem *subscribeMenuItem;
 @property (assign) IBOutlet NSMenuItem *tunnelMenuItem;
 @property (retain)SessionController *optionsCtrlr;
 @property (retain)LoginController *loginCtrlr;
