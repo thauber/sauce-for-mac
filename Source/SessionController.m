@@ -112,7 +112,7 @@
     
     NSString *osStr[4] = {@"Windows", @"Linux", @"Mac", @"Mobile"};
 
-    for(int i=0; i < 4; i++)
+    for(int i=0; i < 2; i++)
     {
         NSTextAttachment* ta = [[NSTextAttachment alloc] init];
         NSTextAttachmentCell* tac = [[NSTextAttachmentCell alloc] init];
@@ -184,7 +184,7 @@
             NSString *twoch = [browser substringToIndex:2];     // 2 chars to identify browser
             if(![twoch isEqualToString:lastBrowser])            // different browser than previous
             {            
-                if([twoch isEqualToString:@"ie"])         // firefox
+                if([twoch isEqualToString:@"ie"])         // internet explorer
                     bimg = bimgs[0];
                 if([twoch isEqualToString:@"fi"])         // firefox
                     bimg = bimgs[1];
@@ -210,7 +210,8 @@
             {
                 winver = [[osstr componentsSeparatedByString:@" "] objectAtIndex:1];
             }
-            NSString *brver = [NSString stringWithFormat:@"%@ %@ %@",winver, browser, version];
+            browser = [browser capitalizedString];
+            NSString *brver = [NSString stringWithFormat:@" %@ %@",browser, version];
             NSNumber *nn = [NSNumber numberWithInteger:6]; 
             NSDictionary *asdict = [NSDictionary dictionaryWithObjectsAndKeys:nn,NSBaselineOffsetAttributeName, nil];
             NSAttributedString *bAStr = [[NSAttributedString alloc] initWithString:brver attributes:asdict]; 
