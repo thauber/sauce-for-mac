@@ -17,6 +17,7 @@ typedef enum { login,options,session } tabType;
 @class HistoryViewController;
 @class RFBView;
 @class GradientView;
+@class StopSession;
 
 @interface ScoutWindowController : NSWindowController <NSToolbarDelegate, NSWindowDelegate> {
 	IBOutlet NSTabView					*tabView;
@@ -39,6 +40,7 @@ typedef enum { login,options,session } tabType;
     NSButton *tunnelButton;    
     IBOutlet NSTextField *nowscout;
     GradientView *msgGradient;
+    StopSession *stopSessionCtl;
     
 }
 @property (assign) IBOutlet NSTabView *tabView;
@@ -56,6 +58,7 @@ typedef enum { login,options,session } tabType;
 @property (retain) SnapProgress *snapProgress;
 @property (assign) IBOutlet NSButton *tunnelButton;
 @property (assign) HistoryViewController *hviewCtlr;
+@property (retain) StopSession *stopSessionCtl;
 
 +(ScoutWindowController*)sharedScout;
 - (IBAction)addNewTab:(id)sender;

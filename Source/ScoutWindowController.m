@@ -18,6 +18,7 @@
 #import "Session.h"
 #import "HistoryViewController.h"
 #import "GradientView.h"
+#import "StopSession.h"
 
 @implementation ScoutWindowController
 
@@ -36,6 +37,7 @@
 @synthesize snapProgress;
 @synthesize tunnelButton;
 @synthesize hviewCtlr;
+@synthesize stopSessionCtl;
 
 static ScoutWindowController* _sharedScout = nil;
 NSString *kHistoryTabLabel = @"Session History";
@@ -97,33 +99,16 @@ NSString *kHistoryTabLabel = @"Session History";
 
 - (IBAction)doPlayStop:(id)sender
 {
-    NSString *header = NSLocalizedString( @"Stop Session", nil );
-    NSString *okayButton = NSLocalizedString( @"Close session", nil );
-    NSString *keepButton =  NSLocalizedString( @"Keep session", nil );
-    NSBeginAlertSheet(header, okayButton, keepButton, nil, [self window], self, nil, @selector(stopSessionDidDismiss:returnCode:contextInfo:), nil, @"Do you want to end this session?");
-}
-
-- (void)stopSessionDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-	/* One might reasonably argue that this should be handled by the connection manager. */
-//    [playstop setSelected:NO forSegment:0];
-	switch (returnCode)
+    if([[NSApp delegate] noShowCloseSession])
+        [self closeTab:nil];
+    else 
     {
-		case NSAlertDefaultReturn:
-            [self closeTab:self];
-			return;
-		case NSAlertAlternateReturn:
-            return;
-		default:
-			NSLog(@"Unknown alert returnvalue: %d", returnCode);
-			break;
-	}
+        self.stopSessionCtl = [[StopSession alloc] init];
+    }
 }
-
 
 - (IBAction)doBugCamera:(id)sender
 {
-//    [bugsnap setState:0];
     // sheet for title and description
     BugInfoController *bugCtrl = [[BugInfoController alloc] init];
     [[NSApp delegate] setBugCtrlr:bugCtrl];
