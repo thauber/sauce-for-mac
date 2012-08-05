@@ -96,6 +96,9 @@
 		0F48D0CE157528C20067B689 /* SnapProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F48D0CC157528C20067B689 /* SnapProgress.m */; };
 		0F59372515C83B150024AB5A /* keysymdef.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59372415C83B150024AB5A /* keysymdef.h */; };
 		0F59372815C8C18B0024AB5A /* keysym.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59372715C8C18B0024AB5A /* keysym.h */; };
+		0F59E7C115CDA3F30003D541 /* stopSession.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F59E7C015CDA3F30003D541 /* stopSession.xib */; };
+		0F59E7C515CDA6CB0003D541 /* StopSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59E7C315CDA6CB0003D541 /* StopSession.h */; };
+		0F59E7C615CDA6CB0003D541 /* StopSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F59E7C415CDA6CB0003D541 /* StopSession.m */; };
 		0F7BE39E1522183800B64686 /* LoginController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F7BE39C1522183800B64686 /* LoginController.h */; };
 		0F7BE39F1522183800B64686 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7BE39D1522183800B64686 /* LoginController.m */; };
 		0F7BF6F11523FEF400F1A478 /* LoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7BF6F01523FEF400F1A478 /* LoginController.xib */; };
@@ -476,6 +479,9 @@
 		0F48D0CC157528C20067B689 /* SnapProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapProgress.m; sourceTree = "<group>"; };
 		0F59372415C83B150024AB5A /* keysymdef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keysymdef.h; sourceTree = "<group>"; };
 		0F59372715C8C18B0024AB5A /* keysym.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keysym.h; sourceTree = "<group>"; };
+		0F59E7C015CDA3F30003D541 /* stopSession.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = stopSession.xib; sourceTree = "<group>"; };
+		0F59E7C315CDA6CB0003D541 /* StopSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StopSession.h; sourceTree = "<group>"; };
+		0F59E7C415CDA6CB0003D541 /* StopSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StopSession.m; sourceTree = "<group>"; };
 		0F7BE39C1522183800B64686 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
 		0F7BE39D1522183800B64686 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
 		0F7BF6F01523FEF400F1A478 /* LoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginController.xib; path = Resources/LoginController.xib; sourceTree = "<group>"; };
@@ -958,6 +964,7 @@
 				0F99617815267C6C002657A9 /* windows_color.pdf */,
 				0F7BF6F01523FEF400F1A478 /* LoginController.xib */,
 				0F7C606C152A964900DA9A4A /* SessionController.xib */,
+				0F59E7C015CDA3F30003D541 /* stopSession.xib */,
 				0F463B32159B5E8A0055B790 /* history.xib */,
 				0F48D0C8157528950067B689 /* snapProgress.xib */,
 				0F3957BB15CC4EE600C04D57 /* subscriber-2.xib */,
@@ -1066,6 +1073,8 @@
 				0FDA1D1115A5648300ECBF59 /* HistoryViewController.m */,
 				0F32B49615B8C88900C0CFBF /* Subscriber.h */,
 				0F32B49715B8C88900C0CFBF /* Subscriber.m */,
+				0F59E7C315CDA6CB0003D541 /* StopSession.h */,
+				0F59E7C415CDA6CB0003D541 /* StopSession.m */,
 			);
 			name = "GUI Controller";
 			sourceTree = "<group>";
@@ -1489,6 +1498,7 @@
 				0F32B49815B8C88900C0CFBF /* Subscriber.h in Headers */,
 				0F59372515C83B150024AB5A /* keysymdef.h in Headers */,
 				0F59372815C8C18B0024AB5A /* keysym.h in Headers */,
+				0F59E7C515CDA6CB0003D541 /* StopSession.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1629,6 +1639,7 @@
 				0F3957C015CC4F4600C04D57 /* subscriber-3.xib in Resources */,
 				0F3957C215CC560900C04D57 /* subscriber-4.xib in Resources */,
 				0F3957C415CC5AA000C04D57 /* subscriber-5.xib in Resources */,
+				0F59E7C115CDA3F30003D541 /* stopSession.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1800,6 +1811,7 @@
 				0F3BBDD415AB5EC7006EDB74 /* PSMTabDragWindowController.m in Sources */,
 				0F3BBDD715AB5EC7006EDB74 /* PSMUnifiedTabStyle.m in Sources */,
 				0F32B49915B8C88900C0CFBF /* Subscriber.m in Sources */,
+				0F59E7C615CDA6CB0003D541 /* StopSession.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

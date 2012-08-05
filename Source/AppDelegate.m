@@ -30,6 +30,7 @@
 @synthesize tunnelCtrlr;
 @synthesize bugCtrlr;
 @synthesize subscriberCtrl;
+@synthesize noShowCloseSession;
 
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification

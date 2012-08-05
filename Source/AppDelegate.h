@@ -30,6 +30,7 @@
     NSMenuItem *tunnelMenuItem;
     BOOL noTunnel;      // set true after user says no to prompt for tunnel
     NSMenuItem *subscribeMenuItem;
+    BOOL noShowCloseSession;
 }
 @property (assign) IBOutlet NSMenuItem *subscribeMenuItem;
 @property (assign) IBOutlet NSMenuItem *tunnelMenuItem;
@@ -39,6 +40,7 @@
 @property (retain)BugInfoController *bugCtrlr;
 @property (retain)Subscriber *subscriberCtrl;
 @property  (assign)BOOL noTunnel;
+@property (assign) BOOL noShowCloseSession;
 
 - (IBAction)bugsAccount:(id)sender;
 - (IBAction)myAccount:(id)sender;
