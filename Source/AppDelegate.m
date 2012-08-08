@@ -23,6 +23,7 @@
 @implementation AppDelegate
 @synthesize subscribeMenuItem;
 @synthesize tunnelMenuItem;
+@synthesize viewConnectMenuItem;
 @synthesize noTunnel;
 
 @synthesize optionsCtrlr;
@@ -43,6 +44,7 @@
 {
     if(INAPPSTORE)
         [subscribeMenuItem setHidden:YES];
+    [viewConnectMenuItem setAction:nil];
     [[ScoutWindowController sharedScout] showWindow:nil];
     
     [mInfoVersionNumber setStringValue: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleVersion"]];
@@ -300,7 +302,6 @@
     {
         self.tunnelCtrlr = [[TunnelController alloc] init];
         [tunnelCtrlr runSheetOnWindow:win];
-        [self toggleTunnelDisplay];
     }
     else  // asking to stop tunnel
     {
@@ -332,12 +333,14 @@
     if(tunnelCtrlr)
     {
         [tunnelMenuItem setTitle:@"Stop Sauce Connect"];
+        [viewConnectMenuItem setAction:@selector(viewConnect:)];
         [[[ScoutWindowController sharedScout] tunnelButton] setTitle:@"Stop Sauce Connect"];
     }
     else    // no tunnel
     {
         [[ScoutWindowController sharedScout] tunnelConnected:NO];
         [tunnelMenuItem setTitle:@"Start Sauce Connect"];
+        [viewConnectMenuItem setAction:nil];
         [[[ScoutWindowController sharedScout] tunnelButton] setTitle:@"Start Sauce Connect"];
     }
 }

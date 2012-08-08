@@ -47,6 +47,7 @@
         NSString *str = @"Please wait while we launch Sauce Connect, (which allows testing local websites) ...\n\n";
         [[[infoTV textStorage] mutableString] appendString: str];
         [hideButton setHidden:YES];      // don't show b/c we are not connected
+        [emailLog setHidden:YES];
         [indicator startAnimation:self];
 
         [self doTunnel];
@@ -56,6 +57,8 @@
     }
     else
     {
+        [hideButton setHidden:NO];
+        [emailLog setHidden:NO];
         [panel makeKeyAndOrderFront:self];
         [panel display];
     }
@@ -77,7 +80,8 @@
             [indicator setHidden:YES];
             [connectLabel setHidden:YES];
             [self doHide:self];
-            [[ScoutWindowController sharedScout] tunnelConnected:YES];            
+            [[ScoutWindowController sharedScout] tunnelConnected:YES];
+            [[NSApp delegate] toggleTunnelDisplay];
         }           
     }
 }
