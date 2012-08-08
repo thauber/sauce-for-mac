@@ -11,7 +11,7 @@
 @interface StopSession : NSObject {
     
     IBOutlet NSPanel *panel;
-    NSButton *againChkbox;
+    IBOutlet NSButton *againChkbox;
 }
 
 - (IBAction)closeSession:(id)sender;
