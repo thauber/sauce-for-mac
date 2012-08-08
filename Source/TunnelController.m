@@ -10,8 +10,10 @@
 #import "ScoutWindowController.h"
 #import "SaucePreconnect.h"
 #import "AppDelegate.h"
+#import "StopConnect.h"
 
 @implementation TunnelController
+@synthesize emailLog;
 @synthesize panel;
 @synthesize closeButton;
 @synthesize hideButton;
@@ -20,6 +22,7 @@
 @synthesize ftask;
 @synthesize fhand;
 @synthesize fpipe;
+@synthesize stopCtlr;
 
 -(id)init
 {
@@ -47,13 +50,17 @@
         [indicator startAnimation:self];
 
         [self doTunnel];
+        hiddenDisplay = NO;
+        [NSApp beginSheet:panel modalForWindow:window modalDelegate:self
+           didEndSelector:nil   contextInfo:nil];
     }
     else
-        [hideButton setHidden:NO];      // show b/c we are connected
+    {
+        [panel makeKeyAndOrderFront:self];
+        [panel display];
+    }
 
-    hiddenDisplay = NO;
-    [NSApp beginSheet:panel modalForWindow:window modalDelegate:self
-       didEndSelector:nil   contextInfo:nil];
+
 }
 
 -(void)displayInfo:(NSString *)str
@@ -76,20 +83,36 @@
 }
 
 - (IBAction)doClose:(id)sender
-{
+{    
+    
     if(panel)
     {
         [NSApp endSheet:panel];
         [panel orderOut:self];
     }
-    self.panel = nil;
+
+    if(!stopCtlr && ![[NSApp delegate] noShowCloseConnect])      // prompt for closing connection
+    {
+        self.stopCtlr = [[StopConnect alloc] init];
+        return;
+    }
+    
+    if(stopCtlr)
+    {
+        [stopCtlr endPanel];
+        self.stopCtlr = nil;        
+    }
+    
+    //    self.panel = nil;
     [[NSNotificationCenter defaultCenter] removeObserver: self];
     [ftask terminate];
     self.ftask = nil;
     self.fhand = nil;
     self.fpipe = nil;
+// testing (w/o internet)
     [[NSApp delegate] setTunnelCtrlr:nil];
     [[NSApp delegate] toggleTunnelDisplay];
+    hiddenDisplay = YES;
 }
 
 - (IBAction)doHide:(id)sender
@@ -98,6 +121,14 @@
     [panel orderOut:self];
     hiddenDisplay = YES;
     [[NSApp delegate] toggleTunnelDisplay];
+}
+
+- (IBAction)doEmailLog:(id)sender
+{
+    
+    NSString *str = [NSString stringWithFormat:@"mailto:<>?body=%@",[[infoTV textStorage] string]];
+    // TODO: html encode the string
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:str]];
 }
 
 - (void)doTunnel
