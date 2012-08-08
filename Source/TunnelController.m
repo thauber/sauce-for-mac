@@ -52,18 +52,14 @@
 
         [self doTunnel];
         hiddenDisplay = NO;
-        [NSApp beginSheet:panel modalForWindow:window modalDelegate:self
-           didEndSelector:nil   contextInfo:nil];
     }
     else
     {
         [hideButton setHidden:NO];
         [emailLog setHidden:NO];
-        [panel makeKeyAndOrderFront:self];
-        [panel display];
     }
-
-
+    [panel makeKeyAndOrderFront:self];
+    [panel display];
 }
 
 -(void)displayInfo:(NSString *)str
