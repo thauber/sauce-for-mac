@@ -263,8 +263,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if([sdict objectForKey:@"connection"] == connection)
         {
             NSString *ajobid = [sdict objectForKey:@"jobId"];
-            [credArr removeObjectAtIndex:i];
             NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@saucelabs.com/rest/v1/%@/jobs/%@' -H 'Content-Type: application/json' -d '{\"tags\":[\"test\",\"example\",taggable\"],\"public\":true,\"name\":\"changed-job-name\"}'", self.user, self.ukey, self.user, ajobid];
+            [credArr removeObjectAtIndex:i];
             NSTask *ftask = [[[NSTask alloc] init] autorelease];
             NSPipe *fpipe = [NSPipe pipe];
             [ftask setStandardOutput:fpipe];
@@ -275,6 +275,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
             [ftask waitUntilExit];
             if([ftask terminationStatus])
                 NSLog(@"failed to close job");
+            break;
         }
     }
 
