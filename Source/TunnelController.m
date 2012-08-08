@@ -127,9 +127,9 @@
 
 - (IBAction)doEmailLog:(id)sender
 {
-    
-    NSString *str = [NSString stringWithFormat:@"mailto:<>?body=%@",[[infoTV textStorage] string]];
-    // TODO: html encode the string
+    NSString *bodystr = [[infoTV textStorage] string];
+    NSString *bstr = [bodystr stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+    NSString *str = [NSString stringWithFormat:@"mailto:?body=%@",bstr];
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:str]];
 }
 
