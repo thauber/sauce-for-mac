@@ -99,17 +99,15 @@
     
     if(stopCtlr)
     {
-        [stopCtlr endPanel];
         self.stopCtlr = nil;        
     }
     
-    //    self.panel = nil;
     [[NSNotificationCenter defaultCenter] removeObserver: self];
     [ftask terminate];
     self.ftask = nil;
     self.fhand = nil;
     self.fpipe = nil;
-// testing (w/o internet)
+
     [[NSApp delegate] setTunnelCtrlr:nil];
     [[NSApp delegate] toggleTunnelDisplay];
     hiddenDisplay = YES;
