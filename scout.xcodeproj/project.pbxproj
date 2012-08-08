@@ -79,6 +79,10 @@
 		0F3D2AC015B9BB8E00C216BE /* ssl-auth.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3D2ABF15B9BB8E00C216BE /* ssl-auth.png */; };
 		0F3DC43D155D6F760069F7AB /* TunnelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F3DC43B155D6F760069F7AB /* TunnelController.h */; };
 		0F3DC43E155D6F760069F7AB /* TunnelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3DC43C155D6F760069F7AB /* TunnelController.m */; };
+		0F3E53B915D22A6700513767 /* stopConnect.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3E53B815D22A6700513767 /* stopConnect.xib */; };
+		0F3E53BB15D22A7700513767 /* stopSession.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3E53BA15D22A7700513767 /* stopSession.xib */; };
+		0F3E53BE15D22AB400513767 /* StopConnect.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F3E53BC15D22AB400513767 /* StopConnect.h */; };
+		0F3E53BF15D22AB400513767 /* StopConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3E53BD15D22AB400513767 /* StopConnect.m */; };
 		0F40B21B1598ED6400E6311E /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F40B2191598ED6400E6311E /* RegexKitLite.h */; };
 		0F40B21C1598ED6400E6311E /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F40B21A1598ED6400E6311E /* RegexKitLite.m */; };
 		0F40B21F1598F14600E6311E /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F40B21E1598F14600E6311E /* libicucore.dylib */; };
@@ -96,7 +100,6 @@
 		0F48D0CE157528C20067B689 /* SnapProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F48D0CC157528C20067B689 /* SnapProgress.m */; };
 		0F59372515C83B150024AB5A /* keysymdef.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59372415C83B150024AB5A /* keysymdef.h */; };
 		0F59372815C8C18B0024AB5A /* keysym.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59372715C8C18B0024AB5A /* keysym.h */; };
-		0F59E7C115CDA3F30003D541 /* stopSession.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F59E7C015CDA3F30003D541 /* stopSession.xib */; };
 		0F59E7C515CDA6CB0003D541 /* StopSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59E7C315CDA6CB0003D541 /* StopSession.h */; };
 		0F59E7C615CDA6CB0003D541 /* StopSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F59E7C415CDA6CB0003D541 /* StopSession.m */; };
 		0F59E7C815CE0F5D0003D541 /* logo.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0F59E7C715CE0F5D0003D541 /* logo.icns */; };
@@ -464,6 +467,10 @@
 		0F3D2ABF15B9BB8E00C216BE /* ssl-auth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ssl-auth.png"; path = "Resources/ssl-auth.png"; sourceTree = "<group>"; };
 		0F3DC43B155D6F760069F7AB /* TunnelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TunnelController.h; sourceTree = "<group>"; };
 		0F3DC43C155D6F760069F7AB /* TunnelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TunnelController.m; sourceTree = "<group>"; };
+		0F3E53B815D22A6700513767 /* stopConnect.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = stopConnect.xib; path = Resources/stopConnect.xib; sourceTree = "<group>"; };
+		0F3E53BA15D22A7700513767 /* stopSession.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = stopSession.xib; path = Resources/stopSession.xib; sourceTree = "<group>"; };
+		0F3E53BC15D22AB400513767 /* StopConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StopConnect.h; sourceTree = "<group>"; };
+		0F3E53BD15D22AB400513767 /* StopConnect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StopConnect.m; sourceTree = "<group>"; };
 		0F40B2191598ED6400E6311E /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
 		0F40B21A1598ED6400E6311E /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		0F40B21E1598F14600E6311E /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
@@ -480,7 +487,6 @@
 		0F48D0CC157528C20067B689 /* SnapProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapProgress.m; sourceTree = "<group>"; };
 		0F59372415C83B150024AB5A /* keysymdef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keysymdef.h; sourceTree = "<group>"; };
 		0F59372715C8C18B0024AB5A /* keysym.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keysym.h; sourceTree = "<group>"; };
-		0F59E7C015CDA3F30003D541 /* stopSession.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = stopSession.xib; sourceTree = "<group>"; };
 		0F59E7C315CDA6CB0003D541 /* StopSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StopSession.h; sourceTree = "<group>"; };
 		0F59E7C415CDA6CB0003D541 /* StopSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StopSession.m; sourceTree = "<group>"; };
 		0F59E7C715CE0F5D0003D541 /* logo.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = logo.icns; path = Resources/logo.icns; sourceTree = "<group>"; };
@@ -946,14 +952,12 @@
 				0F7CE3CF152F6C2800068464 /* stop.pdf */,
 				0F9961841526AC06002657A9 /* linux_color.pdf */,
 				0F9961821526ABC2002657A9 /* apple_color.pdf */,
-				0F46CA6B15CB3EA500A613A1 /* about-screen.png */,
 				0F99617E15267CAF002657A9 /* opera_color.pdf */,
 				0F99617415267C6B002657A9 /* chrome_color.pdf */,
 				0FC861A615C3307F0035C02F /* connect_2.png */,
 				0FEDFA1115C31F5C00D61166 /* new.png */,
 				0FEDFA0C15C31B7900D61166 /* bugsnap.png */,
 				0F486EA1155CBD1A004502C4 /* dotgreen.png */,
-				0F99617515267C6B002657A9 /* firefox_color.icns */,
 				0F99617615267C6C002657A9 /* ie_color.pdf */,
 				0F59E7C715CE0F5D0003D541 /* logo.icns */,
 				0F99617715267C6C002657A9 /* safari_color.icns */,
@@ -962,13 +966,16 @@
 				0F32B49D15B8CD8200C0CFBF /* scottie.png */,
 				0F39C51715C0C5B70023E7B8 /* scout_binos_sm.pdf */,
 				0F39C51A15C0C63F0023E7B8 /* readout_left.pdf */,
+				0F46CA6B15CB3EA500A613A1 /* about-screen.png */,
 				0F39C51B15C0C63F0023E7B8 /* readout_right cap.pdf */,
+				0F99617515267C6B002657A9 /* firefox_color.icns */,
 				0F486EA6155CC2CF004502C4 /* Sauce-Connect.jar */,
 				0F99617815267C6C002657A9 /* windows_color.pdf */,
 				0F7BF6F01523FEF400F1A478 /* LoginController.xib */,
 				0F7C606C152A964900DA9A4A /* SessionController.xib */,
-				0F59E7C015CDA3F30003D541 /* stopSession.xib */,
 				0F463B32159B5E8A0055B790 /* history.xib */,
+				0F3E53B815D22A6700513767 /* stopConnect.xib */,
+				0F3E53BA15D22A7700513767 /* stopSession.xib */,
 				0F48D0C8157528950067B689 /* snapProgress.xib */,
 				0F3957BB15CC4EE600C04D57 /* subscriber-2.xib */,
 				0F3957BF15CC4F4600C04D57 /* subscriber-3.xib */,
@@ -1078,6 +1085,8 @@
 				0F32B49715B8C88900C0CFBF /* Subscriber.m */,
 				0F59E7C315CDA6CB0003D541 /* StopSession.h */,
 				0F59E7C415CDA6CB0003D541 /* StopSession.m */,
+				0F3E53BC15D22AB400513767 /* StopConnect.h */,
+				0F3E53BD15D22AB400513767 /* StopConnect.m */,
 			);
 			name = "GUI Controller";
 			sourceTree = "<group>";
@@ -1502,6 +1511,7 @@
 				0F59372515C83B150024AB5A /* keysymdef.h in Headers */,
 				0F59372815C8C18B0024AB5A /* keysym.h in Headers */,
 				0F59E7C515CDA6CB0003D541 /* StopSession.h in Headers */,
+				0F3E53BE15D22AB400513767 /* StopConnect.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1642,8 +1652,9 @@
 				0F3957C015CC4F4600C04D57 /* subscriber-3.xib in Resources */,
 				0F3957C215CC560900C04D57 /* subscriber-4.xib in Resources */,
 				0F3957C415CC5AA000C04D57 /* subscriber-5.xib in Resources */,
-				0F59E7C115CDA3F30003D541 /* stopSession.xib in Resources */,
 				0F59E7C815CE0F5D0003D541 /* logo.icns in Resources */,
+				0F3E53B915D22A6700513767 /* stopConnect.xib in Resources */,
+				0F3E53BB15D22A7700513767 /* stopSession.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1816,6 +1827,7 @@
 				0F3BBDD715AB5EC7006EDB74 /* PSMUnifiedTabStyle.m in Sources */,
 				0F32B49915B8C88900C0CFBF /* Subscriber.m in Sources */,
 				0F59E7C615CDA6CB0003D541 /* StopSession.m in Sources */,
+				0F3E53BF15D22AB400513767 /* StopConnect.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
