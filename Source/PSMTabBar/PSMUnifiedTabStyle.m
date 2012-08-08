@@ -305,7 +305,7 @@
 	NSColor * lineColor = nil;
 	NSBezierPath* bezier = [NSBezierPath bezierPath];
 //	lineColor = [NSColor colorWithCalibratedWhite:0.576 alpha:1.0];
-	lineColor = [NSColor colorWithCalibratedWhite:0.4 alpha:1.0];
+	lineColor = [NSColor colorWithCalibratedWhite:0.3 alpha:1.0];
 
 	if(!showsBaselineSeparator || [cell state] == NSOnState) {
 		// selected tab
@@ -355,13 +355,13 @@
  */
 		if([NSApp isActive]) {
 			if([cell state] == NSOnState) {
-				[bezier linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.63 alpha:1.0]
-                                                endColor:[NSColor colorWithCalibratedWhite:0.75 alpha:1.0]];
+				[bezier linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.65 alpha:1.0]
+                                                endColor:[NSColor colorWithCalibratedWhite:0.85 alpha:1.0]];
 			} else if([cell isHighlighted]) {
-				[bezier linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.55 alpha:1.0]
+				[bezier linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.45 alpha:1.0]
                                                 endColor:[NSColor colorWithCalibratedWhite:0.65 alpha:1.0]];
 			} else {
-				[bezier linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.50 alpha:1.0]
+				[bezier linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.35 alpha:1.0]
                                                 endColor:[NSColor colorWithCalibratedWhite:0.60 alpha:1.0]];
 			}
 		}
@@ -369,11 +369,24 @@
 		[lineColor set];
 		[bezier stroke];
         
+        
+        
         if([cell state] == NSOnState)        // [rda] extra rect on top to blend in with toolbar
         {
            	NSBezierPath *path = [NSBezierPath bezierPathWithRect:NSMakeRect(cellFrame.origin.x+.5, cellFrame.origin.y-3.0, NSWidth(cellFrame)-.1, 3.0)];
-            [[NSColor colorWithCalibratedWhite:0.63 alpha:1.0] set];
+            [[NSColor colorWithCalibratedWhite:0.64 alpha:1.0] set];
             [path fill]; 
+            [self drawInteriorWithTabCell:cell inView:[cell controlView]];
+        }
+        else {
+            [self drawInteriorWithTabCell:cell inView:[cell controlView]];
+
+            NSBezierPath* bz = [NSBezierPath bezierPath];
+            [bz moveToPoint:NSMakePoint(aRect.origin.x, aRect.origin.y)];
+			[bz lineToPoint:NSMakePoint(NSMaxX(aRect), aRect.origin.y)];
+            NSColor *lclr = [NSColor colorWithCalibratedWhite:0.1 alpha:1.0];
+            [lclr set];
+            [bz stroke];
         }
         
 	}   else{
@@ -418,9 +431,10 @@
 			[NSBezierPath strokeLineFromPoint:NSMakePoint(aRect.origin.x + 1.0, aRect.origin.y - 0.5)
 			 toPoint:NSMakePoint(aRect.origin.x + 1.0, NSMaxY(aRect) - 2.5)];
 		}
+        [self drawInteriorWithTabCell:cell inView:[cell controlView]];
 	}
 
-	[self drawInteriorWithTabCell:cell inView:[cell controlView]];
+    
 }
 
 
@@ -481,7 +495,7 @@
 	labelRect.origin.x = labelPosition;
 	labelRect.size.width = cellFrame.size.width - (labelRect.origin.x - cellFrame.origin.x) - kPSMTabBarCellPadding;
 	NSSize s = [[cell attributedStringValue] size];
-	labelRect.origin.y = cellFrame.origin.y + (cellFrame.size.height - s.height) / 2.0 - 1.0;
+	labelRect.origin.y = cellFrame.origin.y + (cellFrame.size.height - s.height) / 2.0 - 3.0;
 	labelRect.size.height = s.height;
 
 	if(![[cell indicator] isHidden]) {
@@ -524,13 +538,13 @@
 	gradientRect.size.height -= 1.0;
 
 	NSBezierPath *path = [NSBezierPath bezierPathWithRect:gradientRect];
-	[path linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.5 alpha:1.0]
-                                  endColor:[NSColor colorWithCalibratedWhite:0.6 alpha:1.0]];
+	[path linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.3 alpha:1.0]
+                                  endColor:[NSColor colorWithCalibratedWhite:0.5 alpha:1.0]];
 
     [[NSColor colorWithCalibratedWhite:0.1 alpha:1.0] set];	
     [NSBezierPath setDefaultLineWidth:0];    
-    [NSBezierPath strokeLineFromPoint:NSMakePoint(rect.origin.x, NSMinY(rect) + 3.5)
-                              toPoint:NSMakePoint(NSMaxX(rect), NSMinY(rect) + 3.5)];
+    [NSBezierPath strokeLineFromPoint:NSMakePoint(rect.origin.x, NSMinY(rect) + 2.5)
+                              toPoint:NSMakePoint(NSMaxX(rect), NSMinY(rect) + 2.5)];
 
 
 //	if(![[[tabBar tabView] window] isKeyWindow]) {
