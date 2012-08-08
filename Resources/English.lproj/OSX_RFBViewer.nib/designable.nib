@@ -950,20 +950,20 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 					<int key="connectionID">1558</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">doTunnel:</string>
-						<reference key="source" ref="569964129"/>
-						<reference key="destination" ref="315896185"/>
-					</object>
-					<int key="connectionID">1566</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">subscribeMenuItem</string>
 						<reference key="source" ref="569964129"/>
 						<reference key="destination" ref="303563820"/>
 					</object>
 					<int key="connectionID">1576</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">viewConnect:</string>
+						<reference key="source" ref="569964129"/>
+						<reference key="destination" ref="315896185"/>
+					</object>
+					<int key="connectionID">1577</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1656,7 +1656,7 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1576</int>
+			<int key="maxID">1577</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

@@ -48,6 +48,7 @@
 - (IBAction)myAccount:(id)sender;
 - (IBAction)doStopSession:(id)sender;
 - (IBAction)doStopConnect:(id)sender;
+- (IBAction)viewConnect:(id)sender;
 - (void)closeStopConnect;
 
 - (IBAction)toggleToolbar:(id)sender;

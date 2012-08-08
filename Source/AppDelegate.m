@@ -271,6 +271,15 @@
     }
 }
 
+- (IBAction)viewConnect:(id)sender
+{
+    if(tunnelCtrlr)    // need to create the tunnel object
+    {
+        NSWindow *win = [[ScoutWindowController sharedScout] window];
+        [tunnelCtrlr runSheetOnWindow:win]; 
+    }
+}
+
 - (IBAction)toggleToolbar:(id)sender
 {
     [[ScoutWindowController sharedScout] toggleToolbar];
