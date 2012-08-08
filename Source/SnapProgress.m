@@ -30,7 +30,7 @@
         [urlLabel setHidden:YES];
         [cancelButton setFrame:NSMakeRect(0,0,0,0)];       // allow 'esc' to quit
         [indicator startAnimation:self];
-        [viewSnapshotButton setEnabled:NO];
+        [viewSnapshotButton setHidden:YES];
         [availableLbl setHidden:YES];
         okEnableView = NO;                      // default to not show 'view button'
         [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];
@@ -67,6 +67,7 @@
         [takingTxt setStringValue:tstr];
         [indicator stopAnimation:self];
         [indicator setHidden:YES];
+        [viewSnapshotButton setHidden:NO];
         if([surl length])           
             [[ScoutWindowController sharedScout] addBugToHistory:surl];
     }
