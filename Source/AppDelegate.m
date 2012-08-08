@@ -31,7 +31,7 @@
 @synthesize bugCtrlr;
 @synthesize subscriberCtrl;
 @synthesize noShowCloseSession;
-
+@synthesize noShowCloseConnect;
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification
 {
@@ -84,6 +84,12 @@
         if(!userOk)
             [self showLoginDlg:self];
         return userOk;      // connection ok, but maybe no valid user
+    }
+    NSInteger userOk = [[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:akey];
+    if(userOk == -1)
+    {
+        [self internetNotOkDlg];
+        return NO;      // still no connection
     }
     [self showLoginDlg:self];
     return NO;              // no valid user
@@ -175,15 +181,10 @@
         [[SaucePreconnect sharedPreconnect] setErrStr:nil];         // clear error string
         NSString *header = NSLocalizedString( @"Connection Status", nil );
         NSString *okayButton = NSLocalizedString( @"Ok", nil );
-        NSBeginAlertSheet(header, okayButton, nil, nil, [[ScoutWindowController sharedScout] window], self, nil, @selector(errDidDismiss:returnCode:contextInfo:), nil, errMsg);
+        NSBeginAlertSheet(header, okayButton, nil, nil, [[ScoutWindowController sharedScout] window], self, nil, 
+                          nil, nil, errMsg);
     }
 }
-
-- (void)errDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-//    [self showOptionsDlg:nil];        // let user decide whether to show options sheet
-}
-
 
 - (IBAction)showLoginDlg:(id)sender 
 {
@@ -193,8 +194,10 @@
         [[optionsCtrlr panel] orderOut:nil]; 
         self.optionsCtrlr = nil;
     }
-    if([self checkUserOk])
-        self.loginCtrlr = [[LoginController alloc] init];
+    
+    if(sender != self)
+        [self checkUserOk];
+    self.loginCtrlr = [[LoginController alloc] init];
 }
 
 - (IBAction)showSubscribeDlg:(id)sender
@@ -252,6 +255,22 @@
     [[ScoutWindowController sharedScout] doPlayStop:self];
 }
 
+- (IBAction)doStopConnect:(id)sender
+{
+    if(tunnelCtrlr)
+    {
+        [tunnelCtrlr doClose:self];
+    }
+}
+
+- (void)closeStopConnect
+{
+    if(tunnelCtrlr)
+    {
+        [tunnelCtrlr setStopCtlr:nil];
+    }
+}
+
 - (IBAction)toggleToolbar:(id)sender
 {
     [[ScoutWindowController sharedScout] toggleToolbar];
@@ -269,9 +288,15 @@
     NSWindow *win = [[ScoutWindowController sharedScout] window];
     
     if(!tunnelCtrlr)    // need to create the tunnel object
+    {
         self.tunnelCtrlr = [[TunnelController alloc] init];
-    [tunnelCtrlr runSheetOnWindow:win];
-    [self toggleTunnelDisplay];
+        [tunnelCtrlr runSheetOnWindow:win];
+        [self toggleTunnelDisplay];
+    }
+    else  // asking to stop tunnel
+    {
+        [self doStopConnect:self];
+    }
 }
 
 - (void)escapeDialog
@@ -305,7 +330,6 @@
         [[ScoutWindowController sharedScout] tunnelConnected:NO];
         [tunnelMenuItem setTitle:@"Start Sauce Connect"];
         [[[ScoutWindowController sharedScout] tunnelButton] setTitle:@"Start Sauce Connect"];
-//        [self showOptionsDlg:nil];      
     }
 }
 
