@@ -48,7 +48,7 @@
 - (IBAction)viewSnapshot:(id)sender
 {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[url stringValue]]];
-    [self OkBtutton:self];
+    [self OkButton:self];
 }
 
 - (void)setServerURL:(NSString*)surl
