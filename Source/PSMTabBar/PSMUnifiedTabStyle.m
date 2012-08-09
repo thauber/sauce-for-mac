@@ -365,6 +365,12 @@
                                                 endColor:[NSColor colorWithCalibratedWhite:0.60 alpha:1.0]];
 			}
 		}
+        else
+        {
+			if([cell state] == NSOnState)
+				[bezier linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.80 alpha:1.0]
+                                                endColor:[NSColor colorWithCalibratedWhite:0.85 alpha:1.0]];
+        }
 
 		[lineColor set];
 		[bezier stroke];
@@ -373,8 +379,9 @@
         
         if([cell state] == NSOnState)        // [rda] extra rect on top to blend in with toolbar
         {
+            float clr = [NSApp isActive] ? 0.64 : 0.80;
            	NSBezierPath *path = [NSBezierPath bezierPathWithRect:NSMakeRect(cellFrame.origin.x+.5, cellFrame.origin.y-3.0, NSWidth(cellFrame)-.1, 3.0)];
-            [[NSColor colorWithCalibratedWhite:0.64 alpha:1.0] set];
+            [[NSColor colorWithCalibratedWhite:clr alpha:1.0] set];
             [path fill]; 
             [self drawInteriorWithTabCell:cell inView:[cell controlView]];
         }
