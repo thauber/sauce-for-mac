@@ -454,9 +454,12 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 }
                 else
                 {
+                    NSLog(@"heartbeat - session not in progress");
+/*
                     self.errStr = @"Heartbeat says session isn't in progress";
                     // close the session
                     [[ScoutWindowController sharedScout] performSelectorOnMainThread:@selector(closeTabWithSession:) withObject:[cnctn session] waitUntilDone:NO];
+ */
                     break;
                 }
             }
