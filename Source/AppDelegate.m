@@ -21,6 +21,8 @@
 
 
 @implementation AppDelegate
+@synthesize infoPanel;
+@synthesize versionTxt;
 @synthesize subscribeMenuItem;
 @synthesize tunnelMenuItem;
 @synthesize viewConnectMenuItem;
@@ -348,6 +350,15 @@
 - (IBAction)myAccount:(id)sender 
 {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.saucelabs.com/account"]];
+}
+
+- (IBAction)doAbout:(id)sender
+{
+    NSString *vstr = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+    NSString *bstr = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"Build"];
+    NSString *vtxt = [NSString stringWithFormat:@"Version: %@    Build: %@",vstr, bstr];
+    [versionTxt setStringValue:vtxt];
+    [infoPanel makeKeyAndOrderFront:self];    
 }
 
 - (IBAction)bugsAccount:(id)sender 

@@ -869,14 +869,6 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">makeKeyAndOrderFront:</string>
-						<reference key="source" ref="543739902"/>
-						<reference key="destination" ref="692204235"/>
-					</object>
-					<int key="connectionID">628</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">showHelp:</string>
 						<reference key="source" ref="569964129"/>
 						<reference key="destination" ref="538354072"/>
@@ -978,6 +970,30 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 						<reference key="destination" ref="315896185"/>
 					</object>
 					<int key="connectionID">1578</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">versionTxt</string>
+						<reference key="source" ref="569964129"/>
+						<reference key="destination" ref="686866905"/>
+					</object>
+					<int key="connectionID">1579</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">doAbout:</string>
+						<reference key="source" ref="569964129"/>
+						<reference key="destination" ref="692204235"/>
+					</object>
+					<int key="connectionID">1580</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">infoPanel</string>
+						<reference key="source" ref="569964129"/>
+						<reference key="destination" ref="543739902"/>
+					</object>
+					<int key="connectionID">1581</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1670,7 +1686,7 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1578</int>
+			<int key="maxID">1581</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1683,6 +1699,7 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>bugsAccount:</string>
+							<string>doAbout:</string>
 							<string>doStopConnect:</string>
 							<string>doStopSession:</string>
 							<string>doTunnel:</string>
@@ -1700,6 +1717,7 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -1722,6 +1740,7 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>bugsAccount:</string>
+							<string>doAbout:</string>
 							<string>doStopConnect:</string>
 							<string>doStopSession:</string>
 							<string>doTunnel:</string>
@@ -1741,6 +1760,10 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
 								<string key="name">bugsAccount:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">doAbout:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -1806,19 +1829,23 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>fullScreenMenuItem</string>
+							<string>infoPanel</string>
 							<string>mInfoVersionNumber</string>
 							<string>mRendezvousMenuItem</string>
 							<string>subscribeMenuItem</string>
 							<string>tunnelMenuItem</string>
+							<string>versionTxt</string>
 							<string>viewConnectMenuItem</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSMenuItem</string>
+							<string>NSPanel</string>
 							<string>NSTextField</string>
 							<string>NSMenuItem</string>
 							<string>NSMenuItem</string>
 							<string>NSMenuItem</string>
+							<string>NSTextField</string>
 							<string>NSMenuItem</string>
 						</object>
 					</object>
@@ -1827,10 +1854,12 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>fullScreenMenuItem</string>
+							<string>infoPanel</string>
 							<string>mInfoVersionNumber</string>
 							<string>mRendezvousMenuItem</string>
 							<string>subscribeMenuItem</string>
 							<string>tunnelMenuItem</string>
+							<string>versionTxt</string>
 							<string>viewConnectMenuItem</string>
 						</object>
 						<object class="NSArray" key="dict.values">
@@ -1838,6 +1867,10 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 							<object class="IBToOneOutletInfo">
 								<string key="name">fullScreenMenuItem</string>
 								<string key="candidateClassName">NSMenuItem</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">infoPanel</string>
+								<string key="candidateClassName">NSPanel</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">mInfoVersionNumber</string>
@@ -1854,6 +1887,10 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 							<object class="IBToOneOutletInfo">
 								<string key="name">tunnelMenuItem</string>
 								<string key="candidateClassName">NSMenuItem</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">versionTxt</string>
+								<string key="candidateClassName">NSTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">viewConnectMenuItem</string>

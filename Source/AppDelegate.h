@@ -33,7 +33,11 @@
     NSMenuItem *subscribeMenuItem;
     BOOL noShowCloseSession;
     BOOL noShowCloseConnect;
+    NSTextField *versionTxt;
+    NSPanel *infoPanel;
 }
+@property (assign) IBOutlet NSPanel *infoPanel;
+@property (assign) IBOutlet NSTextField *versionTxt;
 @property (assign) IBOutlet NSMenuItem *subscribeMenuItem;
 @property (assign) IBOutlet NSMenuItem *tunnelMenuItem;
 @property (assign) IBOutlet NSMenuItem *viewConnectMenuItem;
@@ -46,6 +50,7 @@
 @property  (assign)BOOL noTunnel;
 @property (assign) BOOL noShowCloseSession;
 @property (assign) BOOL noShowCloseConnect;
+- (IBAction)doAbout:(id)sender;
 
 - (IBAction)bugsAccount:(id)sender;
 - (IBAction)myAccount:(id)sender;
