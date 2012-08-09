@@ -692,7 +692,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     [ftask setStandardOutput:fpipe];
     [ftask setLaunchPath:@"/bin/bash"];
     [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-    [ftask launch];		// fetch job-id and secret server
+    [ftask launch];
     [ftask waitUntilExit];
     if([ftask terminationStatus])
     {
