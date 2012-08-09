@@ -123,14 +123,8 @@ NSString *kHistoryTabLabel = @"Session History";
         NSString *description = [[[bugctrlr description] textStorage] string];
         self.snapProgress = [[SnapProgress alloc] init];
         [[SaucePreconnect sharedPreconnect] snapshotBug:title desc:description];
-        // snapprogress should have been dismissed if all went well
-        SnapProgress *sp = [[ScoutWindowController sharedScout] snapProgress];      
-        if(sp)
-        {
-            [sp OkButton:nil];
-            [[NSApp delegate] checkUserOk];
-        }
     }
+
 }
 
 -(void)snapshotDone

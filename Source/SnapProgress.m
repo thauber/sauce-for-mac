@@ -10,15 +10,11 @@
 #import "ScoutWindowController.h"
 
 @implementation SnapProgress
-@synthesize viewSnapshotButton;
-@synthesize availableLbl;
 @synthesize panel;
 @synthesize takingTxt;
 @synthesize urlLabel;
 @synthesize url;
 @synthesize indicator;
-@synthesize cancelButton;
-@synthesize okEnableView;
 
 - (id)init
 {
@@ -28,11 +24,7 @@
         [panel setOpaque:YES];
         [panel setAlphaValue:1.0];
         [urlLabel setHidden:YES];
-        [cancelButton setFrame:NSMakeRect(0,0,0,0)];       // allow 'esc' to quit
         [indicator startAnimation:self];
-        [viewSnapshotButton setHidden:YES];
-        [availableLbl setHidden:YES];
-        okEnableView = NO;                      // default to not show 'view button'
         [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];
     }
     return self;
@@ -43,12 +35,6 @@
     [panel orderOut:nil];
     panel = nil;
     [[ScoutWindowController sharedScout] snapshotDone];
-}
-
-- (IBAction)viewSnapshot:(id)sender
-{
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[url stringValue]]];
-    [self OkButton:self];
 }
 
 - (void)setServerURL:(NSString*)surl
@@ -67,9 +53,6 @@
         [takingTxt setStringValue:tstr];
         [indicator stopAnimation:self];
         [indicator setHidden:YES];
-        [viewSnapshotButton setHidden:NO];
-        if([surl length])           
-            [[ScoutWindowController sharedScout] addBugToHistory:surl];
     }
 }
 @end
