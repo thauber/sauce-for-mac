@@ -389,7 +389,6 @@ static SaucePreconnect* _sharedPreconnect = nil;
     if(delayedSession == 1)     // about to add a session
         return;
 
-	NSEnumerator *credEnumerator = [credArr objectEnumerator];
     NSMutableDictionary *sdict;
     
     if(![credArr count])
@@ -398,9 +397,11 @@ static SaucePreconnect* _sharedPreconnect = nil;
         return;        
     }
     
-    
-	while ( sdict = (NSMutableDictionary*)[credEnumerator nextObject] )
+    NSInteger credArrSz = [credArr count];
+    NSInteger indx=0;
+	while (indx < [credArr count] )
     {
+        sdict = (NSMutableDictionary*)[credArr objectAtIndex:indx];
         NSString *aliveid = [sdict objectForKey:@"liveId"];
                              
         NSString *farg = [NSString stringWithFormat:@"curl 'https://saucelabs.com/scout/live/%@/status?auth_username=%@&auth_access_key=%@' 2>/dev/null", aliveid, self.user, self.ukey];
@@ -440,7 +441,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
                     Session *session = [[ScoutWindowController sharedScout] curSession];
                     NSString *remaining = [self jsonVal:jsonString key:@"remaining-time"];
                     // show in status
-                    if([remaining length])
+                    if([remaining length] && [credArr count] == credArrSz)
                     {
                         NSString *str = [self remainingTimeStr:[remaining intValue]];
                         [sdict setObject:str forKey:@"remainingTime"];
@@ -469,6 +470,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         // update run time for session in history tab view
         NSView *vv = [sdict objectForKey:@"view"];
         [[ScoutWindowController sharedScout] performSelectorOnMainThread:@selector(updateHistoryRunTime:) withObject:vv waitUntilDone:NO];
+        indx++;
 
     }
     if(delayedSession == 2)     // done adding, so clear flag
