@@ -68,15 +68,12 @@
 
 // if internet had been down, check if it is back up; returns 0=no user, 1=ok
 - (BOOL)checkUserOk
-{
-   if([[SaucePreconnect sharedPreconnect] internetOk])
-       return YES;
-    
+{    
     // check for username/key in prefs
     NSUserDefaults* user = [NSUserDefaults standardUserDefaults];
     NSString *uname = [user stringForKey:kUsername];
     NSString *akey = [user stringForKey:kAccountkey];
-    
+   
     if([uname length] && [akey length])
     {
         NSInteger userOk = [[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:akey];
@@ -199,8 +196,6 @@
         self.optionsCtrlr = nil;
     }
     
-    if(sender != self)
-        [self checkUserOk];
     self.loginCtrlr = [[LoginController alloc] init];
 }
 

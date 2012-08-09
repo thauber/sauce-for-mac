@@ -75,6 +75,7 @@
 }
 - (IBAction)doCancelLogin:(id)sender 
 {
+/*
     if([[SaucePreconnect sharedPreconnect] user])
     {
 
@@ -86,9 +87,11 @@
             [NSApp endSheet:panel];
             [panel orderOut:nil];
             [[NSApp delegate] setLoginCtrlr:nil];
-//            [[NSApp delegate] showOptionsDlg:nil];
         }
+
     }
+ */
+    [self terminateApp];
 }
 
 - (IBAction)login:(id)sender
