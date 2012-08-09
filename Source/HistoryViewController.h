@@ -14,14 +14,10 @@
     NSMutableDictionary *rowDict;
     NSMutableDictionary *indxDict;
     IBOutlet NSTableView *tableView;
-    NSPopUpButtonCell *popbtn;
 }
-@property (assign) IBOutlet NSPopUpButtonCell *popbtn;
 - (void)addRow:(NSView*)view rowArr:(NSArray*)rarr;
 - (void)updateRuntime:(NSView*)view;
 - (void)updateActive:(NSView*)view;     // set not active; assumes we can only deactivate an active session
-- (void)addSnapbug:(NSView*)view bug:(NSString*)bugUrl;
-- (IBAction)doPopSelect:(id)sender;
 - (IBAction)doNewSession:(id)sender;
 
 @end

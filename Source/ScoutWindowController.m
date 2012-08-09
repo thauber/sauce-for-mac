@@ -139,12 +139,6 @@ NSString *kHistoryTabLabel = @"Session History";
     [[NSApp delegate] setBugCtrlr:nil];
 }
 
-- (void)addBugToHistory:(NSString*)bugUrl
-{
-    NSTabViewItem *tvi = [tabView selectedTabViewItem];
-    [hviewCtlr addSnapbug:[tvi view] bug:bugUrl];
-}
-
 - (IBAction)newSession:(id)sender
 {
     [[NSApp delegate] showOptionsDlg:nil];
@@ -251,20 +245,29 @@ NSString *kHistoryTabLabel = @"Session History";
     NSString *os = [sdict  objectForKey:@"os"];
     NSString *browser = [sdict objectForKey:@"browser"];
     NSString *bvers = [sdict objectForKey:@"browserVersion"];
-    // what attributes?
+    NSString *jobId = [sdict objectForKey:@"jobId"];
+
     NSDictionary *udict = [NSDictionary dictionaryWithObjectsAndKeys:nil];
     NSString *osbrv = [NSString stringWithFormat:@"%C %@/%@%@", 0x00bb, os, browser, bvers];
     NSSize sz = [osbrv sizeWithAttributes:udict];
     float urlwid = 300 - sz.width;
+    NSInteger offset = 0;
+    if([url hasPrefix:@"http://www."])
+        offset = 11;
+    else if([url hasPrefix:@"http://"])          // remove schema prefix
+        offset = 7;
+    else if([url hasPrefix:@"www."])
+        offset = 4;
+    NSRange rng = NSMakeRange(offset, [url length]-offset);
+    url = [url substringWithRange:rng];
+
     NSString *truncurl = url;
+
     sz = [url sizeWithAttributes:udict];
     if(sz.width > urlwid)   // truncate and add '...'
     {
         NSInteger numchars = (urlwid-2)/8 -2;   // guess 8 pixels average for characters
-        NSInteger offset = 0;
-        if([url hasPrefix:@"http://"])          // remove schema prefix
-            offset = 7;
-        NSRange rng = NSMakeRange(offset, numchars);
+        NSRange rng = NSMakeRange(0, numchars);
         truncurl = [truncurl substringWithRange:rng];
         truncurl = [truncurl stringByAppendingFormat:@"%C",0x2026];       // add ellipsis
     }
@@ -278,16 +281,14 @@ NSString *kHistoryTabLabel = @"Session History";
 	[tabView addTabViewItem:newItem];
 	[tabView selectTabViewItem:newItem];
     
+    url = [NSString stringWithFormat:@" Scout Session at %@",url];
+    
     // put info into history view tab0
     NSMutableArray *rarr = [NSMutableArray arrayWithCapacity:0];
-    [rarr addObject:@"A"];      // active ('A'/'x')          index = 0
-    [rarr addObject:url];       // initial requested url     index = 1
-    osbrv = [NSString stringWithFormat:@"%@/%@ %@",os, browser, bvers];
-    [rarr addObject:osbrv];      // os/browser/version        index = 2
-    NSMutableArray *bdict = [NSMutableArray arrayWithCapacity:0];
-    [bdict addObject:[NSNumber numberWithInteger:0]];       // initial popup selection
-    [bdict addObject:@"Bugs and Snapshots"]; 
-    [rarr addObject:bdict];     // bugs                      index = 3
+    [rarr addObject:@"Active"];         // 'Active'/'Finished'      index = 0
+    [rarr addObject:url];               // initial requested url    index = 1
+    osbrv = [NSString stringWithFormat:@"  %@/%@ %@",os, browser, bvers];
+    [rarr addObject:osbrv];             // os/browser/version       index = 2
     int hrs, mins, secs;
     time_t rawtime;
     struct tm *ptm;    
@@ -297,9 +298,10 @@ NSString *kHistoryTabLabel = @"Session History";
     mins = ptm->tm_min;
     secs = ptm->tm_sec;
     NSString *timeStr = [NSString stringWithFormat:@"%02d:%02d:%02d",hrs,mins,secs];
-    [rarr addObject:timeStr];          // start time          index = 4
-    [rarr addObject:@"00:00:00"];      // run time            index = 5
-    [rarr addObject:[NSNumber numberWithLong:rawtime]];    // index = 6 start value to compute session run time
+    [rarr addObject:timeStr];          // start time          index = 3
+    [rarr addObject:@"00:00:00"];      // run time            index = 4
+    [rarr addObject:[NSNumber numberWithLong:rawtime]];    // index = 5 start value to compute session run time
+    [rarr addObject:jobId];             // jobId for session url  index = 6
     [hviewCtlr addRow:view rowArr:rarr];    
 }
 
