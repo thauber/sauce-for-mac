@@ -325,9 +325,11 @@ NSString *kHistoryTabLabel = @"Session History";
     NSView *vv = [session view];
     NSArray *tabitems = [tabView tabViewItems];
     NSInteger numitems = [tabitems count];
+    if([tabView numberOfTabViewItems] == 1)
+        return;
     NSTabViewItem *seltvi = [tabView selectedTabViewItem];
     curSession = nil;
-    NSTabViewItem *deltvi;
+    NSTabViewItem *deltvi = nil;
     for(NSInteger i=0;i<numitems;i++)
     {
         NSTabViewItem *tvi = [tabitems objectAtIndex:i];
@@ -337,9 +339,12 @@ NSString *kHistoryTabLabel = @"Session History";
             break;
         }        
     }
-    [tabView selectTabViewItem:deltvi];
-    curSession = session;
-    [self closeTab:self];
+    if(deltvi)       
+    {
+        [tabView selectTabViewItem:deltvi];
+        curSession = session;
+        [self closeTab:self];
+    }
     if(session != osess)
     {
         curSession = osess;
