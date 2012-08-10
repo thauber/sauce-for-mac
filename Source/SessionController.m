@@ -154,7 +154,7 @@
     NSMutableArray *configArr;
     NSMutableArray *brAStrs;
     
-    for(int i=0; i < 2; i++)    // setup browsers for each os
+    for(int i=0; i < 2; i++)    // setup browsers for each os (only 2 for now)
     {
         switch(i)
         {
@@ -459,7 +459,7 @@
     if(column==0)   // size column 0 row heights
     {
         lastpop1 = NO;
-        return 4;
+        return 2;
     }
     else    // size column 1 row heights
     {

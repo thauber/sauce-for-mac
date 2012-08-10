@@ -31,8 +31,6 @@ enum TabType {tt_windows, tt_linux, tt_apple, tt_mobile};
     NSPanel *panel;
     NSView *view;
     NSButton *defaultBrowser;
-//    id trarrWin[kNumWindowsTrackers];       // tracking rect areas
-//    id trarrLnx[kNumLinuxTrackers];         // tracking rect areas
     IBOutlet NSBrowser *browserTbl;
     NSMutableArray *configWindows;          // os/browsers for windows
     NSMutableArray *configLinux;            // os/browsers for linux
@@ -57,12 +55,8 @@ enum TabType {tt_windows, tt_linux, tt_apple, tt_mobile};
 - (void)quitSheet;
 - (void)terminateApp;
 - (void)runSheet;
-//- (void)handleMouseEntered:(id)tn;
-//- (void)handleMouseExited;
-//- (void) doubleClick;
 - (IBAction)connect:(id)sender;
 - (void)startConnecting;
-//- (IBAction)selectBrowser:(id)sender;
 - (void)connectionSucceeded;
 - (void)showError:(NSString *)errStr;
 - (NSInteger)hoverIndx;
