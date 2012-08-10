@@ -262,8 +262,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
         sdict = [credArr objectAtIndex:i];
         if([sdict objectForKey:@"connection"] == connection)
         {
-            NSString *ajobid = [sdict objectForKey:@"jobId"];
-            NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@saucelabs.com/rest/v1/%@/jobs/%@' -H 'Content-Type: application/json' -d '{\"tags\":[\"test\",\"example\",taggable\"],\"public\":true,\"name\":\"changed-job-name\"}'", self.user, self.ukey, self.user, ajobid];
+            NSString *aliveId = [sdict objectForKey:@"liveId"];
+            NSString *farg = [NSString stringWithFormat:@"curl -X DELETE 'https://%@:%@@saucelabs.com/rest/v1/users/%@/scout/%@'", self.user, self.ukey, self.user, aliveId];
             [credArr removeObjectAtIndex:i];
             NSTask *ftask = [[[NSTask alloc] init] autorelease];
             NSPipe *fpipe = [NSPipe pipe];
