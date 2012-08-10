@@ -482,37 +482,44 @@ static SaucePreconnect* _sharedPreconnect = nil;
 {
     NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/rest/v1/%@/jobs'", uuser, kkey, uuser];
     
-    NSTask *ftask = [[[NSTask alloc] init] autorelease];
-    NSPipe *fpipe = [NSPipe pipe];
-    [ftask setStandardOutput:fpipe];
-    [ftask setLaunchPath:@"/bin/bash"];
-    [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-    [ftask launch];		// fetch live id
-    [ftask waitUntilExit];
-    if([ftask terminationStatus])
+    while(1)
     {
-        self.errStr = @"Failed NSTask in checkUserLogin";
-        internetOk = NO;
-        return -1;
-    }
-    else
-    {
-        internetOk = YES;
-        NSFileHandle *fhand = [fpipe fileHandleForReading];
-        
-        NSData *data = [fhand readDataToEndOfFile];		 
-        NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSRange range = [jsonString rangeOfString:@"error"];
-        [jsonString release];
-        if(!range.length)
+        NSTask *ftask = [[[NSTask alloc] init] autorelease];
+        NSPipe *fpipe = [NSPipe pipe];
+        [ftask setStandardOutput:fpipe];
+        [ftask setLaunchPath:@"/bin/bash"];
+        [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+        [ftask launch];		// fetch live id
+        [ftask waitUntilExit];
+        if([ftask terminationStatus])
         {
-            self.user = uuser;
-            self.ukey = kkey;
-            return YES;
+            self.errStr = @"Failed NSTask in checkUserLogin";
+            internetOk = NO;
+            return -1;
         }
-        else 
+        else
         {
-            self.errStr = @"Failed server authentication";
+            internetOk = YES;
+            NSFileHandle *fhand = [fpipe fileHandleForReading];
+            
+            NSData *data = [fhand readDataToEndOfFile];		 
+            NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSRange range = [jsonString rangeOfString:@"error"];
+            [jsonString release];
+            if(!range.length)
+            {
+                range = [jsonString rangeOfString:@"id"];
+                if(range.length)
+                {
+                    self.user = uuser;
+                    self.ukey = kkey;
+                    return YES;
+                }
+            }
+            else 
+            {
+                self.errStr = @"Failed server authentication";
+            }
         }
     }
     return NO;
