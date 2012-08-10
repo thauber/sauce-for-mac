@@ -692,38 +692,41 @@ static SaucePreconnect* _sharedPreconnect = nil;
     NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/rest/v1/users/%@'", 
                       self.user, self.ukey, self.user];
 
-    NSTask *ftask = [[[NSTask alloc] init] autorelease];
-    NSPipe *fpipe = [NSPipe pipe];
-    [ftask setStandardOutput:fpipe];
-    [ftask setLaunchPath:@"/bin/bash"];
-    [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-    [ftask launch];
-    [ftask waitUntilExit];
-    if([ftask terminationStatus])
+    while(1)
     {
-        NSLog(@"failed NSTask");
-        self.errStr =  @"Failed to request accountOk";
-        internetOk = NO;
-        return -1;  // assume no internet connection
-    }
-    else
-    {
-        internetOk = YES;
-        NSFileHandle *fhand = [fpipe fileHandleForReading];
-        
-        NSData *data = [fhand readDataToEndOfFile];		 
-        NSString *jsonString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-        if(bSubscribed)
+        NSTask *ftask = [[[NSTask alloc] init] autorelease];
+        NSPipe *fpipe = [NSPipe pipe];
+        [ftask setStandardOutput:fpipe];
+        [ftask setLaunchPath:@"/bin/bash"];
+        [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+        [ftask launch];
+        [ftask waitUntilExit];
+        if([ftask terminationStatus])
         {
-            NSString *subscribedStr = [self jsonVal:jsonString key:@"subscribed"];
-            return [subscribedStr isEqualToString:@"true"];
+            NSLog(@"failed NSTask");
+            self.errStr =  @"Failed to request accountOk";
+            internetOk = NO;
+            return -1;  // assume no internet connection
         }
-        
-        NSString *minStr = [self jsonVal:jsonString key:@"minutes"];
-        return ([minStr length] > 1);     // assume 0-9 minutes isn't enough
-        
+        else
+        {
+            internetOk = YES;
+            NSFileHandle *fhand = [fpipe fileHandleForReading];
+            
+            NSData *data = [fhand readDataToEndOfFile];		 
+            NSString *jsonString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+            NSString *subscribedStr = [self jsonVal:jsonString key:@"subscribed"];
+            if([subscribedStr length])
+            {
+                if(bSubscribed)
+                {
+                    return [subscribedStr isEqualToString:@"true"];
+                }
+                NSString *minStr = [self jsonVal:jsonString key:@"minutes"];
+                return ([minStr length] > 1);     // assume 0-9 minutes isn't enough            
+            }            
+        }
     }
-    return NO;      // caller should check for errStr or -1 return
 }
 
 @end
