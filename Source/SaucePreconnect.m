@@ -504,9 +504,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
             NSFileHandle *fhand = [fpipe fileHandleForReading];
             
             NSData *data = [fhand readDataToEndOfFile];		 
-            NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSString *jsonString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
             NSRange range = [jsonString rangeOfString:@"error"];
-            [jsonString release];
             if(!range.length)
             {
                 range = [jsonString rangeOfString:@"id"];
