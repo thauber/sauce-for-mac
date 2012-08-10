@@ -100,8 +100,7 @@
 {
     NSString *header = NSLocalizedString( @"Connection Status", nil );
     NSString *okayButton = NSLocalizedString( @"Ok", nil );
-    NSBeginAlertSheet(header, okayButton, nil, nil, [[ScoutWindowController sharedScout] window], self, nil, 
-                      nil, nil, @"Check your internet connection - or Sauce Labs server may be down");
+    NSBeginAlertSheet(header, okayButton, nil, nil, [[ScoutWindowController sharedScout] window], self, nil, nil, nil, @"Check your internet connection - or Sauce Labs server may be down");
     
 }
  
