@@ -343,7 +343,7 @@ enum {
 //        screenRect.size.height +=4;     // kludge b/c we need a few more pixels than the screen gives us
     wf.origin.x = wf.origin.y = 0;
     wf.size = _maxSize;
-    wf.size.height += 76;       // allow for statusbar(26) and tabbar(28) + toolbar(43) ??
+    wf.size.height += 76;       // allow for statusbar(26) and tabbar(28) + toolbar(42) minus the 22 for title bar that the next call will add (unless screen is shorter than 876)
     
     wf = [NSWindow frameRectForContentRect:wf styleMask:[window styleMask]];
 
