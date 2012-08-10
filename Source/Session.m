@@ -307,7 +307,7 @@ enum {
     NSSize	maxviewsize;
 
     maxviewsize = _maxSize;
-    maxviewsize.height += 106;
+    maxviewsize.height += 76;
     
     horizontalScroll = verticalScroll = NO;
     if(aSize.width<maxviewsize.width)
