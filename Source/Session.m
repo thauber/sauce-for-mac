@@ -347,16 +347,16 @@ enum {
     
     wf = [NSWindow frameRectForContentRect:wf styleMask:[window styleMask]];
 
-	if(wf.size.width > NSWidth(screenRect))
-    {
-        horizontalScroll = YES;
-        wf.size.width = NSWidth(screenRect);
-    }
 	if(wf.size.height >  NSHeight(screenRect))
     {
         verticalScroll = YES;
         wf.size.height = NSHeight(screenRect);
         wf.size.width += 18;    // add scroller size to width
+    }
+	if(wf.size.width > NSWidth(screenRect))
+    {
+        horizontalScroll = YES;
+        wf.size.width = NSWidth(screenRect);
     }
     
 	// According to the Human Interface Guidelines, new windows should be "visually centered"
