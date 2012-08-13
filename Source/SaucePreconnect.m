@@ -76,7 +76,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
-    // timeout if can't get creditions from server
+    // timeout if can't get credentials from server
     self.authTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(cancelPreAuthorize:) userInfo:nil repeats:NO];
 
     NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@saucelabs.com/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\"}'", self.user, self.ukey, self.user, self.os, self.browser, self.browserVersion, self.urlStr];
@@ -456,11 +456,6 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 else
                 {
                     NSLog(@"heartbeat - session not in progress");
-/*
-                    self.errStr = @"Heartbeat says session isn't in progress";
-                    // close the session
-                    [[ScoutWindowController sharedScout] performSelectorOnMainThread:@selector(closeTabWithSession:) withObject:[cnctn session] waitUntilDone:NO];
- */
                     break;
                 }
             }
