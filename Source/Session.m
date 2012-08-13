@@ -310,16 +310,14 @@ enum {
     maxviewsize.height += 76;
     
     horizontalScroll = verticalScroll = NO;
-    if(aSize.width<maxviewsize.width)
-    {
-        horizontalScroll = YES;
-        maxviewsize.height += 18;
-    }
-
-    if(aSize.height<maxviewsize.height)
+    if(aSize.height<=maxviewsize.height)
     {
         verticalScroll = YES;            
-        maxviewsize.width += 18;
+    }
+
+    if(aSize.width<=maxviewsize.width)
+    {
+        horizontalScroll = YES;
     }
     
     winframe = [window frame];
@@ -335,12 +333,9 @@ enum {
 {
     NSRect wf;
 	NSRect screenRect;
-	NSClipView *contentView;
     
     horizontalScroll = verticalScroll = NO;
 	screenRect = [[NSScreen mainScreen] visibleFrame];
-//    if(screenRect.size.height == 874)   // cut off 4 pixies instead of having scrollbars
-//        screenRect.size.height +=4;     // kludge b/c we need a few more pixels than the screen gives us
     wf.origin.x = wf.origin.y = 0;
     wf.size = _maxSize;
     wf.size.height += 76;       // allow for statusbar(26) and tabbar(28) + toolbar(42) minus the 22 for title bar that the next call will add (unless screen is shorter than 876)
@@ -372,14 +367,22 @@ enum {
 	
 	[scrollView setHasHorizontalScroller:horizontalScroll];
 	[scrollView setHasVerticalScroller:verticalScroll];
-	contentView = [scrollView contentView];
+
+    // don't really need unless _maxsize is no longer 1024x768
+	NSView *contentView = [scrollView contentView];
     NSRect fr = [contentView frame];
-    fr.size.height = _maxSize.height;
+    fr.size = _maxSize;
     [contentView setFrame:fr];
-    [window setFrame:wf display:NO];
+
+    NSRect sfr = [scrollView frame];
+    sfr.size.width -= verticalScroll;
+    sfr.size.height -= horizontalScroll;
+    [scrollView setFrame:sfr];
 
     [window makeFirstResponder:rfbView];
-    [window display];
+    [window setFrame:wf display:YES];
+
+//    [window display];
 }
 
 - (void)setNewTitle:(id)sender
