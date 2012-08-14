@@ -178,7 +178,7 @@
         for(NSInteger i=0;i < num; i++)     // setup browsers
         {
             NSArray *llArr = [configArr objectAtIndex:i];
-            NSString *osstr = [llArr objectAtIndex:0];
+//            NSString *osstr = [llArr objectAtIndex:0];
             NSString *browser = [llArr objectAtIndex:1];
             NSString *version = [llArr objectAtIndex:2];
             NSString *twoch = [browser substringToIndex:2];     // 2 chars to identify browser
@@ -205,11 +205,11 @@
             [ta release];
             [tac release];
             NSMutableAttributedString* mas = [[NSMutableAttributedString alloc] initWithAttributedString: as];
-            NSString *winver = @"";     // windows version
-            if(configArr == configWindows)
-            {
-                winver = [[osstr componentsSeparatedByString:@" "] objectAtIndex:1];
-            }
+//            NSString *winver = @"";     // windows version
+//            if(configArr == configWindows)
+//            {
+//                winver = [[osstr componentsSeparatedByString:@" "] objectAtIndex:1];
+//            }
             browser = [browser capitalizedString];
             NSString *brver = [NSString stringWithFormat:@" %@ %@",browser, version];
             NSNumber *nn = [NSNumber numberWithInteger:6]; 
@@ -218,8 +218,10 @@
             [mas appendAttributedString:bAStr];
             [bAStr release];
             [brAStrs addObject:mas];
+            [mas release];
         }
     }
+    
 
 }
 
