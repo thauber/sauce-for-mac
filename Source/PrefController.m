@@ -88,7 +88,7 @@ static int const kPrefsVersion = 0x00000002;
 		{
 			// some menu items have changed
 			[defaults removeObjectForKey: @"KeyEquivalentScenarios"];
-			prefsVersion = 0x00000002;
+//			prefsVersion = 0x00000002;
 		}
 		
 		if ( badPrefsVersion )
