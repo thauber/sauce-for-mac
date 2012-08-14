@@ -29,7 +29,7 @@
     self = [super init];
     if(self)
     {
-        NSString *nibname;
+        NSString *nibname=nil;
         if(INAPPSTORE)              // appstore version
         {
             if(type==0)
@@ -47,6 +47,11 @@
                 nibname = @"subscriber-2";      // subscribe (from menu)
         }
 
+        if(!nibname)
+        {
+            NSLog(@"bad subscriber type:%ld",type);
+            return nil;
+        }
         
         [NSBundle loadNibNamed:nibname  owner:self];
         
