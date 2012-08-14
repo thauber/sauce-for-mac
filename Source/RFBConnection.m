@@ -400,6 +400,7 @@
 
 - (void)dummyRequest
 {
+    NSLog(@"dummy mouse-move:%@",session);      // *** testing
     // force activity
     if(session)
     {
