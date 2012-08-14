@@ -412,7 +412,7 @@ NSString *kHistoryTabLabel = @"Session History";
         str = [sdict objectForKey:@"osbv"];
         [self.osbrowser setStringValue:str];
         
-        NSString *s1, *s2, *s3, *s4;
+        NSString *s1=@"", *s2=@"", *s3=@"", *s4=@"";
         NSArray *sarr = [str componentsSeparatedByString:@" "];
         if([str hasPrefix:@"Win"])
         {
@@ -621,7 +621,6 @@ NSString *kHistoryTabLabel = @"Session History";
     }
     
     [tunnelImage setImage:img];
-    [img release];
 }
 
 @end
