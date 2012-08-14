@@ -198,7 +198,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 // return json object for vnc connection
 - (NSString *)credStr
 {
-    NSString *js = [[NSString stringWithFormat:@"{\"job-id\":\"%@\",\"secret\":\"%@\"}\n",self.jobId,self.secret]retain];
+    NSString *js = [NSString stringWithFormat:@"{\"job-id\":\"%@\",\"secret\":\"%@\"}\n",self.jobId,self.secret];
     return js;
 }
 
@@ -636,8 +636,9 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 surl = [NSString stringWithFormat:@"https://saucelabs.com/jobs/%@/%@",ajobid,snapName];
             break;
         }
-    }        
-    [sp setServerURL:surl];
+    } 
+    if(surl)
+        [sp setServerURL:surl];
 }
 
 - (void)snapshotBug:(NSString *)title desc:(NSString *)desc
