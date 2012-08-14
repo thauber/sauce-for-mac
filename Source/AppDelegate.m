@@ -86,14 +86,9 @@
             [self showLoginDlg:self];
         return userOk;      // connection ok, but maybe no valid user
     }
-    NSInteger userOk = [[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:akey];
-    if(userOk == -1)
-    {
-        [self internetNotOkDlg];
-        return NO;      // still no connection
-    }
     [self showLoginDlg:self];
     return NO;              // no valid user
+
 }
 
 - (void)internetNotOkDlg
