@@ -46,8 +46,8 @@
         
         NSView *view = [[[ScoutWindowController sharedScout] curSession] view];
         NSDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:view];
-        NSString *browserStr = [sdict valueForKey:@"browser"];
-        browserStr = [NSString stringWithFormat:@"Browser:%@",browserStr];
+//        NSString *browserStr = [sdict valueForKey:@"browser"];
+//        browserStr = [NSString stringWithFormat:@"Browser:%@",browserStr];
         NSString *osStr = [sdict valueForKey:@"os"];
         osStr = [NSString stringWithFormat:@"OS:%@",osStr];
         NSString *urlStr = [sdict valueForKey:@"url"];
