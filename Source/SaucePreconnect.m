@@ -398,6 +398,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     }
     
     NSInteger credArrSz = [credArr count];
+    BOOL removedObj = NO;
     NSInteger indx=0;
 	while (indx < [credArr count] )
     {
@@ -405,7 +406,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         NSString *aliveid = [sdict objectForKey:@"liveId"];
                              
         NSString *farg = [NSString stringWithFormat:@"curl 'https://saucelabs.com/scout/live/%@/status?auth_username=%@&auth_access_key=%@' 2>/dev/null", aliveid, self.user, self.ukey];
-        
+
         while(1)    
         {
             if(![credArr count])        // if all sessions closed while in heartbeat
@@ -455,10 +456,18 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 }
                 else
                 {
-                    NSLog(@"heartbeat - session not in progress");
+                    NSLog(@"heartbeat - not in progress:%@",jsonString);
+                    [self sessionClosed:[sdict objectForKey:@"connection"]];
+                    credArrSz = [credArr count];
+                    removedObj = YES;
                     break;
                 }
             }
+        }
+        if(removedObj)              // removed b/c session no in progress
+        {
+            removedObj = NO;        // clear flag
+            continue;               // avoid incrementing index
         }
         if(delayedSession)
             break;
