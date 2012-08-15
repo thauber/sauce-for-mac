@@ -407,6 +407,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
                              
         NSString *farg = [NSString stringWithFormat:@"curl 'https://saucelabs.com/scout/live/%@/status?auth_username=%@&auth_access_key=%@' 2>/dev/null", aliveid, self.user, self.ukey];
 
+        NSLog(@"hb:%@",aliveid);        // ** testing
         while(1)    
         {
             if(![credArr count])        // if all sessions closed while in heartbeat
