@@ -22,6 +22,7 @@
 
 @implementation ScoutWindowController
 
+@synthesize statusBox;
 @synthesize tabView;
 @synthesize urlmsg;
 @synthesize osbrowserMsg;
@@ -69,6 +70,7 @@ NSString *kHistoryTabLabel = @"Session History";
 
 - (void)awakeFromNib 
 {
+    [statusBox setHidden:YES];
     [tabView setTabViewType:NSNoTabsNoBorder];
     [tabBar setStyleNamed:@"Unified"];
     [tabBar setSizeCellsToFit:YES];

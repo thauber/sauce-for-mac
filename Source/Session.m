@@ -307,7 +307,7 @@ enum {
     NSSize	maxviewsize;
 
     maxviewsize = _maxSize;
-    maxviewsize.height += 76;
+    maxviewsize.height += 102;
     
     horizontalScroll = verticalScroll = NO;
     if(aSize.height<=maxviewsize.height)
@@ -321,9 +321,10 @@ enum {
     }
     
     winframe = [window frame];
-    winframe.size = maxviewsize;
+//    winframe.size = maxviewsize;
+    winframe = [[NSScreen mainScreen] visibleFrame];
 
-    winframe = [NSWindow frameRectForContentRect:winframe styleMask:[window styleMask]];
+//    winframe = [NSWindow frameRectForContentRect:winframe styleMask:[window styleMask]];
 
     return winframe.size;
 }
@@ -338,7 +339,7 @@ enum {
 	screenRect = [[NSScreen mainScreen] visibleFrame];
     wf.origin.x = wf.origin.y = 0;
     wf.size = _maxSize;
-    wf.size.height += 76;       // allow for statusbar(26) and tabbar(28) + toolbar(42) minus the 22 for title bar that the next call will add (unless screen is shorter than 876)
+    wf.size.height += 91;       // allow for statusbar(26) and tabbar(28) + toolbar(42) minus the 22 for title bar that the next call will add (unless screen is shorter than 876)
     
     wf = [NSWindow frameRectForContentRect:wf styleMask:[window styleMask]];
 
@@ -372,15 +373,16 @@ enum {
 	NSView *contentView = [scrollView contentView];
     NSRect fr = [contentView frame];
     fr.size = _maxSize;
+    fr.origin.y=12;
     [contentView setFrame:fr];
-
+/*
     NSRect sfr = [scrollView frame];
     sfr.size.width -= verticalScroll;
     sfr.size.height -= horizontalScroll;
     [scrollView setFrame:sfr];
-
+*/
     [window makeFirstResponder:rfbView];
-    [window setFrame:wf display:YES];
+//    [window setFrame:wf display:YES];
 
 //    [window display];
 }

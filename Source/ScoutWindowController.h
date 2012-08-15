@@ -40,9 +40,10 @@ typedef enum { login,options,session } tabType;
     NSButton *tunnelButton;    
     IBOutlet NSTextField *nowscout;
     GradientView *msgGradient;
-    StopSession *stopSessionCtl;
-    
+    StopSession *stopSessionCtl;    
+    NSBox *statusBox;
 }
+@property (assign) IBOutlet NSBox *statusBox;
 @property (assign) IBOutlet NSTabView *tabView;
 @property (assign) IBOutlet NSImageView *tunnelImage;
 @property (assign) IBOutlet NSToolbar *toolbar;

@@ -45,7 +45,7 @@
 			</object>
 			<object class="NSScrollView" id="1069521301">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">286</int>
+				<int key="NSvFlags">319</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSClipView" id="831475304">
 						<reference key="NSNextResponder" ref="1069521301"/>
@@ -53,37 +53,31 @@
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="NSCustomView" id="112289914">
 								<reference key="NSNextResponder" ref="831475304"/>
-								<int key="NSvFlags">268</int>
-								<string key="NSFrameSize">{452, 430}</string>
+								<int key="NSvFlags">269</int>
+								<string key="NSFrameSize">{452, 456}</string>
 								<reference key="NSSuperview" ref="831475304"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="945297980"/>
+								<reference key="NSNextKeyView" ref="275832495"/>
 								<string key="NSClassName">RFBView</string>
 							</object>
 						</array>
-						<string key="NSFrameSize">{454, 430}</string>
+						<string key="NSFrameSize">{454, 456}</string>
 						<reference key="NSSuperview" ref="1069521301"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="112289914"/>
 						<reference key="NSDocView" ref="112289914"/>
 						<object class="NSColor" key="NSBGColor">
-							<int key="NSColorSpace">6</int>
-							<string key="NSCatalogName">System</string>
-							<string key="NSColorName">scrollBarColor</string>
-							<object class="NSColor" key="NSColor">
-								<int key="NSColorSpace">3</int>
-								<bytes key="NSWhite">MC41AA</bytes>
-							</object>
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC40NzU2MjY3MDcxIDAuNDc1NzU4OTk5NiAwLjQ3NTUyMzY1MDYAA</bytes>
 						</object>
 						<int key="NScvFlags">6</int>
 					</object>
 					<object class="NSScroller" id="945297980">
 						<reference key="NSNextResponder" ref="1069521301"/>
-						<int key="NSvFlags">261</int>
-						<string key="NSFrame">{{439, 0}, {15, 424}}</string>
+						<int key="NSvFlags">-2147483387</int>
+						<string key="NSFrame">{{439, 0}, {15, 450}}</string>
 						<reference key="NSSuperview" ref="1069521301"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="275832495"/>
 						<reference key="NSTarget" ref="1069521301"/>
 						<string key="NSAction">_doScroller:</string>
 						<double key="NSCurValue">1</double>
@@ -92,11 +86,11 @@
 					</object>
 					<object class="NSScroller" id="275832495">
 						<reference key="NSNextResponder" ref="1069521301"/>
-						<int key="NSvFlags">296</int>
-						<string key="NSFrame">{{0, 415}, {448, 15}}</string>
+						<int key="NSvFlags">-2147483352</int>
+						<string key="NSFrame">{{0, 441}, {448, 15}}</string>
 						<reference key="NSSuperview" ref="1069521301"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="831475304"/>
+						<reference key="NSNextKeyView" ref="945297980"/>
 						<bool key="NSEnabled">YES</bool>
 						<int key="NSsFlags">1</int>
 						<reference key="NSTarget" ref="1069521301"/>
@@ -104,11 +98,11 @@
 						<int key="NSKnobStyle">1</int>
 					</object>
 				</array>
-				<string key="NSFrameSize">{454, 430}</string>
+				<string key="NSFrameSize">{454, 456}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="831475304"/>
-				<int key="NSsFlags">133168</int>
+				<int key="NSsFlags">133680</int>
 				<reference key="NSVScroller" ref="945297980"/>
 				<reference key="NSHScroller" ref="275832495"/>
 				<reference key="NSContentView" ref="831475304"/>
@@ -951,6 +945,7 @@ MApSZWN0YW5nbGVzOiA4OQ</string>
 				<string key="145.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="148.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="149.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<boolean value="YES" key="210.IBNSViewMetadataLastInspectedTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="210.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="211.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="211.IBShouldRemoveOnLegacySave"/>
