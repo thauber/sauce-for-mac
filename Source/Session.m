@@ -307,7 +307,7 @@ enum {
     NSSize	maxviewsize;
 
     maxviewsize = _maxSize;
-    maxviewsize.height += 102;
+    maxviewsize.height += 91;
     
     horizontalScroll = verticalScroll = NO;
     if(aSize.height<=maxviewsize.height)
@@ -321,10 +321,9 @@ enum {
     }
     
     winframe = [window frame];
-//    winframe.size = maxviewsize;
     winframe = [[NSScreen mainScreen] visibleFrame];
 
-//    winframe = [NSWindow frameRectForContentRect:winframe styleMask:[window styleMask]];
+    winframe = [NSWindow frameRectForContentRect:winframe styleMask:[window styleMask]];
 
     return winframe.size;
 }
@@ -363,8 +362,8 @@ enum {
 	// Then the origin must be offset by the "origin" of the screen rect.
 	// Note that while Rects are floats, we seem to have an issue if the origin is
 	// not an integer, so we use the floor() function.
-	wf.origin.x = floor((NSWidth(screenRect) - NSWidth(wf))/2 + NSMinX(screenRect));
-	wf.origin.y = floor((NSHeight(screenRect) - NSHeight(wf))*2/3 + NSMinY(screenRect));
+//	wf.origin.x = floor((NSWidth(screenRect) - NSWidth(wf))/2 + NSMinX(screenRect));
+//	wf.origin.y = floor((NSHeight(screenRect) - NSHeight(wf))*2/3 + NSMinY(screenRect));
 	
 	[scrollView setHasHorizontalScroller:horizontalScroll];
 	[scrollView setHasVerticalScroller:verticalScroll];
@@ -373,18 +372,29 @@ enum {
 	NSView *contentView = [scrollView contentView];
     NSRect fr = [contentView frame];
     fr.size = _maxSize;
-    fr.origin.y=12;
     [contentView setFrame:fr];
-/*
+
     NSRect sfr = [scrollView frame];
     sfr.size.width -= verticalScroll;
     sfr.size.height -= horizontalScroll;
     [scrollView setFrame:sfr];
-*/
+    [self scrollToCenter:scrollView];
+    
     [window makeFirstResponder:rfbView];
-//    [window setFrame:wf display:YES];
+}
 
-//    [window display];
+-(void)scrollToCenter:(NSScrollView*)scrollVw
+{
+    const CGFloat midX = NSMidX([scrollVw frame]);
+    const CGFloat midY = NSMidY([scrollVw frame]);
+    
+    const CGFloat halfWidth = NSWidth([[scrollVw contentView] frame]) / 2.0;
+    const CGFloat halfHeight = NSHeight([[scrollVw contentView] frame]) / 2.0;
+    
+    NSPoint newOrigin = NSMakePoint(midX - halfWidth, midY - halfHeight);
+    
+    [[scrollVw contentView] scrollToPoint:newOrigin];
+//    [scrollVw reflectScrolledClipView:[scrollVw contentView]];
 }
 
 - (void)setNewTitle:(id)sender
@@ -550,7 +560,7 @@ enum {
 {
 	[scrollView setHasHorizontalScroller:horizontalScroll];
 	[scrollView setHasVerticalScroller:verticalScroll];
-
+    [self scrollToCenter:scrollView];
 }
 
 - (void)windowDidBecomeKey
