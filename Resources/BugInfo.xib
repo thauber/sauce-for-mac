@@ -202,7 +202,6 @@
 							<string key="NSFrame">{{494, 19}, {84, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="592061275">
@@ -244,6 +243,15 @@
 						<object class="NSBox" id="222063496">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">12</int>
+							<array class="NSMutableArray" key="NSSubviews">
+								<object class="NSView" id="46267105">
+									<reference key="NSNextResponder" ref="222063496"/>
+									<int key="NSvFlags">274</int>
+									<string key="NSFrame">{{1, 1}, {553, 3}}</string>
+									<reference key="NSSuperview" ref="222063496"/>
+									<reference key="NSWindow"/>
+								</object>
+							</array>
 							<string key="NSFrame">{{17, 402}, {555, 5}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
@@ -261,8 +269,9 @@
 									<bytes key="NSWhite">MCAwLjgwMDAwMDAxMTkAA</bytes>
 								</object>
 							</object>
-							<int key="NSBorderType">3</int>
-							<int key="NSBoxType">2</int>
+							<reference key="NSContentView" ref="46267105"/>
+							<int key="NSBorderType">1</int>
+							<int key="NSBoxType">4</int>
 							<int key="NSTitlePosition">0</int>
 							<bool key="NSTransparent">NO</bool>
 							<object class="NSColor" key="NSFillColor2">
@@ -305,7 +314,7 @@
 											<string key="NSFrameSize">{553, 249}</string>
 											<reference key="NSSuperview" ref="582666531"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="439466444"/>
+											<reference key="NSNextKeyView" ref="156903158"/>
 											<string key="NSReuseIdentifierKey">_NS:13</string>
 											<object class="NSTextContainer" key="NSTextContainer" id="27511246">
 												<object class="NSLayoutManager" key="NSLayoutManager">
@@ -425,7 +434,7 @@
 							<string key="NSFrame">{{17, 59.5}, {555, 249}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="156903158"/>
+							<reference key="NSNextKeyView" ref="582666531"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<int key="NSsFlags">133202</int>
 							<reference key="NSVScroller" ref="439466444"/>

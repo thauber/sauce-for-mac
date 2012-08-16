@@ -641,6 +641,15 @@
 								<object class="NSBox" id="495231105">
 									<reference key="NSNextResponder" ref="667167168"/>
 									<int key="NSvFlags">12</int>
+									<array class="NSMutableArray" key="NSSubviews">
+										<object class="NSView" id="346063114">
+											<reference key="NSNextResponder" ref="495231105"/>
+											<int key="NSvFlags">274</int>
+											<string key="NSFrame">{{1, 1}, {759, 3}}</string>
+											<reference key="NSSuperview" ref="495231105"/>
+											<reference key="NSWindow"/>
+										</object>
+									</array>
 									<string key="NSFrame">{{31, 371}, {761, 5}}</string>
 									<reference key="NSSuperview" ref="667167168"/>
 									<reference key="NSWindow"/>
@@ -658,8 +667,9 @@
 											<bytes key="NSWhite">MCAwLjgwMDAwMDAxMTkAA</bytes>
 										</object>
 									</object>
-									<int key="NSBorderType">3</int>
-									<int key="NSBoxType">2</int>
+									<reference key="NSContentView" ref="346063114"/>
+									<int key="NSBorderType">1</int>
+									<int key="NSBoxType">4</int>
 									<int key="NSTitlePosition">0</int>
 									<bool key="NSTransparent">NO</bool>
 									<object class="NSColor" key="NSFillColor2">
@@ -675,7 +685,6 @@
 									<string key="NSFrame">{{716, 69}, {82, 32}}</string>
 									<reference key="NSSuperview" ref="667167168"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="890014399">
