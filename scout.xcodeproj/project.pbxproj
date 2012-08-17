@@ -10,6 +10,8 @@
 		0F32B49815B8C88900C0CFBF /* Subscriber.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F32B49615B8C88900C0CFBF /* Subscriber.h */; };
 		0F32B49915B8C88900C0CFBF /* Subscriber.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F32B49715B8C88900C0CFBF /* Subscriber.m */; };
 		0F32B49E15B8CD8200C0CFBF /* scottie.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F32B49D15B8CD8200C0CFBF /* scottie.png */; };
+		0F35002915DDDB7700B8ED0E /* centerclip.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F35002715DDDB7700B8ED0E /* centerclip.h */; };
+		0F35002A15DDDB7700B8ED0E /* centerclip.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35002815DDDB7700B8ED0E /* centerclip.m */; };
 		0F392220158190350065C018 /* OptionBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F39221E158190350065C018 /* OptionBox.h */; };
 		0F392221158190350065C018 /* OptionBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F39221F158190350065C018 /* OptionBox.m */; };
 		0F3957BD15CC4EE600C04D57 /* subscriber-2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3957BB15CC4EE600C04D57 /* subscriber-2.xib */; };
@@ -398,6 +400,8 @@
 		0F32B49615B8C88900C0CFBF /* Subscriber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Subscriber.h; sourceTree = "<group>"; };
 		0F32B49715B8C88900C0CFBF /* Subscriber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Subscriber.m; sourceTree = "<group>"; };
 		0F32B49D15B8CD8200C0CFBF /* scottie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = scottie.png; path = Resources/scottie.png; sourceTree = "<group>"; };
+		0F35002715DDDB7700B8ED0E /* centerclip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = centerclip.h; sourceTree = "<group>"; };
+		0F35002815DDDB7700B8ED0E /* centerclip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = centerclip.m; sourceTree = "<group>"; };
 		0F39221E158190350065C018 /* OptionBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionBox.h; sourceTree = "<group>"; };
 		0F39221F158190350065C018 /* OptionBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionBox.m; sourceTree = "<group>"; };
 		0F3957BB15CC4EE600C04D57 /* subscriber-2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "subscriber-2.xib"; path = "Resources/subscriber-2.xib"; sourceTree = "<group>"; };
@@ -1279,6 +1283,8 @@
 				DAD6DEE012DCF37A001FD9D6 /* AuthPrompt.m */,
 				DA335CCD12DA4A6C00C70987 /* Session.h */,
 				DA335CCE12DA4A6C00C70987 /* Session.m */,
+				0F35002715DDDB7700B8ED0E /* centerclip.h */,
+				0F35002815DDDB7700B8ED0E /* centerclip.m */,
 				DAA91C8F1234319B000F1CCD /* DesktopNameEncodingReader.h */,
 				DAA91C901234319B000F1CCD /* DesktopNameEncodingReader.m */,
 				DA231DF512BD562100D3AD44 /* Keymap.h */,
@@ -1512,6 +1518,7 @@
 				0F59372815C8C18B0024AB5A /* keysym.h in Headers */,
 				0F59E7C515CDA6CB0003D541 /* StopSession.h in Headers */,
 				0F3E53BE15D22AB400513767 /* StopConnect.h in Headers */,
+				0F35002915DDDB7700B8ED0E /* centerclip.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1828,6 +1835,7 @@
 				0F32B49915B8C88900C0CFBF /* Subscriber.m in Sources */,
 				0F59E7C615CDA6CB0003D541 /* StopSession.m in Sources */,
 				0F3E53BF15D22AB400513767 /* StopConnect.m in Sources */,
+				0F35002A15DDDB7700B8ED0E /* centerclip.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
