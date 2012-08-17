@@ -80,10 +80,6 @@ enum {
     
     connection = [aConnection retain];
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(tintChanged:)
-//                                                 name:ProfileTintChangedMsg
-//                                               object:[connection profile]];
     [self loadView];
 
     return self;
@@ -96,7 +92,6 @@ enum {
     window = [[ScoutWindowController sharedScout] window];
 
     host = kSauceLabsHost;
-    //    sshTunnel = [[connection sshTunnel] retain];
     
     _isFullscreen = NO; // jason added for fullscreen display
     
@@ -131,8 +126,6 @@ enum {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
 	[titleString release];
-//    [sshTunnel close];
-//    [sshTunnel release];
 	[realDisplayName release];
     [_reconnectSheetTimer invalidate];
     [_reconnectSheetTimer release];
@@ -208,7 +201,6 @@ enum {
 
 - (void)endSession
 {
-//    [sshTunnel close];   //  [rda] not using chicken's tunnel
     [[ScoutWindowController sharedScout] closeTabWithSession:self];
     [self connectionProblem];
 }
@@ -252,8 +244,6 @@ enum {
     if (connection == nil)
         return;
 
-//        [self terminateConnection:NSLocalizedString(@"AuthenticationFailed", nil)];
-
     [self connectionProblem];
     [authHeader setStringValue:NSLocalizedString(@"AuthenticationFailed", nil)];
     [authMessage setStringValue: aReason];
@@ -287,8 +277,6 @@ enum {
 - (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)item
 {
     if ([item action] == @selector(forceReconnect:))
-        // we only enable Force Reconnect menu item if server supports it
-//        return [server_ doYouSupport:CONNECT];
         return NO;
     else
         return [self respondsToSelector:[item action]];
@@ -341,6 +329,7 @@ enum {
     NSClipView* clipView = [[centerclip alloc] initWithFrame:rr];
     [clipView setAutoresizesSubviews:NO];
     [scrollView setContentView:clipView];
+    [clipView release];
     [scrollView setDocumentView:rfbView];
     [scrollView setBackgroundColor:[NSColor colorWithCalibratedWhite:0.6f alpha:1.0]];
 
@@ -369,32 +358,10 @@ enum {
     [window makeFirstResponder:rfbView];
 }
 
--(void)scrollToCenter:(BOOL)scrolling
-{
-
-    const CGFloat midX = NSMidX([scrollView frame]);
-    const CGFloat midY = NSMidY([scrollView frame]);
-    
-    const CGFloat halfWidth = NSWidth([[scrollView documentView] frame]) / 2.0;
-    const CGFloat halfHeight = NSHeight([[scrollView contentView] frame]) / 2.0;
-
-    NSPoint newOrigin;
-    if(scrolling)
-        newOrigin = NSMakePoint(midX - halfWidth, midY - halfHeight);
-    else
-        newOrigin = NSMakePoint(midX - halfWidth,NSMaxY([[scrollView documentView] frame])
-                                -NSHeight([[scrollView contentView] bounds]));        
-    [[scrollView contentView] scrollToPoint:newOrigin];
-    [scrollView reflectScrolledClipView:[scrollView contentView]];
-}
-
 - (void)setNewTitle:(id)sender
 {
     [titleString release];
     titleString = [[newTitleField stringValue] retain];
-
-//    [[RFBConnectionManager sharedManager] setDisplayNameTranslation:titleString forName:realDisplayName forHost:host];
-//    [window setTitle:titleString];
 }
 
 - (void)setDisplayName:(NSString*)aName
@@ -403,13 +370,10 @@ enum {
     realDisplayName = [aName retain];
     [titleString release];
     titleString = [[[RFBConnectionManager sharedManager] translateDisplayName:realDisplayName forHost:host] retain];
-//    [window setTitle:titleString];
 }
 
 - (void)frameBufferUpdateComplete
 {
-//    if ([optionPanel isVisible])
-//        [statisticField setStringValue:[connection statisticsString]];
 }
 
 - (void)resize:(NSSize)size
@@ -535,7 +499,6 @@ enum {
     // The window will autorelease itself when closed.  If we allow terminateConnection
     // to close it again, it will get double-autoreleased.  Bummer.
     window = NULL;
-//    [self endSession];
 }
 
 - (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)proposedFrameSize
@@ -551,27 +514,19 @@ enum {
 {
 	[scrollView setHasHorizontalScroller:horizontalScroll];
 	[scrollView setHasVerticalScroller:verticalScroll];
-//    [self scrollToCenter:NO];
 }
 
 - (void)windowDidBecomeKey
 {
     [[RFBConnectionManager sharedManager] setSessionsUpdateIntervals];
-//    [rfbView setTint:[[connection profile] tintWhenFront:YES]];
 }
 
 - (void)windowDidResignKey
 {
     [[RFBConnectionManager sharedManager] setSessionsUpdateIntervals];
-//    [rfbView setTint:[[connection profile] tintWhenFront:NO]];
 	
 	//Reset keyboard state on remote end
 	[[connection eventFilter] clearAllEmulationStates];
-}
-
-- (void)tintChanged:(NSNotification *)notif
-{
-//    [rfbView setTint:[[connection profile] tintWhenFront:[window isKeyWindow]]];
 }
 
 - (void)openOptions:(id)sender
@@ -586,119 +541,12 @@ enum {
 	return NO;
 }
 
-#if 0
-- (IBAction)toggleFullscreenMode: (id)sender
-{
-	_isFullscreen ? [self makeConnectionWindowed: self] : [self makeConnectionFullscreen: self];
-}
-
-- (void)mouseEntered:(NSEvent *)theEvent {
-	NSTrackingRectTag trackingNumber = [theEvent trackingNumber];
-
-    if (trackingNumber == _leftTrackingTag)
-        _horizScrollFactor = -1;
-    else if (trackingNumber == _topTrackingTag)
-        _vertScrollFactor = +1;
-    else if (trackingNumber == _rightTrackingTag)
-        _horizScrollFactor = +1;
-    else if (trackingNumber == _bottomTrackingTag)
-        _vertScrollFactor = -1;
-    else
-        NSLog(@"Unknown trackingNumber %d", trackingNumber);
-
-//    if ([self connectionIsFullscreen])
-        [self beginFullscreenScrolling];
-}
-
-- (void)mouseExited:(NSEvent *)theEvent {
-	NSTrackingRectTag trackingNumber = [theEvent trackingNumber];
-
-    if (trackingNumber == _leftTrackingTag
-            || trackingNumber == _rightTrackingTag) {
-        _horizScrollFactor = 0;
-        if (_vertScrollFactor == 0)
-            [self endFullscreenScrolling];
-    } else {
-        _vertScrollFactor = 0;
-        if (_horizScrollFactor == 0)
-            [self endFullscreenScrolling];
-    }
-}
-
-/* The tracking rectangles don't apply to mouse movement when the button is
- * down. So this method tests mouse drags to see if it should trigger fullscreen
- * scrolling. */
-- (void)mouseDragged:(NSEvent *)theEvent
-{
-//    if (!_isFullscreen)
-//        return;
-    
-    NSPoint pt = [scrollView convertPoint: [theEvent locationInWindow]
-                                 fromView:nil];
-    NSRect  scrollRect = [scrollView bounds];
-
-    if (pt.x - NSMinX(scrollRect) < kTrackingRectThickness)
-        _horizScrollFactor = -1;
-    else if (NSMaxX(scrollRect) - pt.x < kTrackingRectThickness)
-        _horizScrollFactor = 1;
-    else
-        _horizScrollFactor = 0;
-
-    if (pt.y - NSMinY(scrollRect) < kTrackingRectThickness)
-        _vertScrollFactor = 1;
-    else if (NSMaxY(scrollRect) - pt.y < kTrackingRectThickness)
-        _vertScrollFactor = -1;
-    else
-        _vertScrollFactor = 0;
-
-    if (_horizScrollFactor || _vertScrollFactor)
-        [self beginFullscreenScrolling];
-    else
-        [self endFullscreenScrolling];
-}
-#endif
-
 - (void)setFrameBufferUpdateSeconds: (float)seconds
 {
     // miniaturized windows should keep update seconds set at maximum
     if (![window isMiniaturized])
         [connection setFrameBufferUpdateSeconds:seconds];
 }
-
-#if 0
-- (void)beginFullscreenScrolling {
-    if (_autoscrollTimer)
-        return;
-	_autoscrollTimer = [[NSTimer scheduledTimerWithTimeInterval: kAutoscrollInterval
-                                                         target: self
-                                                       selector: @selector(scrollFullscreenView:)
-                                                       userInfo: nil repeats: YES] retain];
-}
-
-- (void)endFullscreenScrolling {
-	[_autoscrollTimer invalidate];
-	[_autoscrollTimer release];
-	_autoscrollTimer = nil;
-}
-
-- (void)scrollFullscreenView: (NSTimer *)timer {
-	NSClipView *contentView = [scrollView contentView];
-	NSPoint origin = [contentView bounds].origin;
-	float autoscrollIncrement = [[PrefController sharedController] fullscreenAutoscrollIncrement];
-    NSPoint newOrigin = NSMakePoint(origin.x + _horizScrollFactor * autoscrollIncrement, origin.y + _vertScrollFactor * autoscrollIncrement);
-    
-    newOrigin = [contentView constrainScrollPoint: newOrigin];
-    // don't let constrainScrollPoint screw up centering
-    if (_horizScrollFactor == 0)
-        newOrigin.x = origin.x;
-    if (_vertScrollFactor == 0)
-        newOrigin.y = origin.y;
-    
-    [contentView scrollToPoint: newOrigin];
-    [scrollView reflectScrolledClipView: contentView];
-}
-#endif
-
 
 /* Reconnection attempts */
 
