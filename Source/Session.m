@@ -30,6 +30,7 @@
 #import "RFBView.h"
 #import "SshWaiter.h"
 #import "ScoutWindowController.h"
+#import "centerclip.h"
 
 #define XK_MISCELLANY
 #include "keysymdef.h"
@@ -320,7 +321,6 @@ enum {
         horizontalScroll = YES;
     }
     
-    winframe = [window frame];
     winframe = [[NSScreen mainScreen] visibleFrame];
 
     winframe = [NSWindow frameRectForContentRect:winframe styleMask:[window styleMask]];
@@ -333,7 +333,16 @@ enum {
 {
     NSRect wf;
 	NSRect screenRect;
-    
+
+    NSRect rr = [rfbView frame];
+    rr.origin.x = 0;
+    rr.origin.y = 0;
+    [rfbView setFrame:rr];
+    NSClipView* clipView = [[centerclip alloc] initWithFrame:[rfbView frame]];
+    [scrollView setContentView:clipView];
+    [scrollView setDocumentView:rfbView];
+    [scrollView setBackgroundColor:[NSColor colorWithCalibratedWhite:0.6f alpha:1.0]];
+
     horizontalScroll = verticalScroll = NO;
 	screenRect = [[NSScreen mainScreen] visibleFrame];
     wf.origin.x = wf.origin.y = 0;
@@ -345,56 +354,41 @@ enum {
 	if(wf.size.height >  NSHeight(screenRect))
     {
         verticalScroll = YES;
-        wf.size.height = NSHeight(screenRect);
         wf.size.width += 18;    // add scroller size to width
     }
 	if(wf.size.width > NSWidth(screenRect))
     {
         horizontalScroll = YES;
-        wf.size.width = NSWidth(screenRect);
     }
-    
-	// According to the Human Interface Guidelines, new windows should be "visually centered"
-	// If screenRect is X1,Y1-X2,Y2, and wf is x1,y1 -x2,y2, then
-	// the origin (bottom left point of the rect) for wf should be
-	// Ox = ((X2-X1)-(x2-x1)) * (1/2)    [I.e., one half screen width less window width]
-	// Oy = ((Y2-Y1)-(y2-y1)) * (2/3)    [I.e., two thirds screen height less window height]
-	// Then the origin must be offset by the "origin" of the screen rect.
-	// Note that while Rects are floats, we seem to have an issue if the origin is
-	// not an integer, so we use the floor() function.
-//	wf.origin.x = floor((NSWidth(screenRect) - NSWidth(wf))/2 + NSMinX(screenRect));
-//	wf.origin.y = floor((NSHeight(screenRect) - NSHeight(wf))*2/3 + NSMinY(screenRect));
-	
+    	
 	[scrollView setHasHorizontalScroller:horizontalScroll];
 	[scrollView setHasVerticalScroller:verticalScroll];
 
     // don't really need unless _maxsize is no longer 1024x768
-	NSView *contentView = [scrollView contentView];
-    NSRect fr = [contentView frame];
-    fr.size = _maxSize;
-    [contentView setFrame:fr];
 
-    NSRect sfr = [scrollView frame];
-    sfr.size.width -= verticalScroll;
-    sfr.size.height -= horizontalScroll;
-    [scrollView setFrame:sfr];
-    [self scrollToCenter:scrollView];
-    
+	NSClipView *contentView = [scrollView documentView];
+    [contentView setAutoresizesSubviews:NO];
+
     [window makeFirstResponder:rfbView];
 }
 
--(void)scrollToCenter:(NSScrollView*)scrollVw
+-(void)scrollToCenter:(BOOL)scrolling
 {
-    const CGFloat midX = NSMidX([scrollVw frame]);
-    const CGFloat midY = NSMidY([scrollVw frame]);
+
+    const CGFloat midX = NSMidX([scrollView frame]);
+    const CGFloat midY = NSMidY([scrollView frame]);
     
-    const CGFloat halfWidth = NSWidth([[scrollVw contentView] frame]) / 2.0;
-    const CGFloat halfHeight = NSHeight([[scrollVw contentView] frame]) / 2.0;
-    
-    NSPoint newOrigin = NSMakePoint(midX - halfWidth, midY - halfHeight);
-    
-    [[scrollVw contentView] scrollToPoint:newOrigin];
-//    [scrollVw reflectScrolledClipView:[scrollVw contentView]];
+    const CGFloat halfWidth = NSWidth([[scrollView documentView] frame]) / 2.0;
+    const CGFloat halfHeight = NSHeight([[scrollView contentView] frame]) / 2.0;
+
+    NSPoint newOrigin;
+    if(scrolling)
+        newOrigin = NSMakePoint(midX - halfWidth, midY - halfHeight);
+    else
+        newOrigin = NSMakePoint(midX - halfWidth,NSMaxY([[scrollView documentView] frame])
+                                -NSHeight([[scrollView contentView] bounds]));        
+    [[scrollView contentView] scrollToPoint:newOrigin];
+    [scrollView reflectScrolledClipView:[scrollView contentView]];
 }
 
 - (void)setNewTitle:(id)sender
@@ -560,7 +554,7 @@ enum {
 {
 	[scrollView setHasHorizontalScroller:horizontalScroll];
 	[scrollView setHasVerticalScroller:verticalScroll];
-    [self scrollToCenter:scrollView];
+//    [self scrollToCenter:NO];
 }
 
 - (void)windowDidBecomeKey

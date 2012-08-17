@@ -31,7 +31,6 @@
     NSWindow *window;       // set to scoutwindowcontroller's window
     
     RFBConnection   *connection;
-    IBOutlet RFBView *rfbView;
     SshTunnel       *sshTunnel;
 
     id      newTitleField;
@@ -71,9 +70,10 @@
 	NSTimer *_autoscrollTimer;
 
     NSScrollView *scrollView;
+    RFBView *rfbView;
 }
 @property (assign) IBOutlet NSScrollView *scrollView;
-@property (assign) RFBView *rfbView;
+@property (assign) IBOutlet RFBView *rfbView;
 
 - (id)initWithConnection:(RFBConnection*)conn;
 - (void)dealloc;
