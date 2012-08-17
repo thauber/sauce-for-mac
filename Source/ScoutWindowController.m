@@ -311,12 +311,12 @@ NSString *kHistoryTabLabel = @"Session History";
     if(curSession)
     {
         Session *ss = curSession;
-        curSession = nil;        
         NSTabViewItem *tvi = [tabView selectedTabViewItem];
         [hviewCtlr updateActive:[tvi view]];
-        [[SaucePreconnect sharedPreconnect] sessionClosed:[ss connection]];
+        [[SaucePreconnect sharedPreconnect] sessionClosed:[ss view]];
         [[RFBConnectionManager sharedManager] cancelConnection];
         [ss  connectionProblem];
+        curSession = nil;        
         [tabView removeTabViewItem:tvi]; 
     }
 }

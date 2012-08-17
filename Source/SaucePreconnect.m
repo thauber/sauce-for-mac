@@ -254,7 +254,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 }
 
 // remove session being close from heartbeat array
--(void)sessionClosed:(id)connection
+-(void)sessionClosed:(id)view
 {
 	int len = [credArr count];
     NSDictionary *sdict;
@@ -262,7 +262,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     for(int i=0;i<len;i++)
     {
         sdict = [credArr objectAtIndex:i];
-        if([sdict objectForKey:@"connection"] == connection)
+        if([sdict objectForKey:@"view"] == view)
         {
             NSString *aliveId = [sdict objectForKey:@"liveId"];
             NSString *farg = [NSString stringWithFormat:@"curl -X DELETE 'https://%@:%@@%@/rest/v1/users/%@/scout/%@'", self.user, self.ukey, kSauceLabsDomain, self.user, aliveId];

@@ -65,7 +65,7 @@ extern NSString *kSauceLabsDomain;
 // return json with secret/job_id for server connection
 - (NSString *)credStr;
 -(void)cancelPreAuthorize:(NSTimer*)tm;
--(void)sessionClosed:(id)session;
+-(void)sessionClosed:(id)view;
 -(NSDictionary *)sessionInfo:(id)view;
 -(void)setvmsize:(NSSize)size;
 -(void)setSessionInfo:(id)session view:(id)view;
