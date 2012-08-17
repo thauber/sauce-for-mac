@@ -338,7 +338,8 @@ enum {
     rr.origin.x = 0;
     rr.origin.y = 0;
     [rfbView setFrame:rr];
-    NSClipView* clipView = [[centerclip alloc] initWithFrame:[rfbView frame]];
+    NSClipView* clipView = [[centerclip alloc] initWithFrame:rr];
+    [clipView setAutoresizesSubviews:NO];
     [scrollView setContentView:clipView];
     [scrollView setDocumentView:rfbView];
     [scrollView setBackgroundColor:[NSColor colorWithCalibratedWhite:0.6f alpha:1.0]];
@@ -364,10 +365,6 @@ enum {
 	[scrollView setHasHorizontalScroller:horizontalScroll];
 	[scrollView setHasVerticalScroller:verticalScroll];
 
-    // don't really need unless _maxsize is no longer 1024x768
-
-	NSClipView *contentView = [scrollView documentView];
-    [contentView setAutoresizesSubviews:NO];
 
     [window makeFirstResponder:rfbView];
 }
