@@ -290,7 +290,7 @@
 
     [handshaker release];
     handshaker = nil;
-    [self dummyRequest];
+//    [self dummyRequest];
 }
 
 - (NSString*)password
