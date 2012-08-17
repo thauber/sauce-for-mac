@@ -14,8 +14,8 @@
 #import "Session.h"
 #import "TunnelController.h"
 
-//NSString *kSauceLabsDomain = @"saucelabs.com";
-NSString *kSauceLabsDomain = @"admc.dev.saucelabs.com";
+NSString *kSauceLabsDomain = @"saucelabs.com";
+//NSString *kSauceLabsDomain = @"admc.dev.saucelabs.com";
 @implementation SaucePreconnect
 
 @synthesize user;
