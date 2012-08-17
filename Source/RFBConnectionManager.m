@@ -45,7 +45,8 @@ NSString *kSessionIndxLnx = @"sessionIndxLnx";
 NSString *kSessionIndxMac = @"sessionIndxMac";
 NSString *kSessionIndxMbl = @"sessionIndxMbl";
 NSString *kCurTab = @"lastCurrentTab";
-NSString *kSauceLabsHost = @"tv1.saucelabs.com";    // fixed host for connection
+// NSString *kSauceLabsHost = @"tv1.saucelabs.com";    // fixed host for connection
+NSString *kSauceLabsHost = @"admc.dev.saucelabs.com";    // fixed host for connection
 int kPort = 5901;                                   // fixed port for connection
 
 

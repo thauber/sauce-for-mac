@@ -14,6 +14,8 @@
 #import "Session.h"
 #import "TunnelController.h"
 
+//NSString *kSauceLabsDomain = @"saucelabs.com";
+NSString *kSauceLabsDomain = @"admc.dev.saucelabs.com";
 @implementation SaucePreconnect
 
 @synthesize user;
@@ -77,9 +79,9 @@ static SaucePreconnect* _sharedPreconnect = nil;
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
     // timeout if can't get credentials from server
-    self.authTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(cancelPreAuthorize:) userInfo:nil repeats:NO];
+    self.authTimer = [NSTimer scheduledTimerWithTimeInterval:300 target:self selector:@selector(cancelPreAuthorize:) userInfo:nil repeats:NO];
 
-    NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@saucelabs.com/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\"}'", self.user, self.ukey, self.user, self.os, self.browser, self.browserVersion, self.urlStr];
+    NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@%@/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\"}'", self.user, self.ukey,kSauceLabsDomain, user, self.os, self.browser, self.browserVersion, self.urlStr];
     cancelled = NO;
     self.errStr = nil;
 
@@ -206,7 +208,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 // poll til we get secret/jobid
 -(void)curlGetauth
 {    
-	NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/scout/live/%@/status?secret&'", self.user, self.ukey, self.liveId ];
+	NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@%@/scout/live/%@/status?secret&'", self.user, self.ukey, kSauceLabsDomain, self.liveId ];
 
     while(1)    // use live-id to get job-id
     {
@@ -263,7 +265,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if([sdict objectForKey:@"connection"] == connection)
         {
             NSString *aliveId = [sdict objectForKey:@"liveId"];
-            NSString *farg = [NSString stringWithFormat:@"curl -X DELETE 'https://%@:%@@saucelabs.com/rest/v1/users/%@/scout/%@'", self.user, self.ukey, self.user, aliveId];
+            NSString *farg = [NSString stringWithFormat:@"curl -X DELETE 'https://%@:%@@%@/rest/v1/users/%@/scout/%@'", self.user, self.ukey, kSauceLabsDomain, self.user, aliveId];
             [credArr removeObjectAtIndex:i];
             NSTask *ftask = [[[NSTask alloc] init] autorelease];
             NSPipe *fpipe = [NSPipe pipe];
@@ -405,7 +407,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         sdict = (NSMutableDictionary*)[credArr objectAtIndex:indx];
         NSString *aliveid = [sdict objectForKey:@"liveId"];
                              
-        NSString *farg = [NSString stringWithFormat:@"curl 'https://saucelabs.com/scout/live/%@/status?auth_username=%@&auth_access_key=%@' 2>/dev/null", aliveid, self.user, self.ukey];
+        NSString *farg = [NSString stringWithFormat:@"curl 'https://%@/scout/live/%@/status?auth_username=%@&auth_access_key=%@' 2>/dev/null", kSauceLabsDomain, aliveid, self.user, self.ukey];
 
         NSLog(@"hb:%@",aliveid);        // ** testing
         while(1)    
@@ -486,7 +488,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 // 0->bad login 1->good user  -1->bad internet connection
 - (NSInteger)checkUserLogin:(NSString *)uuser  key:(NSString*)kkey
 {
-    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/rest/v1/%@/jobs'", uuser, kkey, uuser];
+    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@%@/rest/v1/%@/jobs'", uuser, kkey, kSauceLabsDomain, uuser];
     
     while(1)
     {
@@ -524,6 +526,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
             else 
             {
                 self.errStr = @"Failed server authentication";
+                return NO;
             }
         }
     }
@@ -537,7 +540,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     self.passNew = upassNew;
     self.emailNew = uemailNew;
     
-    NSString *farg = [NSString stringWithFormat:@"curl -X POST http://saucelabs.com/rest/v1/users -H 'Content-Type: application/json' -d '{\"username\":\"%@\", \"password\":\"%@\",\"name\":\"\",\"email\":\"%@\",\"token\":\"0E44EF6E-B170-4CA0-8264-78FD9E49E5CD\"}'",self.userNew, self.passNew, self.emailNew];
+    NSString *farg = [NSString stringWithFormat:@"curl -X POST http://%@/rest/v1/users -H 'Content-Type: application/json' -d '{\"username\":\"%@\", \"password\":\"%@\",\"name\":\"\",\"email\":\"%@\",\"token\":\"0E44EF6E-B170-4CA0-8264-78FD9E49E5CD\"}'",kSauceLabsDomain, self.userNew, self.passNew, self.emailNew];
      
     self.errStr = nil;
     while(1)
@@ -600,7 +603,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     NSString* escTitle = [title stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
     NSString* escDesc  = [desc stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
 
-    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/scout/live/%@/reportbug?&ssname=%@&title=%@&description=%@'", auser, akey, aliveid, snapName, escTitle, escDesc];
+    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@%@/scout/live/%@/reportbug?&ssname=%@&title=%@&description=%@'", auser, akey, kSauceLabsDomain, aliveid, snapName, escTitle, escDesc];
     
     self.errStr = nil;
     NSString *surl;
@@ -634,7 +637,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
             NSString *snapId = [self jsonVal:jsonString key:@"c"];
             [jsonString release];
             if(snapId)  // QUERY: what is the id for?  jobId isn't always correct?
-                surl = [NSString stringWithFormat:@"https://saucelabs.com/jobs/%@/%@",ajobid,snapName];
+                surl = [NSString stringWithFormat:@"https://%@/jobs/%@/%@",kSauceLabsDomain, ajobid,snapName];
             break;
         }
     } 
@@ -651,8 +654,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
     NSString *akey = [sdict objectForKey:@"ukey"];
     NSString *ajobid = [sdict objectForKey:@"jobId"];
     
-    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/scout/live/%@/sendcommand?&1=getScreenshotName&sessionId=%@&cmd=captureScreenshot'", 
-                      auser, akey, aliveid, ajobid];
+    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@%@/scout/live/%@/sendcommand?&1=getScreenshotName&sessionId=%@&cmd=captureScreenshot'", 
+                      auser, akey, kSauceLabsDomain, aliveid, ajobid];
 
     self.errStr = nil;
     while(1)
@@ -702,8 +705,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
 // 0->bad login 1->good user  -1->bad internet connection
 - (NSInteger)checkAccountOk:(BOOL)bSubscribed
 {
-    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@saucelabs.com/rest/v1/users/%@'", 
-                      self.user, self.ukey, self.user];
+    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@%@/rest/v1/users/%@'", 
+                      self.user, self.ukey, kSauceLabsDomain, self.user];
 
     while(1)
     {

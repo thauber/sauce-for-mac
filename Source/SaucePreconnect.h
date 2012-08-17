@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "SnapProgress.h"
 
+extern NSString *kSauceLabsDomain;
 @class TunnelController;
 
 @interface SaucePreconnect : NSObject
