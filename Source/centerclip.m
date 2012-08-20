@@ -29,15 +29,21 @@
     // Center the clipping rect origin x
     if (docRect.size.width < clipRect.size.width) {
         clipRect.origin.x = roundf((docRect.size.width - clipRect.size.width) / 2.0);
-    } else {
+    }
+#if 0
+    else {
         clipRect.origin.x = roundf(viewPoint.x * docRect.size.width - (clipRect.size.width / 2.0));
     }
+#endif
     // Center the clipping rect origin y
     if (docRect.size.height < clipRect.size.height) {
         clipRect.origin.y = roundf((docRect.size.height - clipRect.size.height) / 2.0);
-    } else {
+    }
+#if 0
+    else {
         clipRect.origin.y = roundf(viewPoint.y * docRect.size.height - (clipRect.size.height / 2.0));
     }
+#endif
     // Scroll the document to the selected center point
     NSScrollView* scrollView = (NSScrollView*)[self superview];
     [scrollView scrollClipView:self toPoint:[self constrainScrollPoint:clipRect.origin]];
@@ -61,10 +67,10 @@
     } else {
         clipRect.origin.y = roundf(MAX(0, MIN(clipRect.origin.y, maxY)));
     }
-    viewPoint.x = NSMidX(clipRect) / docRect.size.width;
-    viewPoint.y = NSMidY(clipRect) / docRect.size.height;
-    if(viewPoint.y > maxvertical)
-        maxvertical = viewPoint.y;
+//    viewPoint.x = NSMidX(clipRect) / docRect.size.width;
+//    viewPoint.y = NSMidY(clipRect) / docRect.size.height;
+//    if(viewPoint.y > maxvertical)
+//        maxvertical = viewPoint.y;
     
     return clipRect.origin;
 }
