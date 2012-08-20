@@ -66,7 +66,6 @@
     if(viewPoint.y > maxvertical)
         maxvertical = viewPoint.y;
     
-    NSLog(@"scrollpt  x:%f y:%f",clipRect.origin.x, clipRect.origin.y);
     return clipRect.origin;
 }
 
