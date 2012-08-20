@@ -15,7 +15,8 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        viewPoint = NSMakePoint(0, 0);
+        viewPoint = NSMakePoint(0.0, 1.0);      // have initially scroll so top is displayed
+        maxvertical = 0.0;
         [self setAutoresizesSubviews:NO];
     }
     
@@ -42,8 +43,8 @@
     [scrollView scrollClipView:self toPoint:[self constrainScrollPoint:clipRect.origin]];
 }
 
-- (NSPoint) constrainScrollPoint:(NSPoint)proposedNewOrigin {
-
+- (NSPoint) constrainScrollPoint:(NSPoint)proposedNewOrigin
+{
     NSRect docRect = [[self documentView] frame];
     NSRect clipRect = [self bounds];
     CGFloat maxX = docRect.size.width - clipRect.size.width;
@@ -62,6 +63,10 @@
     }
     viewPoint.x = NSMidX(clipRect) / docRect.size.width;
     viewPoint.y = NSMidY(clipRect) / docRect.size.height;
+    if(viewPoint.y > maxvertical)
+        maxvertical = viewPoint.y;
+    
+    NSLog(@"scrollpt  x:%f y:%f",clipRect.origin.x, clipRect.origin.y);
     return clipRect.origin;
 }
 
@@ -84,6 +89,7 @@
 }
 - (void) setFrameSize:(NSSize)newSize {
     [super setFrameSize:newSize];
+    viewPoint.y = maxvertical;
     [self centerView];
 }
 - (void) setFrameRotation:(CGFloat)angle {

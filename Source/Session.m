@@ -91,6 +91,17 @@ enum {
     
     window = [[ScoutWindowController sharedScout] window];
 
+    NSRect rr = [rfbView frame];
+    rr.origin.x = 0;
+    rr.origin.y = 0;
+    [rfbView setFrame:rr];
+    NSClipView* clipView = [[centerclip alloc] initWithFrame:rr];
+    [clipView setAutoresizesSubviews:NO];
+    [scrollView setContentView:clipView];
+    [clipView release];
+    [scrollView setDocumentView:rfbView];
+    [scrollView setBackgroundColor:[NSColor colorWithCalibratedWhite:0.6f alpha:1.0]];
+
     host = kSauceLabsHost;
     
     _isFullscreen = NO; // jason added for fullscreen display
@@ -292,69 +303,31 @@ enum {
  * not the scrollbars are necessary. */
 - (NSSize)_maxSizeForWindowSize:(NSSize)aSize;
 {
-    NSRect  winframe;
-    NSSize	maxviewsize;
-
-    maxviewsize = _maxSize;
-    maxviewsize.height += 91;
-    
     horizontalScroll = verticalScroll = NO;
-    if(aSize.height<=maxviewsize.height)
+    
+    NSSize docsz = [[scrollView documentView] frame].size;
+    docsz.height += 91;
+	if(aSize.height <  docsz.height)
     {
-        verticalScroll = YES;            
+        verticalScroll = YES;
+        docsz.width += 18;
     }
-
-    if(aSize.width<=maxviewsize.width)
+	if(aSize.width < docsz.width)
     {
         horizontalScroll = YES;
     }
     
-    winframe = [[NSScreen mainScreen] visibleFrame];
-
-    winframe = [NSWindow frameRectForContentRect:winframe styleMask:[window styleMask]];
-
-    return winframe.size;
+	[scrollView setHasHorizontalScroller:horizontalScroll];
+	[scrollView setHasVerticalScroller:verticalScroll];
+    NSPoint pt = NSMakePoint(0.0, [[scrollView documentView] bounds].size.height);
+    [[scrollView documentView] scrollPoint:pt];
+    return aSize;
 }
 
 /* Sets up window. */
 - (void)setupWindow
 {
-    NSRect wf;
-	NSRect screenRect;
-
-    NSRect rr = [rfbView frame];
-    rr.origin.x = 0;
-    rr.origin.y = 0;
-    [rfbView setFrame:rr];
-    NSClipView* clipView = [[centerclip alloc] initWithFrame:rr];
-    [clipView setAutoresizesSubviews:NO];
-    [scrollView setContentView:clipView];
-    [clipView release];
-    [scrollView setDocumentView:rfbView];
-    [scrollView setBackgroundColor:[NSColor colorWithCalibratedWhite:0.6f alpha:1.0]];
-
-    horizontalScroll = verticalScroll = NO;
-	screenRect = [[NSScreen mainScreen] visibleFrame];
-    wf.origin.x = wf.origin.y = 0;
-    wf.size = _maxSize;
-    wf.size.height += 91;       // allow for statusbar(26) and tabbar(28) + toolbar(42) minus the 22 for title bar that the next call will add (unless screen is shorter than 876)
-    
-    wf = [NSWindow frameRectForContentRect:wf styleMask:[window styleMask]];
-
-	if(wf.size.height >  NSHeight(screenRect))
-    {
-        verticalScroll = YES;
-        wf.size.width += 18;    // add scroller size to width
-    }
-	if(wf.size.width > NSWidth(screenRect))
-    {
-        horizontalScroll = YES;
-    }
-    	
-	[scrollView setHasHorizontalScroller:horizontalScroll];
-	[scrollView setHasVerticalScroller:verticalScroll];
-
-
+    [self _maxSizeForWindowSize:[scrollView frame].size];
     [window makeFirstResponder:rfbView];
 }
 
