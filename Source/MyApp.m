@@ -131,7 +131,10 @@
 - (void)quitDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
     if(returnCode == NSAlertDefaultReturn)
+    {
+        [[ScoutWindowController sharedScout] closeAllTabs];
         [super terminate:nil];
+    }
     else
     {
         if(![[SaucePreconnect sharedPreconnect] user])
