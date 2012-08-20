@@ -19,6 +19,7 @@
 #import "HistoryViewController.h"
 #import "GradientView.h"
 #import "StopSession.h"
+#import "centerclip.h"
 
 @implementation ScoutWindowController
 
@@ -477,6 +478,8 @@ NSString *kHistoryTabLabel = @"Session History";
         [bugsnap setEnabled:YES];
         [playstop setEnabled:YES];
 
+        NSScrollView *svw = [curSession scrollView];
+        [(centerclip*)[svw contentView] centerView];        // make sure view is centered
         [[self window] display];
     }
 }
