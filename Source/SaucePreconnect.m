@@ -460,7 +460,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 else
                 {
                     NSLog(@"heartbeat - not in progress:%@",jsonString);
-                    [self sessionClosed:[sdict objectForKey:@"connection"]];
+                    [self sessionClosed:[sdict objectForKey:@"view"]];
                     credArrSz = [credArr count];
                     removedObj = YES;
                     break;
