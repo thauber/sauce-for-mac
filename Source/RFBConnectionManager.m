@@ -144,7 +144,6 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
 {
     [aConnection retain];
     [sessions removeObject:aConnection];
-//    [[SaucePreconnect sharedPreconnect] sessionClosed:aConnection];
     [aConnection autorelease];
 }
 
