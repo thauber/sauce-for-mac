@@ -10,8 +10,6 @@
 
 @interface centerclip : NSClipView
 {
-    NSPoint viewPoint;      // current scroll point
-    float maxvertical;
 }
 - (id) initWithFrame:(NSRect)frame;
 - (void) centerView;
