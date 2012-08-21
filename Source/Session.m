@@ -100,7 +100,7 @@ enum {
     [scrollView setContentView:clipView];
     [clipView release];
     [scrollView setDocumentView:rfbView];
-    [scrollView setBackgroundColor:[NSColor colorWithCalibratedWhite:0.6f alpha:1.0]];
+    [scrollView setBackgroundColor:[NSColor colorWithCalibratedWhite:0.5f alpha:1.0]];
 
     host = kSauceLabsHost;
     
