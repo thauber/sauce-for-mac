@@ -10,6 +10,7 @@
 #import "HistoryViewController.h"
 #import "SaucePreconnect.h"
 #import "AppDelegate.h"
+#import "historyTableView.h"
 
 @implementation HistoryViewController
 
@@ -20,7 +21,8 @@
     {
         [NSBundle loadNibNamed:@"history"  owner:self];
         rowDict  = [[NSMutableDictionary dictionaryWithCapacity:0] retain];     // row info
-        indxDict = [[NSMutableDictionary dictionaryWithCapacity:0] retain];     // index for a view        
+        indxDict = [[NSMutableDictionary dictionaryWithCapacity:0] retain];     // index for a view 
+        [tableView setVwCtlr:self];
     }
     return self;
 }
@@ -96,18 +98,15 @@
     return @"";
 }
 
-// NB: doesn't get called if row already selected
-- (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)rowIndex
+- (void)browseJobs:(NSInteger)row
 {
-    NSNumber *rindex = [NSNumber numberWithInteger:rowIndex];
+    NSNumber *rindex = [NSNumber numberWithInteger:row];
     NSView *view = [indxDict objectForKey:rindex];
     NSArray *rr = [rowDict objectForKey:[NSNumber numberWithInteger:(NSInteger)view]];
     NSString *jobId = [rr objectAtIndex:6];
     NSString *urlStr = [NSString stringWithFormat:@"http://saucelabs.com/jobs/%@",jobId];
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:urlStr]];
-    return YES;
 }
-
 
 
 - (IBAction)doNewSession:(id)sender

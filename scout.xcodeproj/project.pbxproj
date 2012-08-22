@@ -81,6 +81,8 @@
 		0F3D2AC015B9BB8E00C216BE /* ssl-auth.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3D2ABF15B9BB8E00C216BE /* ssl-auth.png */; };
 		0F3DC43D155D6F760069F7AB /* TunnelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F3DC43B155D6F760069F7AB /* TunnelController.h */; };
 		0F3DC43E155D6F760069F7AB /* TunnelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3DC43C155D6F760069F7AB /* TunnelController.m */; };
+		0F3E0F4715E451720074C229 /* historyTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F3E0F4515E451720074C229 /* historyTableView.h */; };
+		0F3E0F4815E451720074C229 /* historyTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3E0F4615E451720074C229 /* historyTableView.m */; };
 		0F3E53B915D22A6700513767 /* stopConnect.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3E53B815D22A6700513767 /* stopConnect.xib */; };
 		0F3E53BB15D22A7700513767 /* stopSession.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3E53BA15D22A7700513767 /* stopSession.xib */; };
 		0F3E53BE15D22AB400513767 /* StopConnect.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F3E53BC15D22AB400513767 /* StopConnect.h */; };
@@ -471,6 +473,8 @@
 		0F3D2ABF15B9BB8E00C216BE /* ssl-auth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ssl-auth.png"; path = "Resources/ssl-auth.png"; sourceTree = "<group>"; };
 		0F3DC43B155D6F760069F7AB /* TunnelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TunnelController.h; sourceTree = "<group>"; };
 		0F3DC43C155D6F760069F7AB /* TunnelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TunnelController.m; sourceTree = "<group>"; };
+		0F3E0F4515E451720074C229 /* historyTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = historyTableView.h; sourceTree = "<group>"; };
+		0F3E0F4615E451720074C229 /* historyTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = historyTableView.m; sourceTree = "<group>"; };
 		0F3E53B815D22A6700513767 /* stopConnect.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = stopConnect.xib; path = Resources/stopConnect.xib; sourceTree = "<group>"; };
 		0F3E53BA15D22A7700513767 /* stopSession.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = stopSession.xib; path = Resources/stopSession.xib; sourceTree = "<group>"; };
 		0F3E53BC15D22AB400513767 /* StopConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StopConnect.h; sourceTree = "<group>"; };
@@ -1085,6 +1089,8 @@
 				0F463B36159BB82F0055B790 /* GradientView.m */,
 				0FDA1D1015A5648300ECBF59 /* HistoryViewController.h */,
 				0FDA1D1115A5648300ECBF59 /* HistoryViewController.m */,
+				0F3E0F4515E451720074C229 /* historyTableView.h */,
+				0F3E0F4615E451720074C229 /* historyTableView.m */,
 				0F32B49615B8C88900C0CFBF /* Subscriber.h */,
 				0F32B49715B8C88900C0CFBF /* Subscriber.m */,
 				0F59E7C315CDA6CB0003D541 /* StopSession.h */,
@@ -1519,6 +1525,7 @@
 				0F59E7C515CDA6CB0003D541 /* StopSession.h in Headers */,
 				0F3E53BE15D22AB400513767 /* StopConnect.h in Headers */,
 				0F35002915DDDB7700B8ED0E /* centerclip.h in Headers */,
+				0F3E0F4715E451720074C229 /* historyTableView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1836,6 +1843,7 @@
 				0F59E7C615CDA6CB0003D541 /* StopSession.m in Sources */,
 				0F3E53BF15D22AB400513767 /* StopConnect.m in Sources */,
 				0F35002A15DDDB7700B8ED0E /* centerclip.m in Sources */,
+				0F3E0F4815E451720074C229 /* historyTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
