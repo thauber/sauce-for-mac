@@ -70,7 +70,7 @@
     // size column 0 row heights
     NSMatrix *mm = [browserTbl matrixInColumn:0];
     NSSize sz = [mm cellSize];
-    sz.height = 28;
+    sz.height = 21;
     [mm setCellSize:sz];
     sz.width=0; sz.height = 8;
     [mm setIntercellSpacing:sz];
@@ -91,7 +91,7 @@
     // create attributed strings for os's (column 0)    
     // os images
     NSImage *oimgs[4];
-    NSSize isz = NSMakeSize(28,28);
+    NSSize isz = NSMakeSize(21,21);
     NSString *path = [[NSBundle mainBundle] pathForResource:@"win28" ofType:@"png"];
     oimgs[0] = [[NSImage alloc] initByReferencingFile:path];
     [oimgs[0] setSize:isz];
