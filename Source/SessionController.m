@@ -233,7 +233,7 @@
                 brver = [NSString stringWithFormat:@" %@ %@ %@",osstr, browser, version];
             else
                 brver = [NSString stringWithFormat:@" %@ %@",browser, version];
-            NSNumber *nn = [NSNumber numberWithInteger:6]; 
+            NSNumber *nn = [NSNumber numberWithInteger:2]; 
             NSDictionary *asdict = [NSDictionary dictionaryWithObjectsAndKeys:nn,NSBaselineOffsetAttributeName, nil];
             NSAttributedString *bAStr = [[NSAttributedString alloc] initWithString:brver attributes:asdict]; 
             [mas appendAttributedString:bAStr];
