@@ -12,6 +12,9 @@
 		0F32B49E15B8CD8200C0CFBF /* scottie.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F32B49D15B8CD8200C0CFBF /* scottie.png */; };
 		0F35002915DDDB7700B8ED0E /* centerclip.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F35002715DDDB7700B8ED0E /* centerclip.h */; };
 		0F35002A15DDDB7700B8ED0E /* centerclip.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35002815DDDB7700B8ED0E /* centerclip.m */; };
+		0F3742B615ED1E9300A93304 /* an14.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3742B315ED1E9300A93304 /* an14.png */; };
+		0F3742B715ED1E9300A93304 /* lin14.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3742B415ED1E9300A93304 /* lin14.png */; };
+		0F3742B815ED1E9300A93304 /* lin28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3742B515ED1E9300A93304 /* lin28.png */; };
 		0F392220158190350065C018 /* OptionBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F39221E158190350065C018 /* OptionBox.h */; };
 		0F392221158190350065C018 /* OptionBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F39221F158190350065C018 /* OptionBox.m */; };
 		0F3957BD15CC4EE600C04D57 /* subscriber-2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3957BB15CC4EE600C04D57 /* subscriber-2.xib */; };
@@ -416,6 +419,9 @@
 		0F32B49D15B8CD8200C0CFBF /* scottie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = scottie.png; path = Resources/scottie.png; sourceTree = "<group>"; };
 		0F35002715DDDB7700B8ED0E /* centerclip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = centerclip.h; sourceTree = "<group>"; };
 		0F35002815DDDB7700B8ED0E /* centerclip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = centerclip.m; sourceTree = "<group>"; };
+		0F3742B315ED1E9300A93304 /* an14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = an14.png; path = Resources/an14.png; sourceTree = "<group>"; };
+		0F3742B415ED1E9300A93304 /* lin14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lin14.png; path = Resources/lin14.png; sourceTree = "<group>"; };
+		0F3742B515ED1E9300A93304 /* lin28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lin28.png; path = Resources/lin28.png; sourceTree = "<group>"; };
 		0F39221E158190350065C018 /* OptionBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionBox.h; sourceTree = "<group>"; };
 		0F39221F158190350065C018 /* OptionBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionBox.m; sourceTree = "<group>"; };
 		0F3957BB15CC4EE600C04D57 /* subscriber-2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "subscriber-2.xib"; path = "Resources/subscriber-2.xib"; sourceTree = "<group>"; };
@@ -979,6 +985,9 @@
 				0F3BBDD815AB5FDF006EDB74 /* psmtabbar */,
 				0F40B2201599233800E6311E /* scout.conf */,
 				0F4F45FF15EC622100773D93 /* an28.png */,
+				0F3742B315ED1E9300A93304 /* an14.png */,
+				0F3742B415ED1E9300A93304 /* lin14.png */,
+				0F3742B515ED1E9300A93304 /* lin28.png */,
 				0F4F460015EC622100773D93 /* Android-mobile28.png */,
 				0F4F460115EC622100773D93 /* apple28.png */,
 				0F4F460215EC622100773D93 /* chrome28.png */,
@@ -1717,6 +1726,9 @@
 				0F4F461415EC622100773D93 /* safari28.png in Resources */,
 				0F4F461515EC622100773D93 /* win-mobile28.png in Resources */,
 				0F4F461615EC622100773D93 /* win28.png in Resources */,
+				0F3742B615ED1E9300A93304 /* an14.png in Resources */,
+				0F3742B715ED1E9300A93304 /* lin14.png in Resources */,
+				0F3742B815ED1E9300A93304 /* lin28.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

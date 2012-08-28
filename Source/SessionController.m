@@ -95,7 +95,7 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"win28" ofType:@"png"];
     oimgs[0] = [[NSImage alloc] initByReferencingFile:path];
     [oimgs[0] setSize:isz];
-    path = [[NSBundle mainBundle] pathForResource:@"linux" ofType:@"png"];
+    path = [[NSBundle mainBundle] pathForResource:@"lin28" ofType:@"png"];
     oimgs[1] = [[NSImage alloc] initByReferencingFile:path];
     [oimgs[1] setSize:isz];
     path = [[NSBundle mainBundle] pathForResource:@"apple28" ofType:@"png"];
@@ -145,7 +145,7 @@
     path = [[NSBundle mainBundle] pathForResource:@"chrome28" ofType:@"png"];
     bimgs[4] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
     [bimgs[4] setSize:isz];
-    path = [[NSBundle mainBundle] pathForResource:@"Android-mobile28" ofType:@"png"];
+    path = [[NSBundle mainBundle] pathForResource:@"an28" ofType:@"png"];
     bimgs[5] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
     [bimgs[5] setSize:isz];
     path = [[NSBundle mainBundle] pathForResource:@"ios-mobile" ofType:@"png"];
