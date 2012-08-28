@@ -59,7 +59,6 @@ enum TabType {tt_windows, tt_linux, tt_apple, tt_mobile};
 - (void)startConnecting;
 - (void)connectionSucceeded;
 - (void)showError:(NSString *)errStr;
-- (NSInteger)hoverIndx;
 
 
 @end

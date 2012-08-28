@@ -102,6 +102,18 @@
 		0F48D0C9157528950067B689 /* snapProgress.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F48D0C8157528950067B689 /* snapProgress.xib */; };
 		0F48D0CD157528C20067B689 /* SnapProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F48D0CB157528C20067B689 /* SnapProgress.h */; };
 		0F48D0CE157528C20067B689 /* SnapProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F48D0CC157528C20067B689 /* SnapProgress.m */; };
+		0F4F460B15EC622100773D93 /* an28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F45FF15EC622100773D93 /* an28.png */; };
+		0F4F460C15EC622100773D93 /* Android-mobile28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F460015EC622100773D93 /* Android-mobile28.png */; };
+		0F4F460D15EC622100773D93 /* apple28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F460115EC622100773D93 /* apple28.png */; };
+		0F4F460E15EC622100773D93 /* chrome28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F460215EC622100773D93 /* chrome28.png */; };
+		0F4F460F15EC622100773D93 /* firefox28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F460315EC622100773D93 /* firefox28.png */; };
+		0F4F461015EC622100773D93 /* ie28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F460415EC622100773D93 /* ie28.png */; };
+		0F4F461115EC622100773D93 /* ios-mobile.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F460515EC622100773D93 /* ios-mobile.png */; };
+		0F4F461215EC622100773D93 /* linux.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F460615EC622100773D93 /* linux.png */; };
+		0F4F461315EC622100773D93 /* opera28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F460715EC622100773D93 /* opera28.png */; };
+		0F4F461415EC622100773D93 /* safari28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F460815EC622100773D93 /* safari28.png */; };
+		0F4F461515EC622100773D93 /* win-mobile28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F460915EC622100773D93 /* win-mobile28.png */; };
+		0F4F461615EC622100773D93 /* win28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F460A15EC622100773D93 /* win28.png */; };
 		0F59372515C83B150024AB5A /* keysymdef.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59372415C83B150024AB5A /* keysymdef.h */; };
 		0F59372815C8C18B0024AB5A /* keysym.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59372715C8C18B0024AB5A /* keysym.h */; };
 		0F59E7C515CDA6CB0003D541 /* StopSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59E7C315CDA6CB0003D541 /* StopSession.h */; };
@@ -493,6 +505,18 @@
 		0F48D0C8157528950067B689 /* snapProgress.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = snapProgress.xib; path = Resources/snapProgress.xib; sourceTree = "<group>"; };
 		0F48D0CB157528C20067B689 /* SnapProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapProgress.h; sourceTree = "<group>"; };
 		0F48D0CC157528C20067B689 /* SnapProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapProgress.m; sourceTree = "<group>"; };
+		0F4F45FF15EC622100773D93 /* an28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = an28.png; path = Resources/an28.png; sourceTree = "<group>"; };
+		0F4F460015EC622100773D93 /* Android-mobile28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Android-mobile28.png"; path = "Resources/Android-mobile28.png"; sourceTree = "<group>"; };
+		0F4F460115EC622100773D93 /* apple28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = apple28.png; path = Resources/apple28.png; sourceTree = "<group>"; };
+		0F4F460215EC622100773D93 /* chrome28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = chrome28.png; path = Resources/chrome28.png; sourceTree = "<group>"; };
+		0F4F460315EC622100773D93 /* firefox28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = firefox28.png; path = Resources/firefox28.png; sourceTree = "<group>"; };
+		0F4F460415EC622100773D93 /* ie28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ie28.png; path = Resources/ie28.png; sourceTree = "<group>"; };
+		0F4F460515EC622100773D93 /* ios-mobile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ios-mobile.png"; path = "Resources/ios-mobile.png"; sourceTree = "<group>"; };
+		0F4F460615EC622100773D93 /* linux.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = linux.png; path = Resources/linux.png; sourceTree = "<group>"; };
+		0F4F460715EC622100773D93 /* opera28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = opera28.png; path = Resources/opera28.png; sourceTree = "<group>"; };
+		0F4F460815EC622100773D93 /* safari28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = safari28.png; path = Resources/safari28.png; sourceTree = "<group>"; };
+		0F4F460915EC622100773D93 /* win-mobile28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "win-mobile28.png"; path = "Resources/win-mobile28.png"; sourceTree = "<group>"; };
+		0F4F460A15EC622100773D93 /* win28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = win28.png; path = Resources/win28.png; sourceTree = "<group>"; };
 		0F59372415C83B150024AB5A /* keysymdef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keysymdef.h; sourceTree = "<group>"; };
 		0F59372715C8C18B0024AB5A /* keysym.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keysym.h; sourceTree = "<group>"; };
 		0F59E7C315CDA6CB0003D541 /* StopSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StopSession.h; sourceTree = "<group>"; };
@@ -954,6 +978,18 @@
 			children = (
 				0F3BBDD815AB5FDF006EDB74 /* psmtabbar */,
 				0F40B2201599233800E6311E /* scout.conf */,
+				0F4F45FF15EC622100773D93 /* an28.png */,
+				0F4F460015EC622100773D93 /* Android-mobile28.png */,
+				0F4F460115EC622100773D93 /* apple28.png */,
+				0F4F460215EC622100773D93 /* chrome28.png */,
+				0F4F460315EC622100773D93 /* firefox28.png */,
+				0F4F460415EC622100773D93 /* ie28.png */,
+				0F4F460515EC622100773D93 /* ios-mobile.png */,
+				0F4F460615EC622100773D93 /* linux.png */,
+				0F4F460715EC622100773D93 /* opera28.png */,
+				0F4F460815EC622100773D93 /* safari28.png */,
+				0F4F460915EC622100773D93 /* win-mobile28.png */,
+				0F4F460A15EC622100773D93 /* win28.png */,
 				0F7CE3CC152F6C2800068464 /* bug.pdf */,
 				0F7CE3CD152F6C2800068464 /* camera.pdf */,
 				0F7CE3CE152F6C2800068464 /* play.pdf */,
@@ -1669,6 +1705,18 @@
 				0F59E7C815CE0F5D0003D541 /* logo.icns in Resources */,
 				0F3E53B915D22A6700513767 /* stopConnect.xib in Resources */,
 				0F3E53BB15D22A7700513767 /* stopSession.xib in Resources */,
+				0F4F460B15EC622100773D93 /* an28.png in Resources */,
+				0F4F460C15EC622100773D93 /* Android-mobile28.png in Resources */,
+				0F4F460D15EC622100773D93 /* apple28.png in Resources */,
+				0F4F460E15EC622100773D93 /* chrome28.png in Resources */,
+				0F4F460F15EC622100773D93 /* firefox28.png in Resources */,
+				0F4F461015EC622100773D93 /* ie28.png in Resources */,
+				0F4F461115EC622100773D93 /* ios-mobile.png in Resources */,
+				0F4F461215EC622100773D93 /* linux.png in Resources */,
+				0F4F461315EC622100773D93 /* opera28.png in Resources */,
+				0F4F461415EC622100773D93 /* safari28.png in Resources */,
+				0F4F461515EC622100773D93 /* win-mobile28.png in Resources */,
+				0F4F461615EC622100773D93 /* win28.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

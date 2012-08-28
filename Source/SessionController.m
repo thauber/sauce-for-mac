@@ -83,11 +83,6 @@
 
 }
 
-- (NSInteger)hoverIndx
-{
-    return hoverIndx;
-}
-
 // read config to get os/browsers; create rects; store it all
 - (void)setupFromConfig
 {
@@ -96,23 +91,23 @@
     // create attributed strings for os's (column 0)    
     // os images
     NSImage *oimgs[4];
-    NSSize isz = NSMakeSize(40,40);
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"windows_color" ofType:@"pdf"];
+    NSSize isz = NSMakeSize(14,14);
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"win28" ofType:@"png"];
     oimgs[0] = [[NSImage alloc] initByReferencingFile:path];
     [oimgs[0] setSize:isz];
-    path = [[NSBundle mainBundle] pathForResource:@"linux_color" ofType:@"pdf"];
+    path = [[NSBundle mainBundle] pathForResource:@"linux" ofType:@"png"];
     oimgs[1] = [[NSImage alloc] initByReferencingFile:path];
     [oimgs[1] setSize:isz];
-    path = [[NSBundle mainBundle] pathForResource:@"apple_color" ofType:@"pdf"];
+    path = [[NSBundle mainBundle] pathForResource:@"apple28" ofType:@"png"];
     oimgs[2] = [[NSImage alloc] initByReferencingFile:path];
     [oimgs[2] setSize:isz];
-    path = [[NSBundle mainBundle] pathForResource:@"apple_color" ofType:@"pdf"];
+    path = [[NSBundle mainBundle] pathForResource:@"ios-mobile" ofType:@"png"];
     oimgs[3] = [[NSImage alloc] initByReferencingFile:path];
     [oimgs[3] setSize:isz];
     
-    NSString *osStr[4] = {@"Windows", @"Linux", @"Mac", @"Mobile"};
+    NSString *osStr[4] = {@"  Windows", @"  Linux", @"  OSX", @"  Mobile"};
 
-    for(int i=0; i < 2; i++)
+    for(int i=0; i < 3; i++)
     {
         NSTextAttachment* ta = [[NSTextAttachment alloc] init];
         NSTextAttachmentCell* tac = [[NSTextAttachmentCell alloc] init];
@@ -123,7 +118,7 @@
         [ta release];
         [tac release];
         // NSBaselineOffsetAttributeName
-        NSNumber *nn = [NSNumber numberWithInteger:8]; 
+        NSNumber *nn = [NSNumber numberWithInteger:2]; 
         NSDictionary *asdict = [NSDictionary dictionaryWithObjectsAndKeys:nn,NSBaselineOffsetAttributeName, nil];
         NSMutableAttributedString* mas = [[[NSMutableAttributedString alloc] initWithAttributedString:as ] retain];    
         NSAttributedString *osAStr = [[NSAttributedString alloc] initWithString:osStr[i] attributes:asdict]; 
@@ -133,28 +128,34 @@
      }
 
     // browser images for column 1    
-    NSImage *bimgs[5];
-    isz = NSMakeSize(18,18);
-    path = [[NSBundle mainBundle] pathForResource:@"ie_color" ofType:@"pdf"];
+    NSImage *bimgs[7];
+    isz = NSMakeSize(14,14);
+    path = [[NSBundle mainBundle] pathForResource:@"ie28" ofType:@"png"];
     bimgs[0] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
     [bimgs[0] setSize:isz];
-    path = [[NSBundle mainBundle] pathForResource:@"firefox_color" ofType:@"icns"];
+    path = [[NSBundle mainBundle] pathForResource:@"firefox28" ofType:@"png"];
     bimgs[1] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
     [bimgs[1] setSize:isz];
-    path = [[NSBundle mainBundle] pathForResource:@"safari_color" ofType:@"icns"];
+    path = [[NSBundle mainBundle] pathForResource:@"safari28" ofType:@"png"];
     bimgs[2] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
     [bimgs[2] setSize:isz];
-    path = [[NSBundle mainBundle] pathForResource:@"opera_color" ofType:@"pdf"];
+    path = [[NSBundle mainBundle] pathForResource:@"opera28" ofType:@"png"];
     bimgs[3] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
     [bimgs[3] setSize:isz];
-    path = [[NSBundle mainBundle] pathForResource:@"chrome_color" ofType:@"pdf"];
+    path = [[NSBundle mainBundle] pathForResource:@"chrome28" ofType:@"png"];
     bimgs[4] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
     [bimgs[4] setSize:isz];
+    path = [[NSBundle mainBundle] pathForResource:@"Android-mobile28" ofType:@"png"];
+    bimgs[5] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
+    [bimgs[5] setSize:isz];
+    path = [[NSBundle mainBundle] pathForResource:@"ios-mobile" ofType:@"png"];
+    bimgs[6] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
+    [bimgs[6] setSize:isz];
         
     NSMutableArray *configArr;
     NSMutableArray *brAStrs;
     
-    for(int i=0; i < 2; i++)    // setup browsers for each os (only 2 for now)
+    for(int i=0; i < 3; i++)    // setup browsers for each os (only 2 for now)
     {
         switch(i)
         {
@@ -166,13 +167,18 @@
             case tt_linux:   
                 brAStrsLinux = [[[NSMutableArray alloc] init] retain];     // os/browsers for windows
                 brAStrs = brAStrsLinux;
-                configArr = configLinux; break;
-            case tt_apple:  break;
+                configArr = configLinux; 
+                break;
+            case tt_apple:  
+                brAStrsApple = [[[NSMutableArray alloc] init] retain];     // os/browsers for windows
+                brAStrs = brAStrsApple;
+                configArr = configOSX; 
+                break;
             case tt_mobile: break;
         }
         NSInteger num = [configArr count];
 
-        NSString *lastBrowser = @"ie";      // initial column
+        NSString *lastBrowser = @"xx";      // initial column
         NSImage *bimg = bimgs[0];
 
         for(NSInteger i=0;i < num; i++)     // setup browsers
@@ -194,6 +200,10 @@
                     bimg = bimgs[3];
                 else if([twoch isEqualToString:@"go"])    // google chrome
                     bimg = bimgs[4];
+                else if([twoch isEqualToString:@"an"])    // android
+                    bimg = bimgs[5];
+                else if([twoch isEqualToString:@"ip"])    // iphone/ipad
+                    bimg = bimgs[6];
                 lastBrowser = [browser substringToIndex:2];
             }
 
@@ -210,7 +220,14 @@
 //            {
 //                winver = [[osstr componentsSeparatedByString:@" "] objectAtIndex:1];
 //            }
-            browser = [browser capitalizedString];
+            if([browser isEqualToString:@"iphone"])
+                browser = @"IPhone";
+            else if([browser isEqualToString:@"ipad"])
+                browser = @"IPad";
+            else if([browser isEqualToString:@"googlechrome"])
+                browser = @"Google Chrome";
+            else
+                browser = [browser capitalizedString];
             NSString *brver = [NSString stringWithFormat:@" %@ %@",browser, version];
             NSNumber *nn = [NSNumber numberWithInteger:6]; 
             NSDictionary *asdict = [NSDictionary dictionaryWithObjectsAndKeys:nn,NSBaselineOffsetAttributeName, nil];
@@ -259,13 +276,15 @@
     {
         case tt_windows: brarr = [configWindows objectAtIndex:rr]; break;
         case tt_linux: brarr = [configLinux objectAtIndex:rr]; break;
-        case tt_apple:
+        case tt_apple: brarr = [configOSX objectAtIndex:rr]; break;
         case tt_mobile: return;     // TODO: not implemented, yet
     }
     NSString *os      = [brarr objectAtIndex:0];
     NSString *browser = [brarr objectAtIndex:1];
     NSString *version = [brarr objectAtIndex:2];
 
+    if([os isEqualToString:@"OSX"])
+        os = @"MAC";
     if([version isEqualToString:@"*"])
         version = @"";
     NSString *urlstr = [self.url stringValue];
@@ -429,7 +448,7 @@
     if(column==0)
     {
         [cell setAttributedStringValue:osAStrs[row]];
-        if(row>1)
+        if(row>2)
             [cell setEnabled:NO];
     }
     else
@@ -442,7 +461,8 @@
                 obarr = [configWindows objectAtIndex:row]; break;
             case tt_linux:   brAStr = [brAStrsLinux   objectAtIndex:row]; 
                 obarr = [configLinux objectAtIndex:row]; break;
-            case tt_apple:
+            case tt_apple:  brAStr = [brAStrsApple   objectAtIndex:row]; 
+                obarr = [configOSX objectAtIndex:row]; break;
             case tt_mobile:;
         }
         if(brAStr)
@@ -461,7 +481,7 @@
     if(column==0)   // size column 0 row heights
     {
         lastpop1 = NO;
-        return 2;
+        return 3;
     }
     else    // size column 1 row heights
     {
@@ -471,7 +491,7 @@
         {
             case tt_windows: curNumBrowsers = [brAStrsWindows count]; break;
             case tt_linux:   curNumBrowsers = [brAStrsLinux   count]; break;
-            case tt_apple:
+            case tt_apple:   curNumBrowsers = [brAStrsApple   count]; break;
             case tt_mobile:;
         }
         lastpop1 = YES;
