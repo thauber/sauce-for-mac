@@ -117,6 +117,8 @@
 		0F4F461415EC622100773D93 /* safari28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F460815EC622100773D93 /* safari28.png */; };
 		0F4F461515EC622100773D93 /* win-mobile28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F460915EC622100773D93 /* win-mobile28.png */; };
 		0F4F461615EC622100773D93 /* win28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F460A15EC622100773D93 /* win28.png */; };
+		0F51BA6A15EFC915004324EB /* historyTFCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F51BA6815EFC915004324EB /* historyTFCell.h */; };
+		0F51BA6B15EFC915004324EB /* historyTFCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F51BA6915EFC915004324EB /* historyTFCell.m */; };
 		0F59372515C83B150024AB5A /* keysymdef.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59372415C83B150024AB5A /* keysymdef.h */; };
 		0F59372815C8C18B0024AB5A /* keysym.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59372715C8C18B0024AB5A /* keysym.h */; };
 		0F59E7C515CDA6CB0003D541 /* StopSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59E7C315CDA6CB0003D541 /* StopSession.h */; };
@@ -523,6 +525,8 @@
 		0F4F460815EC622100773D93 /* safari28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = safari28.png; path = Resources/safari28.png; sourceTree = "<group>"; };
 		0F4F460915EC622100773D93 /* win-mobile28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "win-mobile28.png"; path = "Resources/win-mobile28.png"; sourceTree = "<group>"; };
 		0F4F460A15EC622100773D93 /* win28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = win28.png; path = Resources/win28.png; sourceTree = "<group>"; };
+		0F51BA6815EFC915004324EB /* historyTFCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = historyTFCell.h; sourceTree = "<group>"; };
+		0F51BA6915EFC915004324EB /* historyTFCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = historyTFCell.m; sourceTree = "<group>"; };
 		0F59372415C83B150024AB5A /* keysymdef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keysymdef.h; sourceTree = "<group>"; };
 		0F59372715C8C18B0024AB5A /* keysym.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keysym.h; sourceTree = "<group>"; };
 		0F59E7C315CDA6CB0003D541 /* StopSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StopSession.h; sourceTree = "<group>"; };
@@ -1136,6 +1140,8 @@
 				0FDA1D1115A5648300ECBF59 /* HistoryViewController.m */,
 				0F3E0F4515E451720074C229 /* historyTableView.h */,
 				0F3E0F4615E451720074C229 /* historyTableView.m */,
+				0F51BA6815EFC915004324EB /* historyTFCell.h */,
+				0F51BA6915EFC915004324EB /* historyTFCell.m */,
 				0F32B49615B8C88900C0CFBF /* Subscriber.h */,
 				0F32B49715B8C88900C0CFBF /* Subscriber.m */,
 				0F59E7C315CDA6CB0003D541 /* StopSession.h */,
@@ -1571,6 +1577,7 @@
 				0F3E53BE15D22AB400513767 /* StopConnect.h in Headers */,
 				0F35002915DDDB7700B8ED0E /* centerclip.h in Headers */,
 				0F3E0F4715E451720074C229 /* historyTableView.h in Headers */,
+				0F51BA6A15EFC915004324EB /* historyTFCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1904,6 +1911,7 @@
 				0F3E53BF15D22AB400513767 /* StopConnect.m in Sources */,
 				0F35002A15DDDB7700B8ED0E /* centerclip.m in Sources */,
 				0F3E0F4815E451720074C229 /* historyTableView.m in Sources */,
+				0F51BA6B15EFC915004324EB /* historyTFCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -26,6 +26,8 @@
     vwCtlr = histVCtlr;
     
 }
+
+// for click in 'session' column, bring up browser to server jobs page
 -(void)mouseDown:(NSEvent *)event
 {
     int row = [self rowAtPoint:[self convertPoint:[event locationInWindow] fromView:nil]];
