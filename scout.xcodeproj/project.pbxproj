@@ -401,6 +401,7 @@
 		E2F3AB0506D5B86A005EB917 /* ProfileManager_private.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F3AB0306D5B86A005EB917 /* ProfileManager_private.m */; };
 		E2F3AD7106D5E11D005EB917 /* NSObject_Chicken.h in Headers */ = {isa = PBXBuildFile; fileRef = E2F3AD6F06D5E11D005EB917 /* NSObject_Chicken.h */; };
 		E2F3AD7206D5E11D005EB917 /* NSObject_Chicken.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F3AD7006D5E11D005EB917 /* NSObject_Chicken.m */; };
+		EF6F161615F1348800E75723 /* connecting.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF6F161515F1348800E75723 /* connecting.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -769,6 +770,7 @@
 		E2F546510768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/ServerDisplay.nib; sourceTree = "<group>"; };
 		E2F546520768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/ProfileManager.nib; sourceTree = "<group>"; };
 		E2F546530768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/OSX_RFBViewer.nib; sourceTree = "<group>"; };
+		EF6F161515F1348800E75723 /* connecting.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = connecting.xib; sourceTree = "<group>"; };
 		F52128E40368AF9F01F702E0 /* GNU Public License.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "GNU Public License.txt"; sourceTree = "<group>"; };
 		F536C26603937E5301178D82 /* ZlibHexEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ZlibHexEncodingReader.h; sourceTree = "<group>"; };
 		F536C26703937E5301178D82 /* ZlibHexEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ZlibHexEncodingReader.m; sourceTree = "<group>"; };
@@ -1055,6 +1057,7 @@
 				0FD424F5153738DC00682AD6 /* scoutwin.xib */,
 				F5DC7172033DB3DC01A8010C /* InfoPlist.strings */,
 				E2F3A33E06D44E0E005EB917 /* Preferences.nib */,
+				EF6F161515F1348800E75723 /* connecting.xib */,
 				E2F3A99C06D4BFD8005EB917 /* ProfileManager.nib */,
 				F5DC7187033DB44301A8010C /* OSX_RFBViewer.nib */,
 				F5DC7185033DB44301A8010C /* RFBConnection.nib */,
@@ -1736,6 +1739,7 @@
 				0F3742B615ED1E9300A93304 /* an14.png in Resources */,
 				0F3742B715ED1E9300A93304 /* lin14.png in Resources */,
 				0F3742B815ED1E9300A93304 /* lin28.png in Resources */,
+				EF6F161615F1348800E75723 /* connecting.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
