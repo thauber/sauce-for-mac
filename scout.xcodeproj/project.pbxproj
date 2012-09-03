@@ -12,6 +12,9 @@
 		0F32B49E15B8CD8200C0CFBF /* scottie.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F32B49D15B8CD8200C0CFBF /* scottie.png */; };
 		0F35002915DDDB7700B8ED0E /* centerclip.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F35002715DDDB7700B8ED0E /* centerclip.h */; };
 		0F35002A15DDDB7700B8ED0E /* centerclip.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35002815DDDB7700B8ED0E /* centerclip.m */; };
+		0F3742B615ED1E9300A93304 /* an14.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3742B315ED1E9300A93304 /* an14.png */; };
+		0F3742B715ED1E9300A93304 /* lin14.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3742B415ED1E9300A93304 /* lin14.png */; };
+		0F3742B815ED1E9300A93304 /* lin28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3742B515ED1E9300A93304 /* lin28.png */; };
 		0F392220158190350065C018 /* OptionBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F39221E158190350065C018 /* OptionBox.h */; };
 		0F392221158190350065C018 /* OptionBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F39221F158190350065C018 /* OptionBox.m */; };
 		0F3957BD15CC4EE600C04D57 /* subscriber-2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3957BB15CC4EE600C04D57 /* subscriber-2.xib */; };
@@ -114,6 +117,8 @@
 		0F4F461415EC622100773D93 /* safari28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F460815EC622100773D93 /* safari28.png */; };
 		0F4F461515EC622100773D93 /* win-mobile28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F460915EC622100773D93 /* win-mobile28.png */; };
 		0F4F461615EC622100773D93 /* win28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F460A15EC622100773D93 /* win28.png */; };
+		0F51BA6A15EFC915004324EB /* historyTFCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F51BA6815EFC915004324EB /* historyTFCell.h */; };
+		0F51BA6B15EFC915004324EB /* historyTFCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F51BA6915EFC915004324EB /* historyTFCell.m */; };
 		0F59372515C83B150024AB5A /* keysymdef.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59372415C83B150024AB5A /* keysymdef.h */; };
 		0F59372815C8C18B0024AB5A /* keysym.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59372715C8C18B0024AB5A /* keysym.h */; };
 		0F59E7C515CDA6CB0003D541 /* StopSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59E7C315CDA6CB0003D541 /* StopSession.h */; };
@@ -396,6 +401,7 @@
 		E2F3AB0506D5B86A005EB917 /* ProfileManager_private.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F3AB0306D5B86A005EB917 /* ProfileManager_private.m */; };
 		E2F3AD7106D5E11D005EB917 /* NSObject_Chicken.h in Headers */ = {isa = PBXBuildFile; fileRef = E2F3AD6F06D5E11D005EB917 /* NSObject_Chicken.h */; };
 		E2F3AD7206D5E11D005EB917 /* NSObject_Chicken.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F3AD7006D5E11D005EB917 /* NSObject_Chicken.m */; };
+		EF6F161615F1348800E75723 /* connecting.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF6F161515F1348800E75723 /* connecting.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -416,6 +422,9 @@
 		0F32B49D15B8CD8200C0CFBF /* scottie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = scottie.png; path = Resources/scottie.png; sourceTree = "<group>"; };
 		0F35002715DDDB7700B8ED0E /* centerclip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = centerclip.h; sourceTree = "<group>"; };
 		0F35002815DDDB7700B8ED0E /* centerclip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = centerclip.m; sourceTree = "<group>"; };
+		0F3742B315ED1E9300A93304 /* an14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = an14.png; path = Resources/an14.png; sourceTree = "<group>"; };
+		0F3742B415ED1E9300A93304 /* lin14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lin14.png; path = Resources/lin14.png; sourceTree = "<group>"; };
+		0F3742B515ED1E9300A93304 /* lin28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lin28.png; path = Resources/lin28.png; sourceTree = "<group>"; };
 		0F39221E158190350065C018 /* OptionBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionBox.h; sourceTree = "<group>"; };
 		0F39221F158190350065C018 /* OptionBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionBox.m; sourceTree = "<group>"; };
 		0F3957BB15CC4EE600C04D57 /* subscriber-2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "subscriber-2.xib"; path = "Resources/subscriber-2.xib"; sourceTree = "<group>"; };
@@ -517,6 +526,8 @@
 		0F4F460815EC622100773D93 /* safari28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = safari28.png; path = Resources/safari28.png; sourceTree = "<group>"; };
 		0F4F460915EC622100773D93 /* win-mobile28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "win-mobile28.png"; path = "Resources/win-mobile28.png"; sourceTree = "<group>"; };
 		0F4F460A15EC622100773D93 /* win28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = win28.png; path = Resources/win28.png; sourceTree = "<group>"; };
+		0F51BA6815EFC915004324EB /* historyTFCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = historyTFCell.h; sourceTree = "<group>"; };
+		0F51BA6915EFC915004324EB /* historyTFCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = historyTFCell.m; sourceTree = "<group>"; };
 		0F59372415C83B150024AB5A /* keysymdef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keysymdef.h; sourceTree = "<group>"; };
 		0F59372715C8C18B0024AB5A /* keysym.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keysym.h; sourceTree = "<group>"; };
 		0F59E7C315CDA6CB0003D541 /* StopSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StopSession.h; sourceTree = "<group>"; };
@@ -759,6 +770,7 @@
 		E2F546510768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/ServerDisplay.nib; sourceTree = "<group>"; };
 		E2F546520768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/ProfileManager.nib; sourceTree = "<group>"; };
 		E2F546530768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/OSX_RFBViewer.nib; sourceTree = "<group>"; };
+		EF6F161515F1348800E75723 /* connecting.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = connecting.xib; sourceTree = "<group>"; };
 		F52128E40368AF9F01F702E0 /* GNU Public License.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "GNU Public License.txt"; sourceTree = "<group>"; };
 		F536C26603937E5301178D82 /* ZlibHexEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ZlibHexEncodingReader.h; sourceTree = "<group>"; };
 		F536C26703937E5301178D82 /* ZlibHexEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ZlibHexEncodingReader.m; sourceTree = "<group>"; };
@@ -979,6 +991,9 @@
 				0F3BBDD815AB5FDF006EDB74 /* psmtabbar */,
 				0F40B2201599233800E6311E /* scout.conf */,
 				0F4F45FF15EC622100773D93 /* an28.png */,
+				0F3742B315ED1E9300A93304 /* an14.png */,
+				0F3742B415ED1E9300A93304 /* lin14.png */,
+				0F3742B515ED1E9300A93304 /* lin28.png */,
 				0F4F460015EC622100773D93 /* Android-mobile28.png */,
 				0F4F460115EC622100773D93 /* apple28.png */,
 				0F4F460215EC622100773D93 /* chrome28.png */,
@@ -1042,6 +1057,7 @@
 				0FD424F5153738DC00682AD6 /* scoutwin.xib */,
 				F5DC7172033DB3DC01A8010C /* InfoPlist.strings */,
 				E2F3A33E06D44E0E005EB917 /* Preferences.nib */,
+				EF6F161515F1348800E75723 /* connecting.xib */,
 				E2F3A99C06D4BFD8005EB917 /* ProfileManager.nib */,
 				F5DC7187033DB44301A8010C /* OSX_RFBViewer.nib */,
 				F5DC7185033DB44301A8010C /* RFBConnection.nib */,
@@ -1127,6 +1143,8 @@
 				0FDA1D1115A5648300ECBF59 /* HistoryViewController.m */,
 				0F3E0F4515E451720074C229 /* historyTableView.h */,
 				0F3E0F4615E451720074C229 /* historyTableView.m */,
+				0F51BA6815EFC915004324EB /* historyTFCell.h */,
+				0F51BA6915EFC915004324EB /* historyTFCell.m */,
 				0F32B49615B8C88900C0CFBF /* Subscriber.h */,
 				0F32B49715B8C88900C0CFBF /* Subscriber.m */,
 				0F59E7C315CDA6CB0003D541 /* StopSession.h */,
@@ -1562,6 +1580,7 @@
 				0F3E53BE15D22AB400513767 /* StopConnect.h in Headers */,
 				0F35002915DDDB7700B8ED0E /* centerclip.h in Headers */,
 				0F3E0F4715E451720074C229 /* historyTableView.h in Headers */,
+				0F51BA6A15EFC915004324EB /* historyTFCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1717,6 +1736,10 @@
 				0F4F461415EC622100773D93 /* safari28.png in Resources */,
 				0F4F461515EC622100773D93 /* win-mobile28.png in Resources */,
 				0F4F461615EC622100773D93 /* win28.png in Resources */,
+				0F3742B615ED1E9300A93304 /* an14.png in Resources */,
+				0F3742B715ED1E9300A93304 /* lin14.png in Resources */,
+				0F3742B815ED1E9300A93304 /* lin28.png in Resources */,
+				EF6F161615F1348800E75723 /* connecting.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1892,6 +1915,7 @@
 				0F3E53BF15D22AB400513767 /* StopConnect.m in Sources */,
 				0F35002A15DDDB7700B8ED0E /* centerclip.m in Sources */,
 				0F3E0F4815E451720074C229 /* historyTableView.m in Sources */,
+				0F51BA6B15EFC915004324EB /* historyTFCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

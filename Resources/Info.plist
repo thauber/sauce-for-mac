@@ -37,7 +37,7 @@
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>Build</key>
-	<string>104</string>
+	<string>105</string>
 	<key>NSAppleScriptEnabled</key>
 	<string>NO</string>
 	<key>NSMainNibFile</key>
