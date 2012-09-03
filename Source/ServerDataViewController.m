@@ -110,19 +110,11 @@
 {
 	if( nil != mServer )
 	{
-		[[NSNotificationCenter defaultCenter] removeObserver:self
-														name:ServerChangeMsg
-													  object:(id)mServer];
 		[(id)mServer autorelease];
 	}
 	
 	mServer = [(id)server retain];
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(updateView:)
-												 name:ServerChangeMsg
-											   object:(id)mServer];
 	
-//	[self updateView:nil];
 }
 
 
@@ -138,8 +130,6 @@
 
 - (IBAction)connectToServer:(id)sender
 {
-//    window = superController ? [superController window] : [self window];
-
     // needed so that any changes being made now are reflected in server
 
     // go on to connect
