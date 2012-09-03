@@ -83,7 +83,7 @@ NSString *kHistoryTabLabel = @"Session History";
 	[[tabBar addTabButton] setTarget:self];
 	[[tabBar addTabButton] setAction:@selector(addNewTab:)];
     
-    NSTabViewItem *newItem = [[(NSTabViewItem*)[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
+    NSTabViewItem *newItem = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
     hviewCtlr = [[[HistoryViewController alloc] init] retain];
     [newItem setView:[hviewCtlr view]];
 	[newItem setLabel:kHistoryTabLabel];
