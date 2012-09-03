@@ -22,11 +22,13 @@
 	IBOutlet NSMenuItem *mRendezvousMenuItem;
 	IBOutlet NSTextField *mInfoVersionNumber;
     IBOutlet NSMenuItem *fullScreenMenuItem;
+    
     SessionController *optionsCtrlr;
     LoginController *loginCtrlr;
     TunnelController *tunnelCtrlr;
     BugInfoController *bugCtrlr;
     Subscriber *subscriberCtrl;
+    
     NSMenuItem *tunnelMenuItem;
     NSMenuItem *viewConnectMenuItem;
     BOOL noTunnel;      // set true after user says no to prompt for tunnel
@@ -47,6 +49,7 @@
 @property (retain)TunnelController *tunnelCtrlr;
 @property (retain)BugInfoController *bugCtrlr;
 @property (retain)Subscriber *subscriberCtrl;
+
 @property  (assign)BOOL noTunnel;
 @property (assign) BOOL noShowCloseSession;
 @property (assign) BOOL noShowCloseConnect;
@@ -57,6 +60,7 @@
 - (IBAction)doStopSession:(id)sender;
 - (IBAction)doStopConnect:(id)sender;
 - (IBAction)viewConnect:(id)sender;
+- (void)startConnecting:(NSMutableDictionary*)sdict;
 - (void)closeStopConnect;
 
 - (IBAction)toggleToolbar:(id)sender;

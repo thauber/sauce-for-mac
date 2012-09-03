@@ -18,6 +18,7 @@
 #import "BugInfoController.h"
 #import "ScoutWindowController.h"
 #import "Subscriber.h"
+#import "sessionConnect.h"
 
 
 @implementation AppDelegate
@@ -33,6 +34,7 @@
 @synthesize tunnelCtrlr;
 @synthesize bugCtrlr;
 @synthesize subscriberCtrl;
+
 @synthesize noShowCloseSession;
 @synthesize noShowCloseConnect;
 
@@ -142,10 +144,23 @@
     }
 }
 
+- (void)startConnecting:(NSMutableDictionary*)sdict
+{
+    self.optionsCtrlr = nil;
+    sessionConnect *sc = [[sessionConnect alloc] init];
+    // add view as new tab
+    NSTabViewItem *newItem = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
+    [newItem setView:[sc view]];
+	[newItem setLabel:@"Connecting"];       // TODO: make actual label
+    // TODO: link rfbview being created to this sessionconnect obj
+	[[[ScoutWindowController sharedScout] tabView] addTabViewItem:newItem];
+    
+    [NSThread detachNewThreadSelector:@selector(preAuthorize) toTarget:[SaucePreconnect sharedPreconnect] withObject:sdict];
+}
+
 -(void)connectionSucceeded
 {
-    [optionsCtrlr connectionSucceeded];
-    self.optionsCtrlr = nil;    
+    // TODO: swap new view in for correct sessionConnect obj
 }
 
 - (void)newUserAuthorized:(id)param
