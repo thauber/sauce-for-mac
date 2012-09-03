@@ -82,6 +82,10 @@
 		0F3BBE1115AB5FDF006EDB74 /* TabNewMetalPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3BBDF415AB5FDF006EDB74 /* TabNewMetalPressed.png */; };
 		0F3BBE1215AB5FDF006EDB74 /* TabNewMetalRollover.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3BBDF515AB5FDF006EDB74 /* TabNewMetalRollover.png */; };
 		0F3D2AC015B9BB8E00C216BE /* ssl-auth.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3D2ABF15B9BB8E00C216BE /* ssl-auth.png */; };
+		0F3DA65615F1182600831E38 /* sessionConnect.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F3DA65415F1182600831E38 /* sessionConnect.h */; };
+		0F3DA65715F1182600831E38 /* sessionConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3DA65515F1182600831E38 /* sessionConnect.m */; };
+		0F3DA65E15F1479000831E38 /* sessionConnect.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3DA65D15F1479000831E38 /* sessionConnect.xib */; };
+		0F3DA66015F1499C00831E38 /* history.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3DA65F15F1499C00831E38 /* history.xib */; };
 		0F3DC43D155D6F760069F7AB /* TunnelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F3DC43B155D6F760069F7AB /* TunnelController.h */; };
 		0F3DC43E155D6F760069F7AB /* TunnelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3DC43C155D6F760069F7AB /* TunnelController.m */; };
 		0F3E0F4715E451720074C229 /* historyTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F3E0F4515E451720074C229 /* historyTableView.h */; };
@@ -94,7 +98,6 @@
 		0F40B21C1598ED6400E6311E /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F40B21A1598ED6400E6311E /* RegexKitLite.m */; };
 		0F40B21F1598F14600E6311E /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F40B21E1598F14600E6311E /* libicucore.dylib */; };
 		0F40B2211599233800E6311E /* scout.conf in Resources */ = {isa = PBXBuildFile; fileRef = 0F40B2201599233800E6311E /* scout.conf */; };
-		0F463B33159B5E8A0055B790 /* history.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F463B32159B5E8A0055B790 /* history.xib */; };
 		0F463B37159BB82F0055B790 /* GradientView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F463B35159BB82F0055B790 /* GradientView.h */; };
 		0F463B38159BB82F0055B790 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F463B36159BB82F0055B790 /* GradientView.m */; };
 		0F46CA6C15CB3EA500A613A1 /* about-screen.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F46CA6B15CB3EA500A613A1 /* about-screen.png */; };
@@ -491,6 +494,10 @@
 		0F3BBDF415AB5FDF006EDB74 /* TabNewMetalPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TabNewMetalPressed.png; sourceTree = "<group>"; };
 		0F3BBDF515AB5FDF006EDB74 /* TabNewMetalRollover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TabNewMetalRollover.png; sourceTree = "<group>"; };
 		0F3D2ABF15B9BB8E00C216BE /* ssl-auth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ssl-auth.png"; path = "Resources/ssl-auth.png"; sourceTree = "<group>"; };
+		0F3DA65415F1182600831E38 /* sessionConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sessionConnect.h; sourceTree = "<group>"; };
+		0F3DA65515F1182600831E38 /* sessionConnect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sessionConnect.m; sourceTree = "<group>"; };
+		0F3DA65D15F1479000831E38 /* sessionConnect.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = sessionConnect.xib; path = Resources/sessionConnect.xib; sourceTree = "<group>"; };
+		0F3DA65F15F1499C00831E38 /* history.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = history.xib; path = Resources/history.xib; sourceTree = "<group>"; };
 		0F3DC43B155D6F760069F7AB /* TunnelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TunnelController.h; sourceTree = "<group>"; };
 		0F3DC43C155D6F760069F7AB /* TunnelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TunnelController.m; sourceTree = "<group>"; };
 		0F3E0F4515E451720074C229 /* historyTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = historyTableView.h; sourceTree = "<group>"; };
@@ -503,7 +510,6 @@
 		0F40B21A1598ED6400E6311E /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		0F40B21E1598F14600E6311E /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		0F40B2201599233800E6311E /* scout.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = scout.conf; path = Resources/scout.conf; sourceTree = "<group>"; };
-		0F463B32159B5E8A0055B790 /* history.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = history.xib; sourceTree = "<group>"; };
 		0F463B35159BB82F0055B790 /* GradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
 		0F463B36159BB82F0055B790 /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
 		0F46CA6B15CB3EA500A613A1 /* about-screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "about-screen.png"; path = "Resources/about-screen.png"; sourceTree = "<group>"; };
@@ -1029,8 +1035,9 @@
 				0F486EA6155CC2CF004502C4 /* Sauce-Connect.jar */,
 				0F99617815267C6C002657A9 /* windows_color.pdf */,
 				0F7BF6F01523FEF400F1A478 /* LoginController.xib */,
+				0F3DA65F15F1499C00831E38 /* history.xib */,
 				0F7C606C152A964900DA9A4A /* SessionController.xib */,
-				0F463B32159B5E8A0055B790 /* history.xib */,
+				0F3DA65D15F1479000831E38 /* sessionConnect.xib */,
 				0F3E53B815D22A6700513767 /* stopConnect.xib */,
 				0F3E53BA15D22A7700513767 /* stopSession.xib */,
 				0F48D0C8157528950067B689 /* snapProgress.xib */,
@@ -1130,6 +1137,8 @@
 				0F7BE39D1522183800B64686 /* LoginController.m */,
 				0F7C6064152A8F8700DA9A4A /* SessionController.h */,
 				0F7C6065152A8F8700DA9A4A /* SessionController.m */,
+				0F3DA65415F1182600831E38 /* sessionConnect.h */,
+				0F3DA65515F1182600831E38 /* sessionConnect.m */,
 				0F39221E158190350065C018 /* OptionBox.h */,
 				0F39221F158190350065C018 /* OptionBox.m */,
 				0F40B2191598ED6400E6311E /* RegexKitLite.h */,
@@ -1578,6 +1587,7 @@
 				0F35002915DDDB7700B8ED0E /* centerclip.h in Headers */,
 				0F3E0F4715E451720074C229 /* historyTableView.h in Headers */,
 				0F51BA6A15EFC915004324EB /* historyTFCell.h in Headers */,
+				0F3DA65615F1182600831E38 /* sessionConnect.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1675,7 +1685,6 @@
 				0F3A18D115617D39007BAA78 /* tunnel.xib in Resources */,
 				0F48D0C9157528950067B689 /* snapProgress.xib in Resources */,
 				0F40B2211599233800E6311E /* scout.conf in Resources */,
-				0F463B33159B5E8A0055B790 /* history.xib in Resources */,
 				0F3BBDF715AB5FDF006EDB74 /* AquaTabClose_Front.png in Resources */,
 				0F3BBDF815AB5FDF006EDB74 /* AquaTabClose_Front_Pressed.png in Resources */,
 				0F3BBDF915AB5FDF006EDB74 /* AquaTabClose_Front_Rollover.png in Resources */,
@@ -1736,6 +1745,8 @@
 				0F3742B615ED1E9300A93304 /* an14.png in Resources */,
 				0F3742B715ED1E9300A93304 /* lin14.png in Resources */,
 				0F3742B815ED1E9300A93304 /* lin28.png in Resources */,
+				0F3DA65E15F1479000831E38 /* sessionConnect.xib in Resources */,
+				0F3DA66015F1499C00831E38 /* history.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1912,6 +1923,7 @@
 				0F35002A15DDDB7700B8ED0E /* centerclip.m in Sources */,
 				0F3E0F4815E451720074C229 /* historyTableView.m in Sources */,
 				0F51BA6B15EFC915004324EB /* historyTFCell.m in Sources */,
+				0F3DA65715F1182600831E38 /* sessionConnect.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
