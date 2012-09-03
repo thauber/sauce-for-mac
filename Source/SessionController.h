@@ -20,10 +20,6 @@ enum TabType {tt_windows, tt_linux, tt_apple, tt_mobile};
     NSInteger curNumBrowsers;
     BOOL lastpop1;
     NSInteger sessionIndxs[kNumTabs];
-    NSInteger hoverIndx;
-    NSView *selectBox;
-    NSRect hoverFrame;
-    NSView *hoverBox;
     NSTextField *url;
     NSProgressIndicator *connectIndicator;
     NSTextField *connectIndicatorText;
@@ -39,7 +35,10 @@ enum TabType {tt_windows, tt_linux, tt_apple, tt_mobile};
     NSMutableArray *brAStrsLinux;
     NSMutableArray *brAStrsApple;
     NSMutableArray *brAStrsMobile;    
-    NSAttributedString* osAStrs[4];    
+    NSAttributedString* osAStrs[4];
+    NSString *os;
+    NSString *browser;
+    NSString *browserVersion;
 }
 @property (assign) IBOutlet NSButton *defaultBrowser;
 @property (assign) IBOutlet NSPanel *panel;
@@ -49,6 +48,10 @@ enum TabType {tt_windows, tt_linux, tt_apple, tt_mobile};
 @property (assign) IBOutlet NSTextField *connectIndicatorText;
 @property (assign) IBOutlet NSProgressIndicator *connectIndicator;
 @property (assign) IBOutlet NSTextField *url;
+@property (copy)NSString *os;
+@property (copy)NSString *browser;
+@property (copy)NSString *browserVersion;
+
 - (IBAction)doBrowserClick:(NSBrowser *)sender;
 - (IBAction)performClose:(id)sender;
 - (IBAction)doDoubleClick:(id)sender;
@@ -56,8 +59,6 @@ enum TabType {tt_windows, tt_linux, tt_apple, tt_mobile};
 - (void)terminateApp;
 - (void)runSheet;
 - (IBAction)connect:(id)sender;
-- (void)startConnecting;
-- (void)connectionSucceeded;
 - (void)showError:(NSString *)errStr;
 
 

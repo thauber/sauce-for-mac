@@ -23,6 +23,9 @@
 @synthesize connectIndicatorText;
 @synthesize connectIndicator;
 @synthesize url;
+@synthesize os;     // latest selection
+@synthesize browser;
+@synthesize browserVersion;
 
 - (id)init
 {
@@ -215,11 +218,6 @@
             [ta release];
             [tac release];
             NSMutableAttributedString* mas = [[NSMutableAttributedString alloc] initWithAttributedString: as];
-//            NSString *winver = @"";     // windows version
-//            if(configArr == configWindows)
-//            {
-//                winver = [[osstr componentsSeparatedByString:@" "] objectAtIndex:1];
-//            }
             if([browser isEqualToString:@"iphone"])
                 browser = @"IPhone";
             else if([browser isEqualToString:@"ipad"])
@@ -283,14 +281,14 @@
         case tt_apple: brarr = [configOSX objectAtIndex:rr]; break;
         case tt_mobile: return;     // TODO: not implemented, yet
     }
-    NSString *os      = [brarr objectAtIndex:0];
-    NSString *browser = [brarr objectAtIndex:1];
-    NSString *version = [brarr objectAtIndex:2];
+    NSString *sel_os      = [brarr objectAtIndex:0];
+    NSString *sel_browser = [brarr objectAtIndex:1];
+    NSString *sel_version = [brarr objectAtIndex:2];
 
-    if([os isEqualToString:@"OSX"])
-        os = @"MAC";
-    if([version isEqualToString:@"*"])
-        version = @"";
+    if([sel_os isEqualToString:@"OSX"])
+        sel_os = @"MAC";
+    if([sel_version isEqualToString:@"*"])
+        sel_version = @"";
     NSString *urlstr = [self.url stringValue];
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -302,8 +300,9 @@
     [defaults setInteger:sessionIndxs[tt_apple] forKey:kSessionIndxMac];
     [defaults setInteger:sessionIndxs[tt_mobile] forKey:kSessionIndxMbl];
 
-    [[SaucePreconnect sharedPreconnect] setOptions:os browser:browser browserVersion:version url:urlstr];
+    NSMutableDictionary *sdict = [[SaucePreconnect sharedPreconnect] setOptions:sel_os browser:sel_browser browserVersion:sel_version url:urlstr];
     [NSApp endSheet:panel];
+    [panel orderOut:nil];    
 
     NSURL *uurl = [NSURL URLWithString:urlstr];
     BOOL noTunnel = [[NSApp delegate] noTunnel];
@@ -323,10 +322,10 @@
             }
         }
         else 
-            [self startConnecting];
+            [[NSApp delegate] startConnecting:sdict];
     }
     else 
-        [self startConnecting];
+        [[NSApp delegate] startConnecting:sdict];
 }
 
 - (void)tunnelDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
@@ -338,7 +337,7 @@
             return;
         case NSAlertAlternateReturn:
             [[NSApp delegate] setNoTunnel:YES];
-            [self startConnecting];
+            [[NSApp delegate] startConnecting];
             return;
         case NSAlertOtherReturn:
             [self runSheet];
@@ -379,28 +378,9 @@
     return NO;
 }
    
-- (void)startConnecting
-{
-    [connectBtn setState:NSOffState];
-    [url setEnabled:NO];
-    [connectIndicator startAnimation:self];
-    [connectIndicatorText setStringValue:@"Connecting..."];
-    
-    [connectIndicatorText display];
-    [connectBtn setAction:@selector(performClose:)];
-    [connectBtn setTitle:@"Cancel"];
-    [NSThread detachNewThreadSelector:@selector(preAuthorize:) toTarget:[SaucePreconnect sharedPreconnect] withObject:nil];
-}
-                                  
--(void)connectionSucceeded
-{
-    [panel orderOut:nil];
-}
-
 - (void)showError:(NSString *)errStr
 {
-    NSBeginAlertSheet(@"Session Options Error", @"Okay", nil, nil, [NSApp keyWindow], self,nil,     
-                      NULL, NULL, errStr);    
+    NSBeginAlertSheet(@"Session Options Error", @"Okay", nil, nil, [NSApp keyWindow], self,nil, NULL, NULL, errStr);    
 }
 
 
