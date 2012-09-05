@@ -125,6 +125,7 @@ NSString *kHistoryTabLabel = @"Session History";
         NSString *title = [[bugctrlr title] stringValue];
         NSString *description = [[[bugctrlr description] textStorage] string];
         self.snapProgress = [[SnapProgress alloc] init];
+        // TODO: display error
         [[SaucePreconnect sharedPreconnect] snapshotBug:title desc:description];
     }
 
@@ -154,9 +155,9 @@ NSString *kHistoryTabLabel = @"Session History";
         NSTabViewItem *tvi = [tabView tabViewItemAtIndex:1];
         NSView *vv = [tvi view];
         [hviewCtlr updateActive:vv];
-        NSDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:vv];
+        NSMutableDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:vv];
         Session *ss = [[sdict objectForKey:@"connection"] session];
-        [[SaucePreconnect sharedPreconnect] sessionClosed:[ss connection]];
+        [[SaucePreconnect sharedPreconnect] sessionClosed:sdict];
         [[RFBConnectionManager sharedManager] cancelConnection];
         [ss  connectionProblem];
         [tabView removeTabViewItem:tvi]; 
@@ -314,7 +315,8 @@ NSString *kHistoryTabLabel = @"Session History";
         Session *ss = curSession;
         NSTabViewItem *tvi = [tabView selectedTabViewItem];
         [hviewCtlr updateActive:[tvi view]];
-        [[SaucePreconnect sharedPreconnect] sessionClosed:[ss view]];
+        NSMutableDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:[ss view]];
+        [[SaucePreconnect sharedPreconnect] sessionClosed:sdict];
         [[RFBConnectionManager sharedManager] cancelConnection];
         [ss  connectionProblem];
         curSession = nil;        
