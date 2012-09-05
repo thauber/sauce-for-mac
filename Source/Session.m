@@ -28,7 +28,7 @@
 #import "RFBConnection.h"
 #import "RFBConnectionManager.h"
 #import "RFBView.h"
-#import "SshWaiter.h"
+//#import "SshWaiter.h"
 #import "ScoutWindowController.h"
 #import "centerclip.h"
 
@@ -63,11 +63,11 @@ enum {
 };
 #endif
 
-@interface Session(Private)
+//@interface Session(Private)
 
-- (void)startTimerForReconnectSheet;
+//- (void)startTimerForReconnectSheet;
 
-@end
+//@end
 
 @implementation Session
 @synthesize scrollView;
@@ -104,17 +104,17 @@ enum {
 
     host = kSauceLabsHost;
     
-    _isFullscreen = NO; // jason added for fullscreen display
+//    _isFullscreen = NO; // jason added for fullscreen display
     
     //    [NSBundle loadNibNamed:@"RFBConnection.nib" owner:self];
     [rfbView registerForDraggedTypes:[NSArray arrayWithObjects:NSStringPboardType, NSFilenamesPboardType, nil]];
-    
+#if 0    
     _reconnectWaiter = nil;
     _reconnectSheetTimer = nil;
     
     _horizScrollFactor = 0;
     _vertScrollFactor = 0;
-    
+#endif    
     /* On 10.7 Lion, the overlay scrollbars don't reappear properly on hover.
      * So, for now, we're going to force legacy scrollbars. */
     if ([scrollView respondsToSelector:@selector(setScrollerStyle:)])
@@ -125,7 +125,9 @@ enum {
     [connection setSession:self];
     [connection setRfbView:rfbView];
     
-    [[SaucePreconnect sharedPreconnect] setSessionInfo:connection view:[self view]];
+    NSMutableDictionary *theDict = [connection theSDict];
+    [theDict setObject:[self view] forKey:@"view"];
+    [theDict setObject:connection forKey:@"connection"];
     [[ScoutWindowController sharedScout] addTabWithView:[self view]];
     
 }
@@ -138,13 +140,14 @@ enum {
 
 	[titleString release];
 	[realDisplayName release];
+#if 0
     [_reconnectSheetTimer invalidate];
     [_reconnectSheetTimer release];
     [_reconnectWaiter cancel];
     [_reconnectWaiter release];
 
 	[optionPanel orderOut:self];
-	
+#endif	
     [_connectionStartDate release];
     [super dealloc];
 }
@@ -159,26 +162,7 @@ enum {
     return NO;
 }
 
-/* Begin a reconnection attempt to the server. */
-- (void)beginReconnect
-{
-    if (sshTunnel) {
-        /* Reuse the same SSH tunnel if we have one. */
-        _reconnectWaiter = [[SshWaiter alloc] initWithServer:nil
-                                                    delegate:self
-                                                      window:window
-                                                   sshTunnel:sshTunnel];
-    } else {
-        _reconnectWaiter = [[ConnectionWaiter waiterForServer:nil
-                                                     delegate:self
-                                                       window:window] retain];
-    }
-    NSString *templ = NSLocalizedString(@"NoReconnection", nil);
-    NSString *err = [NSString stringWithFormat:templ, host];
-    [_reconnectWaiter setErrorStr:err];
-    [self startTimerForReconnectSheet];
-}
-
+#if 0
 - (void)startTimerForReconnectSheet
 {
     _reconnectSheetTimer = [[NSTimer scheduledTimerWithTimeInterval:0.5
@@ -201,6 +185,7 @@ enum {
 	}
     [[ScoutWindowController sharedScout] performSelectorOnMainThread:@selector(closeTabWithSession:) withObject:self waitUntilDone:NO];
 }
+#endif
 
 - (void)connectionProblem
 {
@@ -216,7 +201,6 @@ enum {
     [self connectionProblem];
 }
 
-/* Some kind of connection failure. ([rda] don't) Decide whether to try to reconnect. */
 - (void)terminateConnection:(NSString*)aReason
 {
     if (!connection)
@@ -224,29 +208,7 @@ enum {
 
     [self connectionProblem];
 
-    if(aReason) 
-    {
-        NSTimeInterval timeout = [[PrefController sharedController] intervalBeforeReconnect];
-        BOOL supportReconnect = NO;
-
-        [_reconnectReason setStringValue:aReason];
-        if (supportReconnect
-                && -[_connectionStartDate timeIntervalSinceNow] > timeout) {
-            NSLog(@"Automatically reconnecting to server.  The connection was closed because: \"%@\".", aReason);
-            // begin reconnect
-            [self beginReconnect];
-        }
-        else {
-            // Ask what to do
-            NSString *header = NSLocalizedString( @"ConnectionTerminated", nil );
-            NSString *okayButton = NSLocalizedString( @"Okay", nil );
-            NSString *reconnectButton =  NSLocalizedString( @"Reconnect", nil );
-            NSBeginAlertSheet(header, okayButton, supportReconnect ? reconnectButton : nil, nil, window, self, @selector(connectionTerminatedSheetDidEnd:returnCode:contextInfo:), nil, nil, aReason);
-        }
-    } else 
-    {
-        [[ScoutWindowController sharedScout] performSelectorOnMainThread:@selector(closeTabWithSession:) withObject:self waitUntilDone:NO];
-    }
+    [[ScoutWindowController sharedScout] performSelectorOnMainThread:@selector(closeTabWithSession:) withObject:self waitUntilDone:NO];
 }
 
 /* Authentication failed: give the user a chance to re-enter password. */
@@ -256,8 +218,8 @@ enum {
         return;
 
     [self connectionProblem];
-    [authHeader setStringValue:NSLocalizedString(@"AuthenticationFailed", nil)];
-    [authMessage setStringValue: aReason];
+//    [authHeader setStringValue:NSLocalizedString(@"AuthenticationFailed", nil)];
+//    [authMessage setStringValue: aReason];
 
 }
 
@@ -268,6 +230,7 @@ enum {
     [self endSession];
 }
 
+#if 0
 /* Close the connection and then reconnect */
 - (IBAction)forceReconnect:(id)sender
 {
@@ -292,6 +255,7 @@ enum {
     else
         return [self respondsToSelector:[item action]];
 }
+#endif
 
 - (void)setSize:(NSSize)aSize
 {
@@ -329,12 +293,6 @@ enum {
 {
     [self _maxSizeForWindowSize:[scrollView frame].size];
     [window makeFirstResponder:rfbView];
-}
-
-- (void)setNewTitle:(id)sender
-{
-    [titleString release];
-    titleString = [[newTitleField stringValue] retain];
 }
 
 - (void)setDisplayName:(NSString*)aName
@@ -502,14 +460,6 @@ enum {
 	[[connection eventFilter] clearAllEmulationStates];
 }
 
-- (void)openOptions:(id)sender
-{
-    [infoField setStringValue: [connection infoString]];
-    [statisticField setStringValue:[connection statisticsString]];
-    [optionPanel setTitle:titleString];
-    [optionPanel makeKeyAndOrderFront:self];
-}
-
 - (BOOL)connectionIsFullscreen {
 	return NO;
 }
@@ -519,76 +469,6 @@ enum {
     // miniaturized windows should keep update seconds set at maximum
     if (![window isMiniaturized])
         [connection setFrameBufferUpdateSeconds:seconds];
-}
-
-/* Reconnection attempts */
-
-- (void)createReconnectSheet:(id)sender
-{
-    [NSApp beginSheet:_reconnectPanel modalForWindow:window
-           modalDelegate:self
-           didEndSelector:@selector(reconnectEnded:returnCode:contextInfo:)
-           contextInfo:nil];
-    [_reconnectIndicator startAnimation:self];
-
-    [_reconnectSheetTimer release];
-    _reconnectSheetTimer = nil;
-}
-
-- (void)reconnectCancelled:(id)sender
-{
-    [_reconnectWaiter cancel];
-    [_reconnectWaiter release];
-    _reconnectWaiter = nil;
-    [NSApp endSheet:_reconnectPanel];
-    [self endSession];
-}
-
-- (void)reconnectEnded:(id)sender returnCode:(int)retCode
-           contextInfo:(void *)info
-{
-    [_reconnectPanel orderOut:self];
-}
-
-- (void)connectionPrepareForSheet
-{
-    [NSApp endSheet:_reconnectPanel];
-    [_reconnectSheetTimer invalidate];
-    [_reconnectSheetTimer release];
-    _reconnectSheetTimer = nil;
-}
-
-- (void)connectionSheetOver
-{
-    [self startTimerForReconnectSheet];
-}
-
-/* Reconnect attempt has failed */
-- (void)connectionFailed
-{
-    [self endSession];
-}
-
-/* Reconnect attempt has succeeded */
-- (void)connectionSucceeded:(RFBConnection *)newConnection
-{
-    [NSApp endSheet:_reconnectPanel];
-    [_reconnectSheetTimer invalidate];
-    [_reconnectSheetTimer release];
-    _reconnectSheetTimer = nil;
-
-    connection = [newConnection retain];
-    [connection setSession:self];
-    [connection setRfbView:rfbView];
-    [connection installMouseMovedTrackingRect];
-    if (sshTunnel == nil)
-        sshTunnel = [[connection sshTunnel] retain];
-
-    [_connectionStartDate release];
-    _connectionStartDate = [[NSDate alloc] init];
-
-    [_reconnectWaiter release];
-    _reconnectWaiter = nil;
 }
 
 @end

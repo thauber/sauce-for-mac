@@ -18,10 +18,9 @@
  */
 
 #import "ConnectionWaiter.h"
-#import "IServerData.h"
 #import "RFBConnection.h"
 #import "RFBConnectionManager.h"
-#import "SshWaiter.h"
+#import "ScoutWindowController.h"
 
 #import "SaucePreconnect.h"
 
@@ -37,30 +36,26 @@
 
 @implementation ConnectionWaiter
 
-+ (ConnectionWaiter *)waiterForServer:(id<IServerData>)aServer
++ (ConnectionWaiter *)waiterWithDict:(NSMutableDictionary *)sdict
                              delegate:(id<ConnectionWaiterDelegate>)aDelegate
-                               window:(NSWindow *)aWind
 {
-    ConnectionWaiter    *cw;
-
-//    cw = [aServer sshHost] ? [SshWaiter alloc] : [ConnectionWaiter alloc];
-    cw = [ConnectionWaiter alloc];
-    cw = [cw initWithServer:aServer delegate:aDelegate window:aWind];
+    ConnectionWaiter *cw = [ConnectionWaiter alloc];
+    cw = [cw initWithDict:sdict delegate:aDelegate];
     return [cw autorelease];
 }
 
-- (id)initWithServer:(id<IServerData>)aServer
-    delegate:(id<ConnectionWaiterDelegate>)aDelegate window:(NSWindow *)aWindow
+- (id)initWithDict:(NSMutableDictionary *)theDict
+    delegate:(id<ConnectionWaiterDelegate>)aDelegate
 {
     if (self = [super init])
     {
-        host = kSauceLabsHost;        // fixed
+        host = kSauceLabsHost;        // fixed value
         port = kPort;
 
         lock = [[NSLock alloc] init];
         currentSock = -1;
-//        window = [aWindow retain];
 
+        sdict = theDict;
         delegate = aDelegate;
 
         [NSThread detachNewThreadSelector: @selector(connect:) toTarget: self
@@ -149,9 +144,11 @@
             freeaddrinfo(res0);
             
             // first send secret+jobID to server
-            NSString *arg = [[SaucePreconnect sharedPreconnect] credStr];        
-            int len = [arg length];
-            int wlen = sendto(sock,[arg UTF8String],len,0,0,0);
+            NSString *jobId = [sdict objectForKey:@"jobId"];
+            NSString *secret = [sdict objectForKey:@"secret"];
+            NSString *credStr = [NSString stringWithFormat:@"{\"job-id\":\"%@\",\"secret\":\"%@\"}\n",jobId,secret];
+            int len = [credStr length];
+            int wlen = sendto(sock,[credStr UTF8String],len,0,0,0);
             if(wlen != len)
                 NSLog(@"failed to send credentials");
             
@@ -187,6 +184,7 @@
         errMsg = [NSString stringWithFormat:@"%s: %@", strerror(causeErr),
                                         cause];
     }
+    // TODO: prbly need to pass sdict
     [self performSelectorOnMainThread: @selector(connectionFailed:)
                            withObject: errMsg waitUntilDone: NO];
     [pool release];
@@ -223,8 +221,7 @@
 
         fh = [[NSFileHandle alloc] initWithFileDescriptor: currentSock
                                            closeOnDealloc: YES];
-        theConnection = [[RFBConnection alloc] initWithFileHandle:fh
-                                                           server:nil];
+        theConnection = [[RFBConnection alloc] initWithFileHandle:fh  dict:sdict];
         [delegate connectionSucceeded: theConnection];
         [fh release];
         [theConnection release];
@@ -271,7 +268,7 @@
     [self error:actionStr message:NSLocalizedString(@"ServerClosed", nil)];
 }
 
-/* Creates error sheet or panel */
+/* Creates error sheet */
 - (void)error:(NSString*)theAction message:(NSString*)message
 {
     if (delegate == nil) {
@@ -286,15 +283,7 @@
         theAction = errorStr;
 
 	NSString *ok = NSLocalizedString( @"Okay", nil );
-    if (window)
-        NSBeginAlertSheet(theAction, ok, nil, nil, window, self,
-                @selector(errorDidEnd:returnCode:contextInfo:), NULL, NULL,
-                message);
-    else {
-        int ret;
-        ret = NSRunAlertPanel(theAction, message, ok, NULL, NULL, NULL);
-        [self errorDidEnd:nil returnCode:ret contextInfo:nil];
-    }
+    NSBeginAlertSheet(theAction, ok, nil, nil, [[ScoutWindowController sharedScout] window], self, @selector(errorDidEnd:returnCode:contextInfo:), NULL, NULL, message);
 }
 
 - (void)errorDidEnd:(NSWindow *)sheet returnCode:(int)returnCode

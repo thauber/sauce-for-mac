@@ -36,9 +36,6 @@ enum TabType {tt_windows, tt_linux, tt_apple, tt_mobile};
     NSMutableArray *brAStrsApple;
     NSMutableArray *brAStrsMobile;    
     NSAttributedString* osAStrs[4];
-    NSString *os;
-    NSString *browser;
-    NSString *browserVersion;
 }
 @property (assign) IBOutlet NSButton *defaultBrowser;
 @property (assign) IBOutlet NSPanel *panel;
@@ -48,12 +45,8 @@ enum TabType {tt_windows, tt_linux, tt_apple, tt_mobile};
 @property (assign) IBOutlet NSTextField *connectIndicatorText;
 @property (assign) IBOutlet NSProgressIndicator *connectIndicator;
 @property (assign) IBOutlet NSTextField *url;
-@property (copy)NSString *os;
-@property (copy)NSString *browser;
-@property (copy)NSString *browserVersion;
 
 - (IBAction)doBrowserClick:(NSBrowser *)sender;
-- (IBAction)performClose:(id)sender;
 - (IBAction)doDoubleClick:(id)sender;
 - (void)quitSheet;
 - (void)terminateApp;

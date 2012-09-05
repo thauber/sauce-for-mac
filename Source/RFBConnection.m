@@ -30,7 +30,6 @@
 #import "KeyEquivalentManager.h"
 #import "KeyEquivalentScenario.h"
 #import "Keymap.h"
-//#import "PersistentServer.h"
 #import "PrefController.h"
 #import "Profile.h"
 #import "ProfileManager.h"
@@ -68,7 +67,7 @@
 	[standardUserDefaults registerDefaults: dict];
 }
 
-- (id)initWithFileHandle:(NSFileHandle*)file server:(id<IServerData>)server
+- (id)initWithFileHandle:(NSFileHandle*)file dict:(NSMutableDictionary*)dict
 {
     if (self = [super init]) {
         ByteBlockReader *versionReader;
@@ -77,8 +76,7 @@
 
         currentReader = nil;
 
-//        server_ = [(id)server retain];      
-//        password = [[server password] retain];
+        sdict = dict;
         
         _eventFilter = [[EventFilter alloc] init];
         [_eventFilter setConnection: self];
@@ -138,8 +136,6 @@
     [currentReader release];
 	[_eventFilter release];
 	[handshaker release];
-//    [server_ release];
-    [password release];
 	[rfbProtocol release];
 	[frameBuffer release];
     [lastMouseMovement release];
@@ -187,10 +183,12 @@
     sshTunnel = [tunnel retain];
 }
 
+#if 0
 - (id<IServerData>)server
 {
     return server_;
 }
+#endif
 
 - (Profile*)profile
 {
@@ -239,8 +237,7 @@
 
 - (void)setCursor: (NSCursor *)aCursor
 {
-//    if (![server_ viewOnly])    
-        [rfbView setServerCursorTo: aCursor];
+    [rfbView setServerCursorTo: aCursor];
 }
 
 - (void)terminateConnection:(NSString *)reason
@@ -928,6 +925,11 @@ static NSString* byteString(double d)
     {
         [self requestFrameBufferUpdate:nil];
     }
+}
+
+- (NSMutableDictionary*)theSDict
+{
+    return sdict;
 }
 
 @end

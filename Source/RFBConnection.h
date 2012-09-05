@@ -34,11 +34,11 @@
 @protocol IServerData;
 
 #define RFB_HOST		@"Host"
-#define RFB_PASSWORD		@"Password"
-#define RFB_REMEMBER		@"RememberPassword"
+#define RFB_PASSWORD	@"Password"
+#define RFB_REMEMBER	@"RememberPassword"
 #define RFB_DISPLAY		@"Display"
 #define RFB_SHARED		@"Shared"
-#define RFB_FULLSCREEN          @"Fullscreen"
+#define RFB_FULLSCREEN  @"Fullscreen"
 #define RFB_PORT		5900
 
 #define	DEFAULT_HOST	@"localhost"
@@ -84,14 +84,14 @@
     unsigned char   *writeBuffer;
     int             bufferLen;
     int             lastBufferedIsMouseMovement;
+    NSMutableDictionary *sdict;
 }
 
-- (id)initWithFileHandle:(NSFileHandle*)file server:(id<IServerData>)server;
+- (id)initWithFileHandle:(NSFileHandle*)file dict:(NSMutableDictionary*)dict;
 
 - (void)dealloc;
 
 - (void)closeConnection;
-- (id<IServerData>)server;
 
 - (void)setRfbView:(RFBView *)view;
 - (void)setSession:(Session *)aSession;
@@ -148,5 +148,6 @@
 - (void)mouseDragged:(NSEvent *)theEvent;
 
 - (void)setFrameBufferUpdateSeconds: (float)seconds;
+- (NSMutableDictionary*)theSDict;
 
 @end

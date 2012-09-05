@@ -26,7 +26,7 @@
 #import <Cocoa/Cocoa.h>
 #import "SshTunnel.h"
 
-@protocol IServerData;
+//@protocol IServerData;
 @class Profile;
 @class RFBConnection;
 
@@ -51,9 +51,9 @@
  * instance. */
 @interface ConnectionWaiter : NSObject {
         // variables used for initializing RFBConnection
-    id<IServerData>     server;
     NSString            *host;
     in_port_t           port;
+    NSMutableDictionary *sdict;
     Profile             *profile;
 
     NSLock              *lock; // protects currentSock and delegate
@@ -61,17 +61,15 @@
                                      // when current sock is non-negative, then
                                      // cancel is responsible for closing
                                      // currentSock during cancellation
-    NSWindow            *window; // for displaying error panels
 
     id<ConnectionWaiterDelegate>    delegate;
     NSString            *errorStr; // error header, if not the default
 }
 
-+ (ConnectionWaiter *)waiterForServer:(id<IServerData>)aServer
-                             delegate:(id<ConnectionWaiterDelegate>)aDelegate
-                               window:(NSWindow *)aWind;
-- (id)initWithServer:(id<IServerData>)aServer
-    delegate:(id<ConnectionWaiterDelegate>)aDelegate window:(NSWindow *)aWind;
++ (ConnectionWaiter *)waiterWithDict:(NSMutableDictionary *)sdict
+                             delegate:(id<ConnectionWaiterDelegate>)aDelegate;
+- (id)initWithDict:(NSMutableDictionary *)theDict
+    delegate:(id<ConnectionWaiterDelegate>)aDelegate;
 - (void)dealloc;
 
 - (void)setErrorStr:(NSString *)str;

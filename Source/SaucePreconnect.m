@@ -20,21 +20,8 @@ NSString *kSauceLabsDomain = @"saucelabs.com";
 
 @synthesize user;
 @synthesize ukey;
-@synthesize os;
-@synthesize browser;
-@synthesize browserVersion;
-@synthesize urlStr;
-@synthesize secret;
-@synthesize jobId;
-@synthesize liveId;
-@synthesize userNew;
-@synthesize passNew;
-@synthesize emailNew;
 
 @synthesize timer;
-@synthesize authTimer;
-@synthesize errStr;
-@synthesize cancelled;
 @synthesize internetOk;
 
 static SaucePreconnect* _sharedPreconnect = nil;
@@ -64,30 +51,44 @@ static SaucePreconnect* _sharedPreconnect = nil;
 	return nil;
 }
 
-- (void)setOptions:(NSString*)uos browser:(NSString*)ubrowser 
-    browserVersion:(NSString*)ubrowserVersion url:(NSString*)uurlStr
+// sdict state: 0=os/browser/url; -1=secret/liveId; 1=connected
+- (NSMutableDictionary*)setOptions:(NSString*)os browser:(NSString*)browser 
+    browserVersion:(NSString*)browserVersion url:(NSString*)urlStr
 {
-    os = uos;       
-    browser = ubrowser;
-    browserVersion = ubrowserVersion;
-    urlStr = uurlStr;
+    NSString *osbvStr = [NSString stringWithFormat:@"%@/%@ %@",os,browser,browserVersion];
+    NSMutableDictionary *sdict = [[[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                                  0, @"state", user, @"user", ukey, @"ukey",
+                                  osbvStr, @"osbv", urlStr, @"url", 
+                                  os, @"os", browser, @"browser", browserVersion, @"browserVersion", 
+                                  @"2:00:00", @"remainingTime", nil] autorelease];    
+
+    if(!credArr)
+    {
+        credArr = [[[NSMutableArray alloc] init] retain];
+    }
+    [credArr addObject:sdict];
+    return sdict;
 }
 
 // use user/password and users selections to get live_id from server
-- (void)preAuthorize:(id)param
+- (void)preAuthorize:(NSMutableDictionary*)sdict
 {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
     // timeout if can't get credentials from server
-    self.authTimer = [NSTimer scheduledTimerWithTimeInterval:300 target:self selector:@selector(cancelPreAuthorize:) userInfo:nil repeats:NO];
+    NSTimer *authTimer = [NSTimer scheduledTimerWithTimeInterval:300 target:self selector:@selector(cancelPreAuthorize:) userInfo:sdict repeats:NO];
 
-    NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@%@/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\"}'", self.user, self.ukey,kSauceLabsDomain, user, self.os, self.browser, self.browserVersion, self.urlStr];
-    cancelled = NO;
-    self.errStr = nil;
+    [sdict setObject:authTimer forKey:@"authTimer"];
+    NSString *os = [sdict objectForKey:@"os"];
+    NSString *browser = [sdict objectForKey:@"browser"];
+    NSString *browserVersion = [sdict objectForKey:@"browserVersion"];
+    NSString *urlStr = [sdict objectForKey:@"url"];
+    NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@%@/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\"}'", self.user, self.ukey,kSauceLabsDomain, user, os, browser, browserVersion, urlStr];
 
+    NSString *errStr = nil;
     while(1)
     {
-        if(cancelled)
+        if([sdict objectForKey:@"errorString"])
             break;
 
         NSTask *ftask = [[[NSTask alloc] init] autorelease];
@@ -100,7 +101,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if([ftask terminationStatus])
         {
             NSLog(@"failed NSTask");
-            self.errStr = @"Failed to send user options to server";
+            errStr = @"Failed to send user options to server";
             internetOk = NO;
             break;;
         }
@@ -111,25 +112,31 @@ static SaucePreconnect* _sharedPreconnect = nil;
             
             NSData *data = [fhand readDataToEndOfFile];	
             NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            self.liveId = [self jsonVal:jsonString key:@"live-id"];
+            NSString *liveId = [self jsonVal:jsonString key:@"live-id"];
             [jsonString release];
-            if(self.liveId.length)
+            if(liveId.length)
+            {
+                [sdict setObject:liveId forKey:@"liveId"];
                 break;
+            }
             else 
             {
-                self.errStr =@"Failed to retrieve live-id";
+                errStr = @"Failed to retrieve live-id";
                 break;
             }
         }
     }
-    if(!cancelled && !errStr)
-        [self curlGetauth];
-    [authTimer invalidate];
-    self.authTimer = nil;    
+    if(errStr)
+        [sdict setObject:@"Failed to send user options to server" forKey:@"errorString"];
+    if(![sdict objectForKey:@"errorString"])        // no error/no cancel
+        [self curlGetauth:sdict];
+    NSTimer *atmr = [sdict objectForKey:@"authTimer"];
+    [atmr invalidate];
+    [sdict removeObjectForKey:@"authTimer"];    
 
-    if(errStr)      // call error method of app
+    if([sdict objectForKey:@"errorString"])        // error
     {
-        [self cancelPreAuthorize:nil];
+        [self cancelPreAuthorize:(id)sdict];
     }
     [pool release];
 }
@@ -175,44 +182,44 @@ static SaucePreconnect* _sharedPreconnect = nil;
     return ret;
 }
 
--(void)cancelPreAuthorize:(NSTimer*)tm
+-(void)cancelPreAuthorize:(id)tm      // if timer, userinfo is sdict
 {
-    BOOL wasCancelled = self.cancelled;     // called from appdelegate
+    NSMutableDictionary *sdict;
+    NSTimer *tmr = nil;
+    if([tm class] == @"NSTimer")
+    {
+        tmr = (NSTimer*)tm;
+        sdict = [tmr userInfo];
+        [tmr invalidate];
+    }
+    else        // was passed sdict in directly
+        sdict = (NSMutableDictionary*)tm;
     
-    [authTimer invalidate];
-    self.authTimer = nil;
+    [sdict removeObjectForKey:@"authTimer"];
        
-    if(wasCancelled)        // don't go circular
-        return;
-    
-    self.cancelled = YES;       // make sure any loops break out
-
-    if(tm)
-        self.errStr = @"Connection attempt timed out";
+    NSString *errStr = nil;
+    if(tmr)
+        errStr = @"Connection attempt timed out";
     else 
-    if(!errStr)
-        self.errStr = @"Connection error";
+    if(![sdict objectForKey:@"errorString"])
+        errStr = @"Connection error";
+    [sdict setObject:errStr forKey:@"errorString"];
+    
+    // remove tab with the sdict's sessionConnect object
     [[NSApp delegate]
      performSelectorOnMainThread:@selector(cancelOptionsConnect:)   
-     withObject:errStr  waitUntilDone:NO];
+     withObject:sdict  waitUntilDone:NO];
 }
-
-// return json object for vnc connection
-- (NSString *)credStr
-{
-    NSString *js = [NSString stringWithFormat:@"{\"job-id\":\"%@\",\"secret\":\"%@\"}\n",self.jobId,self.secret];
-    return js;
-}
-
 
 // poll til we get secret/jobid
--(void)curlGetauth
-{    
-	NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@%@/scout/live/%@/status?secret&'", self.user, self.ukey, kSauceLabsDomain, self.liveId ];
+-(void)curlGetauth:(NSMutableDictionary*)sdict
+{
+    NSString *liveId = [sdict objectForKey:@"liveId"];
+	NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@%@/scout/live/%@/status?secret&'", self.user, self.ukey, kSauceLabsDomain, liveId];
 
     while(1)    // use live-id to get job-id
     {
-        if(cancelled)
+        if([sdict objectForKey:@"errorString"])
             break;
         NSTask *ftask = [[[NSTask alloc] init] autorelease];
         NSPipe *fpipe = [NSPipe pipe];
@@ -224,14 +231,14 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if([ftask terminationStatus])
         {
             NSLog(@"failed NSTask");
-            self.errStr =  @"Failed to request job-id";
+            [sdict setObject:@"Failed to request job-id" forKey:@"errorString"];
             internetOk = NO;
             break;
         }
         else
         {
             internetOk = YES;
-            if(cancelled)
+            if([sdict objectForKey:@"errorString"])
                 break;
             else
             {
@@ -239,12 +246,14 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 
                 NSData *data = [fhand readDataToEndOfFile];		 
                 NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                self.secret = [self jsonVal:jsonString key:@"video-secret"];
-                self.jobId  = [self jsonVal:jsonString key:@"job-id"];
+                NSString *secret = [self jsonVal:jsonString key:@"video-secret"];
+                NSString *jobId  = [self jsonVal:jsonString key:@"job-id"];
                 [jsonString release];
                 if(secret.length)
                 {
-                    [[RFBConnectionManager sharedManager] performSelectorOnMainThread:@selector(connectToServer)   withObject:nil  waitUntilDone:NO];
+                    [sdict setObject:secret forKey:@"secret"];
+                    [sdict setObject:jobId forKey:@"jobId"];
+                    [[RFBConnectionManager sharedManager] performSelectorOnMainThread:@selector(connectToServer:)   withObject:sdict  waitUntilDone:NO];
                     break;
                 }
                 
@@ -254,15 +263,13 @@ static SaucePreconnect* _sharedPreconnect = nil;
 }
 
 // remove session being close from heartbeat array
--(void)sessionClosed:(id)view
+-(void)sessionClosed:(NSMutableDictionary*)sdict
 {
 	int len = [credArr count];
-    NSDictionary *sdict;
     
     for(int i=0;i<len;i++)
     {
-        sdict = [credArr objectAtIndex:i];
-        if([sdict objectForKey:@"view"] == view)
+        if([credArr objectAtIndex:i] == sdict)
         {
             NSString *aliveId = [sdict objectForKey:@"liveId"];
             NSString *farg = [NSString stringWithFormat:@"curl -X DELETE 'https://%@:%@@%@/rest/v1/users/%@/scout/%@'", self.user, self.ukey, kSauceLabsDomain, self.user, aliveId];
@@ -284,10 +291,10 @@ static SaucePreconnect* _sharedPreconnect = nil;
 }
 
 // return get info for a view; also used to determine if tab has an active session
--(NSDictionary *)sessionInfo:(id)view
+-(NSMutableDictionary*)sessionInfo:(id)view
 {
 	int len = [credArr count];
-    NSDictionary *sdict;
+    NSMutableDictionary *sdict;
     
     for(int i=0;i<len;i++)
     {
@@ -308,6 +315,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
     [[[ScoutWindowController sharedScout] vmsize] setStringValue:str];
 }
 
+// set connection and view in session object on connection
+/*
 // array for each session/tab - 
 //  session for closing session 
 //  liveId for heartbeat
@@ -336,6 +345,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     [sdict release];
     delayedSession = 2;     // done adding
 }
+*/
 
 -(NSString *)remainingTimeStr:(int)remaining
 {
@@ -370,7 +380,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(heartbeat:) userInfo:nil repeats:YES];
 }
 
--(void)cancelHeartbeat
+-(void)cancelHeartbeat:(NSString*)errStr
 {
     if(![credArr count])    // only stop heartbeat if no sessions are active
     {
@@ -378,10 +388,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
         self.timer = nil;
     }
     if(errStr)      // lost connection - 
-    {
-        [self cancelPreAuthorize:nil];
-        // close all sessions
-        
+    {        
         [[ScoutWindowController sharedScout] performSelectorOnMainThread:@selector(closeAllTabs) withObject:nil waitUntilDone:NO];
     }
 }
@@ -395,7 +402,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     
     if(![credArr count])
     {
-        [self cancelHeartbeat];
+        [self cancelHeartbeat:nil];
         return;        
     }
     
@@ -409,12 +416,11 @@ static SaucePreconnect* _sharedPreconnect = nil;
                              
         NSString *farg = [NSString stringWithFormat:@"curl 'https://%@/scout/live/%@/status?auth_username=%@&auth_access_key=%@' 2>/dev/null", kSauceLabsDomain, aliveid, self.user, self.ukey];
 
-        NSLog(@"hb:%@",aliveid);        // ** testing
         while(1)    
         {
             if(![credArr count])        // if all sessions closed while in heartbeat
             {
-                [self cancelHeartbeat];
+                [self cancelHeartbeat:nil];
                 return;        
             }
             NSTask *ftask = [[[NSTask alloc] init] autorelease];
@@ -426,9 +432,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
             [ftask waitUntilExit];
             if([ftask terminationStatus])
             {
-                self.errStr = @"failed NSTask in heartbeat";
                 internetOk = NO;
-                [self cancelHeartbeat];
+                [self cancelHeartbeat:@"failed NSTask in heartbeat"];
                 return;
             }
             else
@@ -460,14 +465,14 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 else
                 {
                     NSLog(@"heartbeat - not in progress:%@",jsonString);
-                    [self sessionClosed:[sdict objectForKey:@"view"]];
+                    [self sessionClosed:sdict];
                     credArrSz = [credArr count];
                     removedObj = YES;
                     break;
                 }
             }
         }
-        if(removedObj)              // removed b/c session no in progress
+        if(removedObj)              // removed b/c session not in progress
         {
             removedObj = NO;        // clear flag
             continue;               // avoid incrementing index
@@ -485,11 +490,56 @@ static SaucePreconnect* _sharedPreconnect = nil;
         delayedSession = 0;
 }
 
-// 0->bad login 1->good user  -1->bad internet connection
-- (NSInteger)checkUserLogin:(NSString *)uuser  key:(NSString*)kkey
+// return: 'N'->failed login; nil->good user;  'F'->bad internet connection
+- (NSString*)checkUserLogin:(NSString *)uuser  key:(NSString*)kkey
 {
     NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@%@/rest/v1/%@/jobs'", uuser, kkey, kSauceLabsDomain, uuser];
     
+    NSString *resStr = nil;
+    NSTask *ftask = [[[NSTask alloc] init] autorelease];
+    NSPipe *fpipe = [NSPipe pipe];
+    [ftask setStandardOutput:fpipe];
+    [ftask setLaunchPath:@"/bin/bash"];
+    [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+    [ftask launch];		// fetch live id
+    [ftask waitUntilExit];
+    if([ftask terminationStatus])
+    {
+        resStr = @"Failed login check";
+        internetOk = NO;
+    }
+    else
+    {
+        internetOk = YES;
+        NSFileHandle *fhand = [fpipe fileHandleForReading];
+        
+        NSData *data = [fhand readDataToEndOfFile];		 
+        NSString *jsonString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+        NSRange range = [jsonString rangeOfString:@"error"];
+        if(!range.length)
+        {
+            range = [jsonString rangeOfString:@"id"];
+            if(range.length)
+            {
+                self.user = uuser;
+                self.ukey = kkey;
+            }
+            else
+                resStr = @"New user account failed to be created";
+        }
+        else 
+            resStr = @"New user account error";
+    }
+    return resStr;
+}
+
+- (NSString*)signupNew:(NSString*)userNew passNew:(NSString*)passNew 
+         emailNew:(NSString*)emailNew
+{        
+    NSString *farg = [NSString stringWithFormat:@"curl -X POST http://%@/rest/v1/users -H 'Content-Type: application/json' -d '{\"username\":\"%@\", \"password\":\"%@\",\"name\":\"\",\"email\":\"%@\",\"token\":\"0E44EF6E-B170-4CA0-8264-78FD9E49E5CD\"}'",kSauceLabsDomain, userNew, passNew, emailNew];
+     
+    NSString *errStr = nil;
+    // TODO: put a timer on it
     while(1)
     {
         NSTask *ftask = [[[NSTask alloc] init] autorelease];
@@ -501,9 +551,9 @@ static SaucePreconnect* _sharedPreconnect = nil;
         [ftask waitUntilExit];
         if([ftask terminationStatus])
         {
-            self.errStr = @"Failed NSTask in checkUserLogin";
+            errStr = @"Failed NSTask in signupNew";
             internetOk = NO;
-            return -1;
+            break;
         }
         else
         {
@@ -511,86 +561,26 @@ static SaucePreconnect* _sharedPreconnect = nil;
             NSFileHandle *fhand = [fpipe fileHandleForReading];
             
             NSData *data = [fhand readDataToEndOfFile];		 
-            NSString *jsonString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-            NSRange range = [jsonString rangeOfString:@"error"];
-            if(!range.length)
+            NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSString *akey = [self jsonVal:jsonString key:@"access_key"];
+            [jsonString release];
+            if(akey.length)
             {
-                range = [jsonString rangeOfString:@"id"];
-                if(range.length)
-                {
-                    self.user = uuser;
-                    self.ukey = kkey;
-                    return YES;
-                }
-            }
-            else 
-            {
-                self.errStr = @"Failed server authentication";
-                return NO;
+                self.user = userNew;
+                self.ukey = akey;
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                [defaults setObject:self.user  forKey:kUsername];
+                [defaults setObject:self.ukey  forKey:kAccountkey];
+                [[NSApp delegate] performSelectorOnMainThread:@selector(newUserAuthorized:)   
+                                        withObject:nil  waitUntilDone:NO];
+                break;
             }
         }
     }
-    return NO;
+    return errStr;
 }
 
-- (void)signupNew:(NSString*)uuserNew passNew:(NSString*)upassNew 
-         emailNew:(NSString*)uemailNew
-{    
-    self.userNew = uuserNew;
-    self.passNew = upassNew;
-    self.emailNew = uemailNew;
-    
-    NSString *farg = [NSString stringWithFormat:@"curl -X POST http://%@/rest/v1/users -H 'Content-Type: application/json' -d '{\"username\":\"%@\", \"password\":\"%@\",\"name\":\"\",\"email\":\"%@\",\"token\":\"0E44EF6E-B170-4CA0-8264-78FD9E49E5CD\"}'",kSauceLabsDomain, self.userNew, self.passNew, self.emailNew];
-     
-    self.errStr = nil;
-    while(1)
-    {
-        if(cancelled)
-            break;
-
-        NSTask *ftask = [[[NSTask alloc] init] autorelease];
-        NSPipe *fpipe = [NSPipe pipe];
-        [ftask setStandardOutput:fpipe];
-        [ftask setLaunchPath:@"/bin/bash"];
-        [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-        [ftask launch];		// fetch live id
-        [ftask waitUntilExit];
-        if([ftask terminationStatus])
-        {
-            self.errStr = @"Failed NSTask in signupNew";
-            internetOk = NO;
-            break;
-        }
-        else
-        {
-            internetOk = YES;
-            if(cancelled)
-                break;
-            else
-            {
-                NSFileHandle *fhand = [fpipe fileHandleForReading];
-                
-                NSData *data = [fhand readDataToEndOfFile];		 
-                NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                NSString *akey = [self jsonVal:jsonString key:@"access_key"];
-                [jsonString release];
-                if(akey.length)
-                {
-                    self.user = self.userNew;
-                    self.ukey = akey;
-                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                    [defaults setObject:self.user  forKey:kUsername];
-                    [defaults setObject:self.ukey  forKey:kAccountkey];
-                    [[NSApp delegate] performSelectorOnMainThread:@selector(newUserAuthorized:)   
-                                            withObject:nil  waitUntilDone:NO];
-                    break;
-                }
-            }
-        }
-    }    
-}
-
-- (void)postSnapshotBug:(NSString *)snapName title:(NSString *)title desc:(NSString *)desc
+- (NSString*)postSnapshotBug:(NSString *)snapName title:(NSString *)title desc:(NSString *)desc
 { 
     NSView *view = [[[ScoutWindowController sharedScout] curSession] view];
 
@@ -605,47 +595,44 @@ static SaucePreconnect* _sharedPreconnect = nil;
 
     NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@%@/scout/live/%@/reportbug?&ssname=%@&title=%@&description=%@'", auser, akey, kSauceLabsDomain, aliveid, snapName, escTitle, escDesc];
     
-    self.errStr = nil;
     NSString *surl;
+    NSString *errStr = nil;
+    
     SnapProgress *sp = [[ScoutWindowController sharedScout] snapProgress];
-    while(1)
-    {
-        if(cancelled)
-            break;
+    // TODO: ?can this be cancelled
         
-        NSTask *ftask = [[[NSTask alloc] init] autorelease];
-        NSPipe *fpipe = [NSPipe pipe];
-        [ftask setStandardOutput:fpipe];
-        [ftask setLaunchPath:@"/bin/bash"];
-        [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-        [ftask launch];		// fetch live id
-        [ftask waitUntilExit];
-        if([ftask terminationStatus])
-        {
-            internetOk = NO;
-            break;
-        }
-        internetOk = YES;
-        if(cancelled)
-            break;
-        else
-        {
-            NSFileHandle *fhand = [fpipe fileHandleForReading];
-            
-            NSData *data = [fhand readDataToEndOfFile];		 
-            NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            NSString *snapId = [self jsonVal:jsonString key:@"c"];
-            [jsonString release];
-            if(snapId)  // QUERY: what is the id for?  jobId isn't always correct?
-                surl = [NSString stringWithFormat:@"https://%@/jobs/%@/%@",kSauceLabsDomain, ajobid,snapName];
-            break;
-        }
-    } 
+    NSTask *ftask = [[[NSTask alloc] init] autorelease];
+    NSPipe *fpipe = [NSPipe pipe];
+    [ftask setStandardOutput:fpipe];
+    [ftask setLaunchPath:@"/bin/bash"];
+    [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+    [ftask launch];		// fetch live id
+    [ftask waitUntilExit];
+    if([ftask terminationStatus])
+    {
+        internetOk = NO;
+        return @"Failed to report snapshot/bug to server";
+    }
+    internetOk = YES;
+    NSFileHandle *fhand = [fpipe fileHandleForReading];
+    
+    NSData *data = [fhand readDataToEndOfFile];		 
+    NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSString *snapId = [self jsonVal:jsonString key:@"c"];
+    [jsonString release];
+    if(snapId)  // ?what is the id for?
+        surl = [NSString stringWithFormat:@"https://%@/jobs/%@/%@",kSauceLabsDomain, ajobid,snapName];
+    else 
+        errStr = @"Failed to retrieve snapshot id";
+
     if(surl)
         [sp setServerURL:surl];
+    else
+        errStr = @"Failed to retrieve snapshot URL";
+    return errStr;
 }
 
-- (void)snapshotBug:(NSString *)title desc:(NSString *)desc
+- (NSString*)snapshotBug:(NSString *)title desc:(NSString *)desc
 {
     NSView *view = [[[[ScoutWindowController sharedScout] tabView] selectedTabViewItem] view];
     NSDictionary *sdict = [self sessionInfo:view];
@@ -657,57 +644,44 @@ static SaucePreconnect* _sharedPreconnect = nil;
     NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@%@/scout/live/%@/sendcommand?&1=getScreenshotName&sessionId=%@&cmd=captureScreenshot'", 
                       auser, akey, kSauceLabsDomain, aliveid, ajobid];
 
-    self.errStr = nil;
-    while(1)
+    NSTask *ftask = [[[NSTask alloc] init] autorelease];
+    NSPipe *fpipe = [NSPipe pipe];
+    [ftask setStandardOutput:fpipe];
+    [ftask setLaunchPath:@"/bin/bash"];
+    [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+    [ftask launch];		// fetch live id
+    [ftask waitUntilExit];
+    if([ftask terminationStatus])
     {
-        if(cancelled)
-            break;
-        
-        NSTask *ftask = [[[NSTask alloc] init] autorelease];
-        NSPipe *fpipe = [NSPipe pipe];
-        [ftask setStandardOutput:fpipe];
-        [ftask setLaunchPath:@"/bin/bash"];
-        [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-        [ftask launch];		// fetch live id
-        [ftask waitUntilExit];
-        if([ftask terminationStatus])
-        {
-            self.errStr = @"Failed NSTask in snapshotBug";
-            internetOk = NO;
-            break;
-        }
-        internetOk = YES;
-        if(cancelled)
-            break;
-        else
-        {
-            NSFileHandle *fhand = [fpipe fileHandleForReading];
-            
-            NSData *data = [fhand readDataToEndOfFile];		 
-            NSString *jsonString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-            NSString *rstr = [self jsonVal:jsonString key:@"success"];            
-            BOOL res = [rstr boolValue];
-            if(res)
-            {
-                NSString *snapName = [self jsonVal:jsonString key:@"message"];            
-                [self postSnapshotBug:snapName title:title desc:desc];
-                break;
-            }
-            else
-            {
-                self.errStr = @"Failed to get snapshot name";
-                break;
-            }                
-        }
-    }    
+        return @"Failed NSTask in snapshotBug";
+        internetOk = NO;
+    }
+    internetOk = YES;
+    NSFileHandle *fhand = [fpipe fileHandleForReading];
+    
+    NSData *data = [fhand readDataToEndOfFile];		 
+    NSString *jsonString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+    NSString *rstr = [self jsonVal:jsonString key:@"success"];            
+    BOOL res = [rstr boolValue];
+    if(res)
+    {
+        NSString *snapName = [self jsonVal:jsonString key:@"message"];            
+        return [self postSnapshotBug:snapName title:title desc:desc];
+    }
+    else
+    {
+        return @"Failed to get snapshot name";
+    }                
+    return nil;
 }
 
-// 0->bad login 1->good user  -1->bad internet connection
-- (NSInteger)checkAccountOk:(BOOL)bSubscribed
+// 'S'->subscribed; nil->good user;  'F'->bad internet connection
+- (NSString*)checkAccountOk
 {
     NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@%@/rest/v1/users/%@'", 
                       self.user, self.ukey, kSauceLabsDomain, self.user];
 
+    NSString *resStr = nil;
     while(1)
     {
         NSTask *ftask = [[[NSTask alloc] init] autorelease];
@@ -720,9 +694,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if([ftask terminationStatus])
         {
             NSLog(@"failed NSTask");
-            self.errStr =  @"Failed to request accountOk";
             internetOk = NO;
-            return -1;  // assume no internet connection
+            return @"Failed to request accountOk";
         }
         else
         {
@@ -734,15 +707,27 @@ static SaucePreconnect* _sharedPreconnect = nil;
             NSString *subscribedStr = [self jsonVal:jsonString key:@"subscribed"];
             if([subscribedStr length])
             {
-                if(bSubscribed)
-                {
-                    return [subscribedStr isEqualToString:@"true"];
-                }
                 NSString *minStr = [self jsonVal:jsonString key:@"minutes"];
-                return ([minStr length] > 1);     // assume 0-9 minutes isn't enough            
+                if([minStr length] > 1)     // assume 0-9 minutes isn't enough
+                if([subscribedStr isEqualToString:@"true"])
+                {
+                    if([minStr length] > 1)
+                        resStr = @"S+";     // subscribed with minutes
+                    else
+                        resStr = @"S-";     // subscribed without minutes
+                }
+                else
+                {
+                    if([minStr length] > 1)
+                        resStr = @"N+";     // not subscribed with minutes
+                    else
+                        resStr = @"N-";     // not subscribed without minutes               
+                }
+                break;
             }            
         }
     }
+    return resStr;
 }
 
 @end

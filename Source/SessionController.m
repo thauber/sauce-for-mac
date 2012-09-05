@@ -23,9 +23,6 @@
 @synthesize connectIndicatorText;
 @synthesize connectIndicator;
 @synthesize url;
-@synthesize os;     // latest selection
-@synthesize browser;
-@synthesize browserVersion;
 
 - (id)init
 {
@@ -244,18 +241,11 @@
 
 }
 
-
 -(void)terminateApp
 {
     [NSApp endSheet:panel];
     [panel orderOut:nil];
     [[NSApp delegate] setOptionsCtrlr:nil];
-}
-
-- (IBAction)performClose:(id)sender
-{
-    [[SaucePreconnect sharedPreconnect] setErrStr:nil];
-    [[NSApp delegate] cancelOptionsConnect:self];
 }
 
 -(void)quitSheet
@@ -315,7 +305,7 @@
         {
             if(![uhost length] || [self canReachIP:uhost])
             {
-                NSBeginAlertSheet(@"Requires Intranet Access", @"Yes", @"No", nil, [NSApp keyWindow], self,nil, @selector(tunnelDidDismiss:returnCode:contextInfo:), NULL, @"Do you want to start Sauce Connect?"); 
+                NSBeginAlertSheet(@"Requires Intranet Access", @"Yes", @"No", nil, [NSApp keyWindow], self,nil, @selector(tunnelDidDismiss:returnCode:contextInfo:), sdict, @"Do you want to start Sauce Connect?"); 
             }
             else {
                 NSBeginAlertSheet(@"Can't Reach IP", @"Okay", nil, nil, [NSApp keyWindow], self,nil, nil, NULL, @"Check connection and IP address"); 
@@ -337,7 +327,7 @@
             return;
         case NSAlertAlternateReturn:
             [[NSApp delegate] setNoTunnel:YES];
-            [[NSApp delegate] startConnecting];
+            [[NSApp delegate] startConnecting:contextInfo];
             return;
         case NSAlertOtherReturn:
             [self runSheet];

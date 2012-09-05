@@ -20,54 +20,28 @@
 #import <AppKit/AppKit.h>
 #import "ConnectionWaiter.h"
 
-@protocol IServerData;
+//@protocol IServerData;
 
 @class RFBConnection;
 @class RFBView;
-@class SshTunnel;
+//@class SshTunnel;
 
-@interface Session : NSViewController <ConnectionWaiterDelegate>
+@interface Session : NSViewController // <ConnectionWaiterDelegate>
 {
     NSWindow *window;       // set to scoutwindowcontroller's window
     
     RFBConnection   *connection;
-    SshTunnel       *sshTunnel;
-
-    id      newTitleField;
     NSString    *titleString;
-    id      statisticField;
 
     NSSize _maxSize;
 
     BOOL	horizontalScroll;
     BOOL	verticalScroll;
 
-    id optionPanel;
-    id infoField;
-
     NSString *realDisplayName;
     NSString *host;
 
-    IBOutlet NSTextField *authHeader;
-    IBOutlet NSTextField *authMessage;
-
-        // for reconnection attempts
-    IBOutlet NSPanel                *_reconnectPanel;
-    IBOutlet NSProgressIndicator    *_reconnectIndicator;
-    IBOutlet NSTextField            *_reconnectReason;
     NSDate                          *_connectionStartDate;
-    NSTimer                         *_reconnectSheetTimer;
-    ConnectionWaiter                *_reconnectWaiter;
-
-        // instance variables for managing the fullscreen display
-	BOOL _isFullscreen;
-	NSTrackingRectTag _leftTrackingTag;
-	NSTrackingRectTag _topTrackingTag;
-	NSTrackingRectTag _rightTrackingTag;
-	NSTrackingRectTag _bottomTrackingTag;
-    int         _horizScrollFactor;
-    int         _vertScrollFactor;
-	NSTimer *_autoscrollTimer;
 
     NSScrollView *scrollView;
     RFBView *rfbView;
@@ -92,7 +66,6 @@
 - (void)terminateConnection:(NSString*)aReason;
 - (void)authenticationFailed:(NSString *)aReason;
 - (IBAction)dontReconnect:(id)sender;
-- (IBAction)forceReconnect:(id)sender;
 - (void)connectionProblem;
 - (IBAction)requestFrameBufferUpdate:(id)sender;
 
@@ -105,18 +78,6 @@
 - (void)windowDidResize;
 - (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)proposedFrameSize;
 
-- (void)openOptions:(id)sender;
-
-#if 0
-- (void)mouseEntered:(NSEvent *)theEvent;
-- (void)mouseExited:(NSEvent *)theEvent;
-- (void)mouseDragged:(NSEvent *)theEvent;
-#endif
-
 - (void)setFrameBufferUpdateSeconds: (float)seconds;
-
-// For reconnect
-- (void)createReconnectSheet:(id)sender;
-- (IBAction)reconnectCancelled:(id)sender; // returnCode:(int)retCode
 
 @end

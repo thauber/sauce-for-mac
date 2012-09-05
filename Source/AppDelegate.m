@@ -78,15 +78,15 @@
    
     if([uname length] && [akey length])
     {
-        NSInteger userOk = [[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:akey];
-        if(userOk == -1)
+        NSString *userOk = [[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:akey];
+        if([userOk characterAtIndex:0] == 'F')
         {
             [self internetNotOkDlg];
             return NO;      // still no connection
         }
-        if(!userOk)
+        if(userOk)      // TODO: display error message
             [self showLoginDlg:self];
-        return userOk;      // connection ok, but maybe no valid user
+        return userOk == nil;      // connection ok, but maybe no valid user
     }
     [self showLoginDlg:self];
     return NO;              // no valid user
@@ -112,22 +112,15 @@
     if(!optionsCtrlr)
     {
         
-        NSInteger subscribed = [[SaucePreconnect sharedPreconnect] checkAccountOk:YES];  // ask if user is subscribed
-        if(subscribed == -1)
+        NSString *subscribed = [[SaucePreconnect sharedPreconnect] checkAccountOk];  // ask if user is subscribed or has enough minutes
+        if([subscribed characterAtIndex:0] == 'F')      // failed internet
         {
             [self internetNotOkDlg];
             return;
         }
-        if(!subscribed)
+        if([subscribed characterAtIndex:0] == 'N')      // not subscribed
         {
-             NSInteger minutesOk = [[SaucePreconnect sharedPreconnect] checkAccountOk:NO];  // ask if user has minutes
-            
-             if(minutesOk == -1)
-             {
-                [self internetNotOkDlg];
-                return;
-             }
-             if(!minutesOk)
+             if([subscribed characterAtIndex:1] == '-') // not enough minutes
              {
                  [self promptForSubscribing:NO];   // prompt for subscribing to get more minutes
                  return;
@@ -148,14 +141,15 @@
 {
     self.optionsCtrlr = nil;
     sessionConnect *sc = [[sessionConnect alloc] init];
+    // link rfbview being created to this sessionconnect obj
+    [sdict setObject:sc forKey:@"sessionConnect"];
     // add view as new tab
     NSTabViewItem *newItem = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
     [newItem setView:[sc view]];
 	[newItem setLabel:@"Connecting"];       // TODO: make actual label
-    // TODO: link rfbview being created to this sessionconnect obj
 	[[[ScoutWindowController sharedScout] tabView] addTabViewItem:newItem];
     
-    [NSThread detachNewThreadSelector:@selector(preAuthorize) toTarget:[SaucePreconnect sharedPreconnect] withObject:sdict];
+    [NSThread detachNewThreadSelector:@selector(preAuthorize:) toTarget:[SaucePreconnect sharedPreconnect] withObject:sdict];
 }
 
 -(void)connectionSucceeded
@@ -169,30 +163,22 @@
     [self showOptionsDlg:nil];
 }
 
-- (void)preAuthorizeErr
+- (void)cancelOptionsConnect:(id)sdict
 {
-    NSString *err = [[SaucePreconnect sharedPreconnect] errStr];
-    if(err)
-        [optionsCtrlr showError:err];
-}
-
-- (void)cancelOptionsConnect:(id)sender
-{
+    NSMutableDictionary *theDict = sdict;
+    
     [[RFBConnectionManager sharedManager] cancelConnection];
-    [[SaucePreconnect sharedPreconnect] setCancelled:YES];
-    [[SaucePreconnect sharedPreconnect] cancelPreAuthorize:nil];
+    [[SaucePreconnect sharedPreconnect] cancelPreAuthorize:theDict];
     if(optionsCtrlr)
         [optionsCtrlr quitSheet];
     self.optionsCtrlr = nil;    
 
-    NSString *errMsg = [[SaucePreconnect sharedPreconnect] errStr];
+    NSString *errMsg = [theDict objectForKey:@"errorString"];
     if(errMsg)
     {
-        [[SaucePreconnect sharedPreconnect] setErrStr:nil];         // clear error string
         NSString *header = NSLocalizedString( @"Connection Status", nil );
         NSString *okayButton = NSLocalizedString( @"Ok", nil );
-        NSBeginAlertSheet(header, okayButton, nil, nil, [[ScoutWindowController sharedScout] window], self, nil, 
-                          nil, nil, errMsg);
+        NSBeginAlertSheet(header, okayButton, nil, nil, [[ScoutWindowController sharedScout] window], self, nil, nil, nil, errMsg);
     }
 }
 
@@ -319,13 +305,8 @@
 {
     if(optionsCtrlr)
     {
-        if([[[optionsCtrlr connectBtn] title] isEqualToString:@"Cancel"])
-            [self cancelOptionsConnect:self];
-        else
-        {
-            [optionsCtrlr quitSheet];
-            self.optionsCtrlr = nil;
-        }
+        [optionsCtrlr quitSheet];
+        self.optionsCtrlr = nil;
     }
     else if(subscriberCtrl)
     {

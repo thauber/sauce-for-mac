@@ -107,9 +107,9 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
 
 }
 
-- (void)connectToServer     // called after login and user options dialogs
+- (void)connectToServer:(NSMutableDictionary*)sdict     // called after login and user options dialogs
 {
-    [mServerCtrler connectToServer:self];
+    [mServerCtrler connectToServer:sdict];
 }
 
 /* Connection initiated from the command-line succeeded */
@@ -145,23 +145,6 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
     [aConnection retain];
     [sessions removeObject:aConnection];
     [aConnection autorelease];
-}
-
-/* Creates a connection from an already connected file handle */
-- (BOOL)createConnectionWithFileHandle:(NSFileHandle*)file server:(id<IServerData>) server
-{
-	/* change */
-    RFBConnection* theConnection;
-
-    theConnection = [[RFBConnection alloc] initWithFileHandle:file server:server];
-    if(theConnection) {
-        [self successfulConnection:theConnection];
-        [theConnection release];
-        return YES;
-    }
-    else {
-        return NO;
-    }
 }
 
 /* Registers a successful connection using an already-created RFBConnection

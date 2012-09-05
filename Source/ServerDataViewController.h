@@ -29,29 +29,23 @@
 @class RFBConnectionManager;
 @class ServerBase;
 
-@interface ServerDataViewController : NSWindowController
+@interface ServerDataViewController : NSObject
                                             <ConnectionWaiterDelegate>
-{
-	ServerBase  *mServer;
-	
+{	
 	bool selfTerminate;
 	bool removedSaveCheckbox;
 
-    ConnectionWaiter    *connectionWaiter;
+    ConnectionWaiter *connectionWaiter;
     BOOL saveCheckboxWasVisible;
     RFBConnectionManager *superController;
     
-    NSString *cred;
 }
 
-@property(nonatomic,copy) NSString *cred;
 
 - (id)initWithReleaseOnCloseOrConnect;
 
-- (void)setServer:(id<IServerData>)server;
-- (id<IServerData>)server;
-- (IBAction)connectToServer:(id)sender;
-- (IBAction)cancelConnect: (id)sender;
+- (void)connectToServer:(NSMutableDictionary*)sdict;
+- (void)cancelConnect: (id)sender;
 
 - (void)connectionSucceeded: (RFBConnection *)theConnection;
 - (void)connectionFailed;

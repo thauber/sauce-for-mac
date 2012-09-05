@@ -102,7 +102,8 @@
     [panel orderOut:nil];
     if([uname length] && [aaccountkey length])
     {
-        if([[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:aaccountkey])
+        NSString *errStr = [[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:aaccountkey];
+        if(!errStr)
         {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setObject:uname  forKey:kUsername];
@@ -116,7 +117,7 @@
         else 
         {
             // alert for bad login
-            NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [NSApp keyWindow], self,@selector(redoLogin:returnCode:contextInfo:), NULL, NULL, @"Failed to Authenticate");
+            NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [NSApp keyWindow], self,@selector(redoLogin:returnCode:contextInfo:), NULL, NULL, errStr);
         }
     }
     else

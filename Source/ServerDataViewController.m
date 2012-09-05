@@ -31,47 +31,21 @@
 #import "ServerDataManager.h"
 #import "ServerStandAlone.h"
 #import "ServerFromPrefs.h"
-#import "SshWaiter.h"
 #import "SessionController.h"
 
 #define DISPLAY_MAX 50 // numbers >= this are interpreted as a port
 
 @implementation ServerDataViewController
 
-@synthesize cred;
-
 - (id)init
 {
 	if (self = [super init])
-	{
-//		[NSBundle loadNibNamed:@"ServerDisplay.nib" owner:self];
-		
+	{		
 		selfTerminate = NO;
 		removedSaveCheckbox = NO;
 		
-//		[connectIndicatorText setStringValue:@""];
-//		[box setBorderType:NSNoBorder];
-
-        connectionWaiter = nil;
-		
-/*		[self loadProfileIntoView];
-		
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(updateProfileView:)
-													 name:ProfileListChangeMsg
-												   object:(id)[ProfileDataManager sharedInstance]];
-*/	
+        connectionWaiter = nil;		
     }
-	
-	return self;
-}
-
-- (id)initWithServer:(id<IServerData>)server
-{
-	if (self = [self init])
-	{
-		[self setServer:server];
-	}
 	
 	return self;
 }
@@ -80,12 +54,7 @@
 {
 	if (self = [self init])
 	{
-		selfTerminate = YES;
-		
-		[[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(windowClose:)
-                                                     name:NSWindowWillCloseNotification
-                                                   object:(id)[self window]];
+		selfTerminate = YES;		
 	}
 	
 	return self;
@@ -93,28 +62,10 @@
 
 - (void)dealloc
 {
-	[(id)mServer release];
-//	if( YES == removedSaveCheckbox )
-//	{
-//		[save release];
-//	}
 	
     [connectionWaiter cancel];
     [connectionWaiter release];
-	[super dealloc];
-		
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)setServer:(id<IServerData>)server
-{
-	if( nil != mServer )
-	{
-		[(id)mServer autorelease];
-	}
-	
-	mServer = [(id)server retain];
-	
+	[super dealloc];		
 }
 
 
@@ -123,26 +74,17 @@
     superController = aSuperController;
 }
 
-- (id<IServerData>)server
+- (void)connectToServer:(NSMutableDictionary*)sdict
 {
-	return mServer;
-}
-
-- (IBAction)connectToServer:(id)sender
-{
-    // needed so that any changes being made now are reflected in server
-
     // go on to connect
     // Asynchronously creates a connection to the server
-    connectionWaiter = [[ConnectionWaiter waiterForServer:nil
-                                                 delegate:self
-                                                   window:nil] retain];
+    connectionWaiter = [[ConnectionWaiter waiterWithDict:sdict delegate:self] retain];
     if (connectionWaiter == nil)
         [self connectionFailed];
     
 }
 
-- (IBAction)cancelConnect: (id)sender
+- (void)cancelConnect: (id)sender
 {
     [connectionWaiter cancel];
     [self connectionAttemptEnded];
@@ -152,7 +94,6 @@
 {
     [[RFBConnectionManager sharedManager] successfulConnection:theConnection];
 
-//    [superController connectionDone];
     [self connectionAttemptEnded];
 }
 
@@ -166,17 +107,6 @@
 {
     [connectionWaiter release];
     connectionWaiter = nil;    
-}
-
-- (void)windowClose:(id)notification
-{	
-	if([notification object] == [self window])
-	{
-		if( YES == selfTerminate )
-		{
-			[self autorelease];
-		}
-	}
 }
 
 @end

@@ -52,7 +52,7 @@ extern int kPort;
 
 - (void)wakeup;
 
-- (void)connectToServer;
+- (void)connectToServer:(NSMutableDictionary*)sdict;
 
 - (void)connectionSucceeded:(RFBConnection *)conn;
 - (void)connectionFailed;
@@ -63,8 +63,6 @@ extern int kPort;
 
 - (NSString*)translateDisplayName:(NSString*)aName forHost:(NSString*)aHost;
 
-- (BOOL)createConnectionWithFileHandle:(NSFileHandle*)file 
-    server:(id<IServerData>) server;
 - (void)successfulConnection: (RFBConnection *)theConnection;
 - (void)setSessionsUpdateIntervals;
 
