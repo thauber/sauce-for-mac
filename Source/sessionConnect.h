@@ -13,12 +13,14 @@
     NSProgressIndicator *connectionIndicator;
     NSImageView *osImage;
     NSImageView *browserImage;
+    NSMutableDictionary *sdict;
 }
 
 @property (assign) IBOutlet NSProgressIndicator *connectionIndicator;
 @property (assign) IBOutlet NSImageView *osImage;
 @property (assign) IBOutlet NSImageView *browserImage;
 
+- (id)initWithDict:(NSMutableDictionary*)adict;
 - (IBAction)cancel:(id)sender;
 
 @end

@@ -140,7 +140,7 @@
 - (void)startConnecting:(NSMutableDictionary*)sdict
 {
     self.optionsCtrlr = nil;
-    sessionConnect *sc = [[sessionConnect alloc] init];
+    sessionConnect *sc = [[sessionConnect alloc] initWithDict:sdict];
     // link rfbview being created to this sessionconnect obj
     [sdict setObject:sc forKey:@"sessionConnect"];
     // add view as new tab
