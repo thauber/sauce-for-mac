@@ -77,7 +77,7 @@ typedef enum { login,options,session } tabType;
 // UI
 - (void)toggleToolbar;
 - (int)tabCount;
-- (void)addTabWithView:(NSView*)view; 
+- (void)addTabWithDict:(NSMutableDictionary*)sdict; 
 - (IBAction)closeTab:(id)sender;
 - (void)setTabLabel:(NSString*)lbl;
 

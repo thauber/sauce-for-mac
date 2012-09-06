@@ -103,32 +103,21 @@ enum {
     [scrollView setBackgroundColor:[NSColor colorWithCalibratedWhite:0.5f alpha:1.0]];
 
     host = kSauceLabsHost;
-    
-//    _isFullscreen = NO; // jason added for fullscreen display
-    
-    //    [NSBundle loadNibNamed:@"RFBConnection.nib" owner:self];
+        
     [rfbView registerForDraggedTypes:[NSArray arrayWithObjects:NSStringPboardType, NSFilenamesPboardType, nil]];
-#if 0    
-    _reconnectWaiter = nil;
-    _reconnectSheetTimer = nil;
-    
-    _horizScrollFactor = 0;
-    _vertScrollFactor = 0;
-#endif    
+  
     /* On 10.7 Lion, the overlay scrollbars don't reappear properly on hover.
      * So, for now, we're going to force legacy scrollbars. */
     if ([scrollView respondsToSelector:@selector(setScrollerStyle:)])
         [scrollView setScrollerStyle:NSScrollerStyleLegacy];
-    
-    _connectionStartDate = [[NSDate alloc] init];
-    
+        
     [connection setSession:self];
     [connection setRfbView:rfbView];
     
     NSMutableDictionary *theDict = [connection theSDict];
     [theDict setObject:[self view] forKey:@"view"];
     [theDict setObject:connection forKey:@"connection"];
-    [[ScoutWindowController sharedScout] addTabWithView:[self view]];
+    [[ScoutWindowController sharedScout] addTabWithDict:theDict];
     
 }
 
@@ -140,15 +129,7 @@ enum {
 
 	[titleString release];
 	[realDisplayName release];
-#if 0
-    [_reconnectSheetTimer invalidate];
-    [_reconnectSheetTimer release];
-    [_reconnectWaiter cancel];
-    [_reconnectWaiter release];
 
-	[optionPanel orderOut:self];
-#endif	
-    [_connectionStartDate release];
     [super dealloc];
 }
 
@@ -161,31 +142,6 @@ enum {
 {
     return NO;
 }
-
-#if 0
-- (void)startTimerForReconnectSheet
-{
-    _reconnectSheetTimer = [[NSTimer scheduledTimerWithTimeInterval:0.5
-            target:self selector:@selector(createReconnectSheet:)
-            userInfo:nil repeats:NO] retain];
-}
-
-- (void)connectionTerminatedSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-	/* One might reasonably argue that this should be handled by the connection manager. */
-	switch (returnCode) {
-		case NSAlertDefaultReturn:
-			break;
-		case NSAlertAlternateReturn:
-            [self beginReconnect];
-            return;
-		default:
-			NSLog(@"Unknown alert returnvalue: %d", returnCode);
-			break;
-	}
-    [[ScoutWindowController sharedScout] performSelectorOnMainThread:@selector(closeTabWithSession:) withObject:self waitUntilDone:NO];
-}
-#endif
 
 - (void)connectionProblem
 {
@@ -218,44 +174,7 @@ enum {
         return;
 
     [self connectionProblem];
-//    [authHeader setStringValue:NSLocalizedString(@"AuthenticationFailed", nil)];
-//    [authMessage setStringValue: aReason];
-
 }
-
-/* User cancelled chance to enter new password */
-- (IBAction)dontReconnect:(id)sender
-{
-    [self connectionProblem];
-    [self endSession];
-}
-
-#if 0
-/* Close the connection and then reconnect */
-- (IBAction)forceReconnect:(id)sender
-{
-    if (connection == nil)
-        return;
-
-    [self connectionProblem];
-    [_reconnectReason setStringValue:@""];
-
-    // Force ourselves to use a new SSH tunnel
-    [sshTunnel close];
-    [sshTunnel release];
-    sshTunnel = nil;
-
-    [self beginReconnect];
-}
-
-- (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)item
-{
-    if ([item action] == @selector(forceReconnect:))
-        return NO;
-    else
-        return [self respondsToSelector:[item action]];
-}
-#endif
 
 - (void)setSize:(NSSize)aSize
 {

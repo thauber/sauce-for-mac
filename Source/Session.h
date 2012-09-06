@@ -41,8 +41,6 @@
     NSString *realDisplayName;
     NSString *host;
 
-    NSDate                          *_connectionStartDate;
-
     NSScrollView *scrollView;
     RFBView *rfbView;
 }
@@ -65,7 +63,6 @@
 - (IBAction)sendPasteboardToServer:(id)sender;
 - (void)terminateConnection:(NSString*)aReason;
 - (void)authenticationFailed:(NSString *)aReason;
-- (IBAction)dontReconnect:(id)sender;
 - (void)connectionProblem;
 - (IBAction)requestFrameBufferUpdate:(id)sender;
 

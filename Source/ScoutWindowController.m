@@ -20,6 +20,8 @@
 #import "GradientView.h"
 #import "StopSession.h"
 #import "centerclip.h"
+#import "sessionConnect.h"
+#import "centerclip.h"
 
 @implementation ScoutWindowController
 
@@ -235,10 +237,9 @@ NSString *kHistoryTabLabel = @"Session History";
     [self newSession:nil];
 }
 
-- (void)addTabWithView:(NSView*)view
+- (void)addTabWithDict:(NSMutableDictionary*)sdict
 {
     NSString *tstr;
-    NSDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:view];
     NSString *url = [sdict  objectForKey:@"url"];    
     NSString *os = [sdict  objectForKey:@"os"];
     NSString *browser = [sdict objectForKey:@"browser"];
@@ -273,11 +274,24 @@ NSString *kHistoryTabLabel = @"Session History";
 
     [toolbar setVisible:YES];
     
-    NSTabViewItem *newItem = [[(NSTabViewItem*)[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
-    [newItem setView:view];
-	[newItem setLabel:tstr];
-	[tabView addTabViewItem:newItem];
-	[tabView selectTabViewItem:newItem];
+    // find the tab with the sessionConnect object in the dictionary
+    NSView *rvv = [sdict objectForKey:@"view"];
+    sessionConnect *sc = [sdict objectForKey:@"sessionConnect"];
+    NSView *vv = [sc view];
+    NSArray *tabitems = [tabView tabViewItems];
+    NSInteger numitems = [tabitems count];
+    for(NSInteger i=0;i<numitems;i++)
+    {
+        NSTabViewItem *tvi = [tabitems objectAtIndex:i];
+        if([tvi view] == vv)
+        {
+            [tvi setView:rvv];
+            [tvi setLabel:tstr];
+            [self tabView:tabView didSelectTabViewItem:tvi];        // show new session
+            break;
+        }        
+    }
+    // TODO: if we don't find the tab we need to kill the session or add it as new tab?
     
     url = [NSString stringWithFormat:@" Scout Session at %@",url];
     
@@ -300,7 +314,7 @@ NSString *kHistoryTabLabel = @"Session History";
     [rarr addObject:@"00:00:00"];      // run time            index = 4
     [rarr addObject:[NSNumber numberWithLong:rawtime]];    // index = 5 start value to compute session run time
     [rarr addObject:jobId];             // jobId for session url  index = 6
-    [hviewCtlr addRow:view rowArr:rarr];    
+    [hviewCtlr addRow:vv rowArr:rarr];    
 }
 
 - (void)updateHistoryRunTime:(NSView*)view

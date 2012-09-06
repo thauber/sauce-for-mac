@@ -56,11 +56,11 @@ static SaucePreconnect* _sharedPreconnect = nil;
     browserVersion:(NSString*)browserVersion url:(NSString*)urlStr
 {
     NSString *osbvStr = [NSString stringWithFormat:@"%@/%@ %@",os,browser,browserVersion];
-    NSMutableDictionary *sdict = [[[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                  0, @"state", user, @"user", ukey, @"ukey",
+    NSMutableDictionary *sdict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                                  [NSNumber numberWithInt:0], @"state", user, @"user", ukey, @"ukey",
                                   osbvStr, @"osbv", urlStr, @"url", 
                                   os, @"os", browser, @"browser", browserVersion, @"browserVersion", 
-                                  @"2:00:00", @"remainingTime", nil] autorelease];    
+                                  @"2:00:00", @"remainingTime", nil];    
 
     if(!credArr)
     {
