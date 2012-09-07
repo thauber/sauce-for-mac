@@ -36,6 +36,8 @@
 
 @implementation ConnectionWaiter
 
+@synthesize sdict;
+
 + (ConnectionWaiter *)waiterWithDict:(NSMutableDictionary *)sdict
                              delegate:(id<ConnectionWaiterDelegate>)aDelegate
 {
@@ -289,7 +291,7 @@
 - (void)errorDidEnd:(NSWindow *)sheet returnCode:(int)returnCode
         contextInfo:(void *)info
 {
-    [delegate connectionFailed];
+    [delegate connectionFailed:sdict];
 }
 
 @end

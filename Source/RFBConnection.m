@@ -59,6 +59,8 @@
 
 @implementation RFBConnection
 
+@synthesize sdict;
+
 // jason added for Jaguar check
 + (void)initialize {
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
@@ -243,7 +245,7 @@
 - (void)terminateConnection:(NSString *)reason
 {
     [self setReader:nil]; // causes readData to stop
-    [[RFBConnectionManager sharedManager] cancelConnection];
+    [[RFBConnectionManager sharedManager] cancelConnection:sdict];
     [session terminateConnection:reason];
 }
 
@@ -925,11 +927,6 @@ static NSString* byteString(double d)
     {
         [self requestFrameBufferUpdate:nil];
     }
-}
-
-- (NSMutableDictionary*)theSDict
-{
-    return sdict;
 }
 
 @end

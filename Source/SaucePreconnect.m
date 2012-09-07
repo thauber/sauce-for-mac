@@ -193,7 +193,11 @@ static SaucePreconnect* _sharedPreconnect = nil;
         [tmr invalidate];
     }
     else        // was passed sdict in directly
+    {
         sdict = (NSMutableDictionary*)tm;
+        tm = [sdict objectForKey:@"authTimer"];
+        [tm invalidate];
+    }
     
     [sdict removeObjectForKey:@"authTimer"];
        
@@ -206,9 +210,12 @@ static SaucePreconnect* _sharedPreconnect = nil;
     [sdict setObject:errStr forKey:@"errorString"];
     
     // remove tab with the sdict's sessionConnect object
-    [[NSApp delegate]
-     performSelectorOnMainThread:@selector(cancelOptionsConnect:)   
-     withObject:sdict  waitUntilDone:NO];
+    if(tmr)
+    {
+        [[ScoutWindowController sharedScout]
+         performSelectorOnMainThread:@selector(closeTab:)   
+         withObject:sdict  waitUntilDone:NO];
+    }
 }
 
 // poll til we get secret/jobid
@@ -271,6 +278,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
     {
         if([credArr objectAtIndex:i] == sdict)
         {
+            if(![sdict objectForKey:@"view"])
+                return;
             NSString *aliveId = [sdict objectForKey:@"liveId"];
             NSString *farg = [NSString stringWithFormat:@"curl -X DELETE 'https://%@:%@@%@/rest/v1/users/%@/scout/%@'", self.user, self.ukey, kSauceLabsDomain, self.user, aliveId];
             [credArr removeObjectAtIndex:i];
@@ -306,6 +315,24 @@ static SaucePreconnect* _sharedPreconnect = nil;
     }
     return nil;
 }
+
+- (NSMutableDictionary *)sdictWithSCView:(NSView*)view
+{
+	int len = [credArr count];
+    NSMutableDictionary *sdict;
+    
+    for(int i=0;i<len;i++)
+    {
+        sdict = [credArr objectAtIndex:i];
+        if([sdict objectForKey:@"scview"] == view)
+        {
+            return sdict;
+        }
+    }
+    return nil;
+    
+}
+
 
 -(void)setvmsize:(NSSize)size
 {

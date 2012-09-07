@@ -87,6 +87,8 @@
     NSMutableDictionary *sdict;
 }
 
+@property (assign)NSMutableDictionary *sdict;
+
 - (id)initWithFileHandle:(NSFileHandle*)file dict:(NSMutableDictionary*)dict;
 
 - (void)dealloc;
@@ -148,6 +150,5 @@
 - (void)mouseDragged:(NSEvent *)theEvent;
 
 - (void)setFrameBufferUpdateSeconds: (float)seconds;
-- (NSMutableDictionary*)theSDict;
 
 @end

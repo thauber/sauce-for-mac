@@ -72,8 +72,9 @@ enum {
 @implementation Session
 @synthesize scrollView;
 @synthesize rfbView;
+@synthesize sdict;
 
-- (id)initWithConnection:(RFBConnection *)aConnection
+- (id)initWithConnection:(RFBConnection *)aConnection  sdict:(NSMutableDictionary*)sdict
 {
     if ((self = [super initWithNibName:@"RFBConnection" bundle:nil]) == nil)
         return nil;
@@ -114,9 +115,10 @@ enum {
     [connection setSession:self];
     [connection setRfbView:rfbView];
     
-    NSMutableDictionary *theDict = [connection theSDict];
+    NSMutableDictionary *theDict = [connection sdict];
     [theDict setObject:[self view] forKey:@"view"];
     [theDict setObject:connection forKey:@"connection"];
+    [theDict setObject:self forKey:@"session"];
     [[ScoutWindowController sharedScout] addTabWithDict:theDict];
     
 }
@@ -148,7 +150,7 @@ enum {
     [connection closeConnection];
     [connection release];
     connection = nil;
-    [[ScoutWindowController sharedScout] setCurSession:nil];
+//    [[ScoutWindowController sharedScout] setCurSession:nil];
 }
 
 - (void)endSession

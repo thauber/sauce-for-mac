@@ -160,7 +160,7 @@ NSString *kHistoryTabLabel = @"Session History";
         NSMutableDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:vv];
         Session *ss = [[sdict objectForKey:@"connection"] session];
         [[SaucePreconnect sharedPreconnect] sessionClosed:sdict];
-        [[RFBConnectionManager sharedManager] cancelConnection];
+        [[RFBConnectionManager sharedManager] cancelConnection:sdict];
         [ss  connectionProblem];
         [tabView removeTabViewItem:tvi]; 
     }
@@ -276,14 +276,13 @@ NSString *kHistoryTabLabel = @"Session History";
     
     // find the tab with the sessionConnect object in the dictionary
     NSView *rvv = [sdict objectForKey:@"view"];
-    sessionConnect *sc = [sdict objectForKey:@"sessionConnect"];
-    NSView *vv = [sc view];
+    NSView *scv = [sdict objectForKey:@"scview"];
     NSArray *tabitems = [tabView tabViewItems];
     NSInteger numitems = [tabitems count];
     for(NSInteger i=0;i<numitems;i++)
     {
         NSTabViewItem *tvi = [tabitems objectAtIndex:i];
-        if([tvi view] == vv)
+        if([tvi view] == scv)
         {
             [tvi setView:rvv];
             [tvi setLabel:tstr];
@@ -291,6 +290,8 @@ NSString *kHistoryTabLabel = @"Session History";
             break;
         }        
     }
+    [sdict removeObjectForKey:@"sessionConnect"];
+    
     // TODO: if we don't find the tab we need to kill the session or add it as new tab?
     
     url = [NSString stringWithFormat:@" Scout Session at %@",url];
@@ -314,7 +315,7 @@ NSString *kHistoryTabLabel = @"Session History";
     [rarr addObject:@"00:00:00"];      // run time            index = 4
     [rarr addObject:[NSNumber numberWithLong:rawtime]];    // index = 5 start value to compute session run time
     [rarr addObject:jobId];             // jobId for session url  index = 6
-    [hviewCtlr addRow:vv rowArr:rarr];    
+    [hviewCtlr addRow:rvv rowArr:rarr];    
 }
 
 - (void)updateHistoryRunTime:(NSView*)view
@@ -324,18 +325,33 @@ NSString *kHistoryTabLabel = @"Session History";
 
 - (IBAction)closeTab:(id)sender 
 {
-    if(curSession)
+    Session *ss = curSession;
+    NSMutableDictionary *sdict;
+    NSTabViewItem *tvi;
+    BOOL isDict = [sender isKindOfClass:[NSMutableDictionary class]];
+    if(!isDict && curSession)
     {
-        Session *ss = curSession;
-        NSTabViewItem *tvi = [tabView selectedTabViewItem];
+        tvi = [tabView selectedTabViewItem]; // assume closing selected tab
         [hviewCtlr updateActive:[tvi view]];
-        NSMutableDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:[ss view]];
-        [[SaucePreconnect sharedPreconnect] sessionClosed:sdict];
-        [[RFBConnectionManager sharedManager] cancelConnection];
-        [ss  connectionProblem];
+        sdict = [curSession sdict];
         curSession = nil;        
-        [tabView removeTabViewItem:tvi]; 
     }
+    else    // assume it is a session not yet connected
+    {
+        if(isDict)      // came from SaucePreconnect::cancelPreAuthorize
+            sdict = sender;
+        else        // have to cancel authorize attempt
+        {
+            tvi = [tabView selectedTabViewItem]; // assume closing selected tab
+            NSView *scv = [tvi view];
+            sdict = [[SaucePreconnect sharedPreconnect] sdictWithSCView:scv];
+            [[SaucePreconnect sharedPreconnect] cancelPreAuthorize:sdict];
+        }
+    }
+    [[RFBConnectionManager sharedManager] cancelConnection:sdict];
+    [ss  connectionProblem];        // TODO: release the session entirely
+    [[SaucePreconnect sharedPreconnect] sessionClosed:sdict];
+    [tabView removeTabViewItem:tvi]; 
 }
 
 - (void)closeTabWithSession:(Session*)session

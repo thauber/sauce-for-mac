@@ -39,11 +39,11 @@
 			</object>
 			<object class="NSCustomView" id="1005">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">268</int>
+				<int key="NSvFlags">319</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSBox" id="776753742">
 						<reference key="NSNextResponder" ref="1005"/>
-						<int key="NSvFlags">12</int>
+						<int key="NSvFlags">63</int>
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="NSView" id="616282611">
 								<reference key="NSNextResponder" ref="776753742"/>
@@ -51,7 +51,7 @@
 								<array class="NSMutableArray" key="NSSubviews">
 									<object class="NSProgressIndicator" id="267895399">
 										<reference key="NSNextResponder" ref="616282611"/>
-										<int key="NSvFlags">268</int>
+										<int key="NSvFlags">269</int>
 										<string key="NSFrame">{{143, 228}, {163, 20}}</string>
 										<reference key="NSSuperview" ref="616282611"/>
 										<reference key="NSWindow"/>
@@ -63,7 +63,7 @@
 									</object>
 									<object class="NSTextField" id="9860780">
 										<reference key="NSNextResponder" ref="616282611"/>
-										<int key="NSvFlags">268</int>
+										<int key="NSvFlags">269</int>
 										<string key="NSFrame">{{110, 264}, {231, 67}}</string>
 										<reference key="NSSuperview" ref="616282611"/>
 										<reference key="NSWindow"/>
@@ -103,7 +103,7 @@
 									</object>
 									<object class="NSTextField" id="122903357">
 										<reference key="NSNextResponder" ref="616282611"/>
-										<int key="NSvFlags">268</int>
+										<int key="NSvFlags">269</int>
 										<string key="NSFrame">{{84, 106}, {280, 75}}</string>
 										<reference key="NSSuperview" ref="616282611"/>
 										<reference key="NSWindow"/>
@@ -129,8 +129,8 @@ Cg</string>
 									</object>
 									<object class="NSTextField" id="401946827">
 										<reference key="NSNextResponder" ref="616282611"/>
-										<int key="NSvFlags">268</int>
-										<string key="NSFrame">{{84, 188}, {310, 34}}</string>
+										<int key="NSvFlags">269</int>
+										<string key="NSFrame">{{84, 188}, {280, 34}}</string>
 										<reference key="NSSuperview" ref="616282611"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="122903357"/>
@@ -153,8 +153,8 @@ Cg</string>
 									</object>
 									<object class="NSTextField" id="370553847">
 										<reference key="NSNextResponder" ref="616282611"/>
-										<int key="NSvFlags">268</int>
-										<string key="NSFrame">{{81, 41}, {313, 39}}</string>
+										<int key="NSvFlags">269</int>
+										<string key="NSFrame">{{81, 41}, {280, 39}}</string>
 										<reference key="NSSuperview" ref="616282611"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView"/>
@@ -174,7 +174,7 @@ dGhpcyB2aXJ0dWFsIG1hY2hpbmU6Cg</string>
 									</object>
 									<object class="NSBox" id="219292442">
 										<reference key="NSNextResponder" ref="616282611"/>
-										<int key="NSvFlags">12</int>
+										<int key="NSvFlags">13</int>
 										<string key="NSFrame">{{45, 87}, {392, 5}}</string>
 										<reference key="NSSuperview" ref="616282611"/>
 										<reference key="NSWindow"/>
@@ -207,7 +207,7 @@ dGhpcyB2aXJ0dWFsIG1hY2hpbmU6Cg</string>
 									</object>
 									<object class="NSImageView" id="487689317">
 										<reference key="NSNextResponder" ref="616282611"/>
-										<int key="NSvFlags">268</int>
+										<int key="NSvFlags">269</int>
 										<set class="NSMutableSet" key="NSDragTypes">
 											<string>Apple PDF pasteboard type</string>
 											<string>Apple PICT pasteboard type</string>
@@ -239,7 +239,7 @@ dGhpcyB2aXJ0dWFsIG1hY2hpbmU6Cg</string>
 									</object>
 									<object class="NSImageView" id="1015798666">
 										<reference key="NSNextResponder" ref="616282611"/>
-										<int key="NSvFlags">268</int>
+										<int key="NSvFlags">269</int>
 										<set class="NSMutableSet" key="NSDragTypes">
 											<string>Apple PDF pasteboard type</string>
 											<string>Apple PICT pasteboard type</string>

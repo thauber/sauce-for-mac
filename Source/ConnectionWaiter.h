@@ -65,6 +65,7 @@
     id<ConnectionWaiterDelegate>    delegate;
     NSString            *errorStr; // error header, if not the default
 }
+@property (assign)NSMutableDictionary *sdict;
 
 + (ConnectionWaiter *)waiterWithDict:(NSMutableDictionary *)sdict
                              delegate:(id<ConnectionWaiterDelegate>)aDelegate;

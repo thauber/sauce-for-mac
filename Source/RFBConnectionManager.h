@@ -17,14 +17,14 @@
  */
 
 #import <AppKit/AppKit.h>
-#import "ServerDataViewController.h"
+//#import "ServerDataViewController.h"
 #import "ConnectionWaiter.h"
-#import "LoginController.h"
+//#import "LoginController.h"
 
-@class Profile, ProfileManager;
+//@class Profile, ProfileManager;
 @class RFBConnection;
-@class ServerDataViewController;
-@protocol IServerData;
+//@class ServerDataViewController;
+//@protocol IServerData;
 
 // stored in prefs, but not editable in the pref dlg
 extern NSString *kUsername;
@@ -40,11 +40,8 @@ extern int kPort;
 
 @interface RFBConnectionManager : NSWindowController<ConnectionWaiterDelegate>
 {
+    NSMutableArray*	connectionWaiters;
     NSMutableArray*	sessions;
-	ServerDataViewController* mServerCtrler;
-	NSArray* mOrderedServerNames;
-
-    ConnectionWaiter    *connectionWaiter;
     BOOL lockedSelection;
 }
 
@@ -53,13 +50,12 @@ extern int kPort;
 - (void)wakeup;
 
 - (void)connectToServer:(NSMutableDictionary*)sdict;
-
+- (void)removeConnectionWaiter:(NSMutableDictionary*)sdict;
 - (void)connectionSucceeded:(RFBConnection *)conn;
-- (void)connectionFailed;
-- (void)cancelConnection;
+- (void)connectionFailed:(NSMutableDictionary*)sdict;
+- (void)cancelConnection:(NSMutableDictionary*)sdict;
 
-- (void)removeConnection:(id)aConnection;
-- (void)connectionDone;
+- (void)connectionDone:(NSMutableDictionary*)sdict;
 
 - (NSString*)translateDisplayName:(NSString*)aName forHost:(NSString*)aHost;
 

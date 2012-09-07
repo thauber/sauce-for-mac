@@ -43,11 +43,13 @@
 
     NSScrollView *scrollView;
     RFBView *rfbView;
+    NSMutableDictionary *sdict;
 }
 @property (assign) IBOutlet NSScrollView *scrollView;
 @property (assign) IBOutlet RFBView *rfbView;
+@property (assign) NSMutableDictionary *sdict;
 
-- (id)initWithConnection:(RFBConnection*)conn;
+- (id)initWithConnection:(RFBConnection*)conn sdict:(NSMutableDictionary*)sdict;
 - (void)dealloc;
 
 - (RFBConnection *)connection;

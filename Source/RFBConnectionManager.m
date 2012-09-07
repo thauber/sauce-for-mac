@@ -23,14 +23,14 @@
 //#import "ListenerController.h"
 //#import "PersistentServer.h"
 #import "PrefController.h"
-#import "ProfileManager.h"
-#import "Profile.h"
+//#import "ProfileManager.h"
+//#import "Profile.h"
 #import "rfbproto.h"
 #import "vncauth.h"
-#import "ServerDataViewController.h"
-#import "ServerFromPrefs.h"
-#import "ServerStandAlone.h"
-#import "ServerDataManager.h"
+//#import "ServerDataViewController.h"
+//#import "ServerFromPrefs.h"
+//#import "ServerStandAlone.h"
+//#import "ServerDataManager.h"
 #import "Session.h"
 #import "SessionController.h"
 #import "SaucePreconnect.h"
@@ -79,37 +79,44 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
     [[self window] makeFirstResponder:nil];
 
     /* Also, during termination, ServerDataManager needs to save, but it needs
-     * to hapeen after we make our changes. Thus, it is triggered here instead
+     * to happen after we make our changes. Thus, it is triggered here instead
      * of ServerDataManager having its own notification. */
-    [[ServerDataManager sharedInstance] save];
+//    [[ServerDataManager sharedInstance] save];
 
 	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+#if 0
 - (void)reloadServerArray
 {
     ServerDataManager   *manager = [ServerDataManager sharedInstance];
     [mOrderedServerNames release];
     mOrderedServerNames = [[manager sortedServerNames] retain];
 }
+#endif
 
 - (void)wakeup
 {
-	mOrderedServerNames = nil;
-	[self reloadServerArray];
-	
-	mServerCtrler = [[ServerDataViewController alloc] init];
+//	mOrderedServerNames = nil;
+//	[self reloadServerArray];	
+//	mServerCtrler = [[ServerDataViewController alloc] init];
 
     signal(SIGPIPE, SIG_IGN);
+    connectionWaiters = [[NSMutableArray alloc] init];
     sessions = [[NSMutableArray alloc] init];
 
-    [mServerCtrler setSuperController: self];
+//    [mServerCtrler setSuperController: self];
 
 }
 
 - (void)connectToServer:(NSMutableDictionary*)sdict     // called after login and user options dialogs
 {
-    [mServerCtrler connectToServer:sdict];
+//    [mServerCtrler connectToServer:sdict];
+    ConnectionWaiter *connectionWaiter = [[ConnectionWaiter waiterWithDict:sdict delegate:self] autorelease];
+    if (connectionWaiter == nil)
+        [self connectionFailed];
+    else 
+        [connectionWaiters addObject:connectionWaiter];
 }
 
 /* Connection initiated from the command-line succeeded */
@@ -118,20 +125,37 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
     [self successfulConnection:conn];
 }
 
-- (void)connectionFailed
+- (void)connectionFailed:(NSMutableDictionary*)sdict
 {
+    [self cancelConnection:sdict];
+    [sdict setObject:@"Failed Connection" forKey:@"errorString"];
+    [[SaucePreconnect sharedPreconnect] cancelPreAuthorize:sdict];
+    [[ScoutWindowController sharedScout] closeTab:sdict];
 }
 
-- (void)cancelConnection
+- (void)cancelConnection:(NSMutableDictionary*)sdict
 {
-    if(mServerCtrler)
-        [mServerCtrler cancelConnect:self];
+//    if(mServerCtrler)
+//        [mServerCtrler cancelConnect:self];
+
+    [self connectionDone:sdict];
 }
 
 
-// We're done with the connecting to a server with the dialog
-- (void)connectionDone
+// We're done with the session
+- (void)connectionDone:(NSMutableDictionary*)sdict
 {
+	NSEnumerator *enumerator = [sessions objectEnumerator];
+    Session *ss;
+    while(ss = [enumerator nextObject])
+    {
+        if([ss sdict] == sdict)
+        {
+            [self removeConnectionWaiter:sdict];
+            [sessions removeObject:ss];
+            return;
+        }
+    }    
 }
 
 - (NSString*)translateDisplayName:(NSString*)aName forHost:(NSString*)aHost
@@ -139,20 +163,29 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
     return @"Sauce Labs";
 }
 
-
-- (void)removeConnection:(id)aConnection
+- (void)removeConnectionWaiter:(NSMutableDictionary*)sdict
 {
-    [aConnection retain];
-    [sessions removeObject:aConnection];
-    [aConnection autorelease];
+    // TODO: find connectionWaiter for the sdict and remove it from array
+	NSEnumerator *enumerator = [connectionWaiters objectEnumerator];
+    ConnectionWaiter *cw;
+    while(cw = [enumerator nextObject])
+    {
+        if([cw sdict] == sdict)
+        {
+            [connectionWaiters removeObject:cw];
+            return;
+        }
+    }
 }
 
 /* Registers a successful connection using an already-created RFBConnection
  * object. */
 - (void)successfulConnection: (RFBConnection *)theConnection
 {
+    NSMutableDictionary *sdict = [theConnection sdict];
+    [self removeConnectionWaiter:sdict];
     [[NSApp delegate] connectionSucceeded]; 
-    Session *sess = [[Session alloc] initWithConnection:theConnection];
+    Session *sess = [[Session alloc] initWithConnection:theConnection sdict:sdict];
     [sessions addObject:sess];
     [sess release];
     [self setSessionsUpdateIntervals];

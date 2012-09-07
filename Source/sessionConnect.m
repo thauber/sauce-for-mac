@@ -16,6 +16,7 @@
 @synthesize connectionIndicator;
 @synthesize osImage;
 @synthesize browserImage;
+@synthesize sdict;
 
 - (id)initWithDict:(NSMutableDictionary*)adict
 {
@@ -27,7 +28,7 @@
         sdict = adict;
         NSString *os = [sdict objectForKey:@"os"];
         NSString *browser = [sdict objectForKey:@"browser"];
-        // TODO: get images for os/browser
+        // set image for os
         NSString *path;
         NSString *pStr;
         // set OS image

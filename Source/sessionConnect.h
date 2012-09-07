@@ -19,6 +19,7 @@
 @property (assign) IBOutlet NSProgressIndicator *connectionIndicator;
 @property (assign) IBOutlet NSImageView *osImage;
 @property (assign) IBOutlet NSImageView *browserImage;
+@property (assign) NSMutableDictionary *sdict;
 
 - (id)initWithDict:(NSMutableDictionary*)adict;
 - (IBAction)cancel:(id)sender;

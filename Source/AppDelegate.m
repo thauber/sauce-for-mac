@@ -143,6 +143,7 @@
     sessionConnect *sc = [[sessionConnect alloc] initWithDict:sdict];
     // link rfbview being created to this sessionconnect obj
     [sdict setObject:sc forKey:@"sessionConnect"];
+    [sdict setObject:[sc view] forKey:@"scview"];
     // add view as new tab
     NSTabViewItem *newItem = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
     [newItem setView:[sc view]];
@@ -155,7 +156,7 @@
 
 -(void)connectionSucceeded
 {
-    // TODO: swap new view in for correct sessionConnect obj
+    // ?what gets here
 }
 
 - (void)newUserAuthorized:(id)param
@@ -168,12 +169,8 @@
 {
     NSMutableDictionary *theDict = sdict;
     
-    [[RFBConnectionManager sharedManager] cancelConnection];
-    [[SaucePreconnect sharedPreconnect] cancelPreAuthorize:theDict];
-    if(optionsCtrlr)
-        [optionsCtrlr quitSheet];
-    self.optionsCtrlr = nil;    
-
+    [[ScoutWindowController sharedScout] closeTab:sdict];
+    
     NSString *errMsg = [theDict objectForKey:@"errorString"];
     if(errMsg)
     {

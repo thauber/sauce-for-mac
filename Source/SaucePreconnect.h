@@ -38,6 +38,7 @@ extern NSString *kSauceLabsDomain;
 -(void)cancelPreAuthorize:(id)tm;
 -(void)sessionClosed:(NSMutableDictionary*)sdict;
 -(NSMutableDictionary*)sessionInfo:(id)view;
+-(NSMutableDictionary *)sdictWithSCView:(NSView*)view;
 -(void)setvmsize:(NSSize)size;
 -(NSString*)remainingTimeStr:(int)remaining;
 -(void)startHeartbeat;
