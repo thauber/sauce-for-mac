@@ -59,7 +59,6 @@ extern int kPort;
 
 - (NSString*)translateDisplayName:(NSString*)aName forHost:(NSString*)aHost;
 
-- (void)successfulConnection: (RFBConnection *)theConnection;
 - (void)setSessionsUpdateIntervals;
 
 @end

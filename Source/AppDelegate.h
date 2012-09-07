@@ -78,7 +78,7 @@
 - (IBAction)showHelp: (id)sender;
 
 - (BOOL)checkUserOk;
-- (void)connectionSucceeded;
+- (void)connectionSucceeded:(NSMutableDictionary*)sdict;
 - (void)cancelOptionsConnect:(id)sender;
 - (void)escapeDialog;
 - (NSMenuItem *)getFullScreenMenuItem;

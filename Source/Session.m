@@ -125,6 +125,7 @@ enum {
 
 - (void)dealloc
 {
+    [connection closeConnection];
     [connection setSession:nil];
     [connection release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -150,7 +151,6 @@ enum {
     [connection closeConnection];
     [connection release];
     connection = nil;
-//    [[ScoutWindowController sharedScout] setCurSession:nil];
 }
 
 - (void)endSession

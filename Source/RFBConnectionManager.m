@@ -87,12 +87,6 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
         [connectionWaiters addObject:connectionWaiter];
 }
 
-/* Connection initiated from the command-line succeeded */
-- (void)connectionSucceeded:(RFBConnection *)conn
-{
-    [self successfulConnection:conn];
-}
-
 - (void)connectionFailed:(NSMutableDictionary*)sdict
 {
     [self cancelConnection:sdict];
@@ -145,17 +139,19 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
 
 /* Registers a successful connection using an already-created RFBConnection
  * object. */
-- (void)successfulConnection: (RFBConnection *)theConnection
+- (void)connectionSucceeded: (RFBConnection *)theConnection
 {
     NSMutableDictionary *sdict = [theConnection sdict];
     [self removeConnectionWaiter:sdict];
-    [[NSApp delegate] connectionSucceeded]; 
+    [(AppDelegate*)[NSApp delegate] connectionSucceeded:sdict]; 
     Session *sess = [[Session alloc] initWithConnection:theConnection sdict:sdict];
     [sessions addObject:sess];
     [sess release];
+    [sdict removeObjectForKey:@"scview"];
     [self setSessionsUpdateIntervals];
     if(![[SaucePreconnect sharedPreconnect] timer])
-        [[SaucePreconnect sharedPreconnect]  startHeartbeat]; 
+        [[SaucePreconnect sharedPreconnect]  startHeartbeat];
+    [self connectionFailed:sdict];
 }
 
 - (void)setSessionsUpdateIntervals

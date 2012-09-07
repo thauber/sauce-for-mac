@@ -154,9 +154,9 @@
     [NSThread detachNewThreadSelector:@selector(preAuthorize:) toTarget:[SaucePreconnect sharedPreconnect] withObject:sdict];
 }
 
--(void)connectionSucceeded
+-(void)connectionSucceeded:(NSMutableDictionary*)sdict
 {
-    // ?what gets here
+    [[SaucePreconnect sharedPreconnect] cancelPreAuthorize:sdict];
 }
 
 - (void)newUserAuthorized:(id)param

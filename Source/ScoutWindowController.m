@@ -325,33 +325,51 @@ NSString *kHistoryTabLabel = @"Session History";
 
 - (IBAction)closeTab:(id)sender 
 {
-    Session *ss = curSession;
     NSMutableDictionary *sdict;
-    NSTabViewItem *tvi;
+    NSTabViewItem *tvi = nil;
     BOOL isDict = [sender isKindOfClass:[NSMutableDictionary class]];
-    if(!isDict && curSession)
+    if(!isDict)     // user initiated
     {
-        tvi = [tabView selectedTabViewItem]; // assume closing selected tab
-        [hviewCtlr updateActive:[tvi view]];
-        sdict = [curSession sdict];
-        curSession = nil;        
-    }
-    else    // assume it is a session not yet connected
-    {
-        if(isDict)      // came from SaucePreconnect::cancelPreAuthorize
-            sdict = sender;
-        else        // have to cancel authorize attempt
+        if(curSession)      // should always be the case
         {
             tvi = [tabView selectedTabViewItem]; // assume closing selected tab
-            NSView *scv = [tvi view];
-            sdict = [[SaucePreconnect sharedPreconnect] sdictWithSCView:scv];
+            [hviewCtlr updateActive:[tvi view]];
+            sdict = [curSession sdict];
+            curSession = nil;
+        }
+    }
+    else    // cancelling a session
+    {
+        sdict = sender;
+        if(![sdict objectForKey:@"authTimer"])  
+        {
+            // find tvi for the sdict
+            NSView *view = [sdict objectForKey:@"view"];        // session is connected
+            if(!view)
+                view = [sdict objectForKey:@"scview"];          // session isn't connected
+            else 
+                [hviewCtlr updateActive:view];
+            NSArray *tabitems = [tabView tabViewItems];
+            NSInteger numitems = [tabitems count];
+            for(NSInteger i=0;i<numitems;i++)
+            {
+                NSTabViewItem *xtvi = [tabitems objectAtIndex:i];
+                if([xtvi view] == view)
+                {
+                    tvi = xtvi;
+                    break;
+                }
+            }
+        }
+        else        // preAuthorizing cancelling
+        {
             [[SaucePreconnect sharedPreconnect] cancelPreAuthorize:sdict];
         }
     }
     [[RFBConnectionManager sharedManager] cancelConnection:sdict];
-    [ss  connectionProblem];        // TODO: release the session entirely
     [[SaucePreconnect sharedPreconnect] sessionClosed:sdict];
-    [tabView removeTabViewItem:tvi]; 
+    if(tvi)
+        [tabView removeTabViewItem:tvi]; 
 }
 
 - (void)closeTabWithSession:(Session*)session
