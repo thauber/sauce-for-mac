@@ -207,7 +207,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
     else 
     if(![sdict objectForKey:@"errorString"])
         errStr = @"Connection error";
-    [sdict setObject:errStr forKey:@"errorString"];
+    if(errStr)
+        [sdict setObject:errStr forKey:@"errorString"];
     
     // remove tab with the sdict's sessionConnect object
     if(tmr)
