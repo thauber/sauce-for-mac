@@ -80,7 +80,7 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
 
 - (void)connectToServer:(NSMutableDictionary*)sdict     // called after login and user options dialogs
 {
-    ConnectionWaiter *connectionWaiter = [[ConnectionWaiter waiterWithDict:sdict delegate:self] autorelease];
+    ConnectionWaiter *connectionWaiter = [ConnectionWaiter waiterWithDict:sdict delegate:self];
     if (connectionWaiter == nil)
         [self connectionFailed:sdict];
     else 
@@ -130,7 +130,7 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
 
 - (void)removeConnectionWaiter:(NSMutableDictionary*)sdict
 {
-    // TODO: find connectionWaiter for the sdict and remove it from array
+    // find connectionWaiter for the sdict and remove it from array
 	NSEnumerator *enumerator = [connectionWaiters objectEnumerator];
     ConnectionWaiter *cw;
     while(cw = [enumerator nextObject])
