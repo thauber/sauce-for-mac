@@ -259,8 +259,6 @@
 		7F7DE7D7080F39DF006BF1DF /* ServerStandAlone.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7DE7D5080F39DF006BF1DF /* ServerStandAlone.m */; };
 		7FB6A8D1068AB5E3005E5E49 /* ServerFromRendezvous.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC6DF6D05C31B0D0028A970 /* ServerFromRendezvous.h */; };
 		7FB6A8D2068AB5E7005E5E49 /* ServerFromRendezvous.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC6DF6E05C31B0D0028A970 /* ServerFromRendezvous.m */; };
-		7FBB0A6A05F5BC9700F716C4 /* ServerDataViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FBB0A6605F5BC9700F716C4 /* ServerDataViewController.h */; };
-		7FBB0A6B05F5BC9700F716C4 /* ServerDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB0A6705F5BC9700F716C4 /* ServerDataViewController.m */; };
 		7FD35C1A06CC583A00648090 /* ProfileDataManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FD35C1806CC583A00648090 /* ProfileDataManager.h */; };
 		7FD35C1B06CC583A00648090 /* ProfileDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD35C1906CC583A00648090 /* ProfileDataManager.m */; };
 		7FFA8FEB062BA6330008D381 /* ServerBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FFA8FE9062BA6330008D381 /* ServerBase.h */; };
@@ -565,8 +563,6 @@
 		7F088F2505E1D81100336456 /* ServerDataManager.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ServerDataManager.m; sourceTree = "<group>"; };
 		7F7DE7D4080F39DF006BF1DF /* ServerStandAlone.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ServerStandAlone.h; sourceTree = "<group>"; };
 		7F7DE7D5080F39DF006BF1DF /* ServerStandAlone.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ServerStandAlone.m; sourceTree = "<group>"; };
-		7FBB0A6605F5BC9700F716C4 /* ServerDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ServerDataViewController.h; sourceTree = "<group>"; };
-		7FBB0A6705F5BC9700F716C4 /* ServerDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ServerDataViewController.m; sourceTree = "<group>"; };
 		7FC6DF2705C315C20028A970 /* IServerData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IServerData.h; sourceTree = "<group>"; };
 		7FC6DF6705C31AF50028A970 /* ServerFromPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerFromPrefs.h; sourceTree = "<group>"; };
 		7FC6DF6805C31AF50028A970 /* ServerFromPrefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerFromPrefs.m; sourceTree = "<group>"; };
@@ -1113,8 +1109,6 @@
 		7FE7F83006D8005600647AA1 /* GUI Controller */ = {
 			isa = PBXGroup;
 			children = (
-				7FBB0A6605F5BC9700F716C4 /* ServerDataViewController.h */,
-				7FBB0A6705F5BC9700F716C4 /* ServerDataViewController.m */,
 				0F7BE39C1522183800B64686 /* LoginController.h */,
 				0F7BE39D1522183800B64686 /* LoginController.m */,
 				0F7C6064152A8F8700DA9A4A /* SessionController.h */,
@@ -1485,7 +1479,6 @@
 				7F7A941305E71B5C00E20416 /* IServerData.h in Headers */,
 				7F7A941405E71B5C00E20416 /* ServerFromPrefs.h in Headers */,
 				7F7A941605E71B5C00E20416 /* ServerDataManager.h in Headers */,
-				7FBB0A6A05F5BC9700F716C4 /* ServerDataViewController.h in Headers */,
 				E21FE44A062B79AB0059585C /* KeyEquivalentEntry.h in Headers */,
 				E21FE44C062B79AB0059585C /* KeyEquivalent.h in Headers */,
 				E21FE44F062B79AB0059585C /* KeyEquivalentPrefsController.h in Headers */,
@@ -1772,7 +1765,6 @@
 				7F7A945205E71B5C00E20416 /* debug.m in Sources */,
 				7F7A945405E71B5C00E20416 /* ServerFromPrefs.m in Sources */,
 				7F7A945605E71B5C00E20416 /* ServerDataManager.m in Sources */,
-				7FBB0A6B05F5BC9700F716C4 /* ServerDataViewController.m in Sources */,
 				E21FE449062B79AB0059585C /* KeyEquivalentScenario.m in Sources */,
 				E21FE44B062B79AB0059585C /* KeyEquivalent.m in Sources */,
 				E21FE44D062B79AB0059585C /* KeyEquivalentEntry.m in Sources */,
