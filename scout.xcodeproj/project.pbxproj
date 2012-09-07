@@ -103,6 +103,7 @@
 		0F486EA4155CBD1A004502C4 /* dotred.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F486EA2155CBD1A004502C4 /* dotred.png */; };
 		0F486EA7155CC2CF004502C4 /* Sauce-Connect.jar in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F486EA6155CC2CF004502C4 /* Sauce-Connect.jar */; };
 		0F486EA8155CC5CA004502C4 /* Sauce-Connect.jar in Resources */ = {isa = PBXBuildFile; fileRef = 0F486EA6155CC2CF004502C4 /* Sauce-Connect.jar */; };
+		0F48CFD915F9A40800264876 /* PaletteFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5DC71D4033DB4A801A8010C /* PaletteFilter.m */; };
 		0F48D0C9157528950067B689 /* snapProgress.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F48D0C8157528950067B689 /* snapProgress.xib */; };
 		0F48D0CD157528C20067B689 /* SnapProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F48D0CB157528C20067B689 /* SnapProgress.h */; };
 		0F48D0CE157528C20067B689 /* SnapProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F48D0CC157528C20067B689 /* SnapProgress.m */; };
@@ -226,7 +227,7 @@
 		7F7A943605E71B5C00E20416 /* HextileEncodingReader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5DC71BE033DB4A801A8010C /* HextileEncodingReader.m */; };
 		7F7A943705E71B5C00E20416 /* HighColorFrameBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = F5DC71C0033DB4A801A8010C /* HighColorFrameBuffer.m */; settings = {COMPILER_FLAGS = "-O2"; }; };
 		7F7A943805E71B5C00E20416 /* LowColorFrameBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = F5DC71CF033DB4A801A8010C /* LowColorFrameBuffer.m */; settings = {COMPILER_FLAGS = "-O2"; }; };
-		7F7A943A05E71B5C00E20416 /* PaletteFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5DC71D4033DB4A801A8010C /* PaletteFilter.m */; };
+		7F7A943A05E71B5C00E20416 /* PaletteFilter.m in Resources */ = {isa = PBXBuildFile; fileRef = F5DC71D4033DB4A801A8010C /* PaletteFilter.m */; };
 		7F7A943B05E71B5C00E20416 /* Profile.m in Sources */ = {isa = PBXBuildFile; fileRef = F5DC71D6033DB4A801A8010C /* Profile.m */; };
 		7F7A943C05E71B5C00E20416 /* ProfileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F5DC71D8033DB4A801A8010C /* ProfileManager.m */; };
 		7F7A943D05E71B5C00E20416 /* RawEncodingReader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5DC71DA033DB4A801A8010C /* RawEncodingReader.m */; };
@@ -394,7 +395,6 @@
 		E2F3AB0506D5B86A005EB917 /* ProfileManager_private.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F3AB0306D5B86A005EB917 /* ProfileManager_private.m */; };
 		E2F3AD7106D5E11D005EB917 /* NSObject_Chicken.h in Headers */ = {isa = PBXBuildFile; fileRef = E2F3AD6F06D5E11D005EB917 /* NSObject_Chicken.h */; };
 		E2F3AD7206D5E11D005EB917 /* NSObject_Chicken.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F3AD7006D5E11D005EB917 /* NSObject_Chicken.m */; };
-		EF6F161615F1348800E75723 /* connecting.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF6F161515F1348800E75723 /* connecting.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -756,7 +756,6 @@
 		E2F546510768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/ServerDisplay.nib; sourceTree = "<group>"; };
 		E2F546520768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/ProfileManager.nib; sourceTree = "<group>"; };
 		E2F546530768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/OSX_RFBViewer.nib; sourceTree = "<group>"; };
-		EF6F161515F1348800E75723 /* connecting.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = connecting.xib; sourceTree = "<group>"; };
 		F52128E40368AF9F01F702E0 /* GNU Public License.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "GNU Public License.txt"; sourceTree = "<group>"; };
 		F536C26603937E5301178D82 /* ZlibHexEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ZlibHexEncodingReader.h; sourceTree = "<group>"; };
 		F536C26703937E5301178D82 /* ZlibHexEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ZlibHexEncodingReader.m; sourceTree = "<group>"; };
@@ -1044,7 +1043,6 @@
 				0FD424F5153738DC00682AD6 /* scoutwin.xib */,
 				F5DC7172033DB3DC01A8010C /* InfoPlist.strings */,
 				E2F3A33E06D44E0E005EB917 /* Preferences.nib */,
-				EF6F161515F1348800E75723 /* connecting.xib */,
 				E2F3A99C06D4BFD8005EB917 /* ProfileManager.nib */,
 				F5DC7187033DB44301A8010C /* OSX_RFBViewer.nib */,
 				F5DC7185033DB44301A8010C /* RFBConnection.nib */,
@@ -1715,7 +1713,7 @@
 				0F3742B815ED1E9300A93304 /* lin28.png in Resources */,
 				0F3DA65E15F1479000831E38 /* sessionConnect.xib in Resources */,
 				0F3DA66015F1499C00831E38 /* history.xib in Resources */,
-				7F7A943A05E71B5C00E20416 /* PaletteFilter.m in Sources */,
+				7F7A943A05E71B5C00E20416 /* PaletteFilter.m in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1743,7 +1741,7 @@
 				7F7A943605E71B5C00E20416 /* HextileEncodingReader.m in Sources */,
 				7F7A943705E71B5C00E20416 /* HighColorFrameBuffer.m in Sources */,
 				7F7A943805E71B5C00E20416 /* LowColorFrameBuffer.m in Sources */,
-				7F7A943A05E71B5C00E20416 /* PaletteFilter.m in Sources */,
+				0F48CFD915F9A40800264876 /* PaletteFilter.m in Sources */,
 				7F7A943B05E71B5C00E20416 /* Profile.m in Sources */,
 				7F7A943C05E71B5C00E20416 /* ProfileManager.m in Sources */,
 				7F7A943D05E71B5C00E20416 /* RawEncodingReader.m in Sources */,
