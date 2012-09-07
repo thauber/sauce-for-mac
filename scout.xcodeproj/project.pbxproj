@@ -1715,6 +1715,7 @@
 				0F3742B815ED1E9300A93304 /* lin28.png in Resources */,
 				0F3DA65E15F1479000831E38 /* sessionConnect.xib in Resources */,
 				0F3DA66015F1499C00831E38 /* history.xib in Resources */,
+				7F7A943A05E71B5C00E20416 /* PaletteFilter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
