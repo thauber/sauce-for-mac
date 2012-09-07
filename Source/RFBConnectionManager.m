@@ -77,44 +77,21 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
     /* We need to make sure than any changes to text fields get reflected in our
      * preferences before we quit. */
     [[self window] makeFirstResponder:nil];
-
-    /* Also, during termination, ServerDataManager needs to save, but it needs
-     * to happen after we make our changes. Thus, it is triggered here instead
-     * of ServerDataManager having its own notification. */
-//    [[ServerDataManager sharedInstance] save];
-
-	[[NSUserDefaults standardUserDefaults] synchronize];
 }
-
-#if 0
-- (void)reloadServerArray
-{
-    ServerDataManager   *manager = [ServerDataManager sharedInstance];
-    [mOrderedServerNames release];
-    mOrderedServerNames = [[manager sortedServerNames] retain];
-}
-#endif
 
 - (void)wakeup
 {
-//	mOrderedServerNames = nil;
-//	[self reloadServerArray];	
-//	mServerCtrler = [[ServerDataViewController alloc] init];
-
     signal(SIGPIPE, SIG_IGN);
     connectionWaiters = [[NSMutableArray alloc] init];
     sessions = [[NSMutableArray alloc] init];
-
-//    [mServerCtrler setSuperController: self];
 
 }
 
 - (void)connectToServer:(NSMutableDictionary*)sdict     // called after login and user options dialogs
 {
-//    [mServerCtrler connectToServer:sdict];
     ConnectionWaiter *connectionWaiter = [[ConnectionWaiter waiterWithDict:sdict delegate:self] autorelease];
     if (connectionWaiter == nil)
-        [self connectionFailed];
+        [self connectionFailed:sdict];
     else 
         [connectionWaiters addObject:connectionWaiter];
 }
@@ -135,9 +112,6 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
 
 - (void)cancelConnection:(NSMutableDictionary*)sdict
 {
-//    if(mServerCtrler)
-//        [mServerCtrler cancelConnect:self];
-
     [self connectionDone:sdict];
 }
 
