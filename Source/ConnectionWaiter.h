@@ -33,7 +33,7 @@
 @protocol ConnectionWaiterDelegate <NSObject>
 
 - (void)connectionSucceeded: (RFBConnection *)conn;
-- (void)connectionFailed;
+- (void)connectionFailed:(NSMutableDictionary*)sdict;
 
 @optional
 - (void)connectionPrepareForSheet;
