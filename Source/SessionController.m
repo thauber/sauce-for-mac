@@ -11,7 +11,6 @@
 #import "RFBConnectionManager.h"
 #import "ScoutWindowController.h"
 #import "AppDelegate.h"
-#import "OptionBox.h"
 #import "RegexKitLite.h"
 
 @implementation SessionController
@@ -86,7 +85,9 @@
 // read config to get os/browsers; create rects; store it all
 - (void)setupFromConfig
 {
-    [self readConfig];      // fill config arrays with data from config file
+    configWindows = [[NSApp delegate] configWindows];      // os/browsers for windows
+    configLinux = [[NSApp delegate] configLinux];          // os/browsers for linux
+    configOSX = [[NSApp delegate] configOSX];              // os/browsers for osx
     
     // create attributed strings for os's (column 0)    
     // os images
@@ -371,49 +372,6 @@
 - (void)showError:(NSString *)errStr
 {
     NSBeginAlertSheet(@"Session Options Error", @"Okay", nil, nil, [NSApp keyWindow], self,nil, NULL, NULL, errStr);    
-}
-
-
-// read data in config file into a dictionary
-// NB:  assumes no curly braces wrapping the lines; 
-//      assumes sorted by os, and all the same browsers for an os are grouped together
-- (void)readConfig
-{
-    configOSX     = [[[NSMutableArray alloc] init] retain];     // os/browsers for osx
-    configWindows = [[[NSMutableArray alloc] init] retain];     // os/browsers for windows
-    configLinux   = [[[NSMutableArray alloc] init] retain];     // os/browsers for linux
-
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"scout" ofType:@"conf"];
-    NSData *fdata = [[NSFileManager defaultManager] contentsAtPath:path];
-    NSString *jsonStr = [[NSString alloc] initWithData:fdata encoding:NSUTF8StringEncoding];
-    // pull out the lines into an array
-    NSArray *linesArr = [jsonStr arrayOfCaptureComponentsMatchedByRegex:@"\\{(.*?)\\}"];
-    [jsonStr release];
-    NSString *osStr, *ll;
-    NSString *browser;
-    NSString *version;
-    NSString *active;
-    for(NSArray *arr in linesArr)
-    {
-        ll = [arr objectAtIndex:0];
-        osStr   = [[SaucePreconnect sharedPreconnect] jsonVal:ll key:@"os"];
-        browser = [[SaucePreconnect sharedPreconnect] jsonVal:ll key:@"browser"];
-        version = [[SaucePreconnect sharedPreconnect] jsonVal:ll key:@"version"];
-        if(![version length])
-            version=@"*";
-        active  = [[SaucePreconnect sharedPreconnect] jsonVal:ll key:@"active"];
-        NSMutableArray *obarr = [NSMutableArray arrayWithCapacity:4];
-        [obarr  addObject:osStr];
-        [obarr  addObject:browser];
-        [obarr  addObject:version];
-        [obarr  addObject:active];
-        if([osStr hasPrefix:@"Windows"])
-            [configWindows addObject:obarr];
-        else if([osStr hasPrefix:@"Linux"])
-            [configLinux addObject:obarr];            
-        else if([osStr hasPrefix:@"OSX"])
-            [configOSX addObject:obarr];
-    }    
 }
 
 // browser delegate methods
