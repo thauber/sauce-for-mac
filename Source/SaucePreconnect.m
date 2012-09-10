@@ -146,14 +146,24 @@ static SaucePreconnect* _sharedPreconnect = nil;
 {
     if([json hasPrefix:@"<html>"])
         return @"";
-    const char *str = [json UTF8String];
+    int klen = [key length];
     const char *kk = [key UTF8String];
-    const char *kstr = strstr(str,kk);
-    if(!kstr)
+    const char *kstr = [json UTF8String];
+    bool kfound = false;
+    while((kstr = strstr(kstr,kk)))     // avoid match on part of a key
+    {
+        if( *(kstr + klen) == '"')
+        {
+           kfound = true;
+           break;
+        }
+        kstr++; 
+    }
+    if(!kfound || !kstr)
         return @"";
     
-    kstr += [key length] + 2;   // skip over the key, end quote and colon
-    if(*kstr == ' ')
+    kstr += klen + 2;   // skip over the key, end quote and colon
+    if(*kstr == ' ')            // skip possible space
         kstr++;
     char *cstr = malloc(100);
     int indx=0;
