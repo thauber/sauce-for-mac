@@ -151,7 +151,6 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
     [self setSessionsUpdateIntervals];
     if(![[SaucePreconnect sharedPreconnect] timer])
         [[SaucePreconnect sharedPreconnect]  startHeartbeat];
-    [self connectionFailed:sdict];
 }
 
 - (void)setSessionsUpdateIntervals
