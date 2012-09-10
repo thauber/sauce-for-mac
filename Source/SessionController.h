@@ -10,8 +10,6 @@
 
 #define kNumTabs 4
 
-@class OptionBox;
-
 enum TabType {tt_windows, tt_linux, tt_apple, tt_mobile};
 
 @interface SessionController : NSObject <NSBrowserDelegate>
