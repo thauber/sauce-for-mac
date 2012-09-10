@@ -19,7 +19,7 @@
 #import "ScoutWindowController.h"
 #import "Subscriber.h"
 #import "sessionConnect.h"
-
+#import "RegexKitLite.h"
 
 @implementation AppDelegate
 @synthesize infoPanel;
@@ -38,6 +38,10 @@
 @synthesize noShowCloseSession;
 @synthesize noShowCloseConnect;
 
+@synthesize configWindows;          // os/browsers for windows
+@synthesize configLinux;            // os/browsers for linux
+@synthesize configOSX;              // os/browsers for osx
+
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification
 {
 	// make sure our singleton key equivalent manager is initialized, otherwise, it won't watch the frontmost window
@@ -46,6 +50,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    
     if(INAPPSTORE)
         [subscribeMenuItem setHidden:YES];
     [viewConnectMenuItem setAction:nil];
@@ -53,6 +58,11 @@
     
     [mInfoVersionNumber setStringValue: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleVersion"]];
 
+    if([self prefetchBrowsers] != 1)
+    {
+        
+    }
+    else
     if([self checkUserOk])
     {
         // good name/key, so go on to options dialog
@@ -361,6 +371,79 @@
     if(returnCode == NSAlertDefaultReturn)      // go to subscribe page
         [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.saucelabs.com/pricing"]];
 
+}
+
+// get json data for browsers from server
+- (NSInteger)prefetchBrowsers
+{
+    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@/rest/v1/info/scout' -H 'Content-Type: application/json'", kSauceLabsDomain];
+    
+    NSTask *ftask = [[[NSTask alloc] init] autorelease];
+    NSPipe *fpipe = [NSPipe pipe];
+    [ftask setStandardOutput:fpipe];
+    [ftask setLaunchPath:@"/bin/bash"];
+    [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+    [ftask launch];		// fetch live id
+    [ftask waitUntilExit];
+    if([ftask terminationStatus])
+    {
+        NSLog(@"failed NSTask");
+        return -1;
+    }
+    else
+    {
+        NSFileHandle *fhand = [fpipe fileHandleForReading];        
+        NSData *data = [fhand readDataToEndOfFile];	
+        NSString *jsonString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+        if([jsonString hasPrefix:@"[{"])
+        {
+            [self parseBrowsers:jsonString];
+            return 1;       // get valid data
+        }
+        else 
+        {
+            return 0;   // didn't get valid data
+        }
+    }    
+}
+
+// read data ifrom server into dictionaries
+- (void)parseBrowsers:(NSString*)jsonStr
+{
+    configOSX     = [[[NSMutableArray alloc] init] retain];     // os/browsers for osx
+    configWindows = [[[NSMutableArray alloc] init] retain];     // os/browsers for windows
+    configLinux   = [[[NSMutableArray alloc] init] retain];     // os/browsers for linux
+    
+    // pull out the lines into an array
+    // a sample line: {"name": "android", "os_display": "Linux", "short_version": "4", "long_name": "Android", "long_version": "4.0.3.", "os": "Linux", "backend": "selenium"}
+    NSArray *linesArr = [jsonStr arrayOfCaptureComponentsMatchedByRegex:@"\\{(.*?)\\}"];
+    [jsonStr release];
+    NSString *osStr, *ll;
+    NSString *browser;
+    NSString *version;
+    NSString *active;
+    for(NSArray *arr in linesArr)
+    {
+        ll = [arr objectAtIndex:0];
+        osStr   = [[SaucePreconnect sharedPreconnect] jsonVal:ll key:@"os"];
+        browser = [[SaucePreconnect sharedPreconnect] jsonVal:ll key:@"name"];
+        version = [[SaucePreconnect sharedPreconnect] jsonVal:ll key:@"short_version"];
+        if(![version length])
+            version=@"*";
+        active  = @"YES";
+        
+        NSMutableArray *obarr = [NSMutableArray arrayWithCapacity:4];
+        [obarr  addObject:osStr];
+        [obarr  addObject:browser];
+        [obarr  addObject:version];
+        [obarr  addObject:active];
+        if([osStr hasPrefix:@"Windows"])
+            [configWindows addObject:obarr];
+        else if([osStr hasPrefix:@"Linux"])
+            [configLinux addObject:obarr];            
+        else if([osStr hasPrefix:@"Mac"])
+            [configOSX addObject:obarr];
+    }    
 }
 
 @end

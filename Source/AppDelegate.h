@@ -37,6 +37,10 @@
     BOOL noShowCloseConnect;
     NSTextField *versionTxt;
     NSPanel *infoPanel;
+    
+    NSMutableArray *configWindows;          // os/browsers for windows
+    NSMutableArray *configLinux;            // os/browsers for linux
+    NSMutableArray *configOSX;              // os/browsers for osx
 }
 @property (assign) IBOutlet NSPanel *infoPanel;
 @property (assign) IBOutlet NSTextField *versionTxt;
@@ -53,6 +57,11 @@
 @property  (assign)BOOL noTunnel;
 @property (assign) BOOL noShowCloseSession;
 @property (assign) BOOL noShowCloseConnect;
+
+@property (assign)NSMutableArray *configWindows;          // os/browsers for windows
+@property (assign)NSMutableArray *configLinux;            // os/browsers for linux
+@property (assign)NSMutableArray *configOSX;              // os/browsers for osx
+
 - (IBAction)doAbout:(id)sender;
 
 - (IBAction)bugsAccount:(id)sender;
