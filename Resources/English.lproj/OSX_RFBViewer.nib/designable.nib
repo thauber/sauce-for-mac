@@ -72,6 +72,24 @@
 									<reference key="NSOnImage" ref="529750286"/>
 									<reference key="NSMixedImage" ref="368837609"/>
 								</object>
+								<object class="NSMenuItem" id="926676420">
+									<reference key="NSMenu" ref="1056163985"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsSeparator">YES</bool>
+									<string key="NSTitle"/>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="529750286"/>
+									<reference key="NSMixedImage" ref="368837609"/>
+								</object>
+								<object class="NSMenuItem" id="730733349">
+									<reference key="NSMenu" ref="1056163985"/>
+									<string key="NSTitle">Preferences...</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="529750286"/>
+									<reference key="NSMixedImage" ref="368837609"/>
+								</object>
 								<object class="NSMenuItem" id="611205423">
 									<reference key="NSMenu" ref="1056163985"/>
 									<bool key="NSIsDisabled">YES</bool>
@@ -716,9 +734,11 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 				<string key="NSClassName">AppDelegate</string>
 			</object>
 			<object class="NSView" id="1061574114">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">256</int>
 				<string key="NSFrameSize">{435, 1}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 			</object>
 			<object class="NSMenuItem" id="560175149">
 				<string key="NSTitle">Item</string>
@@ -995,6 +1015,14 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 					</object>
 					<int key="connectionID">1581</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showPreferences:</string>
+						<reference key="source" ref="569964129"/>
+						<reference key="destination" ref="730733349"/>
+					</object>
+					<int key="connectionID">1584</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1084,6 +1112,8 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 							<reference ref="209732645"/>
 							<reference ref="658179264"/>
 							<reference ref="611205423"/>
+							<reference ref="730733349"/>
+							<reference ref="926676420"/>
 						</object>
 						<reference key="parent" ref="81055041"/>
 					</object>
@@ -1515,6 +1545,16 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 						<reference key="object" ref="56237824"/>
 						<reference key="parent" ref="851618597"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1582</int>
+						<reference key="object" ref="730733349"/>
+						<reference key="parent" ref="1056163985"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1583</int>
+						<reference key="object" ref="926676420"/>
+						<reference key="parent" ref="1056163985"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1576,6 +1616,8 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 					<string>1572.IBPluginDependency</string>
 					<string>1573.IBPluginDependency</string>
 					<string>1574.IBPluginDependency</string>
+					<string>1582.IBPluginDependency</string>
+					<string>1583.IBPluginDependency</string>
 					<string>231.IBPluginDependency</string>
 					<string>232.IBPluginDependency</string>
 					<string>232.IBWindowTemplateEditedContentRect</string>
@@ -1598,6 +1640,8 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 				</object>
 				<object class="NSArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1686,7 +1730,7 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1581</int>
+			<int key="maxID">1584</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2048,17 +2092,11 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>dontReconnect:</string>
-							<string>forceReconnect:</string>
-							<string>reconnectCancelled:</string>
 							<string>requestFrameBufferUpdate:</string>
 							<string>sendPasteboardToServer:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 						</object>
@@ -2067,26 +2105,11 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>dontReconnect:</string>
-							<string>forceReconnect:</string>
-							<string>reconnectCancelled:</string>
 							<string>requestFrameBufferUpdate:</string>
 							<string>sendPasteboardToServer:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">dontReconnect:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">forceReconnect:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">reconnectCancelled:</string>
-								<string key="candidateClassName">id</string>
-							</object>
 							<object class="IBActionInfo">
 								<string key="name">requestFrameBufferUpdate:</string>
 								<string key="candidateClassName">id</string>
@@ -2101,21 +2124,11 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_reconnectIndicator</string>
-							<string>_reconnectPanel</string>
-							<string>_reconnectReason</string>
-							<string>authHeader</string>
-							<string>authMessage</string>
 							<string>rfbView</string>
 							<string>scrollView</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSProgressIndicator</string>
-							<string>NSPanel</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
 							<string>RFBView</string>
 							<string>NSScrollView</string>
 						</object>
@@ -2124,36 +2137,11 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_reconnectIndicator</string>
-							<string>_reconnectPanel</string>
-							<string>_reconnectReason</string>
-							<string>authHeader</string>
-							<string>authMessage</string>
 							<string>rfbView</string>
 							<string>scrollView</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_reconnectIndicator</string>
-								<string key="candidateClassName">NSProgressIndicator</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_reconnectPanel</string>
-								<string key="candidateClassName">NSPanel</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_reconnectReason</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">authHeader</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">authMessage</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">rfbView</string>
 								<string key="candidateClassName">RFBView</string>
