@@ -73,6 +73,7 @@ typedef enum { login,options,session } tabType;
 - (void)tunnelConnected:(BOOL)is;     // tunnel is ready to use - or not
 - (void)updateHistoryRunTime:(NSView*)view;
 - (void)closeTabWithSession:(Session*)session;
+- (void)addTabItem:(NSTabViewItem*)newItem;
 
 // UI
 - (void)toggleToolbar;

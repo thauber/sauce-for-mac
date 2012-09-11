@@ -158,8 +158,7 @@
     NSTabViewItem *newItem = [[[NSTabViewItem alloc] initWithIdentifier:nil] autorelease];
     [newItem setView:[sc view]];
 	[newItem setLabel:@"Connecting"];       // TODO: make actual label
-	[[[ScoutWindowController sharedScout] tabView] addTabViewItem:newItem];
-	[[[ScoutWindowController sharedScout] tabView] selectTabViewItem:newItem];
+    [[ScoutWindowController sharedScout] addTabItem:newItem];
     
     [NSThread detachNewThreadSelector:@selector(preAuthorize:) toTarget:[SaucePreconnect sharedPreconnect] withObject:sdict];
 }

@@ -237,6 +237,15 @@ NSString *kHistoryTabLabel = @"Session History";
     [self newSession:nil];
 }
 
+- (void)addTabItem:(NSTabViewItem*)newItem
+{
+	[[self tabView] addTabViewItem:newItem];
+	[[self tabView] selectTabViewItem:newItem];
+    [playstop setEnabled:YES];
+    
+}
+
+
 - (void)addTabWithDict:(NSMutableDictionary*)sdict
 {
     NSString *tstr;
@@ -330,12 +339,18 @@ NSString *kHistoryTabLabel = @"Session History";
     BOOL isDict = [sender isKindOfClass:[NSMutableDictionary class]];
     if(!isDict)     // user initiated
     {
-        if(curSession)      // should always be the case
+        tvi = [tabView selectedTabViewItem]; // assume closing selected tab
+        if(curSession)      // closing a connected session
         {
-            tvi = [tabView selectedTabViewItem]; // assume closing selected tab
             [hviewCtlr updateActive:[tvi view]];
             sdict = [curSession sdict];
             curSession = nil;
+        }
+        else        // closing a session being connected
+        {
+            sdict = [[SaucePreconnect sharedPreconnect] sdictWithSCView:[tvi view]];
+            if([sdict objectForKey:@"authTimer"])  
+                [[SaucePreconnect sharedPreconnect] cancelPreAuthorize:sdict];            
         }
     }
     else    // cancelling a session
@@ -428,7 +443,6 @@ NSString *kHistoryTabLabel = @"Session History";
     {
         [playstop setEnabled:NO];
         [bugsnap setEnabled:NO];
-        [bugsnap setEnabled:NO];
         curSession = nil;
         // hide text in statusbar and messagebox
         [timeRemainingStat setStringValue:@""];
@@ -519,12 +533,17 @@ NSString *kHistoryTabLabel = @"Session History";
         [[RFBConnectionManager sharedManager] setSessionsUpdateIntervals];
         
         [bugsnap setEnabled:YES];
-        [bugsnap setEnabled:YES];
         [playstop setEnabled:YES];
 
         NSScrollView *svw = [curSession scrollView];
         [(centerclip*)[svw contentView] centerView];        // make sure view is centered
         [[self window] display];
+    }
+    else    // session is in process of connecting
+    {
+        [playstop setEnabled:NO];
+        [bugsnap setEnabled:NO];
+        curSession = nil;        
     }
 }
 
