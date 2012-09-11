@@ -58,15 +58,13 @@
     
     [mInfoVersionNumber setStringValue: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleVersion"]];
 
-    if([self prefetchBrowsers] != 1)
-    {
-        
-    }
-    else
     if([self checkUserOk])
     {
-        // good name/key, so go on to options dialog
-        [self showOptionsDlg:self];
+        // good name/key, got browsers, so go on to options dialog
+        if([[PrefController sharedController] alwaysUseTunnel])
+            [self doTunnel:self];
+        else
+            [self showOptionsDlg:self];
     }
 }
 
@@ -114,6 +112,8 @@
 - (IBAction)showOptionsDlg:(id)sender 
 {
     if(![self checkUserOk])
+        return;
+    if(![configWindows count] && [self prefetchBrowsers] != 1)
         return;
     
     if(loginCtrlr)
@@ -254,7 +254,7 @@
 
 - (IBAction)doStopSession:(id)sender
 {
-    [[ScoutWindowController sharedScout] doPlayStop:self];
+    [[ScoutWindowController sharedScout] doPlayStop:sender];
 }
 
 - (IBAction)doStopConnect:(id)sender
@@ -275,7 +275,7 @@
 
 - (IBAction)viewConnect:(id)sender
 {
-    if(tunnelCtrlr)    // need to create the tunnel object
+    if(tunnelCtrlr)    // need to display the tunnel object
     {
         NSWindow *win = [[ScoutWindowController sharedScout] window];
         [tunnelCtrlr runSheetOnWindow:win]; 
@@ -376,6 +376,8 @@
 // get json data for browsers from server
 - (NSInteger)prefetchBrowsers
 {
+    NSInteger bres = -1;
+
     NSString *farg = [NSString stringWithFormat:@"curl 'https://%@/rest/v1/info/scout' -H 'Content-Type: application/json'", kSauceLabsDomain];
     
     NSTask *ftask = [[[NSTask alloc] init] autorelease];
@@ -388,7 +390,7 @@
     if([ftask terminationStatus])
     {
         NSLog(@"failed NSTask");
-        return -1;
+        bres = -1;
     }
     else
     {
@@ -401,10 +403,15 @@
             return 1;       // get valid data
         }
         else 
-        {
-            return 0;   // didn't get valid data
-        }
+            bres = 0;   // didn't get valid data
     }    
+    NSString *msg;
+    if(bres==-1)
+        msg = @"Failed connection to server";
+    else
+        msg = @"Can't retrieve browser data";
+    NSBeginAlertSheet(@"Browser Data", @"Ok", nil, nil, [[ScoutWindowController sharedScout] window], self, nil, nil, nil, msg);
+    return bres;
 }
 
 // read data ifrom server into dictionaries

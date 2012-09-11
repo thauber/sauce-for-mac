@@ -215,9 +215,14 @@ static int const kPrefsVersion = 0x00000002;
     return [[NSUserDefaults standardUserDefaults] boolForKey:kPrefs_NoWarningDialogs];
 }
 
-- (void)setNoShowWarning:(BOOL)bNoShow
+- (void)setNoShowWarning
 {
-    [[NSUserDefaults standardUserDefaults] setBool:bNoShow forKey:kPrefs_NoWarningDialogs];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kPrefs_NoWarningDialogs];
+}
+
+- (BOOL)alwaysUseTunnel
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kPrefs_AlwaysUseTunnel];    
 }
 
 #pragma mark -

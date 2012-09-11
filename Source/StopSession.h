@@ -12,8 +12,10 @@
     
     IBOutlet NSPanel *panel;
     IBOutlet NSButton *againChkbox;
+    NSMutableDictionary *sdict;
 }
 
+- (id)init:(NSMutableDictionary*)adict;
 - (IBAction)closeSession:(id)sender;
 - (IBAction)keepSession:(id)sender;
 

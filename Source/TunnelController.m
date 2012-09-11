@@ -83,8 +83,7 @@
 }
 
 - (IBAction)doClose:(id)sender
-{    
-    
+{        
     if(panel)
     {
         [NSApp endSheet:panel];

@@ -39,6 +39,9 @@
 - (void)setProfileDict: (NSDictionary *)dict;
 - (BOOL)autoReconnect;
 - (NSTimeInterval)intervalBeforeReconnect;
+- (BOOL)defaultShowWarnings;
+- (void)setNoShowWarning;
+- (BOOL)alwaysUseTunnel;
 
 	// Preferences Window
 - (void)showWindow;

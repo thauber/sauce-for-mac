@@ -103,10 +103,10 @@ NSString *kHistoryTabLabel = @"Session History";
 - (IBAction)doPlayStop:(id)sender
 {
     if([[NSApp delegate] noShowCloseSession])
-        [self closeTab:nil];
+        [self closeTab:sender];
     else 
     {
-        self.stopSessionCtl = [[StopSession alloc] init];
+        self.stopSessionCtl = [[StopSession alloc] init:sender];
     }
 }
 
@@ -341,30 +341,24 @@ NSString *kHistoryTabLabel = @"Session History";
     else    // cancelling a session
     {
         sdict = sender;
-        if(![sdict objectForKey:@"authTimer"])  
+        if([sdict objectForKey:@"authTimer"])  
+            [[SaucePreconnect sharedPreconnect] cancelPreAuthorize:sdict];            
+        NSView *view = [sdict objectForKey:@"view"];        // session is connected
+        if(!view)
+            view = [sdict objectForKey:@"scview"];          // session isn't connected
+        else 
+            [hviewCtlr updateActive:view];
+        NSArray *tabitems = [tabView tabViewItems];
+        NSInteger numitems = [tabitems count];
+        for(NSInteger i=0;i<numitems;i++)
         {
-            // find tvi for the sdict
-            NSView *view = [sdict objectForKey:@"view"];        // session is connected
-            if(!view)
-                view = [sdict objectForKey:@"scview"];          // session isn't connected
-            else 
-                [hviewCtlr updateActive:view];
-            NSArray *tabitems = [tabView tabViewItems];
-            NSInteger numitems = [tabitems count];
-            for(NSInteger i=0;i<numitems;i++)
+            NSTabViewItem *xtvi = [tabitems objectAtIndex:i];
+            if([xtvi view] == view)
             {
-                NSTabViewItem *xtvi = [tabitems objectAtIndex:i];
-                if([xtvi view] == view)
-                {
-                    tvi = xtvi;
-                    break;
-                }
+                tvi = xtvi;
+                break;
             }
-        }
-        else        // preAuthorizing cancelling
-        {
-            [[SaucePreconnect sharedPreconnect] cancelPreAuthorize:sdict];
-        }
+        }        
     }
     [[RFBConnectionManager sharedManager] cancelConnection:sdict];
     [[SaucePreconnect sharedPreconnect] sessionClosed:sdict];

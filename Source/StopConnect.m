@@ -9,6 +9,7 @@
 #import "StopConnect.h"
 #import "ScoutWindowController.h"
 #import "AppDelegate.h"
+#import "PrefController.h"
 
 @implementation StopConnect
 
@@ -39,8 +40,11 @@
 - (void)endPanel
 {
     [NSApp endSheet:panel];
-    [panel orderOut:nil];    
-    [[NSApp delegate] setNoShowCloseConnect:[againChkbox state]==1];
+    [panel orderOut:nil];
+    BOOL bNoShow = [againChkbox state]==1;
+    [[NSApp delegate] setNoShowCloseConnect:bNoShow];
+    if(bNoShow)
+        [[PrefController sharedController] setNoShowWarning];
 }
 
 @end
