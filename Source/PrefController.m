@@ -41,7 +41,8 @@ static int const kPrefsVersion = 0x00000002;
 		[NSNumber numberWithFloat: 0],			kPrefs_FrontFrameBufferUpdateSeconds_Key,
 		[NSNumber numberWithFloat: 4.0],		kPrefs_OtherFrameBufferUpdateSeconds_Key, 
 		[NSNumber numberWithBool: NO],			kPrefs_AutoReconnect_Key, 
-		[NSNumber numberWithDouble: 30.0],		kPrefs_IntervalBeforeReconnect_Key, 
+		[NSNumber numberWithDouble: 30.0],		kPrefs_IntervalBeforeReconnect_Key,
+        [NSNumber numberWithBool:NO],           kPrefs_AlwaysUseTunnel,
 		nil,									nil];
 	
     Profile *defaultProfile = [[Profile alloc] init];
@@ -166,7 +167,9 @@ static int const kPrefsVersion = 0x00000002;
 
 
 - (BOOL)usesRendezvous
-{  return [[NSUserDefaults standardUserDefaults] boolForKey: kPrefs_UseRendezvous_Key];  }
+{  
+    return [[NSUserDefaults standardUserDefaults] boolForKey: kPrefs_UseRendezvous_Key];  
+}
 
 
 - (NSDictionary *)hostInfo
@@ -174,11 +177,14 @@ static int const kPrefsVersion = 0x00000002;
 
 
 - (void)setHostInfo: (NSDictionary *)dict
-{  [[NSUserDefaults standardUserDefaults] setObject: dict forKey: kPrefs_HostInfo_Key];  }
+{  
+    [[NSUserDefaults standardUserDefaults] setObject: dict forKey: kPrefs_HostInfo_Key];  
+}
 
 
 - (NSDictionary *)profileDict
-{  return [[NSUserDefaults standardUserDefaults] objectForKey: kPrefs_ConnectionProfiles_Key];  }
+{  return [[NSUserDefaults standardUserDefaults] objectForKey: kPrefs_ConnectionProfiles_Key];  
+}
 
 
 - (NSDictionary *)defaultProfileDict
@@ -188,20 +194,34 @@ static int const kPrefsVersion = 0x00000002;
 
 
 - (void)setProfileDict: (NSDictionary *)dict
-{  [[NSUserDefaults standardUserDefaults] setObject: dict forKey: kPrefs_ConnectionProfiles_Key];  }
+{  
+    [[NSUserDefaults standardUserDefaults] setObject: dict forKey: kPrefs_ConnectionProfiles_Key];  
+}
 
 
 - (BOOL)autoReconnect
-{  return [[NSUserDefaults standardUserDefaults] boolForKey: kPrefs_AutoReconnect_Key];  }
+{  
+    return [[NSUserDefaults standardUserDefaults] boolForKey: kPrefs_AutoReconnect_Key];  
+}
 
 
 - (NSTimeInterval)intervalBeforeReconnect
-{  return [[NSUserDefaults standardUserDefaults] floatForKey: kPrefs_IntervalBeforeReconnect_Key];  }
+{  
+    return [[NSUserDefaults standardUserDefaults] floatForKey: kPrefs_IntervalBeforeReconnect_Key];  
+}
 
+- (BOOL)defaultShowWarnings
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kPrefs_NoWarningDialogs];
+}
+
+- (void)setNoShowWarning:(BOOL)bNoShow
+{
+    [[NSUserDefaults standardUserDefaults] setBool:bNoShow forKey:kPrefs_NoWarningDialogs];
+}
 
 #pragma mark -
 #pragma mark Preferences Window
-
 
 - (void)showWindow
 {
@@ -209,57 +229,18 @@ static int const kPrefsVersion = 0x00000002;
 	[mWindow makeKeyAndOrderFront: nil];
 }
 
-#if 0
 #pragma mark -
 #pragma mark Action Methods
 
 
-- (IBAction)frontInverseCPUSliderChanged: (NSSlider *)sender
-{
-	float updateDelay = [sender floatValue];
-	updateDelay = (float)[sender maxValue] - updateDelay;
-	[[NSUserDefaults standardUserDefaults] setFloat: updateDelay forKey: kPrefs_FrontFrameBufferUpdateSeconds_Key];
-	[[RFBConnectionManager sharedManager] setFrontWindowUpdateInterval: updateDelay];
-}
-
-- (IBAction)otherInverseCPUSliderChanged: (NSSlider *)sender
-{
-	float updateDelay = [sender floatValue];
-	updateDelay = (float)[sender maxValue] - updateDelay;
-	[[NSUserDefaults standardUserDefaults] setFloat: updateDelay forKey: kPrefs_OtherFrameBufferUpdateSeconds_Key];
-	[[RFBConnectionManager sharedManager] setOtherWindowUpdateInterval: updateDelay];
-}
-
-
-- (IBAction)autoscrollSpeedChanged: (NSSlider *)sender
-{
-	float value = floor([sender floatValue] + 0.5);
-	[[NSUserDefaults standardUserDefaults] setFloat: value forKey: kPrefs_AutoscrollIncrement_Key];
-}
-
-
-- (IBAction)toggleFullscreenScrollbars: (NSButton *)sender
+- (IBAction)checkTunnel:(id)sender
 {
 	BOOL value = ([sender state] == NSOnState) ? YES : NO;
-	[[NSUserDefaults standardUserDefaults] setBool: value forKey: kPrefs_FullscreenScrollbars_Key];
+	[[NSUserDefaults standardUserDefaults] setBool:value forKey:kPrefs_AlwaysUseTunnel];        
 }
 
-
-- (IBAction)toggleFullscreenWarning: (NSButton *)sender
+- (IBAction)resetWarnings:(id)sender 
 {
-	BOOL value = ([sender state] == NSOnState) ? YES : NO;
-	[[NSUserDefaults standardUserDefaults] setBool: value forKey: kPrefs_FullscreenWarning_Key];
+	[[NSUserDefaults standardUserDefaults] setBool:NO forKey:kPrefs_NoWarningDialogs];    
 }
-
-
-- (IBAction)toggleUseRendezvous: (id)sender
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	BOOL use = ! [[defaults objectForKey: kPrefs_UseRendezvous_Key] boolValue];
-	[defaults setBool: use forKey: kPrefs_UseRendezvous_Key];
-
-	[[RFBConnectionManager sharedManager] useRendezvous: use];
-}
-#endif
-
 @end

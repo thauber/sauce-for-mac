@@ -24,9 +24,9 @@ NSString *kPrefs_Version_Key = @"Version";
 NSString *kPrefs_AutoReconnect_Key = @"AutoReconnect";
 NSString *kPrefs_IntervalBeforeReconnect_Key = @"IntervalBeforeReconnect";
 
-
-// Note: Preference Keys that start with "Listener"
-// are defined and used in ListenerController
+// keys in our sauce pref panel
+NSString *kPrefs_AlwaysUseTunnel = @"AlwaysUseTunnel";
+NSString *kPrefs_NoWarningDialogs = @"NoWarningDialogs";
 
 
 @implementation PrefController (Private)
@@ -121,17 +121,7 @@ NSString *kPrefs_IntervalBeforeReconnect_Key = @"IntervalBeforeReconnect";
 	
 	// set our controls' default values
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	[mAutoscrollIncrement setFloatValue: [defaults floatForKey: kPrefs_AutoscrollIncrement_Key]];
-    [mFullscreenScrollbars setState: [defaults boolForKey: kPrefs_FullscreenScrollbars_Key] ? NSOnState : NSOffState];
-    
-	float updateDelay;
-    updateDelay = [defaults floatForKey: kPrefs_FrontFrameBufferUpdateSeconds_Key];
-    updateDelay = (float)[mFrontInverseCPUSlider maxValue] - updateDelay;
-    [mFrontInverseCPUSlider setFloatValue: updateDelay];
-    updateDelay = [defaults floatForKey: kPrefs_OtherFrameBufferUpdateSeconds_Key];
-    updateDelay = (float)[mOtherInverseCPUSlider maxValue] - updateDelay;
-    [mOtherInverseCPUSlider setFloatValue: updateDelay];
-	[mDisplayFullscreenWarning setState: [defaults boolForKey: kPrefs_FullscreenWarning_Key]];
+    [mAlwaysStartTunnel setState:[defaults integerForKey:kPrefs_AlwaysUseTunnel]];
 }
 
 @end

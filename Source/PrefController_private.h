@@ -23,6 +23,8 @@ extern NSString *kPrefs_Version_Key;
 extern NSString *kPrefs_AutoReconnect_Key;
 extern NSString *kPrefs_IntervalBeforeReconnect_Key;
 
+NSString *kPrefs_AlwaysUseTunnel;
+NSString *kPrefs_NoWarningDialogs;
 
 @interface PrefController (Private)
 
