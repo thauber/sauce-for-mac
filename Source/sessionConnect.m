@@ -7,6 +7,8 @@
 //
 
 #import "sessionConnect.h"
+#import "AppDelegate.h"
+#import "ScoutWindowController.h"
 
 @interface sessionConnect ()
 
@@ -68,8 +70,8 @@
 }
 
 - (IBAction)cancel:(id)sender
-{
-    // TODO: remove tab with this view
+{    
+    [[NSApp delegate] doStopSession:sdict];
 }
 
 @end
