@@ -244,15 +244,20 @@
 
 -(void)terminateApp
 {
-    [NSApp endSheet:panel];
-    [panel orderOut:nil];
-    [[NSApp delegate] setOptionsCtrlr:nil];
+    [self cancel:self];
 }
 
 -(void)quitSheet
 {
     [NSApp endSheet:panel];
     [panel orderOut:nil];    
+}
+
+- (IBAction)cancel:(id)sender 
+{
+    [NSApp endSheet:panel];
+    [panel orderOut:nil];
+    [[NSApp delegate] setOptionsCtrlr:nil];
 }
 
 - (void)textDidChange:(NSNotification *)aNotification

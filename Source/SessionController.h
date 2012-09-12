@@ -50,7 +50,9 @@ enum TabType {tt_windows, tt_linux, tt_apple, tt_mobile};
 - (void)terminateApp;
 - (void)runSheet;
 - (IBAction)connect:(id)sender;
+- (IBAction)cancel:(id)sender;
 - (void)showError:(NSString *)errStr;
+
 
 
 @end
