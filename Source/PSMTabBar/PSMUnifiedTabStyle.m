@@ -298,8 +298,8 @@
 	if(!showsBaselineSeparator) {
 //		cellFrame.origin.y += 1.0;
 //		cellFrame.size.height -= 1.0;
-		cellFrame.origin.y += 3.0;
-        cellFrame.size.height -= 8.0;
+		cellFrame.origin.y += 2.0;
+        cellFrame.size.height -= 7.0;
 	}
 
 	NSColor * lineColor = nil;
@@ -391,7 +391,7 @@
             NSBezierPath* bz = [NSBezierPath bezierPath];
             [bz moveToPoint:NSMakePoint(aRect.origin.x, aRect.origin.y)];
 			[bz lineToPoint:NSMakePoint(NSMaxX(aRect), aRect.origin.y)];
-            NSColor *lclr = [NSColor colorWithCalibratedWhite:0.1 alpha:1.0];
+            NSColor *lclr = [NSColor colorWithCalibratedWhite:0.3 alpha:1.0];
             [lclr set];
             [bz stroke];
         }
@@ -548,10 +548,10 @@
 	[path linearGradientFillWithStartColor:[NSColor colorWithCalibratedWhite:0.3 alpha:1.0]
                                   endColor:[NSColor colorWithCalibratedWhite:0.5 alpha:1.0]];
 
-    [[NSColor colorWithCalibratedWhite:0.1 alpha:1.0] set];	
+    [[NSColor colorWithCalibratedWhite:0.2 alpha:1.0] set];	
     [NSBezierPath setDefaultLineWidth:0];    
-    [NSBezierPath strokeLineFromPoint:NSMakePoint(rect.origin.x, NSMinY(rect) + 2.5)
-                              toPoint:NSMakePoint(NSMaxX(rect), NSMinY(rect) + 2.5)];
+    [NSBezierPath strokeLineFromPoint:NSMakePoint(rect.origin.x, NSMinY(rect) + 0.5)
+                              toPoint:NSMakePoint(NSMaxX(rect), NSMinY(rect) + 0.5)];
 
 
 //	if(![[[tabBar tabView] window] isKeyWindow]) {
