@@ -17,23 +17,22 @@
                            objectAtIndex:[tv columnAtPoint:
                                           [tv convertPoint:cellFrame.origin
                                                     fromView:nil]]];
-    NSString *colId = [aCol identifier];
 
-    // control hilite color
-    NSColor *color;
-    if([self isHighlighted])
-        color = [NSColor colorWithCalibratedRed:102/255.0f green:1.0f blue:153/255.0f alpha:1.0f];
-    else
-        color = [self backgroundColor];
-    cellFrame.size.width += 5;
-    [color set];
-    NSRectFill(cellFrame);
-    
     // underline the url in the 2nd column
     NSDictionary *asdict = nil;
+    NSColor *txtclr = [NSColor blackColor];
+    if([self isHighlighted])
+        txtclr = [NSColor whiteColor];
+    NSString *colId = [aCol identifier];
     if([colId isEqualToString:@"session"])
     {
-        asdict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:NSUnderlineStyleSingle], NSUnderlineStyleAttributeName,[NSColor blueColor],NSForegroundColorAttributeName,nil];
+        if(![self isHighlighted])
+            txtclr = [NSColor blueColor];
+        asdict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:NSUnderlineStyleSingle], NSUnderlineStyleAttributeName,txtclr,NSForegroundColorAttributeName,nil];
+    }
+    else
+    {
+        asdict = [NSDictionary dictionaryWithObjectsAndKeys:txtclr,NSForegroundColorAttributeName,nil];        
     }
     [[self title] drawInRect:cellFrame withAttributes:asdict];
 }
