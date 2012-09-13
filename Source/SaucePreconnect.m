@@ -485,14 +485,14 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 NSString *status = [self jsonVal:jsonString key:@"status"];
                 if([status isEqualToString:@"in progress"])
                 {
-                    Session *session = [[ScoutWindowController sharedScout] curSession];
                     NSString *remaining = [self jsonVal:jsonString key:@"remaining-time"];
                     // show in status
                     if([remaining length] && [credArr count] == credArrSz)
                     {
                         NSString *str = [self remainingTimeStr:[remaining intValue]];
                         [sdict setObject:str forKey:@"remainingTime"];
-                        if(cnctn == [session connection])
+                        Session *session = [[ScoutWindowController sharedScout] curSession];
+                        if(cnctn == [session connection])       // this session is current tab
                         {
                             NSTextField *tf = [[ScoutWindowController sharedScout] timeRemainingStat];
                             [tf setStringValue:str];
@@ -502,10 +502,13 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 }
                 else
                 {
-                    NSLog(@"heartbeat - not in progress:%@",jsonString);
-                    [self sessionClosed:sdict];
-                    credArrSz = [credArr count];
-                    removedObj = YES;
+                    if(![status isEqualToString:@"queued"])
+                    {
+                        NSLog(@"heartbeat - not in progress:%@",jsonString);
+                        [self sessionClosed:sdict];
+                        credArrSz = [credArr count];
+                        removedObj = YES;
+                    }
                     break;
                 }
             }
