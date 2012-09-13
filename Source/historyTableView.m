@@ -10,6 +10,7 @@
 #import "HistoryViewController.h"
 
 @implementation historyTableView
+@synthesize vwCtlr;
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -19,12 +20,6 @@
     }
     
     return self;
-}
-
--(void)setVwCtlr:(HistoryViewController*)histVCtlr
-{
-    vwCtlr = histVCtlr;
-    
 }
 
 // for click in 'session' column, bring up browser to server jobs page

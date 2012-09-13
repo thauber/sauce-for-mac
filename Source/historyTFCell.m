@@ -7,6 +7,7 @@
 //
 
 #import "historyTFCell.h"
+#import "historyTableView.h"
 
 @implementation historyTFCell
 
@@ -32,6 +33,22 @@
     }
     else
     {
+        if([colId isEqualToString:@"status"])
+        {
+            NSInteger aRow = [tv rowAtPoint:cellFrame.origin];
+            NSColor *color;
+            NSString *status = [[(historyTableView*)tv vwCtlr] tableView:tv objectValueForTableColumn:aCol row:aRow];
+            if([status isEqualToString:@"Active"])
+                color = [NSColor colorWithCalibratedRed:106/251.0f green:1.0f blue:146/255.0f alpha:1.0f];
+            else
+                color = [NSColor colorWithCalibratedRed:195/255.0f green:1.0f blue:184/255.0f alpha:1.0f];
+                
+            
+            cellFrame.size.width += 5;
+            [color set];
+            NSRectFill(cellFrame);
+            txtclr = [NSColor grayColor];
+        }
         asdict = [NSDictionary dictionaryWithObjectsAndKeys:txtclr,NSForegroundColorAttributeName,nil];        
     }
     [[self title] drawInRect:cellFrame withAttributes:asdict];

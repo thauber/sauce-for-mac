@@ -14,6 +14,8 @@
 {
     HistoryViewController *vwCtlr;
 }
+@property (assign)HistoryViewController *vwCtlr;
+
 -(void)mouseDown:(NSEvent *)event;
 -(void)setVwCtlr:(HistoryViewController*)histVCtlr;
 
