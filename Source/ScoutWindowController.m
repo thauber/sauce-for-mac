@@ -288,6 +288,7 @@ NSString *kHistoryTabLabel = @"Session History";
     NSView *scv = [sdict objectForKey:@"scview"];
     NSArray *tabitems = [tabView tabViewItems];
     NSInteger numitems = [tabitems count];
+    BOOL bFound = NO;
     for(NSInteger i=0;i<numitems;i++)
     {
         NSTabViewItem *tvi = [tabitems objectAtIndex:i];
@@ -296,13 +297,20 @@ NSString *kHistoryTabLabel = @"Session History";
             [tvi setView:rvv];
             [tvi setLabel:tstr];
             [self tabView:tabView didSelectTabViewItem:tvi];        // show new session
+            bFound = YES;
             break;
         }        
     }
+    
+    // if we don't find the tab we kill the session
+    if(!bFound)
+    {
+        [self closeTab:sdict];
+        return;
+    }
+    
     [sdict removeObjectForKey:@"sessionConnect"];
-    
-    // TODO: if we don't find the tab we need to kill the session or add it as new tab?
-    
+
     url = [NSString stringWithFormat:@" Scout Session at %@",url];
     
     // put info into history view tab0
@@ -533,7 +541,6 @@ NSString *kHistoryTabLabel = @"Session History";
         [[RFBConnectionManager sharedManager] setSessionsUpdateIntervals];
         
         [bugsnap setEnabled:YES];
-        [playstop setEnabled:YES];
 
         NSScrollView *svw = [curSession scrollView];
         [(centerclip*)[svw contentView] centerView];        // make sure view is centered
@@ -541,10 +548,10 @@ NSString *kHistoryTabLabel = @"Session History";
     }
     else    // session is in process of connecting
     {
-        [playstop setEnabled:NO];
         [bugsnap setEnabled:NO];
         curSession = nil;        
     }
+    [playstop setEnabled:YES];
 }
 
 - (BOOL)tabView:(NSTabView *)aTabView shouldCloseTabViewItem:(NSTabViewItem *)tabViewItem
