@@ -39,22 +39,23 @@
         int yr = ptm->tm_year+1900;
         int mon = ptm->tm_mon + 1;
         int day = ptm->tm_mday;
-        NSString *dateStr = [NSString stringWithFormat:@"Date:%d-%2d-%2d",yr,mon,day];
+        NSString *dateStr = [NSString stringWithFormat:@"Date: %d-%2d-%2d",yr,mon,day];
         hrs = ptm->tm_hour;
         mins = ptm->tm_min;
-        NSString *timeStr = [NSString stringWithFormat:@"Time:%d:%d",hrs,mins];
+        NSString *timeStr = [NSString stringWithFormat:@"Time: %d:%d",hrs,mins];
         
         NSView *view = [[[ScoutWindowController sharedScout] curSession] view];
         NSDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:view];
-//        NSString *browserStr = [sdict valueForKey:@"browser"];
-//        browserStr = [NSString stringWithFormat:@"Browser:%@",browserStr];
         NSString *osStr = [sdict valueForKey:@"os"];
-        osStr = [NSString stringWithFormat:@"OS:%@",osStr];
+        osStr = [NSString stringWithFormat:@"OS: %@",osStr];
+        NSString *browserStr = [sdict valueForKey:@"browser"];
+        browserStr = [NSString stringWithFormat:@"Browser: %@",browserStr];
+        NSString *bvers = [sdict objectForKey:@"browserVersion"];
         NSString *urlStr = [sdict valueForKey:@"url"];
-        urlStr = [NSString stringWithFormat:@"Start URL:%@",urlStr];
+        urlStr = [NSString stringWithFormat:@"Start URL: %@",urlStr];
         NSString *user = [sdict valueForKey:@"user"];
-        NSString *userStr = [NSString stringWithFormat:@"User:%@",user];
-        [description insertText:[NSString stringWithFormat:@"%@\n%@\n%@\n%@\n%@",dateStr,timeStr,osStr,urlStr,userStr]];
+        NSString *userStr = [NSString stringWithFormat:@"User: %@",user];
+        [description insertText:[NSString stringWithFormat:@"%@\n%@\n%@\n%@ %@\n%@\n%@",dateStr,timeStr,osStr,browserStr, bvers, urlStr,userStr]];
         if(bSnap)
             [header setStringValue:@"Take a Snapshot"];
         [title setStringValue:[NSString stringWithFormat:@"%@-snapshot-%@",dateStr,user]];
