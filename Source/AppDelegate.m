@@ -50,6 +50,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    noShowCloseSession = [[PrefController sharedController] defaultShowWarnings];
+    noShowCloseConnect = noShowCloseSession;
     
     if(INAPPSTORE)
         [subscribeMenuItem setHidden:YES];

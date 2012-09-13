@@ -15,6 +15,7 @@
 #import "LowColorFrameBuffer.h"
 #import "HighColorFrameBuffer.h"
 #import "TrueColorFrameBuffer.h"
+#import "AppDelegate.h"
 
 
 // --- Preferences Version --- //
@@ -246,6 +247,8 @@ static int const kPrefsVersion = 0x00000002;
 
 - (IBAction)resetWarnings:(id)sender 
 {
-	[[NSUserDefaults standardUserDefaults] setBool:NO forKey:kPrefs_NoWarningDialogs];    
+	[[NSUserDefaults standardUserDefaults] setBool:NO forKey:kPrefs_NoWarningDialogs];
+    [[NSApp delegate] setNoShowCloseConnect:NO];
+    [[NSApp delegate] setNoShowCloseSession:NO];    
 }
 @end
