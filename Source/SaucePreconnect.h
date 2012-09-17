@@ -18,7 +18,6 @@ extern NSString *kSauceLabsDomain;
     NSString *ukey;
     NSMutableArray *credArr;   // array of dictionaries with session,secret,jobid,and liveid
     NSTimer *timer;
-    int delayedSession;     // 1->adding 2->done adding (but need to abort if in heartbeat loop
     BOOL internetOk;
 }
 

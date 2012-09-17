@@ -353,38 +353,6 @@ static SaucePreconnect* _sharedPreconnect = nil;
     [[[ScoutWindowController sharedScout] vmsize] setStringValue:str];
 }
 
-// set connection and view in session object on connection
-/*
-// array for each session/tab - 
-//  session for closing session 
-//  liveId for heartbeat
-//  osbrowserversion string for setting status when switching tabs
-//  view to know which tab is becoming active
-//  user, authkey, job-id, os, browser, and browserversion taken from most recent preauthorization
--(void)setSessionInfo:(id)connection view:(id)view
-{
-    NSString *osbvStr = [NSString stringWithFormat:@"%@/%@ %@",os,browser,browserVersion];
-    [[[ScoutWindowController sharedScout] osbrowser] setStringValue:osbvStr];
-    
-    NSMutableDictionary *sdict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                    connection,@"connection", view, @"view", liveId, @"liveId",
-                    user, @"user", ukey, @"ukey", jobId, @"jobId",
-                    osbvStr, @"osbv", urlStr, @"url", 
-                    os, @"os", browser, @"browser", browserVersion, @"browserVersion", 
-                    @"2:00:00", @"remainingTime", nil];
-    
-    delayedSession=1;    // adding a new tab
-
-    if(!credArr)
-    {
-        credArr = [[[NSMutableArray alloc] init] retain];
-    }
-    [credArr addObject:sdict];
-    [sdict release];
-    delayedSession = 2;     // done adding
-}
-*/
-
 -(NSString *)remainingTimeStr:(int)remaining
 {
     if(!remaining)
@@ -433,9 +401,6 @@ static SaucePreconnect* _sharedPreconnect = nil;
 
 - (void)heartbeat:(NSTimer*)tm
 {    
-    if(delayedSession == 1)     // about to add a session
-        return;
-
     NSMutableDictionary *sdict;
     
     if(![credArr count])
@@ -451,7 +416,12 @@ static SaucePreconnect* _sharedPreconnect = nil;
     {
         sdict = (NSMutableDictionary*)[credArr objectAtIndex:indx];
         NSString *aliveid = [sdict objectForKey:@"liveId"];
-                             
+        if(!aliveid)
+        {
+            NSLog(@"no liveId in heartbeat");
+            indx++;
+            continue;
+        }
         NSString *farg = [NSString stringWithFormat:@"curl 'https://%@/scout/live/%@/status?auth_username=%@&auth_access_key=%@' 2>/dev/null", kSauceLabsDomain, aliveid, self.user, self.ukey];
 
         while(1)    
@@ -481,7 +451,6 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 
                 NSData *data = [fhand readDataToEndOfFile];		 
                 NSString *jsonString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-                id cnctn = [sdict objectForKey:@"connection"];
                 NSString *status = [self jsonVal:jsonString key:@"status"];
                 if([status isEqualToString:@"in progress"])
                 {
@@ -492,6 +461,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
                         NSString *str = [self remainingTimeStr:[remaining intValue]];
                         [sdict setObject:str forKey:@"remainingTime"];
                         Session *session = [[ScoutWindowController sharedScout] curSession];
+                        id cnctn = [sdict objectForKey:@"connection"];
                         if(cnctn == [session connection])       // this session is current tab
                         {
                             NSTextField *tf = [[ScoutWindowController sharedScout] timeRemainingStat];
@@ -518,8 +488,6 @@ static SaucePreconnect* _sharedPreconnect = nil;
             removedObj = NO;        // clear flag
             continue;               // avoid incrementing index
         }
-        if(delayedSession)
-            break;
         // update run time for session in history tab view
         NSView *vv = [sdict objectForKey:@"view"];
         if(vv)
@@ -527,8 +495,6 @@ static SaucePreconnect* _sharedPreconnect = nil;
         indx++;
 
     }
-    if(delayedSession == 2)     // done adding, so clear flag
-        delayedSession = 0;
 }
 
 // return: 'N'->failed login; nil->good user;  'F'->bad internet connection
