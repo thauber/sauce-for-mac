@@ -63,23 +63,19 @@ enum {
 };
 #endif
 
-//@interface Session(Private)
-
-//- (void)startTimerForReconnectSheet;
-
-//@end
 
 @implementation Session
 @synthesize scrollView;
 @synthesize rfbView;
 @synthesize sdict;
 
-- (id)initWithConnection:(RFBConnection *)aConnection  sdict:(NSMutableDictionary*)sdict
+- (id)initWithConnection:(RFBConnection *)aConnection  sdict:(NSMutableDictionary*)adict
 {
     if ((self = [super initWithNibName:@"RFBConnection" bundle:nil]) == nil)
         return nil;
     
     connection = [aConnection retain];
+    sdict = adict;
     
     [self loadView];
 

@@ -49,7 +49,7 @@
 @property (assign) IBOutlet RFBView *rfbView;
 @property (assign) NSMutableDictionary *sdict;
 
-- (id)initWithConnection:(RFBConnection*)conn sdict:(NSMutableDictionary*)sdict;
+- (id)initWithConnection:(RFBConnection*)conn sdict:(NSMutableDictionary*)adict;
 - (void)dealloc;
 
 - (RFBConnection *)connection;
