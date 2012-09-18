@@ -13,6 +13,7 @@
 #import "ScoutWindowController.h"
 #import "Session.h"
 #import "TunnelController.h"
+#import "AppDelegate.h"
 
 NSString *kSauceLabsDomain = @"saucelabs.com";
 //NSString *kSauceLabsDomain = @"admc.dev.saucelabs.com";
@@ -76,7 +77,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
     // timeout if can't get credentials from server
-    NSTimer *authTimer = [NSTimer scheduledTimerWithTimeInterval:300 target:self selector:@selector(cancelPreAuthorize:) userInfo:sdict repeats:NO];
+    NSTimer *authTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(cancelPreAuthorize:) userInfo:sdict repeats:NO];
 
     [sdict setObject:authTimer forKey:@"authTimer"];
     NSString *os = [sdict objectForKey:@"os"];
@@ -192,11 +193,11 @@ static SaucePreconnect* _sharedPreconnect = nil;
     return ret;
 }
 
--(void)cancelPreAuthorize:(id)tm      // if timer, userinfo is sdict
+-(void)cancelPreAuthorize:(id)tm      // if timer, userinfo is sdict; or it is sdict
 {
     NSMutableDictionary *sdict;
     NSTimer *tmr = nil;
-    if([tm class] == @"NSTimer")
+    if([tm isKindOfClass:[NSTimer class]])
     {
         tmr = (NSTimer*)tm;
         sdict = [tmr userInfo];
@@ -263,10 +264,9 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 NSFileHandle *fhand = [fpipe fileHandleForReading];
                 
                 NSData *data = [fhand readDataToEndOfFile];		 
-                NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                NSString *jsonString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
                 NSString *secret = [self jsonVal:jsonString key:@"video-secret"];
                 NSString *jobId  = [self jsonVal:jsonString key:@"job-id"];
-                [jsonString release];
                 if(secret.length)
                 {
                     [sdict setObject:secret forKey:@"secret"];
@@ -274,7 +274,15 @@ static SaucePreconnect* _sharedPreconnect = nil;
                     [[RFBConnectionManager sharedManager] performSelectorOnMainThread:@selector(connectToServer:)   withObject:sdict  waitUntilDone:NO];
                     break;
                 }
-                
+                else
+                {
+                    NSString *err = [self jsonVal:jsonString key:@"status"];
+                    if([err isEqualToString:@"error"])
+                    {
+                        [[NSApp delegate] performSelectorOnMainThread:@selector(cancelOptionsConnect) withObject:sdict waitUntilDone:NO];
+                        break;
+                    }
+                }                
             }
         }
     }
