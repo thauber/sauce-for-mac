@@ -251,6 +251,11 @@ NSString *kHistoryTabLabel = @"Session History";
     NSString *tstr;
     NSString *url = [sdict  objectForKey:@"url"];    
     NSString *os = [sdict  objectForKey:@"os"];
+    if([os hasPrefix:@"Mac"])
+        os = @"Mac";
+    else
+    if([os hasPrefix:@"Windows"])
+        os = @"Windows";
     NSString *browser = [sdict objectForKey:@"browser"];
     NSString *bvers = [sdict objectForKey:@"browserVersion"];
     NSString *jobId = [sdict objectForKey:@"jobId"];
@@ -509,6 +514,21 @@ NSString *kHistoryTabLabel = @"Session History";
                     s3 = [sarr objectAtIndex:1];
             }
             str = [NSString stringWithFormat:@"%@ %@ / %@%@",s1,s2,s3,s4];
+        }
+        else 
+        if([str hasPrefix:@"Mac"])
+        {
+            s1 = @"Mac";
+            if(![[sarr objectAtIndex:2] length])     // assume no version b/c it is googlechrome
+            {
+                s3 = @"chrome";
+                s4 = @"";
+            }
+            else 
+                s4 = [sarr objectAtIndex:2];        // version
+            sarr = [[sarr objectAtIndex:1] componentsSeparatedByString:@"/"];
+            s3 = [sarr objectAtIndex:1];
+            str = [NSString stringWithFormat:@"%@ / %@%@",s1,s3,s4];
         }
         else
         {
