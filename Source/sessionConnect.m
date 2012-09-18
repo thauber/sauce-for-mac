@@ -38,7 +38,7 @@
             pStr = @"win28";
         else if([os hasPrefix:@"Linux"])
             pStr = @"lin28";
-        else if([os hasPrefix:@"OSX"])
+        else if([os hasPrefix:@"Mac"])
             pStr = @"apple28";
 
         path = [[NSBundle mainBundle] pathForResource:pStr ofType:@"png"];
