@@ -281,8 +281,6 @@
     NSString *sel_browser = [brarr objectAtIndex:1];
     NSString *sel_version = [brarr objectAtIndex:2];
 
-    if([sel_os isEqualToString:@"OSX"])
-        sel_os = @"MAC";
     if([sel_version isEqualToString:@"*"])
         sel_version = @"";
     NSString *urlstr = [self.url stringValue];
