@@ -532,17 +532,11 @@ static SaucePreconnect* _sharedPreconnect = nil;
         NSRange range = [jsonString rangeOfString:@"error"];
         if(!range.length)
         {
-            range = [jsonString rangeOfString:@"id"];
-            if(range.length)
-            {
-                self.user = uuser;
-                self.ukey = kkey;
-            }
-            else
-                resStr = @"New user account failed to be created";
+            self.user = uuser;
+            self.ukey = kkey;
         }
         else 
-            resStr = @"New user account error";
+            resStr = @"User account login error";
     }
     return resStr;
 }
