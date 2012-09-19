@@ -293,7 +293,6 @@ dGhpcyB2aXJ0dWFsIG1hY2hpbmU6Cg</string>
 														<string key="NSFrame">{{184, 15}, {90, 32}}</string>
 														<reference key="NSSuperview" ref="175366752"/>
 														<reference key="NSWindow"/>
-														<reference key="NSNextKeyView"/>
 														<int key="NSViewLayerContentsRedrawPolicy">2</int>
 														<string key="NSReuseIdentifierKey">_NS:9</string>
 														<bool key="NSEnabled">YES</bool>
@@ -438,6 +437,22 @@ dGhpcyB2aXJ0dWFsIG1hY2hpbmU6Cg</string>
 						<reference key="destination" ref="990550929"/>
 					</object>
 					<int key="connectionID">1242</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">osImage</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="711396829"/>
+					</object>
+					<int key="connectionID">1244</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">browserImage</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="992730896"/>
+					</object>
+					<int key="connectionID">1245</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -637,7 +652,7 @@ dGhpcyB2aXJ0dWFsIG1hY2hpbmU6Cg</string>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1243</int>
+			<int key="maxID">1245</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
