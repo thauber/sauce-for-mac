@@ -224,8 +224,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     // remove tab with the sdict's sessionConnect object
     if(tmr)
     {
-        [[ScoutWindowController sharedScout]
-         performSelectorOnMainThread:@selector(closeTab:)   
+        [[NSApp delegate] performSelectorOnMainThread:@selector(cancelOptionsConnect:)   
          withObject:sdict  waitUntilDone:NO];
     }
 }
