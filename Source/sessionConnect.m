@@ -70,8 +70,9 @@
 }
 
 - (IBAction)cancel:(id)sender
-{    
-    [[NSApp delegate] doStopSession:sdict];
+{
+    [sdict setObject:@"User cancelled" forKey:@"errorString"];
+    [[NSApp delegate] cancelOptionsConnect:sdict];
 }
 
 @end
