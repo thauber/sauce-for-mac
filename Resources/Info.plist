@@ -2,12 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Build</key>
+	<string>108</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
-	<key>LSApplicationCategoryType</key>
-	<string>public.app-category.business</string>
 	<key>CFBundleExecutable</key>
-	<string>Sauce for Mac</string>
+	<string>Sauce</string>
 	<key>CFBundleGetInfoString</key>
 	<string>Sauce for Mac version 1.0, Copyright 2012 Sauce Labs</string>
 	<key>CFBundleIconFile</key>
@@ -38,8 +38,8 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
-	<key>Build</key>
-	<string>108</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.developer-tools</string>
 	<key>NSAppleScriptEnabled</key>
 	<string>NO</string>
 	<key>NSMainNibFile</key>
