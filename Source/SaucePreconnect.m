@@ -278,7 +278,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
                     NSString *err = [self jsonVal:jsonString key:@"status"];
                     if([err isEqualToString:@"error"])
                     {
-                        [[NSApp delegate] performSelectorOnMainThread:@selector(cancelOptionsConnect) withObject:sdict waitUntilDone:NO];
+                        [[NSApp delegate] performSelectorOnMainThread:@selector(cancelOptionsConnect:) withObject:sdict waitUntilDone:NO];
                         break;
                     }
                 }                
