@@ -261,7 +261,7 @@ NSString *kHistoryTabLabel = @"Session History";
     NSString *jobId = [sdict objectForKey:@"jobId"];
 
     NSDictionary *udict = [NSDictionary dictionaryWithObjectsAndKeys:nil];
-    NSString *osbrv = [NSString stringWithFormat:@"%C %@/%@%@", 0x00bb, os, browser, bvers];
+    NSString *osbrv = [NSString stringWithFormat:@"%C %@/%@%@", (unsigned short)0x00bb, os, browser, bvers];
     NSSize sz = [osbrv sizeWithAttributes:udict];
     float urlwid = 300 - sz.width;
     NSInteger offset = 0;
@@ -282,7 +282,7 @@ NSString *kHistoryTabLabel = @"Session History";
         NSInteger numchars = (urlwid-2)/8 -2;   // guess 8 pixels average for characters
         NSRange rng = NSMakeRange(0, numchars);
         truncurl = [truncurl substringWithRange:rng];
-        truncurl = [truncurl stringByAppendingFormat:@"%C",0x2026];       // add ellipsis
+        truncurl = [truncurl stringByAppendingFormat:@"%d",0x2026];       // add ellipsis
     }
     tstr = [NSString stringWithFormat:@"%@ %@",truncurl, osbrv];
 
