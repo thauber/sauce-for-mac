@@ -571,7 +571,7 @@
 		7FC6DF6E05C31B0D0028A970 /* ServerFromRendezvous.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerFromRendezvous.m; sourceTree = "<group>"; };
 		7FD35C1806CC583A00648090 /* ProfileDataManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ProfileDataManager.h; sourceTree = "<group>"; };
 		7FD35C1906CC583A00648090 /* ProfileDataManager.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ProfileDataManager.m; sourceTree = "<group>"; };
-		7FD66F5805E9E2B500229E5C /* Sauce for Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sauce for Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FD66F5805E9E2B500229E5C /* Sauce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sauce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FFA8FE9062BA6330008D381 /* ServerBase.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ServerBase.h; sourceTree = "<group>"; };
 		7FFA8FEA062BA6330008D381 /* ServerBase.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ServerBase.m; sourceTree = "<group>"; };
 		7FFA903C062BA74F0008D381 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = Resources/English.lproj/ServerDisplay.nib; sourceTree = "<group>"; };
@@ -951,7 +951,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7FD66F5805E9E2B500229E5C /* Sauce for Mac.app */,
+				7FD66F5805E9E2B500229E5C /* Sauce.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1576,7 +1576,7 @@
 			);
 			name = scout;
 			productName = "Chicken of the VNC";
-			productReference = 7FD66F5805E9E2B500229E5C /* Sauce for Mac.app */;
+			productReference = 7FD66F5805E9E2B500229E5C /* Sauce.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -2007,7 +2007,7 @@
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				"OTHER_LDFLAGS[arch=*]" = "-lcrypto";
-				PRODUCT_NAME = "Sauce for Mac";
+				PRODUCT_NAME = Sauce;
 				SDKROOT = macosx;
 				SECTORDER_FLAGS = "";
 				SKIP_INSTALL = YES;
@@ -2046,7 +2046,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "Sauce for Mac";
+				PRODUCT_NAME = Sauce;
 				SDKROOT = macosx;
 				SECTORDER_FLAGS = "";
 				SKIP_INSTALL = YES;
@@ -2083,7 +2083,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "Sauce for Mac";
+				PRODUCT_NAME = Sauce;
 				SDKROOT = macosx;
 				SECTORDER_FLAGS = "";
 				SKIP_INSTALL = YES;
