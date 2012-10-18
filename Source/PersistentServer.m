@@ -61,16 +61,16 @@
 - (NSMutableDictionary *)propertyDict
 {
 	NSMutableDictionary* propertyDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-		[NSNumber numberWithBool:_rememberPassword],	[NSString stringWithString:@"rememberPassword"],
-		[NSNumber numberWithBool:_shared],				[NSString stringWithString:@"shared"],
-		[NSNumber numberWithBool:_fullscreen],			[NSString stringWithString:@"fullscreen"],
-		[NSNumber numberWithBool:_viewOnly],            [NSString stringWithString:@"viewOnly"], 
-		[_profile profileName],							[NSString stringWithString:@"lastProfile"],
+		[NSNumber numberWithBool:_rememberPassword], @"rememberPassword",
+		[NSNumber numberWithBool:_shared],			 @"shared",
+		[NSNumber numberWithBool:_fullscreen],       @"fullscreen",
+		[NSNumber numberWithBool:_viewOnly],         @"viewOnly", 
+		[_profile profileName],						 @"lastProfile",
             // note that _sshHost or _sshUser might be nil, thus marking the end
             // of the list
-        _sshHost,                                       [NSString stringWithString:@"sshHost"],
-        _sshUser,                                       @"sshUser",
-		nil,											nil];
+        _sshHost,                                    @"sshHost",
+        _sshUser,                                    @"sshUser",
+		nil,										 nil];
     
     if (_sshHost && _sshPort)
         [propertyDict setObject:[NSNumber numberWithInt:_sshPort]
