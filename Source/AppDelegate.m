@@ -396,11 +396,12 @@
     else
     {
         NSFileHandle *fhand = [fpipe fileHandleForReading];        
-        NSData *data = [fhand readDataToEndOfFile];	
-        NSString *jsonString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-        if([jsonString hasPrefix:@"[{"])
+        NSData *data = [fhand readDataToEndOfFile];
+        NSError *err;
+        NSArray *jsonArr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&err];
+        if(jsonArr)
         {
-            [self parseBrowsers:jsonString];
+            [self parseBrowsers:jsonArr];
             return 1;       // get valid data
         }
         else 
@@ -415,27 +416,63 @@
     return bres;
 }
 
-// read data ifrom server into dictionaries
-- (void)parseBrowsers:(NSString*)jsonStr
+
+NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
 {
+    NSComparisonResult res = NSOrderedSame;
+    NSDictionary *dict1 = arg1;
+    NSDictionary *dict2 = arg2;
+    NSString *OS1 = [dict1 objectForKey:@"os_display"];
+    NSString *OS2 = [dict2 objectForKey:@"os_display"];
+    res = [OS1 compare:OS2];
+    if(res != NSOrderedSame)
+        return res;
+    NSString *name1 = [dict1 objectForKey:@"name"];
+    NSString *name2 = [dict2 objectForKey:@"name"];
+    res = [name1 compare:name2];
+    if(res != NSOrderedSame)
+        return res;
+    NSString *ver1 = [dict1 objectForKey:@"short_version"];
+    NSString *ver2 = [dict2 objectForKey:@"short_version"];
+    NSInteger iv1 = [ver1 integerValue];
+    NSInteger iv2 = [ver2 integerValue];
+    if(iv1<iv2)
+        return NSOrderedAscending;
+    if(iv1>iv2)
+        return NSOrderedDescending;
+    res = [ver1 compare:ver2];
+    if(res != NSOrderedSame)
+        return res;    
+    OS1 = [dict1 objectForKey:@"os"];
+    OS2 = [dict2 objectForKey:@"os"];
+    res = [OS1 compare:OS2];    
+    return res;
+    
+}
+
+// read data ifrom server into dictionaries
+- (void)parseBrowsers:(NSArray*)jsonArr
+{
+    [configOSX release];
+    [configWindows release];
+    [configLinux release];
     configOSX     = [[[NSMutableArray alloc] init] retain];     // os/browsers for osx
     configWindows = [[[NSMutableArray alloc] init] retain];     // os/browsers for windows
     configLinux   = [[[NSMutableArray alloc] init] retain];     // os/browsers for linux
     
     // pull out the lines into an array
     // a sample line: {"name": "android", "os_display": "Linux", "short_version": "4", "long_name": "Android", "long_version": "4.0.3.", "os": "Linux", "backend": "selenium"}
-    NSArray *linesArr = [jsonStr arrayOfCaptureComponentsMatchedByRegex:@"\\{(.*?)\\}"];
-    [jsonStr release];
-    NSString *osStr, *ll;
+    NSArray *sarr = [jsonArr sortedArrayUsingFunction:dcmp context:nil];
+
+    NSString *osStr;
     NSString *browser;
     NSString *version;
     NSString *active;
-    for(NSArray *arr in linesArr)
+    for(NSDictionary *dict in sarr)
     {
-        ll = [arr objectAtIndex:0];
-        osStr   = [[SaucePreconnect sharedPreconnect] jsonVal:ll key:@"os"];
-        browser = [[SaucePreconnect sharedPreconnect] jsonVal:ll key:@"name"];
-        version = [[SaucePreconnect sharedPreconnect] jsonVal:ll key:@"short_version"];
+        osStr   = [dict objectForKey:@"os"];
+        browser = [dict objectForKey:@"name"];
+        version = [dict objectForKey:@"short_version"];
         if(![version length])
             version=@"*";
         active  = @"YES";
@@ -451,7 +488,7 @@
             [configLinux addObject:obarr];            
         else if([osStr hasPrefix:@"Mac"])
             [configOSX addObject:obarr];
-    }    
+    }
 }
 
 @end
