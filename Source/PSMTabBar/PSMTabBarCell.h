@@ -41,8 +41,8 @@
 - (void)dealloc;
 
 // accessors
-- (id)controlView;
-- (void)setControlView:(id)view;
+//- (id)controlView;
+//- (void)setControlView:(id)view;
 - (NSTrackingRectTag)closeButtonTrackingTag;
 - (void)setCloseButtonTrackingTag:(NSTrackingRectTag)tag;
 - (NSTrackingRectTag)cellTrackingTag;
