@@ -395,6 +395,7 @@
 		E2F3AB0506D5B86A005EB917 /* ProfileManager_private.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F3AB0306D5B86A005EB917 /* ProfileManager_private.m */; };
 		E2F3AD7106D5E11D005EB917 /* NSObject_Chicken.h in Headers */ = {isa = PBXBuildFile; fileRef = E2F3AD6F06D5E11D005EB917 /* NSObject_Chicken.h */; };
 		E2F3AD7206D5E11D005EB917 /* NSObject_Chicken.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F3AD7006D5E11D005EB917 /* NSObject_Chicken.m */; };
+		EF70A9FB16385FAC00658228 /* LoginControllerold.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF70A9FA16385FAC00658228 /* LoginControllerold.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -756,6 +757,7 @@
 		E2F546510768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/ServerDisplay.nib; sourceTree = "<group>"; };
 		E2F546520768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/ProfileManager.nib; sourceTree = "<group>"; };
 		E2F546530768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/OSX_RFBViewer.nib; sourceTree = "<group>"; };
+		EF70A9FA16385FAC00658228 /* LoginControllerold.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginControllerold.xib; path = Resources/LoginControllerold.xib; sourceTree = "<group>"; };
 		F52128E40368AF9F01F702E0 /* GNU Public License.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "GNU Public License.txt"; sourceTree = "<group>"; };
 		F536C26603937E5301178D82 /* ZlibHexEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ZlibHexEncodingReader.h; sourceTree = "<group>"; };
 		F536C26703937E5301178D82 /* ZlibHexEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ZlibHexEncodingReader.m; sourceTree = "<group>"; };
@@ -1016,6 +1018,7 @@
 				0F486EA6155CC2CF004502C4 /* Sauce-Connect.jar */,
 				0F99617815267C6C002657A9 /* windows_color.pdf */,
 				0F7BF6F01523FEF400F1A478 /* LoginController.xib */,
+				EF70A9FA16385FAC00658228 /* LoginControllerold.xib */,
 				0F3DA65F15F1499C00831E38 /* history.xib */,
 				0F7C606C152A964900DA9A4A /* SessionController.xib */,
 				0F3DA65D15F1479000831E38 /* sessionConnect.xib */,
@@ -1714,6 +1717,7 @@
 				0F3DA65E15F1479000831E38 /* sessionConnect.xib in Resources */,
 				0F3DA66015F1499C00831E38 /* history.xib in Resources */,
 				7F7A943A05E71B5C00E20416 /* PaletteFilter.m in Resources */,
+				EF70A9FB16385FAC00658228 /* LoginControllerold.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
