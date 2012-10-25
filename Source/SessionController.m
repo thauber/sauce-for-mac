@@ -226,7 +226,7 @@
                 browser = [browser capitalizedString];
             NSString *brver = @"";
             if([osstr hasPrefix:@"Win"])
-                brver = [NSString stringWithFormat:@" %@ %@ %@",osstr, browser, version];
+                brver = [NSString stringWithFormat:@" %@ %@ (%@)", browser, version, osstr];
             else
                 brver = [NSString stringWithFormat:@" %@ %@",browser, version];
             NSNumber *nn = [NSNumber numberWithInteger:2]; 
