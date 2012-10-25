@@ -54,6 +54,11 @@
     NSIndexSet *rind = [NSIndexSet indexSetWithIndex:index];
     NSIndexSet *cind = [NSIndexSet indexSetWithIndex:4];    // runtime into column=4
     [tableView reloadDataForRowIndexes:rind columnIndexes:cind];
+    if([[NSApp delegate] isDemoAccount] && mins>10)
+    {
+    // TODO: close the session
+       [[NSApp delegate] promptForSubscribing:NO];
+    }
 }
 
 - (void)updateActive:(NSView*)view      // assumes we can only deactivate an active session
