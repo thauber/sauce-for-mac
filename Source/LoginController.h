@@ -41,5 +41,6 @@
 - (IBAction)login:(id)sender;
 - (IBAction)forgotKey:(id)sender;
 - (IBAction)signUp:(id)sender;
+- (IBAction)demoLogin:(id)sender;
 
 @end

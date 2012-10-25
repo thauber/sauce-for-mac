@@ -27,6 +27,7 @@
 #import "SessionController.h"
 #import "ScoutWindowController.h"
 
+#define kDemoAccountKey @"2c2d1793-1f84-4092-a115-0b9cc64264c6"
 
 @implementation LoginController
 @synthesize panel;
@@ -36,10 +37,21 @@
 {
     if (self = [super init]) 
     {
-        [NSBundle loadNibNamed:@"LoginController" owner:self];
+        NSString *rsrc = nil;
+        if(INAPPSTORE)              // appstore version
+            rsrc = @"LoginControllerAS";
+        else
+            rsrc = @"LoginController";
+
+        [NSBundle loadNibNamed:rsrc owner:self];
         NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
         NSString *uname = [defs stringForKey:kUsername];
         NSString *akey = [defs stringForKey:kAccountkey];
+        if([uname isEqualToString:kDemoAccountName])        // don't display demo account info
+        {
+            uname = nil;
+            akey = nil;
+        }
         if(!uname)
             uname=@"";
         [user setStringValue:uname];
@@ -51,8 +63,11 @@
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(textDidChange:) name:NSControlTextDidChangeNotification object:user];
         [center addObserver:self selector:@selector(textDidChange:) name:NSControlTextDidChangeNotification object:accountKey];
-        [center addObserver:self selector:@selector(textDidChange:) name:NSControlTextDidChangeNotification object:aNewUsername];
-        [center addObserver:self selector:@selector(textDidChange:) name:NSControlTextDidChangeNotification object:aNewPassword];
+        if(!INAPPSTORE)              // has provision for creating a new user
+        {
+            [center addObserver:self selector:@selector(textDidChange:) name:NSControlTextDidChangeNotification object:aNewUsername];
+            [center addObserver:self selector:@selector(textDidChange:) name:NSControlTextDidChangeNotification object:aNewPassword];
+        }
     
         [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];
     }
@@ -96,13 +111,24 @@
 
 - (IBAction)login:(id)sender
 {
-    NSString *uname = [user stringValue];
-    NSString *aaccountkey = [accountKey stringValue];
+    NSString *uname = nil;
+    NSString *aaccountkey = nil;
+    if(sender == self)      // using demo login
+    {
+        uname = kDemoAccountName;       // defined in AppDelegate.h
+        aaccountkey = kDemoAccountKey;
+    }
+    else
+    {
+        uname = [user stringValue];
+        aaccountkey = [accountKey stringValue];
+        
+    }
     [NSApp endSheet:panel];
     [panel orderOut:nil];
     if([uname length] && [aaccountkey length])
     {
-        NSString *errStr = [[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:aaccountkey];
+        NSString *errStr = [[SaucePreconnect sharedPreconnect] checkUserLogin:uname key:aaccountkey];
         if(!errStr)
         {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -170,5 +196,9 @@
         NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [NSApp keyWindow], self,@selector(redoLogin:returnCode:contextInfo:), NULL, NULL, @"Sign up was not successful");                
 }
 
+- (IBAction)demoLogin:(id)sender
+{
+    [self login:self];
+}
 
 @end
