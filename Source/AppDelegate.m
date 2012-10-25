@@ -143,6 +143,13 @@
                 return;
             }
         }
+        else        // demo account says 'true' for being subscribed
+        if([self isDemoAccount] && [[ScoutWindowController sharedScout] tabCount] > 1)
+        {
+            [self promptForSubscribing:YES];   // prompt for subscribing to get more tabs
+            return;
+        }
+
         
         self.optionsCtrlr = [[SessionController alloc] init];
         [optionsCtrlr runSheet];
@@ -220,6 +227,13 @@
 	[[PrefController sharedController] showWindow];
 }
 
+- (BOOL)isDemoAccount
+{
+    NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
+    NSString *uname = [defs stringForKey:kUsername];
+    return [uname isEqualToString:kDemoAccountName];
+}
+
 - (BOOL) applicationShouldHandleReopen: (NSApplication *) app hasVisibleWindows: (BOOL) visibleWindows
 {
 	if(!visibleWindows)
@@ -230,7 +244,6 @@
 	
 	return YES;
 }
-
 
 - (IBAction)showConnectionDialog: (id)sender
 {  [[RFBConnectionManager sharedManager] showConnectionDialog: nil];  }

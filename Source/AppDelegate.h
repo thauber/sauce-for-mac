@@ -10,6 +10,7 @@
 #import "SaucePreconnect.h"
 
 #define INAPPSTORE 1
+#define kDemoAccountName @"sauce_for_mac"
 
 @class SessionController;
 @class LoginController;
@@ -86,6 +87,7 @@
 - (IBAction)showProfileManager: (id)sender;
 - (IBAction)showHelp: (id)sender;
 
+- (BOOL)isDemoAccount;
 - (BOOL)checkUserOk;
 - (void)connectionSucceeded:(NSMutableDictionary*)sdict;
 - (void)cancelOptionsConnect:(id)sender;
