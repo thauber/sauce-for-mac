@@ -17,6 +17,7 @@
 
 NSString *kSauceLabsDomain = @"saucelabs.com";
 //NSString *kSauceLabsDomain = @"admc.dev.saucelabs.com";
+
 @implementation SaucePreconnect
 
 @synthesize user;
@@ -716,7 +717,6 @@ static SaucePreconnect* _sharedPreconnect = nil;
             if([subscribedStr length])
             {
                 NSString *minStr = [self jsonVal:jsonString key:@"minutes"];
-                if([minStr length] > 1)     // assume 0-9 minutes isn't enough
                 if([subscribedStr isEqualToString:@"true"])
                 {
                     if([minStr length] > 1)
