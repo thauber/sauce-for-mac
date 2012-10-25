@@ -128,7 +128,6 @@
 		0F59E7C815CE0F5D0003D541 /* logo.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0F59E7C715CE0F5D0003D541 /* logo.icns */; };
 		0F7BE39E1522183800B64686 /* LoginController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F7BE39C1522183800B64686 /* LoginController.h */; };
 		0F7BE39F1522183800B64686 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7BE39D1522183800B64686 /* LoginController.m */; };
-		0F7BF6F11523FEF400F1A478 /* LoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7BF6F01523FEF400F1A478 /* LoginController.xib */; };
 		0F7C605D152A279A00DA9A4A /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F7C605C152A279A00DA9A4A /* Quartz.framework */; };
 		0F7C6067152A8F8800DA9A4A /* SessionController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F7C6064152A8F8700DA9A4A /* SessionController.h */; };
 		0F7C6068152A8F8800DA9A4A /* SessionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7C6065152A8F8700DA9A4A /* SessionController.m */; };
@@ -137,6 +136,8 @@
 		0F7CE3D1152F6C2800068464 /* camera.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F7CE3CD152F6C2800068464 /* camera.pdf */; };
 		0F7CE3D2152F6C2800068464 /* play.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F7CE3CE152F6C2800068464 /* play.pdf */; };
 		0F7CE3D3152F6C2800068464 /* stop.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F7CE3CF152F6C2800068464 /* stop.pdf */; };
+		0F865E4E1639AF7D00E650D0 /* LoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F865E4C1639AF7D00E650D0 /* LoginController.xib */; };
+		0F865E4F1639AF7D00E650D0 /* LoginControllerAS.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F865E4D1639AF7D00E650D0 /* LoginControllerAS.xib */; };
 		0F99617915267C6C002657A9 /* chrome_color.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F99617415267C6B002657A9 /* chrome_color.pdf */; };
 		0F99617A15267C6C002657A9 /* firefox_color.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0F99617515267C6B002657A9 /* firefox_color.icns */; };
 		0F99617B15267C6C002657A9 /* ie_color.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F99617615267C6C002657A9 /* ie_color.pdf */; };
@@ -395,7 +396,6 @@
 		E2F3AB0506D5B86A005EB917 /* ProfileManager_private.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F3AB0306D5B86A005EB917 /* ProfileManager_private.m */; };
 		E2F3AD7106D5E11D005EB917 /* NSObject_Chicken.h in Headers */ = {isa = PBXBuildFile; fileRef = E2F3AD6F06D5E11D005EB917 /* NSObject_Chicken.h */; };
 		E2F3AD7206D5E11D005EB917 /* NSObject_Chicken.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F3AD7006D5E11D005EB917 /* NSObject_Chicken.m */; };
-		EF70A9FB16385FAC00658228 /* LoginControllerold.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF70A9FA16385FAC00658228 /* LoginControllerold.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -530,7 +530,6 @@
 		0F59E7C715CE0F5D0003D541 /* logo.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = logo.icns; path = Resources/logo.icns; sourceTree = "<group>"; };
 		0F7BE39C1522183800B64686 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
 		0F7BE39D1522183800B64686 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
-		0F7BF6F01523FEF400F1A478 /* LoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginController.xib; path = Resources/LoginController.xib; sourceTree = "<group>"; };
 		0F7C605C152A279A00DA9A4A /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		0F7C6064152A8F8700DA9A4A /* SessionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionController.h; sourceTree = "<group>"; };
 		0F7C6065152A8F8700DA9A4A /* SessionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionController.m; sourceTree = "<group>"; };
@@ -539,6 +538,8 @@
 		0F7CE3CD152F6C2800068464 /* camera.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = camera.pdf; path = Resources/camera.pdf; sourceTree = "<group>"; };
 		0F7CE3CE152F6C2800068464 /* play.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = play.pdf; path = Resources/play.pdf; sourceTree = "<group>"; };
 		0F7CE3CF152F6C2800068464 /* stop.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = stop.pdf; path = Resources/stop.pdf; sourceTree = "<group>"; };
+		0F865E4C1639AF7D00E650D0 /* LoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginController.xib; path = Resources/LoginController.xib; sourceTree = "<group>"; };
+		0F865E4D1639AF7D00E650D0 /* LoginControllerAS.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginControllerAS.xib; path = Resources/LoginControllerAS.xib; sourceTree = "<group>"; };
 		0F99617415267C6B002657A9 /* chrome_color.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = chrome_color.pdf; path = Resources/chrome_color.pdf; sourceTree = "<group>"; };
 		0F99617515267C6B002657A9 /* firefox_color.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = firefox_color.icns; path = Resources/firefox_color.icns; sourceTree = "<group>"; };
 		0F99617615267C6C002657A9 /* ie_color.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = ie_color.pdf; path = Resources/ie_color.pdf; sourceTree = "<group>"; };
@@ -757,7 +758,6 @@
 		E2F546510768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/ServerDisplay.nib; sourceTree = "<group>"; };
 		E2F546520768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/ProfileManager.nib; sourceTree = "<group>"; };
 		E2F546530768C79D00AB2600 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Resources/Italian.lproj/OSX_RFBViewer.nib; sourceTree = "<group>"; };
-		EF70A9FA16385FAC00658228 /* LoginControllerold.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginControllerold.xib; path = Resources/LoginControllerold.xib; sourceTree = "<group>"; };
 		F52128E40368AF9F01F702E0 /* GNU Public License.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "GNU Public License.txt"; sourceTree = "<group>"; };
 		F536C26603937E5301178D82 /* ZlibHexEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ZlibHexEncodingReader.h; sourceTree = "<group>"; };
 		F536C26703937E5301178D82 /* ZlibHexEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ZlibHexEncodingReader.m; sourceTree = "<group>"; };
@@ -1017,9 +1017,9 @@
 				0F99617515267C6B002657A9 /* firefox_color.icns */,
 				0F486EA6155CC2CF004502C4 /* Sauce-Connect.jar */,
 				0F99617815267C6C002657A9 /* windows_color.pdf */,
-				0F7BF6F01523FEF400F1A478 /* LoginController.xib */,
-				EF70A9FA16385FAC00658228 /* LoginControllerold.xib */,
 				0F3DA65F15F1499C00831E38 /* history.xib */,
+				0F865E4C1639AF7D00E650D0 /* LoginController.xib */,
+				0F865E4D1639AF7D00E650D0 /* LoginControllerAS.xib */,
 				0F7C606C152A964900DA9A4A /* SessionController.xib */,
 				0F3DA65D15F1479000831E38 /* sessionConnect.xib */,
 				0F3E53B815D22A6700513767 /* stopConnect.xib */,
@@ -1633,7 +1633,6 @@
 				DAFB492212944331008C6FC4 /* dsa_pub.pem in Resources */,
 				DAD6DEEA12DCF4A3001FD9D6 /* AuthPrompt.nib in Resources */,
 				DAC8077E12FEC38400C4ADB6 /* ssh-helper.sh in Resources */,
-				0F7BF6F11523FEF400F1A478 /* LoginController.xib in Resources */,
 				0F99617915267C6C002657A9 /* chrome_color.pdf in Resources */,
 				0F99617A15267C6C002657A9 /* firefox_color.icns in Resources */,
 				0F99617B15267C6C002657A9 /* ie_color.pdf in Resources */,
@@ -1717,7 +1716,8 @@
 				0F3DA65E15F1479000831E38 /* sessionConnect.xib in Resources */,
 				0F3DA66015F1499C00831E38 /* history.xib in Resources */,
 				7F7A943A05E71B5C00E20416 /* PaletteFilter.m in Resources */,
-				EF70A9FB16385FAC00658228 /* LoginControllerold.xib in Resources */,
+				0F865E4E1639AF7D00E650D0 /* LoginController.xib in Resources */,
+				0F865E4F1639AF7D00E650D0 /* LoginControllerAS.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
