@@ -138,12 +138,14 @@
 
 - (IBAction)viewSite:(id)sender 
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://saucelabs.com"]]; 
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://saucelabs.com"]];
+    [self doSubscribe:self];
 }
 
 - (IBAction)contactSauce:(id)sender 
 {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"mailto:support@saucelabs.com"]];
+    [self doSubscribe:self];
 }
 
 - (IBAction)cancel:(id)sender 
