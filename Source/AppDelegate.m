@@ -54,7 +54,14 @@
     noShowCloseConnect = noShowCloseSession;
     
     if(INAPPSTORE)
+    {
+        NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
+        NSInteger tm = [defs integerForKey:@"demoLastTime"];
+        if(tm)
+            [defs setInteger:-1 forKey:@"demoLastTime"];
+
         [subscribeMenuItem setHidden:YES];
+    }
     [viewConnectMenuItem setAction:nil];
     [[ScoutWindowController sharedScout] showWindow:nil];
     
@@ -255,10 +262,14 @@
 {
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
     NSInteger lastTime = [defs integerForKey:@"demoLastTime"];
+    if(lastTime<0)
+        return 99;
     time_t rawtime, tt;
     int hrs, mins;
     time(&rawtime);
-    tt = rawtime - lastTime;
+    tt = rawtime - (lastTime*60);
+    if(tt<0)
+        return 99;
     hrs = tt/3600;
     mins =  (tt-(hrs*3600))/60;
     return mins;
