@@ -144,12 +144,29 @@
             }
         }
         else        // demo account says 'true' for being subscribed
-        if([self isDemoAccount] && [[ScoutWindowController sharedScout] tabCount] > 1)
+        if([self isDemoAccount])
         {
-            [self promptForSubscribing:YES];   // prompt for subscribing to get more tabs
-            return;
+            if([[ScoutWindowController sharedScout] tabCount] > 1)
+            {
+                [self promptForSubscribing:YES];   // prompt for subscribing to get more tabs
+                return;
+            }
+            else    // no sessions running
+            {
+                NSInteger tm = [self demoCheckTime];
+                if(tm < 30)
+                {
+                    [self promptForSubscribing:YES];    // TODO: tell user how many minutes to wait
+                    return;
+                }
+            }
+            // set last time to be 10 minutes ahead
+            time_t tm;
+            time(&tm);
+            tm += 60*10;
+            NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
+            [defs setInteger:tm forKey:@"demoLastTime"];
         }
-
         
         self.optionsCtrlr = [[SessionController alloc] init];
         [optionsCtrlr runSheet];
@@ -232,6 +249,19 @@
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
     NSString *uname = [defs stringForKey:kUsername];
     return [uname isEqualToString:kDemoAccountName];
+}
+    
+- (NSInteger)demoCheckTime
+{
+    NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
+    NSInteger lastTime = [defs integerForKey:@"demoLastTime"];
+    time_t rawtime, tt;
+    int hrs, mins;
+    time(&rawtime);
+    tt = rawtime - lastTime;
+    hrs = tt/3600;
+    mins =  (tt-(hrs*3600))/60;
+    return mins;
 }
 
 - (BOOL) applicationShouldHandleReopen: (NSApplication *) app hasVisibleWindows: (BOOL) visibleWindows

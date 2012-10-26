@@ -30,12 +30,19 @@
     if(self)
     {
         NSString *nibname=nil;
+        BOOL bDemo = [[NSApp delegate] isDemoAccount];
+        
         if(INAPPSTORE)              // appstore version
         {
-            if(type==0)
-                nibname = @"subscriber-3";      // out of minutes
-            else if(type==1)
-                nibname = @"subscriber-5";      // out of tabs
+            if(bDemo)
+                nibname = @"subscriber-3_demo";      // demo account subscribe request
+            else
+            {
+                if(type==0)
+                    nibname = @"subscriber-3";      // out of minutes
+                else if(type==1)
+                    nibname = @"subscriber-5";      // out of tabs
+            }
         }
         else
         {
@@ -56,7 +63,7 @@
         [NSBundle loadNibNamed:nibname  owner:self];
         
         // make string for next month
-        if(type==1 || type==2 || type==4)
+        if(!bDemo && (type==1 || type==2 || type==4))
         {
             NSDateComponents *components = [[[NSDateComponents alloc] init] autorelease];
             components.month = 7;
