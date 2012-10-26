@@ -85,6 +85,8 @@
 // read config to get os/browsers; create rects; store it all
 - (void)setupFromConfig
 {
+    BOOL bDemo = [[NSApp delegate] isDemoAccount];
+    
     configWindows = [[NSApp delegate] configWindows];      // os/browsers for windows
     configLinux = [[NSApp delegate] configLinux];          // os/browsers for linux
     configOSX = [[NSApp delegate] configOSX];              // os/browsers for osx
@@ -165,7 +167,9 @@
                 brAStrs = brAStrsWindows;
                 configArr = configWindows; 
                 break;
-            case tt_linux:   
+            case tt_linux:
+                if(bDemo)
+                    continue;
                 brAStrsLinux = [[[NSMutableArray alloc] init] retain];     // os/browsers for windows
                 brAStrs = brAStrsLinux;
                 configArr = configLinux; 
@@ -182,9 +186,9 @@
         NSString *lastBrowser = @"xx";      // initial column
         NSImage *bimg = bimgs[0];
 
-        for(NSInteger i=0;i < num; i++)     // setup browsers
+        for(NSInteger j=0;j < num; j++)     // setup browsers
         {
-            NSArray *llArr = [configArr objectAtIndex:i];
+            NSArray *llArr = [configArr objectAtIndex:j];
             NSString *osstr = [llArr objectAtIndex:0];
             NSString *browser = [llArr objectAtIndex:1];
             NSString *version = [llArr objectAtIndex:2];
@@ -208,6 +212,24 @@
                 lastBrowser = [browser substringToIndex:2];
             }
 
+            if(bDemo)
+            {
+                if(i == tt_windows)
+                {                       
+                   if(![twoch isEqualToString:@"ie"])
+                       continue;
+                   if(   ![version isEqualToString:@"6"]
+                      && ![version isEqualToString:@"7"]
+                      && ![version isEqualToString:@"8"])
+                       continue;
+                }
+                else
+                if((i == tt_apple) && ![browser isEqualToString:@"iphone"])
+                    continue;
+                else
+                if(i==tt_linux)
+                    continue;
+            }
             NSTextAttachment* ta = [[NSTextAttachment alloc] init];
             NSTextAttachmentCell* tac = [[NSTextAttachmentCell alloc] init];
             [tac setImage: bimg];
