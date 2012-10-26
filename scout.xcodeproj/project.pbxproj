@@ -138,6 +138,7 @@
 		0F7CE3D3152F6C2800068464 /* stop.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F7CE3CF152F6C2800068464 /* stop.pdf */; };
 		0F865E4E1639AF7D00E650D0 /* LoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F865E4C1639AF7D00E650D0 /* LoginController.xib */; };
 		0F865E4F1639AF7D00E650D0 /* LoginControllerAS.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F865E4D1639AF7D00E650D0 /* LoginControllerAS.xib */; };
+		0F865E51163A609800E650D0 /* subscriber-3_demo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F865E50163A609800E650D0 /* subscriber-3_demo.xib */; };
 		0F99617915267C6C002657A9 /* chrome_color.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F99617415267C6B002657A9 /* chrome_color.pdf */; };
 		0F99617A15267C6C002657A9 /* firefox_color.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0F99617515267C6B002657A9 /* firefox_color.icns */; };
 		0F99617B15267C6C002657A9 /* ie_color.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0F99617615267C6C002657A9 /* ie_color.pdf */; };
@@ -540,6 +541,7 @@
 		0F7CE3CF152F6C2800068464 /* stop.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = stop.pdf; path = Resources/stop.pdf; sourceTree = "<group>"; };
 		0F865E4C1639AF7D00E650D0 /* LoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginController.xib; path = Resources/LoginController.xib; sourceTree = "<group>"; };
 		0F865E4D1639AF7D00E650D0 /* LoginControllerAS.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginControllerAS.xib; path = Resources/LoginControllerAS.xib; sourceTree = "<group>"; };
+		0F865E50163A609800E650D0 /* subscriber-3_demo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "subscriber-3_demo.xib"; path = "Resources/subscriber-3_demo.xib"; sourceTree = "<group>"; };
 		0F99617415267C6B002657A9 /* chrome_color.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = chrome_color.pdf; path = Resources/chrome_color.pdf; sourceTree = "<group>"; };
 		0F99617515267C6B002657A9 /* firefox_color.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = firefox_color.icns; path = Resources/firefox_color.icns; sourceTree = "<group>"; };
 		0F99617615267C6C002657A9 /* ie_color.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = ie_color.pdf; path = Resources/ie_color.pdf; sourceTree = "<group>"; };
@@ -1029,6 +1031,7 @@
 				0F3957BF15CC4F4600C04D57 /* subscriber-3.xib */,
 				0F3957C115CC560900C04D57 /* subscriber-4.xib */,
 				0F3957C315CC5AA000C04D57 /* subscriber-5.xib */,
+				0F865E50163A609800E650D0 /* subscriber-3_demo.xib */,
 				0F3957BC15CC4EE600C04D57 /* subscriber.xib */,
 				0F3A18D015617D39007BAA78 /* tunnel.xib */,
 				0FD5668F1545B17B0007C94A /* BugInfo.xib */,
@@ -1718,6 +1721,7 @@
 				7F7A943A05E71B5C00E20416 /* PaletteFilter.m in Resources */,
 				0F865E4E1639AF7D00E650D0 /* LoginController.xib in Resources */,
 				0F865E4F1639AF7D00E650D0 /* LoginControllerAS.xib in Resources */,
+				0F865E51163A609800E650D0 /* subscriber-3_demo.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
