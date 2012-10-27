@@ -193,7 +193,7 @@
             NSString *browser = [llArr objectAtIndex:1];
             NSString *version = [llArr objectAtIndex:2];
             NSString *twoch = [browser substringToIndex:2];     // 2 chars to identify browser
-            if(![twoch isEqualToString:lastBrowser])            // different browser than previous
+            if(![twoch isEqualToString:lastBrowser])      // different browser than previous
             {            
                 if([twoch isEqualToString:@"ie"])         // internet explorer
                     bimg = bimgs[0];
@@ -292,19 +292,46 @@
 {        
     NSInteger rr = [browserTbl selectedRowInColumn:1];
     NSArray *brarr;
-    switch(curTabIndx)
-    {
-        case tt_windows: brarr = [configWindows objectAtIndex:rr]; break;
-        case tt_linux: brarr = [configLinux objectAtIndex:rr]; break;
-        case tt_apple: brarr = [configOSX objectAtIndex:rr]; break;
-        case tt_mobile: return;     // TODO: not implemented, yet
-    }
-    NSString *sel_os      = [brarr objectAtIndex:0];
-    NSString *sel_browser = [brarr objectAtIndex:1];
-    NSString *sel_version = [brarr objectAtIndex:2];
+    BOOL bDemo = [[NSApp delegate] isDemoAccount];
 
-    if([sel_version isEqualToString:@"*"])
-        sel_version = @"";
+    NSString *sel_os;
+    NSString *sel_browser;
+    NSString *sel_version;
+    if(bDemo)
+    {
+        NSBrowserCell *cell =  [browserTbl selectedCell];
+        NSString *seltxt = [cell stringValue];
+        NSArray *arr = [seltxt componentsSeparatedByString:@" "];
+        if([[arr objectAtIndex:1] hasPrefix:@"Ie"])
+        {
+            sel_os = @"Windows 2003";
+            sel_browser = @"iexplore";
+            sel_version = [arr objectAtIndex:2];
+        }
+        else
+        {
+            sel_os = @"Mac 10.6";
+            sel_browser = @"iphone";
+            sel_version = [arr objectAtIndex:2];
+            
+        }
+    }
+    else
+    {
+        switch(curTabIndx)
+        {
+            case tt_windows: brarr = [configWindows objectAtIndex:rr]; break;
+            case tt_linux: brarr = [configLinux objectAtIndex:rr]; break;
+            case tt_apple: brarr = [configOSX objectAtIndex:rr]; break;
+            case tt_mobile: return;     // TODO: not implemented, yet
+        }
+        sel_os      = [brarr objectAtIndex:0];
+        sel_browser = [brarr objectAtIndex:1];
+        sel_version = [brarr objectAtIndex:2];
+        if([sel_version isEqualToString:@"*"])
+            sel_version = @"";
+    }
+
     NSString *urlstr = [self.url stringValue];
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
