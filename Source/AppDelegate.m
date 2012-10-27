@@ -258,7 +258,7 @@
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
     NSInteger lastTime = [defs integerForKey:@"demoLastTime"];
     if(lastTime==0)
-        return 99;
+        return -1;
     time_t rawtime, tt;
     time(&rawtime);
     tt = rawtime - lastTime;
