@@ -20,6 +20,7 @@
 #import "Subscriber.h"
 #import "sessionConnect.h"
 #import "RegexKitLite.h"
+#import "waitSession.h"
 
 @implementation AppDelegate
 @synthesize infoPanel;
@@ -55,11 +56,6 @@
     
     if(INAPPSTORE)
     {
-        NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
-        NSInteger tm = [defs integerForKey:@"demoLastTime"];
-        if(tm)
-            [defs setInteger:-1 forKey:@"demoLastTime"];
-
         [subscribeMenuItem setHidden:YES];
     }
     [viewConnectMenuItem setAction:nil];
@@ -161,18 +157,12 @@
             else    // no sessions running
             {
                 NSInteger tm = [self demoCheckTime];
-                if(tm < 30)
+                if(tm > 0)      // still time left to wait
                 {
-                    [self promptForSubscribing:YES];    // TODO: tell user how many minutes to wait
+                    [[waitSession alloc] init:tm];    // tell user how many minutes to wait
                     return;
                 }
             }
-            // set last time to be 10 minutes ahead
-            time_t tm;
-            time(&tm);
-            tm += 60*10;
-            NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
-            [defs setInteger:tm forKey:@"demoLastTime"];
         }
         
         self.optionsCtrlr = [[SessionController alloc] init];
@@ -199,6 +189,11 @@
 -(void)connectionSucceeded:(NSMutableDictionary*)sdict
 {
     [[SaucePreconnect sharedPreconnect] cancelPreAuthorize:sdict];
+    // set 'last time' value to now
+    time_t tm;
+    time(&tm);
+    NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
+    [defs setInteger:tm forKey:@"demoLastTime"];
 }
 
 - (void)newUserAuthorized:(id)param
@@ -262,16 +257,12 @@
 {
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
     NSInteger lastTime = [defs integerForKey:@"demoLastTime"];
-    if(lastTime<0)
+    if(lastTime==0)
         return 99;
     time_t rawtime, tt;
-    int hrs, mins;
     time(&rawtime);
-    tt = rawtime - (lastTime*60);
-    if(tt<0)
-        return 99;
-    hrs = tt/3600;
-    mins =  (tt-(hrs*3600))/60;
+    tt = rawtime - lastTime;
+    int mins = 30 - (tt/60);       // #seconds divided by 60 is #minutes left
     return mins;
 }
 

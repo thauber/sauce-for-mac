@@ -88,6 +88,9 @@
 		0F3DC43E155D6F760069F7AB /* TunnelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3DC43C155D6F760069F7AB /* TunnelController.m */; };
 		0F3E0F4715E451720074C229 /* historyTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F3E0F4515E451720074C229 /* historyTableView.h */; };
 		0F3E0F4815E451720074C229 /* historyTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3E0F4615E451720074C229 /* historyTableView.m */; };
+		0F3E2490163B13AF0053E6E6 /* waitSession.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3E248F163B13AF0053E6E6 /* waitSession.xib */; };
+		0F3E2494163B15220053E6E6 /* waitSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F3E2492163B15220053E6E6 /* waitSession.h */; };
+		0F3E2495163B15220053E6E6 /* waitSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3E2493163B15220053E6E6 /* waitSession.m */; };
 		0F3E53B915D22A6700513767 /* stopConnect.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3E53B815D22A6700513767 /* stopConnect.xib */; };
 		0F3E53BB15D22A7700513767 /* stopSession.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3E53BA15D22A7700513767 /* stopSession.xib */; };
 		0F3E53BE15D22AB400513767 /* StopConnect.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F3E53BC15D22AB400513767 /* StopConnect.h */; };
@@ -493,6 +496,9 @@
 		0F3DC43C155D6F760069F7AB /* TunnelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TunnelController.m; sourceTree = "<group>"; };
 		0F3E0F4515E451720074C229 /* historyTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = historyTableView.h; sourceTree = "<group>"; };
 		0F3E0F4615E451720074C229 /* historyTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = historyTableView.m; sourceTree = "<group>"; };
+		0F3E248F163B13AF0053E6E6 /* waitSession.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = waitSession.xib; path = Resources/waitSession.xib; sourceTree = "<group>"; };
+		0F3E2492163B15220053E6E6 /* waitSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = waitSession.h; sourceTree = "<group>"; };
+		0F3E2493163B15220053E6E6 /* waitSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = waitSession.m; sourceTree = "<group>"; };
 		0F3E53B815D22A6700513767 /* stopConnect.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = stopConnect.xib; path = Resources/stopConnect.xib; sourceTree = "<group>"; };
 		0F3E53BA15D22A7700513767 /* stopSession.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = stopSession.xib; path = Resources/stopSession.xib; sourceTree = "<group>"; };
 		0F3E53BC15D22AB400513767 /* StopConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StopConnect.h; sourceTree = "<group>"; };
@@ -1033,6 +1039,7 @@
 				0F3957C315CC5AA000C04D57 /* subscriber-5.xib */,
 				0F865E50163A609800E650D0 /* subscriber-3_demo.xib */,
 				0F3957BC15CC4EE600C04D57 /* subscriber.xib */,
+				0F3E248F163B13AF0053E6E6 /* waitSession.xib */,
 				0F3A18D015617D39007BAA78 /* tunnel.xib */,
 				0FD5668F1545B17B0007C94A /* BugInfo.xib */,
 				DAC8077D12FEC38400C4ADB6 /* ssh-helper.sh */,
@@ -1134,6 +1141,8 @@
 				0F51BA6915EFC915004324EB /* historyTFCell.m */,
 				0F32B49615B8C88900C0CFBF /* Subscriber.h */,
 				0F32B49715B8C88900C0CFBF /* Subscriber.m */,
+				0F3E2492163B15220053E6E6 /* waitSession.h */,
+				0F3E2493163B15220053E6E6 /* waitSession.m */,
 				0F59E7C315CDA6CB0003D541 /* StopSession.h */,
 				0F59E7C415CDA6CB0003D541 /* StopSession.m */,
 				0F3E53BC15D22AB400513767 /* StopConnect.h */,
@@ -1560,6 +1569,7 @@
 				0F3E0F4715E451720074C229 /* historyTableView.h in Headers */,
 				0F51BA6A15EFC915004324EB /* historyTFCell.h in Headers */,
 				0F3DA65615F1182600831E38 /* sessionConnect.h in Headers */,
+				0F3E2494163B15220053E6E6 /* waitSession.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1722,6 +1732,7 @@
 				0F865E4E1639AF7D00E650D0 /* LoginController.xib in Resources */,
 				0F865E4F1639AF7D00E650D0 /* LoginControllerAS.xib in Resources */,
 				0F865E51163A609800E650D0 /* subscriber-3_demo.xib in Resources */,
+				0F3E2490163B13AF0053E6E6 /* waitSession.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1894,6 +1905,7 @@
 				0F3E0F4815E451720074C229 /* historyTableView.m in Sources */,
 				0F51BA6B15EFC915004324EB /* historyTFCell.m in Sources */,
 				0F3DA65715F1182600831E38 /* sessionConnect.m in Sources */,
+				0F3E2495163B15220053E6E6 /* waitSession.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

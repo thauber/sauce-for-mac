@@ -21,7 +21,9 @@
     NSPopUpButton *expireYear;
     NSButton *subscribeBtn;
     NSTextField *nextMonthLbl;
+    NSTextField *restartTxt;
 }
+@property (assign) IBOutlet NSTextField *restartTxt;
 @property (assign) IBOutlet NSTextField *nextMonthLbl;
 @property (assign) IBOutlet NSPanel *panel;
 @property (assign) IBOutlet NSTextField *firstName;

@@ -54,10 +54,10 @@
     NSIndexSet *rind = [NSIndexSet indexSetWithIndex:index];
     NSIndexSet *cind = [NSIndexSet indexSetWithIndex:4];    // runtime into column=4
     [tableView reloadDataForRowIndexes:rind columnIndexes:cind];
-    if([[NSApp delegate] isDemoAccount] && mins>10)
+    if([[NSApp delegate] isDemoAccount] && mins>10)     // time is up for demo session
     {
-    // TODO: close the session
-       [[NSApp delegate] promptForSubscribing:NO];
+        [[ScoutWindowController sharedScout] closeTab:nil];
+        [[NSApp delegate] promptForSubscribing:NO];
     }
 }
 

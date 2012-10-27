@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 
 @implementation Subscriber
+@synthesize restartTxt;
 @synthesize nextMonthLbl;
 @synthesize panel;
 @synthesize firstName;
@@ -73,6 +74,12 @@
             NSString *monthStr = [df stringFromDate:oneMonthFromNow];
             NSString *msg = [NSString stringWithFormat:@"Wait until %@",monthStr];
             [nextMonthLbl setStringValue:msg];
+        }
+        else if(bDemo)
+        {
+            NSInteger minutes = [[NSApp delegate] demoCheckTime];
+            NSString *txt = [NSString stringWithFormat:@"Restart in %ld minutes",minutes];
+            [restartTxt setStringValue:txt];
         }
         
         [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];

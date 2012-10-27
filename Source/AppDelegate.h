@@ -88,6 +88,7 @@
 - (IBAction)showHelp: (id)sender;
 
 - (BOOL)isDemoAccount;
+- (NSInteger)demoCheckTime;
 - (BOOL)checkUserOk;
 - (void)connectionSucceeded:(NSMutableDictionary*)sdict;
 - (void)cancelOptionsConnect:(id)sender;
