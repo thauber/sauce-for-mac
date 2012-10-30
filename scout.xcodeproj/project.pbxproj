@@ -563,6 +563,7 @@
 		0FD5668F1545B17B0007C94A /* BugInfo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BugInfo.xib; path = Resources/BugInfo.xib; sourceTree = "<group>"; };
 		0FD566911545B1A90007C94A /* BugInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BugInfoController.h; sourceTree = "<group>"; };
 		0FD566921545B1A90007C94A /* BugInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BugInfoController.m; sourceTree = "<group>"; };
+		0FD9FF6B164097D1001583AD /* Sauce.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Sauce.entitlements; sourceTree = "<group>"; };
 		0FDA1D1015A5648300ECBF59 /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
 		0FDA1D1115A5648300ECBF59 /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
 		0FDB429C1511459A00841EE9 /* SaucePreconnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaucePreconnect.h; sourceTree = "<group>"; };
@@ -969,6 +970,7 @@
 		29B97314FDCFA39411CA2CEA /* Chicken of the VNC */ = {
 			isa = PBXGroup;
 			children = (
+				0FD9FF6B164097D1001583AD /* Sauce.entitlements */,
 				0F40B21E1598F14600E6311E /* libicucore.dylib */,
 				F5DC718B033DB45F01A8010C /* Documentation */,
 				F5DC7198033DB4A801A8010C /* Source */,
@@ -2004,6 +2006,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CODE_SIGN_ENTITLEMENTS = Sauce.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_LOCATION = YES;
@@ -2046,6 +2050,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CODE_SIGN_ENTITLEMENTS = Sauce.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEPLOYMENT_LOCATION = YES;
@@ -2086,6 +2092,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CODE_SIGN_ENTITLEMENTS = Sauce.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2135,8 +2143,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = Sauce.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=*]" = "3rd Party Mac Developer Application";
 				GCC_VERSION = "";
 				ONLY_ACTIVE_ARCH = YES;
+				"PROVISIONING_PROFILE[sdk=*]" = "";
 				SDKROOT = macosx;
 				_CHICKEN_VERSION_ = 2.2b2;
 			};
