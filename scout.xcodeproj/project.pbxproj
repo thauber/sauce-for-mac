@@ -2008,8 +2008,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CODE_SIGN_ENTITLEMENTS = Sauce.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_LOCATION = YES;
@@ -2052,8 +2051,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CODE_SIGN_ENTITLEMENTS = Sauce.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEPLOYMENT_LOCATION = YES;
@@ -2077,6 +2075,7 @@
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = Sauce;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 				SECTORDER_FLAGS = "";
 				SKIP_INSTALL = YES;
@@ -2094,8 +2093,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CODE_SIGN_ENTITLEMENTS = Sauce.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2146,10 +2144,10 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = Sauce.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=*]" = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				GCC_VERSION = "";
 				ONLY_ACTIVE_ARCH = YES;
-				"PROVISIONING_PROFILE[sdk=*]" = "";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 				_CHICKEN_VERSION_ = 2.2b2;
 			};
