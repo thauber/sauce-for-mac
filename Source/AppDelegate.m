@@ -157,7 +157,7 @@
             else    // no sessions running
             {
                 NSInteger tm = [self demoCheckTime];
-                if(tm < 0)      // still time left to wait
+                if(tm > 0)      // still time left to wait
                 {
                     [[waitSession alloc] init:tm];    // tell user how many minutes to wait
                     return;
