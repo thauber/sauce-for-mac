@@ -687,8 +687,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 // 'S'->subscribed; nil->good user;  'F'->bad internet connection
 - (NSString*)checkAccountOk
 {
-    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@%@/rest/v1/users/%@'", 
-                      self.user, self.ukey, kSauceLabsDomain, self.user];
+    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@%@/rest/v1/users/%@'",self.user, self.ukey, kSauceLabsDomain, self.user];
 
     NSString *resStr = nil;
     while(1)
@@ -736,6 +735,24 @@ static SaucePreconnect* _sharedPreconnect = nil;
         }
     }
     return resStr;
+}
+
+// called on connection for a demo account session
+- (void)sendDemoVersion:(NSString*)job version:(NSString*)version
+{
+    NSString *farg = [NSString stringWithFormat:@"curl https://%@:%@@%@/rest/v1/%@/jobs/%@ -H 'Content-Type: application/json' -d '{\"tags\":[\"desktop\", \"version:%@\"]}'",self.user, self.ukey, kSauceLabsDomain, self.user, job,version];
+
+    NSTask *ftask = [[[NSTask alloc] init] autorelease];
+    NSPipe *fpipe = [NSPipe pipe];
+    [ftask setStandardOutput:fpipe];
+    [ftask setLaunchPath:@"/bin/bash"];
+    [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+    [ftask launch];
+    [ftask waitUntilExit];
+    if([ftask terminationStatus])
+    {
+        NSLog(@"failed NSTask in sendDemoVersion");
+    }
 }
 
 @end

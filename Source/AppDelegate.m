@@ -157,7 +157,7 @@
             else    // no sessions running
             {
                 NSInteger tm = [self demoCheckTime];
-                if(tm > 0)      // still time left to wait
+                if(tm < 0)      // still time left to wait
                 {
                     [[waitSession alloc] init:tm];    // tell user how many minutes to wait
                     return;
@@ -189,11 +189,18 @@
 -(void)connectionSucceeded:(NSMutableDictionary*)sdict
 {
     [[SaucePreconnect sharedPreconnect] cancelPreAuthorize:sdict];
-    // set 'last time' value to now
-    time_t tm;
-    time(&tm);
-    NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
-    [defs setInteger:tm forKey:@"demoLastTime"];
+    if([self isDemoAccount])
+    {
+        // set 'last time' value to now
+        time_t tm;
+        time(&tm);
+        NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
+        [defs setInteger:tm forKey:@"demoLastTime"];
+        // track demo account version
+        NSString *job = [sdict objectForKey:@"jobId"];
+        NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+        [[SaucePreconnect sharedPreconnect] sendDemoVersion:job version:version];
+    }
 }
 
 - (void)newUserAuthorized:(id)param
