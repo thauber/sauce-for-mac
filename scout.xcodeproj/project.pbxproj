@@ -233,7 +233,6 @@
 		7F7A943605E71B5C00E20416 /* HextileEncodingReader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5DC71BE033DB4A801A8010C /* HextileEncodingReader.m */; };
 		7F7A943705E71B5C00E20416 /* HighColorFrameBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = F5DC71C0033DB4A801A8010C /* HighColorFrameBuffer.m */; settings = {COMPILER_FLAGS = "-O2"; }; };
 		7F7A943805E71B5C00E20416 /* LowColorFrameBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = F5DC71CF033DB4A801A8010C /* LowColorFrameBuffer.m */; settings = {COMPILER_FLAGS = "-O2"; }; };
-		7F7A943A05E71B5C00E20416 /* PaletteFilter.m in Resources */ = {isa = PBXBuildFile; fileRef = F5DC71D4033DB4A801A8010C /* PaletteFilter.m */; };
 		7F7A943B05E71B5C00E20416 /* Profile.m in Sources */ = {isa = PBXBuildFile; fileRef = F5DC71D6033DB4A801A8010C /* Profile.m */; };
 		7F7A943C05E71B5C00E20416 /* ProfileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F5DC71D8033DB4A801A8010C /* ProfileManager.m */; };
 		7F7A943D05E71B5C00E20416 /* RawEncodingReader.m in Sources */ = {isa = PBXBuildFile; fileRef = F5DC71DA033DB4A801A8010C /* RawEncodingReader.m */; };
@@ -1731,7 +1730,6 @@
 				0F3742B815ED1E9300A93304 /* lin28.png in Resources */,
 				0F3DA65E15F1479000831E38 /* sessionConnect.xib in Resources */,
 				0F3DA66015F1499C00831E38 /* history.xib in Resources */,
-				7F7A943A05E71B5C00E20416 /* PaletteFilter.m in Resources */,
 				0F865E4E1639AF7D00E650D0 /* LoginController.xib in Resources */,
 				0F865E4F1639AF7D00E650D0 /* LoginControllerAS.xib in Resources */,
 				0F865E51163A609800E650D0 /* subscriber-3_demo.xib in Resources */,
