@@ -142,8 +142,8 @@
     bCommandline = YES;
 
     // uncomment 2 lines below to check arguments in alert panel
-    NSString *args = [NSString stringWithFormat:@"-o %@ -b %@ -v %@ -c %@", cmdOS,cmdBrowser,cmdVersion,cmdConnect];
-    NSBeginAlertSheet(@"Command Line Args", @"Okay", nil, nil, [NSApp keyWindow], self,nil, NULL, NULL, args);
+//    NSString *args = [NSString stringWithFormat:@"-o %@ -b %@ -v %@ -c %@", cmdOS,cmdBrowser,cmdVersion,cmdConnect];
+//    NSBeginAlertSheet(@"Command Line Args", @"Okay", nil, nil, [NSApp keyWindow], self,nil, NULL, NULL, args);
 
 }
 
