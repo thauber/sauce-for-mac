@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "SaucePreconnect.h"
 
-#define INAPPSTORE 1
+#define INAPPSTORE 0
 #define kDemoAccountName @"sauce_for_mac"
 
 @class SessionController;
@@ -42,6 +42,13 @@
     NSMutableArray *configWindows;          // os/browsers for windows
     NSMutableArray *configLinux;            // os/browsers for linux
     NSMutableArray *configOSX;              // os/browsers for osx
+    
+    BOOL bCommandline;                      // running from command line
+    NSString *cmdOS;                        // command line arguments
+    NSString *cmdBrowser;
+    NSString *cmdVersion;
+    NSString *cmdURL;
+    NSString *cmdConnect;
 }
 @property (assign) IBOutlet NSPanel *infoPanel;
 @property (assign) IBOutlet NSTextField *versionTxt;

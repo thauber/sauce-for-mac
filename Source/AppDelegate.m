@@ -54,23 +54,97 @@
     noShowCloseSession = [[PrefController sharedController] defaultShowWarnings];
     noShowCloseConnect = noShowCloseSession;
     
+    [self processCommandLine];
+    
     if(INAPPSTORE)
     {
         [subscribeMenuItem setHidden:YES];
     }
     [viewConnectMenuItem setAction:nil];
     [[ScoutWindowController sharedScout] showWindow:nil];
-    
+
+        
     [mInfoVersionNumber setStringValue: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleVersion"]];
 
     if([self checkUserOk])
     {
         // good name/key, got browsers, so go on to options dialog
-        if([[PrefController sharedController] alwaysUseTunnel])
+        if([[PrefController sharedController] alwaysUseTunnel] || cmdConnect)
             [self doTunnel:self];
+        else
+        if(bCommandline)
+        {
+            NSMutableDictionary *sdict = [[SaucePreconnect sharedPreconnect] setOptions:cmdOS browser:cmdBrowser browserVersion:cmdVersion url:cmdURL];
+            [self startConnecting:sdict];
+        }
         else
             [self showOptionsDlg:self];
     }
+}
+
+- (void)processCommandLine
+{
+    NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
+    
+    // NB: should be checking for browser/version/os matching
+    
+    cmdOS = [standardDefaults stringForKey:@"o"];
+    if(!cmdOS) return;
+    if([cmdOS hasPrefix:@"w"] || [cmdOS hasPrefix:@"W"])
+    {
+        if([cmdOS rangeOfString:@"3"].location != NSNotFound)
+            cmdOS = @"Windows 2003";
+        else if([cmdOS rangeOfString:@"8"].location != NSNotFound)
+            cmdOS = @"Windows 2008";
+    }
+    else
+    if([cmdOS hasPrefix:@"l"] || [cmdOS hasPrefix:@"L"])
+        cmdOS = @"Linux";
+    else
+    if([cmdOS hasPrefix:@"o"] || [cmdOS hasPrefix:@"O"])
+        cmdOS = @"OSX";
+    
+    cmdBrowser = [standardDefaults stringForKey:@"b"];
+    if(!cmdBrowser) return;
+    if([cmdBrowser hasPrefix:@"i"] || [cmdBrowser hasPrefix:@"I"])
+        cmdBrowser = @"iexplore";
+    else
+    if([cmdBrowser hasPrefix:@"o"] || [cmdBrowser hasPrefix:@"O"])
+        cmdBrowser = @"opera";
+    else
+    if([cmdBrowser hasPrefix:@"f"] || [cmdBrowser hasPrefix:@"F"])
+        cmdBrowser = @"firefox";
+    else
+    if([cmdBrowser hasPrefix:@"s"] || [cmdBrowser hasPrefix:@"S"])
+        cmdBrowser = @"safari";
+    else
+    if([cmdBrowser hasPrefix:@"c"] || [cmdBrowser hasPrefix:@"C"])
+        cmdBrowser = @"googlechrome";
+    else
+    if([cmdBrowser hasPrefix:@"a"] || [cmdBrowser hasPrefix:@"A"])
+        cmdBrowser = @"android";
+    else
+    if([cmdBrowser hasPrefix:@"iph"] || [cmdBrowser hasPrefix:@"IPh"])
+        cmdBrowser = @"iphone";
+    else
+    if([cmdBrowser hasPrefix:@"ipa"] || [cmdBrowser hasPrefix:@"IPa"])
+        cmdBrowser = @"ipad";
+    else
+        return;     // not a valid browser
+    
+    cmdVersion = [standardDefaults stringForKey:@"v"];
+    if(!cmdVersion) return;     // assume it is valid for now
+    
+    cmdURL = [standardDefaults stringForKey:@"u"];
+    if(!cmdURL) return;
+    
+    cmdConnect = [standardDefaults stringForKey:@"c"];
+    bCommandline = YES;
+
+    // uncomment 2 lines below to check arguments in alert panel
+    NSString *args = [NSString stringWithFormat:@"-o %@ -b %@ -v %@ -c %@", cmdOS,cmdBrowser,cmdVersion,cmdConnect];
+    NSBeginAlertSheet(@"Command Line Args", @"Okay", nil, nil, [NSApp keyWindow], self,nil, NULL, NULL, args);
+
 }
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSNotification *)aNotification
@@ -116,6 +190,8 @@
  
 - (IBAction)showOptionsDlg:(id)sender 
 {
+    bCommandline = NO;
+    
     if(![self checkUserOk])
         return;
     if(![configWindows count] && [self prefetchBrowsers] != 1)
@@ -383,6 +459,11 @@
         [tunnelMenuItem setTitle:@"Stop Sauce Connect"];
         [viewConnectMenuItem setAction:@selector(viewConnect:)];
         [[[ScoutWindowController sharedScout] tunnelButton] setTitle:@"Stop Sauce Connect"];
+        if(bCommandline)
+        {
+            NSMutableDictionary *sdict = [[SaucePreconnect sharedPreconnect] setOptions:cmdOS browser:cmdBrowser browserVersion:cmdVersion url:cmdURL];
+            [self startConnecting:sdict];            
+        }
     }
     else    // no tunnel
     {
