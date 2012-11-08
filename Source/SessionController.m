@@ -28,7 +28,11 @@
     self = [super init];
     if(self)
     {
-        [NSBundle loadNibNamed:@"SessionController"  owner:self];
+        BOOL bDemo = [[NSApp delegate] isDemoAccount];
+        if(bDemo)
+            [NSBundle loadNibNamed:@"SessionController_demo"  owner:self];
+        else
+            [NSBundle loadNibNamed:@"SessionController"  owner:self];
     }
     return self;
 }
@@ -424,6 +428,12 @@
 - (void)showError:(NSString *)errStr
 {
     NSBeginAlertSheet(@"Session Options Error", @"Okay", nil, nil, [NSApp keyWindow], self,nil, NULL, NULL, errStr);    
+}
+
+- (IBAction)visitSauce:(id)sender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://saucelabs.com"]];
+    [self cancel:nil];
 }
 
 // browser delegate methods

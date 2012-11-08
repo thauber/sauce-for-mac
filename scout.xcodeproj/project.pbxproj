@@ -124,6 +124,7 @@
 		0F4F461615EC622100773D93 /* win28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F460A15EC622100773D93 /* win28.png */; };
 		0F51BA6A15EFC915004324EB /* historyTFCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F51BA6815EFC915004324EB /* historyTFCell.h */; };
 		0F51BA6B15EFC915004324EB /* historyTFCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F51BA6915EFC915004324EB /* historyTFCell.m */; };
+		0F58FCB1164C214100494955 /* SessionController_demo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F58FCB0164C214100494955 /* SessionController_demo.xib */; };
 		0F59372515C83B150024AB5A /* keysymdef.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59372415C83B150024AB5A /* keysymdef.h */; };
 		0F59372815C8C18B0024AB5A /* keysym.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59372715C8C18B0024AB5A /* keysym.h */; };
 		0F59E7C515CDA6CB0003D541 /* StopSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59E7C315CDA6CB0003D541 /* StopSession.h */; };
@@ -530,6 +531,7 @@
 		0F4F460A15EC622100773D93 /* win28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = win28.png; path = Resources/win28.png; sourceTree = "<group>"; };
 		0F51BA6815EFC915004324EB /* historyTFCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = historyTFCell.h; sourceTree = "<group>"; };
 		0F51BA6915EFC915004324EB /* historyTFCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = historyTFCell.m; sourceTree = "<group>"; };
+		0F58FCB0164C214100494955 /* SessionController_demo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SessionController_demo.xib; path = Resources/SessionController_demo.xib; sourceTree = "<group>"; };
 		0F59372415C83B150024AB5A /* keysymdef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keysymdef.h; sourceTree = "<group>"; };
 		0F59372715C8C18B0024AB5A /* keysym.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keysym.h; sourceTree = "<group>"; };
 		0F59E7C315CDA6CB0003D541 /* StopSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StopSession.h; sourceTree = "<group>"; };
@@ -1031,6 +1033,7 @@
 				0F865E4C1639AF7D00E650D0 /* LoginController.xib */,
 				0F865E4D1639AF7D00E650D0 /* LoginControllerAS.xib */,
 				0F7C606C152A964900DA9A4A /* SessionController.xib */,
+				0F58FCB0164C214100494955 /* SessionController_demo.xib */,
 				0F3DA65D15F1479000831E38 /* sessionConnect.xib */,
 				0F3E53B815D22A6700513767 /* stopConnect.xib */,
 				0F3E53BA15D22A7700513767 /* stopSession.xib */,
@@ -1735,6 +1738,7 @@
 				0F865E51163A609800E650D0 /* subscriber-3_demo.xib in Resources */,
 				0F3E2490163B13AF0053E6E6 /* waitSession.xib in Resources */,
 				0FD9FF7B1640BDAF001583AD /* Sauce.entitlements in Resources */,
+				0F58FCB1164C214100494955 /* SessionController_demo.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

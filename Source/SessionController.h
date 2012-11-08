@@ -52,6 +52,7 @@ enum TabType {tt_windows, tt_linux, tt_apple, tt_mobile};
 - (IBAction)connect:(id)sender;
 - (IBAction)cancel:(id)sender;
 - (void)showError:(NSString *)errStr;
+- (IBAction)visitSauce:(id)sender;
 
 
 
