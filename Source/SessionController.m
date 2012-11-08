@@ -362,7 +362,7 @@
         {
             if(![uhost length] || [self canReachIP:uhost])
             {
-                NSBeginAlertSheet(@"Requires Intranet Access", @"Yes", @"No", nil, [NSApp keyWindow], self,nil, @selector(tunnelDidDismiss:returnCode:contextInfo:), sdict, @"Do you want to start Sauce Connect?"); 
+                NSBeginAlertSheet(@"Are you testing an intranet site?", @"Yes", @"No", nil, [NSApp keyWindow], self,nil, @selector(tunnelDidDismiss:returnCode:contextInfo:), sdict, @"Do you wish to use Sauce Connect, our secure tunnel for accessing your local servers?"); 
             }
             else {
                 NSBeginAlertSheet(@"Can't Reach IP", @"Okay", nil, nil, [NSApp keyWindow], self,nil, nil, NULL, @"Check connection and IP address"); 
