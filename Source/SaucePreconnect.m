@@ -276,12 +276,13 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 }
                 else
                 {
-                    NSString *err = [self jsonVal:jsonString key:@"status"];
-                    if([err isEqualToString:@"error"])
+//                    NSString *err = [self jsonVal:jsonString key:@"status"];
+//                    if([err isEqualToString:@"error"])
                     {
+                        [sdict setObject:@"Error getting job id" forKey:@"errorString"];
                         [[NSApp delegate] performSelectorOnMainThread:@selector(cancelOptionsConnect:) withObject:sdict waitUntilDone:NO];
                         break;
-                    }
+                    }                    
                 }                
             }
         }
@@ -297,8 +298,9 @@ static SaucePreconnect* _sharedPreconnect = nil;
     {
         if([credArr objectAtIndex:i] == sdict)
         {
-            if(![sdict objectForKey:@"view"])
-                return;
+// do we need this?
+//            if(![sdict objectForKey:@"view"])
+//                return;
             NSString *aliveId = [sdict objectForKey:@"liveId"];
             NSString *farg = [NSString stringWithFormat:@"curl -X DELETE 'https://%@:%@@%@/rest/v1/users/%@/scout/%@'", self.user, self.ukey, kSauceLabsDomain, self.user, aliveId];
             [credArr removeObjectAtIndex:i];
@@ -494,6 +496,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
         if(removedObj)              // removed b/c session not in progress
         {
             removedObj = NO;        // clear flag
+            [sdict setObject:@"job not in progress" forKey:@"errorString"];
+            [[NSApp delegate] cancelOptionsConnect:sdict];
             continue;               // avoid incrementing index
         }
         // update run time for session in history tab view

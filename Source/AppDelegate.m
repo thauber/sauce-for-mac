@@ -597,6 +597,8 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
     // a sample line: {"name": "android", "os_display": "Linux", "short_version": "4", "long_name": "Android", "long_version": "4.0.3.", "os": "Linux", "backend": "selenium"}
     NSArray *sarr = [jsonArr sortedArrayUsingFunction:dcmp context:nil];
 
+    BOOL bDemo = [self isDemoAccount];
+    NSInteger iWin=0, iOSX=0, iLin=0;       // insertion index
     NSString *osStr;
     NSString *browser;
     NSString *version;
@@ -608,19 +610,58 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
         version = [dict objectForKey:@"short_version"];
         if(![version length])
             version=@"*";
-        active  = @"YES";
+        BOOL bActive = YES;
+        if(bDemo)
+        {
+            if([osStr hasPrefix:@"W"])
+            {
+                if(![browser hasPrefix:@"I"])
+                    active = @"NO";
+                if(   ![version isEqualToString:@"6"]
+                   && ![version isEqualToString:@"7"]
+                   && ![version isEqualToString:@"8"])
+                    bActive = NO;
+            }
+            else
+            {
+                if([osStr hasPrefix:@"M"] && ![browser hasPrefix:@"iph"])
+                    bActive = NO;
+                else
+                if([osStr hasPrefix:@"L"])
+                    bActive = NO;
+            }
+        }
         
+        active  = bActive ? @"YES" : @"NO";
+
         NSMutableArray *obarr = [NSMutableArray arrayWithCapacity:4];
         [obarr  addObject:osStr];
         [obarr  addObject:browser];
         [obarr  addObject:version];
         [obarr  addObject:active];
         if([osStr hasPrefix:@"Windows"])
-            [configWindows addObject:obarr];
-        else if([osStr hasPrefix:@"Linux"])
-            [configLinux addObject:obarr];            
-        else if([osStr hasPrefix:@"Mac"])
-            [configOSX addObject:obarr];
+        {
+            if(bDemo && bActive)
+                [configWindows insertObject:obarr atIndex:iWin++];
+            else
+                [configWindows addObject:obarr];
+        }
+        else
+        if([osStr hasPrefix:@"Linux"])
+        {
+            if(bDemo && bActive)
+                [configLinux insertObject:obarr atIndex:iLin++];
+            else
+                [configLinux addObject:obarr];
+        }
+        else
+        if([osStr hasPrefix:@"Mac"])
+        {
+            if(bDemo && bActive)
+                [configOSX insertObject:obarr atIndex:iOSX++];
+            else
+                [configOSX addObject:obarr];
+        }
     }
 }
 
