@@ -353,19 +353,22 @@
 
     NSURL *uurl = [NSURL URLWithString:urlstr];
     BOOL noTunnel = [[NSApp delegate] noTunnel];
-    if(uurl && !noTunnel && ![urlstr hasPrefix:@"www."])        // check for localhost
+    if(uurl && !noTunnel)        // check for localhost
     {
         NSString *uhost = [uurl host];
-        BOOL isLocalURL = ![uhost length] || [uhost isEqualToString:@"localhost"] || [uhost isEqualToString:@"127.0.0.1"];
-        isLocalURL = isLocalURL || [uhost hasPrefix:@"192.168."] || [uhost hasPrefix:@"10."];
+        BOOL isLocalURL;
+        if(!uhost)
+            uhost = urlstr;
+        isLocalURL = [uhost hasPrefix:@"localhost"] || [uhost hasPrefix:@"127.0.0.1"]
+                        || [uhost hasPrefix:@"192.168."] || [uhost hasPrefix:@"10."];
         if(![[NSApp delegate] tunnelCtrlr] && isLocalURL)       // prompt for opening tunnel
         {
-            if(![uhost length] || [self canReachIP:uhost])
+            if([self canReachIP:uhost])
             {
                 NSBeginAlertSheet(@"Are you testing an intranet site?", @"Yes", @"No", nil, [NSApp keyWindow], self,nil, @selector(tunnelDidDismiss:returnCode:contextInfo:), sdict, @"Do you wish to use Sauce Connect, our secure tunnel for accessing your local servers?"); 
             }
-            else {
-                NSBeginAlertSheet(@"Can't Reach IP", @"Okay", nil, nil, [NSApp keyWindow], self,nil, nil, NULL, @"Check connection and IP address"); 
+            else {                
+                NSBeginAlertSheet(@"Can't Reach IP", @"Okay", nil, nil, [NSApp keyWindow], self,nil, @selector(endCantReachIP:returnCode:contextInfo:), NULL, @"Check connection and IP address");
             }
         }
         else 
@@ -373,6 +376,11 @@
     }
     else 
         [[NSApp delegate] startConnecting:sdict];
+}
+
+-(void)endCantReachIP:(NSWindow*)sheet returnCode:(int)returnCode contextInfo:(void*)contextInfo
+{
+    [self runSheet];
 }
 
 - (void)tunnelDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
@@ -399,30 +407,13 @@
     [ftask setStandardOutput:fpipe];
     [ftask setStandardError:fpipe];
     [ftask setLaunchPath:@"/bin/bash"];
-    NSString *arg = [NSString stringWithFormat:@"ping %@",host];
+    NSString *arg = [NSString stringWithFormat:@"ping -o -t3 %@",host];
     [ftask setArguments:[NSArray arrayWithObjects:@"-c", arg, nil]];
-    NSFileHandle *fhand = [fpipe fileHandleForReading];        
     [ftask launch];
-    while(10)       // just a guess to give enough attempts to get yes/no result
-    {
-        NSData *data = [fhand availableData];		 
-        NSString *retStr = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-        if([retStr length])
-        {
-            unichar ch = [retStr characterAtIndex:0];
-            if(ch >= '1' && ch <= '9')
-                return YES;
-            if(ch == 'R')      // Request timeout
-                return NO;
-            else
-            {
-                NSRange r = [retStr rangeOfString:@"down"];
-                if(r.location != NSNotFound)
-                    return NO;
-            }
-        }
-    }
-    return NO;
+    [ftask waitUntilExit];
+    if([ftask terminationStatus])
+        return NO;
+    return YES;
 }
    
 - (void)showError:(NSString *)errStr
