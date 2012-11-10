@@ -276,7 +276,6 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 }
                 else
                 {
-                    NSLog(@"no secret");
                     NSString *err = [self jsonVal:jsonString key:@"status"];
                     if([err isEqualToString:@"error"])
                     {
