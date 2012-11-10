@@ -276,8 +276,9 @@ static SaucePreconnect* _sharedPreconnect = nil;
                 }
                 else
                 {
-//                    NSString *err = [self jsonVal:jsonString key:@"status"];
-//                    if([err isEqualToString:@"error"])
+                    NSLog(@"no secret");
+                    NSString *err = [self jsonVal:jsonString key:@"status"];
+                    if([err isEqualToString:@"error"])
                     {
                         [sdict setObject:@"Error getting job id" forKey:@"errorString"];
                         [[NSApp delegate] performSelectorOnMainThread:@selector(cancelOptionsConnect:) withObject:sdict waitUntilDone:NO];
