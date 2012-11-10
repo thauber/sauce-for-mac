@@ -339,6 +339,12 @@
             uhost = urlstr;
         isLocalURL = [uhost hasPrefix:@"localhost"] || [uhost hasPrefix:@"127.0.0.1"]
                         || [uhost hasPrefix:@"192.168."] || [uhost hasPrefix:@"10."];
+        if([uhost hasPrefix:@"172."])
+        {
+            NSArray *iparr = [uhost componentsSeparatedByString:@"."];
+            NSInteger sub = [[iparr objectAtIndex:1] integerValue];
+            isLocalURL = sub>= 16 && sub<=31;
+        }
         if(![[NSApp delegate] tunnelCtrlr] && isLocalURL)       // prompt for opening tunnel
         {
             if([self canReachIP:uhost])
