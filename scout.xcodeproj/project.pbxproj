@@ -110,6 +110,8 @@
 		0F48D0C9157528950067B689 /* snapProgress.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F48D0C8157528950067B689 /* snapProgress.xib */; };
 		0F48D0CD157528C20067B689 /* SnapProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F48D0CB157528C20067B689 /* SnapProgress.h */; };
 		0F48D0CE157528C20067B689 /* SnapProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F48D0CC157528C20067B689 /* SnapProgress.m */; };
+		0F4D1E7B164EDE7600A85404 /* SauceLinkTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F4D1E79164EDE7600A85404 /* SauceLinkTextField.h */; };
+		0F4D1E7C164EDE7600A85404 /* SauceLinkTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4D1E7A164EDE7600A85404 /* SauceLinkTextField.m */; };
 		0F4F460B15EC622100773D93 /* an28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F45FF15EC622100773D93 /* an28.png */; };
 		0F4F460C15EC622100773D93 /* Android-mobile28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F460015EC622100773D93 /* Android-mobile28.png */; };
 		0F4F460D15EC622100773D93 /* apple28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F460115EC622100773D93 /* apple28.png */; };
@@ -517,6 +519,8 @@
 		0F48D0C8157528950067B689 /* snapProgress.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = snapProgress.xib; path = Resources/snapProgress.xib; sourceTree = "<group>"; };
 		0F48D0CB157528C20067B689 /* SnapProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapProgress.h; sourceTree = "<group>"; };
 		0F48D0CC157528C20067B689 /* SnapProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapProgress.m; sourceTree = "<group>"; };
+		0F4D1E79164EDE7600A85404 /* SauceLinkTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SauceLinkTextField.h; sourceTree = "<group>"; };
+		0F4D1E7A164EDE7600A85404 /* SauceLinkTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SauceLinkTextField.m; sourceTree = "<group>"; };
 		0F4F45FF15EC622100773D93 /* an28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = an28.png; path = Resources/an28.png; sourceTree = "<group>"; };
 		0F4F460015EC622100773D93 /* Android-mobile28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Android-mobile28.png"; path = "Resources/Android-mobile28.png"; sourceTree = "<group>"; };
 		0F4F460115EC622100773D93 /* apple28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = apple28.png; path = Resources/apple28.png; sourceTree = "<group>"; };
@@ -1113,6 +1117,8 @@
 				0F7C6065152A8F8700DA9A4A /* SessionController.m */,
 				0F3DA65415F1182600831E38 /* sessionConnect.h */,
 				0F3DA65515F1182600831E38 /* sessionConnect.m */,
+				0F4D1E79164EDE7600A85404 /* SauceLinkTextField.h */,
+				0F4D1E7A164EDE7600A85404 /* SauceLinkTextField.m */,
 				0F40B2191598ED6400E6311E /* RegexKitLite.h */,
 				0F40B21A1598ED6400E6311E /* RegexKitLite.m */,
 				0F463B35159BB82F0055B790 /* GradientView.h */,
@@ -1554,6 +1560,7 @@
 				0F51BA6A15EFC915004324EB /* historyTFCell.h in Headers */,
 				0F3DA65615F1182600831E38 /* sessionConnect.h in Headers */,
 				0F3E2494163B15220053E6E6 /* waitSession.h in Headers */,
+				0F4D1E7B164EDE7600A85404 /* SauceLinkTextField.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1891,6 +1898,7 @@
 				0F51BA6B15EFC915004324EB /* historyTFCell.m in Sources */,
 				0F3DA65715F1182600831E38 /* sessionConnect.m in Sources */,
 				0F3E2495163B15220053E6E6 /* waitSession.m in Sources */,
+				0F4D1E7C164EDE7600A85404 /* SauceLinkTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
