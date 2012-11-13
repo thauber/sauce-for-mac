@@ -320,12 +320,14 @@
         [[optionsCtrlr panel] orderOut:nil];
         self.optionsCtrlr = nil;    
     }
+    BOOL bCause=2;      // default is 'from menu'
     if(!sender)     // from SaucePreconnect when no time left on account
     {
         [[ScoutWindowController sharedScout] closeAllTabs];
+        bCause = 0;     // out of minutes
     }
         
-    [self promptForSubscribing:2];
+    [self promptForSubscribing:bCause];
 }
 
 - (IBAction)showPreferences: (id)sender
