@@ -386,6 +386,13 @@ static SaucePreconnect* _sharedPreconnect = nil;
         secstr = [NSString stringWithFormat:@"0%d",sec];
     else
         secstr = [NSString stringWithFormat:@"%d",sec];
+    if(!hr && !min)   // less than 1 minute left, so prompt users
+    {
+        NSString *res = [self checkAccountOk];
+        if([res rangeOfString:@"-"].location != NSNotFound)
+            [[NSApp delegate] performSelectorOnMainThread:@selector(showSubscribeDlg:) withObject:nil waitUntilDone:NO];
+
+    }
     NSString *str = [NSString stringWithFormat:@"%@:%@:%@",hrstr,minstr,secstr];
     return str;
 }

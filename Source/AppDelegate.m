@@ -320,6 +320,10 @@
         [[optionsCtrlr panel] orderOut:nil];
         self.optionsCtrlr = nil;    
     }
+    if(!sender)     // from SaucePreconnect when no time left on account
+    {
+        [[ScoutWindowController sharedScout] closeAllTabs];
+    }
         
     [self promptForSubscribing:2];
 }

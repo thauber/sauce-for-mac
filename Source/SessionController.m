@@ -291,6 +291,20 @@
             sel_version = [arr objectAtIndex:2];
         }
         else
+        if([[arr objectAtIndex:1] hasPrefix:@"Fi"])
+        {
+            if([seltxt rangeOfString:@"03"].location!=NSNotFound)
+                sel_os = @"Windows 2003";
+            else
+            if([seltxt rangeOfString:@"08"].location!=NSNotFound)
+                sel_os = @"Windows 2008";
+            else
+            if([seltxt rangeOfString:@"12"].location!=NSNotFound)
+                sel_os = @"Windows 2012";
+            sel_browser = @"firefox";
+            sel_version = [arr objectAtIndex:2];
+        }
+        else
         {
             sel_os = @"Mac 10.6";
             sel_browser = @"iphone";
