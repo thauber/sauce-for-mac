@@ -166,4 +166,7 @@ typedef enum {
 - (unsigned int)handleMultiTapForButton: (unsigned int)button;
 - (unsigned int)handleTapModifierAndClickForButton: (unsigned int)button;
 
+- (void)sendKey:(int)chr  modifier:(int)modifier;
+
+
 @end

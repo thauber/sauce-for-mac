@@ -213,12 +213,12 @@
         {
              if([subscribed characterAtIndex:1] == '-') // not enough minutes
              {
-                 [self promptForSubscribing:NO];   // prompt for subscribing to get more minutes
+                 [self promptForSubscribing:0];   // prompt for subscribing to get more minutes
                  return;
              }
             if([[ScoutWindowController sharedScout] tabCount] > 2)      // user has to be subscribed
             {
-                [self promptForSubscribing:YES];   // prompt for subscribing to get more tabs
+                [self promptForSubscribing:1];   // prompt for subscribing to get more tabs
                 return;
             }
         }
@@ -227,7 +227,7 @@
         {
             if([[ScoutWindowController sharedScout] tabCount] > 1)
             {
-                [self promptForSubscribing:YES];   // prompt for subscribing to get more tabs
+                [self promptForSubscribing:1];   // prompt for subscribing to get more tabs
                 return;
             }
             else    // no sessions running
@@ -380,6 +380,11 @@
 - (IBAction)showHelp: (id)sender
 {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://saucelabs.com/scoutdesktop"]]; 
+}
+
+- (IBAction)refreshAllSessions:(id)sender
+{
+    [[ScoutWindowController sharedScout] refreshAllTabs];
 }
 
 - (NSMenuItem *)getFullScreenMenuItem
@@ -670,5 +675,6 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
         }
     }
 }
+
 
 @end

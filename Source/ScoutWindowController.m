@@ -166,6 +166,23 @@ NSString *kHistoryTabLabel = @"Session History";
     }
 }
 
+- (void)refreshAllTabs
+{
+    int indx = 1;
+    while(indx < [self tabCount])
+    {
+        NSTabViewItem *tv = [tabView tabViewItemAtIndex:indx++];
+        NSView *vv = [tv view];
+        NSMutableDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:vv];
+        Session *ss = [[sdict objectForKey:@"connection"] session];
+        RFBView *rfbView = [ss rfbView];
+        // TODO: set params based on os/browser
+        int chr = 114;      // 'r'
+        int modifier = NSControlKeyMask;
+        [rfbView sendKey:chr modifier:modifier];    // send event to session's rbfview
+    }
+}
+
 #pragma mark -
 #pragma mark ---- window delegate ----
 

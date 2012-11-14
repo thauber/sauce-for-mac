@@ -247,4 +247,9 @@
     return YES;
 }
 
+- (void)sendKey:(int)chr  modifier:(int)modifier
+{
+    [_eventFilter sendKey:chr  modifier:(int)modifier];
+}
+
 @end

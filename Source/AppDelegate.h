@@ -93,6 +93,7 @@
 - (IBAction)showConnectionDialog: (id)sender;
 - (IBAction)showProfileManager: (id)sender;
 - (IBAction)showHelp: (id)sender;
+- (IBAction)refreshAllSessions:(id)sender;
 
 - (BOOL)isDemoAccount;
 - (NSInteger)demoCheckTime;

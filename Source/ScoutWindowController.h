@@ -89,6 +89,7 @@ typedef enum { login,options,session } tabType;
 - (BOOL)tabView:(NSTabView *)aTabView shouldCloseTabViewItem:(NSTabViewItem *)tabViewItem;
 - (void)tabView:(NSTabView *)aTabView didCloseTabViewItem:(NSTabViewItem *)tabViewItem;
 - (void)closeAllTabs;
+- (void)refreshAllTabs;
 
 //window delegate messages
 - (void)windowDidBecomeKey:(NSNotification *)aNotification;

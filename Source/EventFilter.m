@@ -1,3 +1,4 @@
+
 //
 //  EventFilter.m
 //  Chicken of the VNC
@@ -411,6 +412,18 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 
     [_connection writeBuffer];
 }
+
+// send a key directly
+- (void)sendKey:(int)chr modifier:(int)modifier
+{
+    unichar character = chr;
+    [_connection sendModifier:modifier pressed: YES];
+    [_connection sendKey: character pressed: YES];
+    [_connection sendModifier:modifier pressed: NO];
+    [_connection sendKey: character pressed: NO];
+    [_connection writeBuffer];
+}
+
 
 /* Queues a change in the modifier state. Note that unlike the preceeding
  * queue... messages, this does not write the connection buffer. */

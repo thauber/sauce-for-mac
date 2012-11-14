@@ -46,5 +46,6 @@
 - (unsigned int)draggingUpdated:(id <NSDraggingInfo>)sender;
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender;
+- (void)sendKey:(int)chr  modifier:(int)modifier;
 
 @end
