@@ -1995,7 +1995,7 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				NASM_OTHER_FLAGS = "-I $(SRCROOT)/libjpeg-turbo/simd/";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
@@ -2037,7 +2037,7 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				NASM_OTHER_FLAGS = "-I $(SRCROOT)/libjpeg-turbo/simd/";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
@@ -2077,7 +2077,7 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				NASM_OTHER_FLAGS = "-I $(SRCROOT)/libjpeg-turbo/simd/";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
