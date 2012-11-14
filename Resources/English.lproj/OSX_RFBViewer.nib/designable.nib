@@ -133,7 +133,7 @@
 								</object>
 								<object class="NSMenuItem" id="905347854">
 									<reference key="NSMenu" ref="1056163985"/>
-									<string key="NSTitle">Hide Scout Desktop</string>
+									<string key="NSTitle">Hide Sauce for Mac</string>
 									<string key="NSKeyEquiv">h</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -358,6 +358,14 @@
 									<reference key="NSOnImage" ref="529750286"/>
 									<reference key="NSMixedImage" ref="368837609"/>
 								</object>
+								<object class="NSMenuItem" id="109550746">
+									<reference key="NSMenu" ref="857574433"/>
+									<string key="NSTitle">Refresh All Sessions</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="529750286"/>
+									<reference key="NSMixedImage" ref="368837609"/>
+								</object>
 								<object class="NSMenuItem" id="134679870">
 									<reference key="NSMenu" ref="857574433"/>
 									<bool key="NSIsDisabled">YES</bool>
@@ -545,7 +553,7 @@
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSMenuItem" id="538354072">
 									<reference key="NSMenu" ref="46572346"/>
-									<string key="NSTitle">Scout Desktop Help</string>
+									<string key="NSTitle">Sauce for Mac Help</string>
 									<string key="NSKeyEquiv">?</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -613,6 +621,7 @@
 							<string key="NSFrame">{{123, 69}, {430, 117}}</string>
 							<reference key="NSSuperview" ref="579117168"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSAntiCompressionPriority">{250, 750}</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="56237824">
@@ -739,6 +748,7 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 				<string key="NSFrameSize">{435, 1}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView"/>
 			</object>
 			<object class="NSMenuItem" id="560175149">
 				<string key="NSTitle">Item</string>
@@ -1031,6 +1041,14 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 					</object>
 					<int key="connectionID">1585</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">refreshAllSessions:</string>
+						<reference key="source" ref="569964129"/>
+						<reference key="destination" ref="109550746"/>
+					</object>
+					<int key="connectionID">1589</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1089,6 +1107,7 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 							<reference ref="1009826342"/>
 							<reference ref="1014350925"/>
 							<reference ref="315896185"/>
+							<reference ref="109550746"/>
 						</object>
 						<reference key="parent" ref="791818499"/>
 					</object>
@@ -1563,6 +1582,11 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 						<reference key="object" ref="926676420"/>
 						<reference key="parent" ref="1056163985"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1586</int>
+						<reference key="object" ref="109550746"/>
+						<reference key="parent" ref="857574433"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1626,6 +1650,7 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 					<string>1574.IBPluginDependency</string>
 					<string>1582.IBPluginDependency</string>
 					<string>1583.IBPluginDependency</string>
+					<string>1586.IBPluginDependency</string>
 					<string>231.IBPluginDependency</string>
 					<string>232.IBPluginDependency</string>
 					<string>232.IBWindowTemplateEditedContentRect</string>
@@ -1648,6 +1673,7 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 				</object>
 				<object class="NSArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1738,7 +1764,7 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1585</int>
+			<int key="maxID">1589</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1756,6 +1782,7 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 							<string>doStopSession:</string>
 							<string>doTunnel:</string>
 							<string>myAccount:</string>
+							<string>refreshAllSessions:</string>
 							<string>showConnectionDialog:</string>
 							<string>showHelp:</string>
 							<string>showLoginDlg:</string>
@@ -1785,6 +1812,7 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
+							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
@@ -1797,6 +1825,7 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 							<string>doStopSession:</string>
 							<string>doTunnel:</string>
 							<string>myAccount:</string>
+							<string>refreshAllSessions:</string>
 							<string>showConnectionDialog:</string>
 							<string>showHelp:</string>
 							<string>showLoginDlg:</string>
@@ -1832,6 +1861,10 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">myAccount:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">refreshAllSessions:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
