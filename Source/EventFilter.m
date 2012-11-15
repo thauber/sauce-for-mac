@@ -417,9 +417,11 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 - (void)sendKey:(int)chr modifier:(int)modifier
 {
     unichar character = chr;
-    [_connection sendModifier:modifier pressed: YES];
+    if(modifier)
+        [_connection sendModifier:modifier pressed: YES];
     [_connection sendKey: character pressed: YES];
-    [_connection sendModifier:modifier pressed: NO];
+    if(modifier)
+        [_connection sendModifier:modifier pressed: NO];
     [_connection sendKey: character pressed: NO];
     [_connection writeBuffer];
 }

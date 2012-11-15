@@ -177,8 +177,20 @@ NSString *kHistoryTabLabel = @"Session History";
         Session *ss = [[sdict objectForKey:@"connection"] session];
         RFBView *rfbView = [ss rfbView];
         // TODO: set params based on os/browser
-        int chr = 114;      // 'r'
-        int modifier = NSControlKeyMask;
+        NSString *os = [sdict objectForKey:@"os"];
+        NSString *browser = [sdict objectForKey:@"browser"];
+        int chr = 114;                      // 'r'    - default
+        int modifier = NSControlKeyMask;    // 'ctrl' - default
+        if([os characterAtIndex:0] == 'W' && [browser characterAtIndex:0] == 'i')
+        {
+            chr = 63240;        // fn+f5 key
+            modifier = 0;       // no modifier
+        }
+        else if([os characterAtIndex:0] == 'M')
+        {
+            modifier = NSCommandKeyMask;        // cmd-R for mac refresh
+            // TODO: what about iphone/ipad?
+        }
         [rfbView sendKey:chr modifier:modifier];    // send event to session's rbfview
     }
 }
