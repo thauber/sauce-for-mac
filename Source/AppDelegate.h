@@ -104,5 +104,6 @@
 - (NSMenuItem *)getFullScreenMenuItem;
 
 - (void)promptForSubscribing:(BOOL)bCause;        // 0=needs more minutes; 1=to get more tabs
+- (NSInteger)prefetchBrowsers;
 
 @end
