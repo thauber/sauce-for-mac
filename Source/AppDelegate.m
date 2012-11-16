@@ -518,6 +518,35 @@
 
 }
 
+-(NSArray*)data2json:(NSData*)data
+{
+    NSMutableArray *jarr = [[[NSMutableArray alloc] init] retain];
+    NSString *jstr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSArray *barr = [jstr componentsSeparatedByString:@"{"];
+    NSEnumerator *ee = [barr objectEnumerator];
+    NSString *jbrwsr;
+    while (jbrwsr = [ee nextObject])
+    {        
+        NSMutableDictionary *bdict = [[NSMutableDictionary alloc] init];
+        NSArray *qarr = [jbrwsr componentsSeparatedByString:@"\""];
+        int qcount = [qarr count];
+        if(qcount<10)
+            continue;
+        int indx = 1;
+        while(indx<qcount)
+        {
+            NSString *qkey = [qarr objectAtIndex:indx];
+            indx += 2;
+            NSString *qval = [qarr objectAtIndex:indx];
+            [bdict setObject:qval forKey:qkey];
+            indx += 2;
+        }
+        [jarr addObject:bdict];
+    }
+
+    return jarr;
+}
+
 // get json data for browsers from server
 - (NSInteger)prefetchBrowsers
 {
@@ -541,11 +570,13 @@
     {
         NSFileHandle *fhand = [fpipe fileHandleForReading];        
         NSData *data = [fhand readDataToEndOfFile];
-        NSError *err;
-        NSArray *jsonArr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&err];
+//        NSError *err;
+//        NSArray *jsonArr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&err];
+        NSArray *jsonArr = [self data2json:data];
         if(jsonArr)
         {
             [self parseBrowsers:jsonArr];
+            [jsonArr release];
             return 1;       // get valid data
         }
         else 
