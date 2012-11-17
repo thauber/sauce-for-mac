@@ -520,9 +520,10 @@
 
 -(NSArray*)data2json:(NSData*)data
 {
-    NSMutableArray *jarr = [[[NSMutableArray alloc] init] retain];
+    NSMutableArray *jarr = [[NSMutableArray alloc] init];
     NSString *jstr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSArray *barr = [jstr componentsSeparatedByString:@"{"];
+    [jstr release];
     NSEnumerator *ee = [barr objectEnumerator];
     NSString *jbrwsr;
     while (jbrwsr = [ee nextObject])
@@ -542,6 +543,7 @@
             indx += 2;
         }
         [jarr addObject:bdict];
+        [bdict release];
     }
 
     return jarr;
@@ -570,8 +572,6 @@
     {
         NSFileHandle *fhand = [fpipe fileHandleForReading];        
         NSData *data = [fhand readDataToEndOfFile];
-//        NSError *err;
-//        NSArray *jsonArr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&err];
         NSArray *jsonArr = [self data2json:data];
         if(jsonArr)
         {
