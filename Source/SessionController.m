@@ -304,12 +304,14 @@
             sel_browser = @"firefox";
             sel_version = [arr objectAtIndex:2];
         }
-        else
+        else        // OSX
         {
-            sel_os = @"Mac 10.6";
             sel_browser = @"iphone";
             sel_version = [arr objectAtIndex:2];
-            
+            if([sel_version hasPrefix:@"5.1"] || [sel_version hasPrefix:@"6"])
+                sel_os = @"Mac 10.8";
+            else
+                sel_os = @"Mac 10.6";            
         }
     }
     else
