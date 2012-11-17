@@ -78,7 +78,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
     // timeout if can't get credentials from server
-    NSTimer *authTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(cancelPreAuthorize:) userInfo:sdict repeats:NO];
+    NSTimer *authTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(cancelPreAuthorize:) userInfo:sdict repeats:NO];
 
     [sdict setObject:authTimer forKey:@"authTimer"];
     NSString *os = [sdict objectForKey:@"os"];
