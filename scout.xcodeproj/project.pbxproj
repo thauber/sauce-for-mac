@@ -110,6 +110,7 @@
 		0F48D0C9157528950067B689 /* snapProgress.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F48D0C8157528950067B689 /* snapProgress.xib */; };
 		0F48D0CD157528C20067B689 /* SnapProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F48D0CB157528C20067B689 /* SnapProgress.h */; };
 		0F48D0CE157528C20067B689 /* SnapProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F48D0CC157528C20067B689 /* SnapProgress.m */; };
+		0F4BD8C6165AF781000D61AF /* subscriber-5_demo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F4BD8C5165AF781000D61AF /* subscriber-5_demo.xib */; };
 		0F4D1E7B164EDE7600A85404 /* SauceLinkTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F4D1E79164EDE7600A85404 /* SauceLinkTextField.h */; };
 		0F4D1E7C164EDE7600A85404 /* SauceLinkTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4D1E7A164EDE7600A85404 /* SauceLinkTextField.m */; };
 		0F4F460B15EC622100773D93 /* an28.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4F45FF15EC622100773D93 /* an28.png */; };
@@ -519,6 +520,7 @@
 		0F48D0C8157528950067B689 /* snapProgress.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = snapProgress.xib; path = Resources/snapProgress.xib; sourceTree = "<group>"; };
 		0F48D0CB157528C20067B689 /* SnapProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapProgress.h; sourceTree = "<group>"; };
 		0F48D0CC157528C20067B689 /* SnapProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapProgress.m; sourceTree = "<group>"; };
+		0F4BD8C5165AF781000D61AF /* subscriber-5_demo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "subscriber-5_demo.xib"; path = "Resources/subscriber-5_demo.xib"; sourceTree = "<group>"; };
 		0F4D1E79164EDE7600A85404 /* SauceLinkTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SauceLinkTextField.h; sourceTree = "<group>"; };
 		0F4D1E7A164EDE7600A85404 /* SauceLinkTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SauceLinkTextField.m; sourceTree = "<group>"; };
 		0F4F45FF15EC622100773D93 /* an28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = an28.png; path = Resources/an28.png; sourceTree = "<group>"; };
@@ -1026,6 +1028,7 @@
 				0F3957C115CC560900C04D57 /* subscriber-4.xib */,
 				0F3957C315CC5AA000C04D57 /* subscriber-5.xib */,
 				0F865E50163A609800E650D0 /* subscriber-3_demo.xib */,
+				0F4BD8C5165AF781000D61AF /* subscriber-5_demo.xib */,
 				0F3957BC15CC4EE600C04D57 /* subscriber.xib */,
 				0F3E248F163B13AF0053E6E6 /* waitSession.xib */,
 				0F3A18D015617D39007BAA78 /* tunnel.xib */,
@@ -1725,6 +1728,7 @@
 				0F3E2490163B13AF0053E6E6 /* waitSession.xib in Resources */,
 				0FD9FF7B1640BDAF001583AD /* Sauce.entitlements in Resources */,
 				0F58FCB1164C214100494955 /* SessionController_demo.xib in Resources */,
+				0F4BD8C6165AF781000D61AF /* subscriber-5_demo.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
