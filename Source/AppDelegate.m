@@ -47,6 +47,7 @@
 {
 	// make sure our singleton key equivalent manager is initialized, otherwise, it won't watch the frontmost window
 	[KeyEquivalentManager defaultManager];
+    self.noTunnel = YES;        // no tunnel connection at startup
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification

@@ -36,7 +36,12 @@
         if(INAPPSTORE)              // appstore version
         {
             if(bDemo)
-                nibname = @"subscriber-3_demo";      // demo account subscribe request
+            {
+                if(type==0)
+                    nibname = @"subscriber-3_demo";      // out of minutes
+                else if(type==1)
+                    nibname = @"subscriber-5_demo";      // out of tabs
+            }
             else
             {
                 if(type==0)

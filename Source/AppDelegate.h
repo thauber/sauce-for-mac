@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "SaucePreconnect.h"
 
-#define INAPPSTORE 0
+#define INAPPSTORE 1
 #define kDemoAccountName @"sauce_for_mac"
 
 @class SessionController;
