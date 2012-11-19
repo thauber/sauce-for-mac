@@ -347,7 +347,7 @@
 
     NSURL *uurl = [NSURL URLWithString:urlstr];
     BOOL noTunnel = [[NSApp delegate] noTunnel];
-    if(uurl && !noTunnel)        // check for localhost
+    if(uurl && noTunnel)        // check for localhost
     {
         NSString *uhost = [uurl host];
         BOOL isLocalURL;
