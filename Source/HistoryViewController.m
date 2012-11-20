@@ -55,8 +55,9 @@
     NSIndexSet *cind = [NSIndexSet indexSetWithIndex:4];    // runtime into column=4
     [tableView reloadDataForRowIndexes:rind columnIndexes:cind];
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
-    NSInteger runMins = [defs integerForKey:@"demoRunMins"];
-    if([[NSApp delegate] isDemoAccount] && mins>(10-runMins))     // time is up for demo session
+    secs += mins*60;        // #seconds of run time
+    secs += [defs integerForKey:@"demoRunSecs"];         // add previous #demo seconds
+    if([[NSApp delegate] isDemoAccount] && secs>600)     // time is up for demo session
     {
         [[ScoutWindowController sharedScout] closeTab:nil];
         [[NSApp delegate] promptForSubscribing:NO];
@@ -73,17 +74,15 @@
     [tableView reloadDataForRowIndexes:rind columnIndexes:cind];
     // update #demo minutes used
     time_t start = [[rarr objectAtIndex:5] longValue];   // start time of session
-    int hrs, mins;
-    time_t rawtime, tt;
+    int secs;
+    time_t rawtime;
     time(&rawtime);
-    tt = rawtime - start;
-    hrs = tt/3600;
-    mins =  (tt-(hrs*3600))/60;
+    secs = rawtime - start;
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
-    mins += [defs integerForKey:@"demoRunMins"];
-    if(mins>10)     // no more demo time until waiting
-        mins = 10;
-    [defs setInteger:mins forKey:@"demoRunMins"];
+    secs += [defs integerForKey:@"demoRunSecs"];            
+    if(secs > 600)     // no more demo time until waiting
+        secs = 600;
+    [defs setInteger:secs forKey:@"demoRunSecs"];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView

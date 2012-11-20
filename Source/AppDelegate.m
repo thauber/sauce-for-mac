@@ -49,7 +49,7 @@
 	[KeyEquivalentManager defaultManager];
     self.noTunnel = YES;        // no tunnel connection at startup
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
-    [defs setInteger:0 forKey:@"demoRunMins"];      // #demo minutes used
+    [defs setInteger:0 forKey:@"demoRunSecs"];      // #demo minutes used
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -275,9 +275,9 @@
         time(&tm);
         NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
         [defs setInteger:tm forKey:@"demoLastTime"];
-        NSInteger runMins = [defs integerForKey:@"demoRunMins"];
-        if(runMins >= 10)   // we allowed this session even though used 10 minutes run time,
-            [defs setInteger:0 forKey:@"demoRunMins"];      // means we have waited long enough
+        NSInteger runSecs = [defs integerForKey:@"demoRunSecs"];
+        if(runSecs >= 600)   // we allowed this session even though used 10 minutes run time,
+            [defs setInteger:0 forKey:@"demoRunSecs"];      // means we have waited long enough
 
         // track demo account version
         NSString *job = [sdict objectForKey:@"jobId"];
@@ -353,10 +353,10 @@
 {
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
     NSInteger lastTime = [defs integerForKey:@"demoLastTime"];
-    NSInteger runMins = [defs integerForKey:@"demoRunMins"];
+    NSInteger runSecs = [defs integerForKey:@"demoRunSecs"];
     if(lastTime==0)     // not recorded a time, so its ok
         return -1;
-    if(runMins < 10)    // haven't used up the allotted 10 minutes before having to wait
+    if(runSecs < 600)    // haven't used up the allotted 10 minutes before having to wait
         return -1;
     time_t rawtime, tt;
     time(&rawtime);
