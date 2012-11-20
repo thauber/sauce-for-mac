@@ -363,13 +363,7 @@
         }
         if(![[NSApp delegate] tunnelCtrlr] && isLocalURL)       // prompt for opening tunnel
         {
-            if([self canReachIP:uhost])
-            {
                 NSBeginAlertSheet(@"Are you testing an intranet site?", @"Yes", @"No", nil, [NSApp keyWindow], self,nil, @selector(tunnelDidDismiss:returnCode:contextInfo:), sdict, @"Do you wish to use Sauce Connect, our secure tunnel for accessing your local servers?"); 
-            }
-            else {                
-                NSBeginAlertSheet(@"Can't Reach IP", @"Okay", nil, nil, [NSApp keyWindow], self,nil, @selector(endCantReachIP:returnCode:contextInfo:), NULL, @"Check connection and IP address");
-            }
         }
         else 
             [[NSApp delegate] startConnecting:sdict];
@@ -398,22 +392,6 @@
             [self runSheet];
             return;
     }
-}
-
--(BOOL)canReachIP:(NSString*)host
-{
-    NSTask *ftask = [[[NSTask alloc] init] autorelease];
-    NSPipe *fpipe = [NSPipe pipe];
-    [ftask setStandardOutput:fpipe];
-    [ftask setStandardError:fpipe];
-    [ftask setLaunchPath:@"/bin/bash"];
-    NSString *arg = [NSString stringWithFormat:@"ping -o -t3 %@",host];
-    [ftask setArguments:[NSArray arrayWithObjects:@"-c", arg, nil]];
-    [ftask launch];
-    [ftask waitUntilExit];
-    if([ftask terminationStatus])
-        return NO;
-    return YES;
 }
    
 - (void)showError:(NSString *)errStr
