@@ -54,7 +54,9 @@
     NSIndexSet *rind = [NSIndexSet indexSetWithIndex:index];
     NSIndexSet *cind = [NSIndexSet indexSetWithIndex:4];    // runtime into column=4
     [tableView reloadDataForRowIndexes:rind columnIndexes:cind];
-    if([[NSApp delegate] isDemoAccount] && mins>10)     // time is up for demo session
+    NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
+    NSInteger runMins = [defs integerForKey:@"demoRunMins"];
+    if([[NSApp delegate] isDemoAccount] && mins>(10-runMins))     // time is up for demo session
     {
         [[ScoutWindowController sharedScout] closeTab:nil];
         [[NSApp delegate] promptForSubscribing:NO];
@@ -69,6 +71,19 @@
     NSIndexSet *rind = [NSIndexSet indexSetWithIndex:index];
     NSIndexSet *cind = [NSIndexSet indexSetWithIndex:0];
     [tableView reloadDataForRowIndexes:rind columnIndexes:cind];
+    // update #demo minutes used
+    time_t start = [[rarr objectAtIndex:5] longValue];   // start time of session
+    int hrs, mins;
+    time_t rawtime, tt;
+    time(&rawtime);
+    tt = rawtime - start;
+    hrs = tt/3600;
+    mins =  (tt-(hrs*3600))/60;
+    NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
+    mins += [defs integerForKey:@"demoRunMins"];
+    if(mins>10)     // no more demo time until waiting
+        mins = 10;
+    [defs setInteger:mins forKey:@"demoRunMins"];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView

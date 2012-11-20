@@ -48,6 +48,8 @@
 	// make sure our singleton key equivalent manager is initialized, otherwise, it won't watch the frontmost window
 	[KeyEquivalentManager defaultManager];
     self.noTunnel = YES;        // no tunnel connection at startup
+    NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
+    [defs setInteger:0 forKey:@"demoRunMins"];      // #demo minutes used
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -273,6 +275,10 @@
         time(&tm);
         NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
         [defs setInteger:tm forKey:@"demoLastTime"];
+        NSInteger runMins = [defs integerForKey:@"demoRunMins"];
+        if(runMins >= 10)   // we allowed this session even though used 10 minutes run time,
+            [defs setInteger:0 forKey:@"demoRunMins"];      // means we have waited long enough
+
         // track demo account version
         NSString *job = [sdict objectForKey:@"jobId"];
         NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
@@ -347,12 +353,15 @@
 {
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
     NSInteger lastTime = [defs integerForKey:@"demoLastTime"];
-    if(lastTime==0)
+    NSInteger runMins = [defs integerForKey:@"demoRunMins"];
+    if(lastTime==0)     // not recorded a time, so its ok
+        return -1;
+    if(runMins < 10)    // haven't used up the allotted 10 minutes before having to wait
         return -1;
     time_t rawtime, tt;
     time(&rawtime);
     tt = rawtime - lastTime;
-    int mins = 30 - (tt/60);       // #seconds divided by 60 is #minutes left
+    int mins = 30 - (tt/60);       // #seconds divided by 60 is #minutes since last run
     return mins;
 }
 
