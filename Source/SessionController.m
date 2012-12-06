@@ -54,7 +54,10 @@
     else        // never connected
     {
         [connectBtn setEnabled:NO];
-        sessionIndxs[curTabIndx] = 6;           // default is firefox 9    
+        if([[NSApp delegate] isDemoAccount])
+            sessionIndxs[curTabIndx] = 0;
+        else
+            sessionIndxs[curTabIndx] = 6;           // default is firefox 9
     }
 
     [self setupFromConfig];
@@ -89,8 +92,6 @@
 // read config to get os/browsers; create rects; store it all
 - (void)setupFromConfig
 {
-//    BOOL bDemo = [[NSApp delegate] isDemoAccount];
-    
     configWindows = [[NSApp delegate] configWindows];      // os/browsers for windows
     configLinux = [[NSApp delegate] configLinux];          // os/browsers for linux
     configOSX = [[NSApp delegate] configOSX];              // os/browsers for osx

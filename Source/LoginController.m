@@ -117,6 +117,7 @@
     {
         uname = kDemoAccountName;       // defined in AppDelegate.h
         aaccountkey = kDemoAccountKey;
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kSessionURL];
     }
     else
     {
