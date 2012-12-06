@@ -140,7 +140,8 @@
     [ftask setStandardOutput:fpipe];
     [ftask setLaunchPath:@"/bin/bash"];
     [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-    NSString *cdir = [NSString stringWithFormat:@"%@/Library/Logs",NSHomeDirectory()];
+    
+    NSString *cdir = [@"~/Library/Logs" stringByExpandingTildeInPath];
     [ftask setCurrentDirectoryPath:cdir];
     self.fhand = [fpipe fileHandleForReading];        
     [[NSNotificationCenter defaultCenter] addObserver: self
