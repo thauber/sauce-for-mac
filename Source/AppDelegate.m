@@ -389,7 +389,7 @@
 
 - (IBAction)showHelp: (id)sender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://saucelabs.com/scoutdesktop"]]; 
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://saucelabs.com/mac/help"]]; 
 }
 
 - (IBAction)refreshAllSessions:(id)sender
