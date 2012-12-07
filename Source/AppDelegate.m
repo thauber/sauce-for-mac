@@ -665,24 +665,38 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
     NSString *browser;
     NSString *version;
     NSString *active;
+    BOOL bMacgoogleVer = NO;
+    
     for(NSDictionary *dict in sarr)
     {
         osStr   = [dict objectForKey:@"os"];
         browser = [dict objectForKey:@"name"];
         version = [dict objectForKey:@"short_version"];
         if(![version length])
+        {
             version=@"*";
+            if([osStr hasPrefix:@"M"] && [browser hasPrefix:@"g"])
+            {
+                if(!bMacgoogleVer)
+                    bMacgoogleVer = YES;    // only have 1 mac google item
+                else
+                    continue;
+            }
+        }
         BOOL bActive = YES;
         if(bDemo)
         {
             if([osStr hasPrefix:@"W"])
             {
-                if(![browser hasPrefix:@"I"])
-                    active = @"NO";
-                if(   ![version isEqualToString:@"6"]
-                   && ![version isEqualToString:@"7"]
-                   && ![version isEqualToString:@"8"])
-                    bActive = NO;
+                if([browser hasPrefix:@"i"])
+                {
+                    if(![version isEqualToString:@"6"]
+                       && ![version isEqualToString:@"7"]
+                       && ![version isEqualToString:@"8"])
+                        bActive = NO;
+                }
+                else
+                    bActive = NO;                
             }
             else
             {
