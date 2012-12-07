@@ -41,7 +41,7 @@
 {
     // use last used values from prefs
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(textDidChange:) name: NSTextDidChangeNotification object: nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(textDidChange:) name: NSTextDidChangeNotification object: nil];
     curTabIndx = [defs integerForKey:kCurTab];
     sessionIndxs[tt_windows] = [defs integerForKey:kSessionIndxWin];
     sessionIndxs[tt_linux] =   [defs integerForKey:kSessionIndxLnx];
@@ -53,7 +53,7 @@
         [self.url setStringValue:urlstr];
     else        // never connected
     {
-        [connectBtn setEnabled:NO];
+//        [connectBtn setEnabled:NO];
         if([[NSApp delegate] isDemoAccount])
             sessionIndxs[curTabIndx] = 0;
         else
@@ -273,6 +273,14 @@
 
 -(IBAction)connect:(id)sender 
 {        
+    NSString *urlstr = [self.url stringValue];
+    
+    if(![urlstr length])
+    {
+        [url becomeFirstResponder];
+        return;
+    }
+
     NSInteger rr = [browserTbl selectedRowInColumn:1];
     NSArray *brarr;
     BOOL bDemo = [[NSApp delegate] isDemoAccount];
@@ -330,8 +338,6 @@
         if([sel_version isEqualToString:@"*"])
             sel_version = @"";
     }
-
-    NSString *urlstr = [self.url stringValue];
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:urlstr  forKey:kSessionURL];
