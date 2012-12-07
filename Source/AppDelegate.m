@@ -28,6 +28,7 @@
 @synthesize subscribeMenuItem;
 @synthesize tunnelMenuItem;
 @synthesize viewConnectMenuItem;
+@synthesize separatorMenuItem;
 @synthesize noTunnel;
 
 @synthesize optionsCtrlr;
@@ -62,6 +63,7 @@
     if(INAPPSTORE)
     {
         [subscribeMenuItem setHidden:YES];
+        [separatorMenuItem setHidden:YES];
     }
     BOOL bDemo = [self isDemoAccount];
     if(bDemo)
