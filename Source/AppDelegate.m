@@ -63,6 +63,10 @@
     {
         [subscribeMenuItem setHidden:YES];
     }
+    BOOL bDemo = [self isDemoAccount];
+    if(bDemo)
+        [tunnelMenuItem setAction:nil];
+    
     [viewConnectMenuItem setAction:nil];
     [[ScoutWindowController sharedScout] showWindow:nil];
 
@@ -475,6 +479,10 @@
 
 - (void)toggleTunnelDisplay
 {
+    BOOL bDemo = [self isDemoAccount];
+    if(bDemo)
+        return;
+
     if(tunnelCtrlr)
     {
         [tunnelMenuItem setTitle:@"Stop Sauce Connect"];
