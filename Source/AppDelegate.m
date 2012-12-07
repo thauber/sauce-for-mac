@@ -519,7 +519,7 @@
 
 - (IBAction)bugsAccount:(id)sender 
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.saucelabs.com/bugs"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.saucelabs.com/snapshots"]];
 }
 
 - (void)promptForSubscribing:(BOOL)bCause        // 0=needs more minutes; 1=to get more tabs
