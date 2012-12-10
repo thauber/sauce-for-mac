@@ -38,7 +38,7 @@ NSString *kSessionIndxMbl = @"sessionIndxMbl";
 NSString *kCurTab = @"lastCurrentTab";
 NSString *kSauceLabsHost = @"tv1.saucelabs.com";    // fixed host for connection
 //NSString *kSauceLabsHost = @"admc.dev.saucelabs.com";    // fixed host for connection
-int kPorts[4] = {5901, 80, 443, 6080};                      // fixed port for connection
+int kPorts[3] = {5901, 80, 443};                      // fixed port for connection
 
 
 static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
