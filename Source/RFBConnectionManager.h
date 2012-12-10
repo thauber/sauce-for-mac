@@ -36,7 +36,7 @@ extern NSString *kSessionIndxMac;
 extern NSString *kSessionIndxMbl;
 extern NSString *kCurTab;
 extern NSString *kSauceLabsHost;        // fixed host for connection
-extern int kPort;
+extern int kPorts[4];
 
 @interface RFBConnectionManager : NSWindowController<ConnectionWaiterDelegate>
 {

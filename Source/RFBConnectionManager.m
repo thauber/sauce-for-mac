@@ -38,7 +38,7 @@ NSString *kSessionIndxMbl = @"sessionIndxMbl";
 NSString *kCurTab = @"lastCurrentTab";
 NSString *kSauceLabsHost = @"tv1.saucelabs.com";    // fixed host for connection
 //NSString *kSauceLabsHost = @"admc.dev.saucelabs.com";    // fixed host for connection
-int kPort = 5901;                                   // fixed port for connection
+int kPorts[4] = {5901, 80, 443, 6080};                      // fixed port for connection
 
 
 static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
@@ -93,6 +93,7 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
     [sdict setObject:@"Failed Connection" forKey:@"errorString"];
     [[SaucePreconnect sharedPreconnect] cancelPreAuthorize:sdict];
     [[ScoutWindowController sharedScout] closeTab:sdict];
+    NSBeginAlertSheet(@"Failed Connection", @"Ok", nil, nil, [[ScoutWindowController sharedScout] window], self, nil, nil, nil, @"Check your internet connection - or Sauce Labs server may be down");
 }
 
 - (void)cancelConnection:(NSMutableDictionary*)sdict

@@ -52,7 +52,12 @@
     if (self = [super init])
     {
         host = kSauceLabsHost;        // fixed value
-        port = kPort;
+        port = [self checkHost:host];
+        if(!port)
+        {
+            [self release];
+            return nil;
+        }
 
         lock = [[NSLock alloc] init];
         currentSock = -1;
@@ -71,6 +76,26 @@
     [lock release];
     [errorStr release];
     [super dealloc];
+}
+
+- (int)checkHost:(NSString*)ahost
+{
+    for(int i=0;i<4;i++)
+    {
+        NSTask *ftask = [[[NSTask alloc] init] autorelease];
+        NSPipe *fpipe = [NSPipe pipe];
+        [ftask setStandardOutput:fpipe];
+        [ftask setLaunchPath:@"/bin/bash"];
+        NSString *farg = [NSString stringWithFormat:@"telnet %@ %d",ahost, kPorts[i]];
+        [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+        [ftask launch];		
+        NSFileHandle *fhand = [fpipe fileHandleForReading];                
+        NSData *data = [fhand readDataOfLength:40];
+        NSString *rstr = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+        if([rstr rangeOfString:@"Connected"].location != NSNotFound)
+            return kPorts[i];        
+    }
+    return 0;
 }
 
 - (void)setErrorStr:(NSString *)str
