@@ -248,6 +248,12 @@ NSString *kHistoryTabLabel = @"Session History";
     return proposedFrameSize;
 }
 
+- (void)paste:(id)sender
+{
+    if(curSession)
+        [curSession paste:sender];
+}
+
 #pragma mark -
 
 -(void)toggleToolbar
