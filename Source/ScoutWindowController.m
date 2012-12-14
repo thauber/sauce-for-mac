@@ -491,6 +491,9 @@ NSString *kHistoryTabLabel = @"Session History";
     {
         [playstop setEnabled:NO];
         [bugsnap setEnabled:NO];
+        BOOL bDemo = [[NSApp delegate] isDemoAccount];
+        if(bDemo)
+            [tunnelButton setEnabled:NO];
         curSession = nil;
         // hide text in statusbar and messagebox
         [timeRemainingStat setStringValue:@""];
