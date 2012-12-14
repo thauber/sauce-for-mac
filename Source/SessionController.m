@@ -403,7 +403,7 @@
    
 - (void)showError:(NSString *)errStr
 {
-    NSBeginAlertSheet(@"Session Options Error", @"Okay", nil, nil, [NSApp keyWindow], self,nil, NULL, NULL, errStr);    
+    NSBeginAlertSheet(@"Session Options Error", @"Okay", nil, nil, [NSApp keyWindow], self,nil, NULL, NULL, @"%@",errStr);    
 }
 
 - (IBAction)visitSauce:(id)sender

@@ -310,7 +310,7 @@
         theAction = errorStr;
 
 	NSString *ok = NSLocalizedString( @"Okay", nil );
-    NSBeginAlertSheet(theAction, ok, nil, nil, [[ScoutWindowController sharedScout] window], self, @selector(errorDidEnd:returnCode:contextInfo:), NULL, NULL, message);
+    NSBeginAlertSheet(theAction, ok, nil, nil, [[ScoutWindowController sharedScout] window], self, @selector(errorDidEnd:returnCode:contextInfo:), NULL, NULL, @"%@",message);
 }
 
 - (void)errorDidEnd:(NSWindow *)sheet returnCode:(int)returnCode

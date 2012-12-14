@@ -67,7 +67,10 @@
     }
     BOOL bDemo = [self isDemoAccount];
     if(bDemo)
+    {
         [tunnelMenuItem setAction:nil];
+        [[[ScoutWindowController sharedScout]  tunnelButton] setEnabled:NO];
+    }
     
     [viewConnectMenuItem setAction:nil];
     [[ScoutWindowController sharedScout] showWindow:nil];
@@ -152,7 +155,7 @@
 
     // uncomment 2 lines below to check arguments in alert panel
 //    NSString *args = [NSString stringWithFormat:@"-o %@ -b %@ -v %@ -c %@", cmdOS,cmdBrowser,cmdVersion,cmdConnect];
-//    NSBeginAlertSheet(@"Command Line Args", @"Okay", nil, nil, [NSApp keyWindow], self,nil, NULL, NULL, args);
+//    NSBeginAlertSheet(@"Command Line Args", @"Okay", nil, nil, [NSApp keyWindow], self,nil, NULL, NULL, @"%@",args);
 
 }
 
@@ -309,7 +312,7 @@
     {
         NSString *header = NSLocalizedString( @"Connection Status", nil );
         NSString *okayButton = NSLocalizedString( @"Ok", nil );
-        NSBeginAlertSheet(header, okayButton, nil, nil, [[ScoutWindowController sharedScout] window], self, nil, nil, nil, errMsg);
+        NSBeginAlertSheet(header, okayButton, nil, nil, [[ScoutWindowController sharedScout] window], self, nil, nil, nil, @"%@",errMsg);
     }
 }
 
@@ -607,7 +610,7 @@
         msg = @"Failed connection to server";
     else
         msg = @"Can't retrieve browser data";
-    NSBeginAlertSheet(@"Browser Data", @"Ok", nil, nil, [[ScoutWindowController sharedScout] window], self, nil, nil, nil, msg);
+    NSBeginAlertSheet(@"Browser Data", @"Ok", nil, nil, [[ScoutWindowController sharedScout] window], self, nil, nil, nil, @"%@",msg);
     return bres;
 }
 

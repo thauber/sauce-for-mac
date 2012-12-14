@@ -145,7 +145,7 @@
         else 
         {
             // alert for bad login
-            NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [NSApp keyWindow], self,@selector(redoLogin:returnCode:contextInfo:), NULL, NULL, errStr);
+            NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [NSApp keyWindow], self,@selector(redoLogin:returnCode:contextInfo:), NULL, NULL, @"%@",errStr);
         }
     }
     else
