@@ -295,7 +295,7 @@
     NSString *sel_resolution;
     
     sel_resolution = [[browserTbl selectedCellInColumn:2] stringValue];
-    if(!sel_resolution)
+    if(!sel_resolution)     // TODO: figure out which one is 1024x768
         sel_resolution = [browserTbl itemAtRow:0 inColumn:2];
     
     if(bDemo)
@@ -359,7 +359,7 @@
     [defaults setInteger:resolutionIndxs[tt_linux] forKey:kResolutionIndxLnx];
     [defaults setInteger:resolutionIndxs[tt_apple] forKey:kResolutionIndxMac];
 
-    NSMutableDictionary *sdict = [[SaucePreconnect sharedPreconnect] setOptions:sel_os browser:sel_browser browserVersion:sel_version url:urlstr];
+    NSMutableDictionary *sdict = [[SaucePreconnect sharedPreconnect] setOptions:sel_os browser:sel_browser browserVersion:sel_version url:urlstr resolution:sel_resolution];
     [NSApp endSheet:panel];
     [panel orderOut:nil];    
 

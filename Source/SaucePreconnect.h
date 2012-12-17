@@ -33,7 +33,7 @@ extern NSString *kSauceLabsDomain;
 - (void)preAuthorize:(NSMutableDictionary*)sdict;
 -(NSString *)jsonVal:(NSString *)json key:(NSString *)key;
 - (NSMutableDictionary*)setOptions:(NSString*)os browser:(NSString*)browser 
-                    browserVersion:(NSString*)version url:(NSString*)url;
+                    browserVersion:(NSString*)version url:(NSString*)url resolution:(NSString*)resolution;
 -(void)cancelPreAuthorize:(id)tm;
 -(void)sessionClosed:(NSMutableDictionary*)sdict;
 -(NSMutableDictionary*)sessionInfo:(id)view;

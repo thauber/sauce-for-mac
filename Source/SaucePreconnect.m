@@ -55,14 +55,14 @@ static SaucePreconnect* _sharedPreconnect = nil;
 
 // sdict state: 0=os/browser/url; -1=secret/liveId; 1=connected
 - (NSMutableDictionary*)setOptions:(NSString*)os browser:(NSString*)browser 
-    browserVersion:(NSString*)browserVersion url:(NSString*)urlStr
+browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSString*)resolution
 {
     NSString *osbvStr = [NSString stringWithFormat:@"%@/%@ %@",os,browser,browserVersion];
     NSMutableDictionary *sdict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                                   [NSNumber numberWithInt:0], @"state", user, @"user", ukey, @"ukey",
                                   osbvStr, @"osbv", urlStr, @"url", 
                                   os, @"os", browser, @"browser", browserVersion, @"browserVersion", 
-                                  @"2:00:00", @"remainingTime", nil];    
+                                  @"2:00:00", @"remainingTime", resolution, @"resolution", nil];
 
     if(!credArr)
     {
@@ -85,7 +85,8 @@ static SaucePreconnect* _sharedPreconnect = nil;
     NSString *browser = [sdict objectForKey:@"browser"];
     NSString *browserVersion = [sdict objectForKey:@"browserVersion"];
     NSString *urlStr = [sdict objectForKey:@"url"];
-    NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@%@/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\"}'", self.user, self.ukey,kSauceLabsDomain, user, os, browser, browserVersion, urlStr];
+    NSString *resolution = [sdict objectForKey:@"resolution"];
+    NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@%@/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\", \"res\":\"%@\",\"tags\":[\"sauce-for-mac\"]}'", self.user, self.ukey,kSauceLabsDomain, user, os, browser, browserVersion, urlStr, resolution];
 
     NSString *errStr = nil;
     while(1)
