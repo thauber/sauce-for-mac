@@ -49,6 +49,7 @@
     NSString *cmdBrowser;
     NSString *cmdVersion;
     NSString *cmdURL;
+    NSString *cmdResolution;
     NSString *cmdConnect;
 }
 @property (assign) IBOutlet NSPanel *infoPanel;

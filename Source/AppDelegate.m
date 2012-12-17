@@ -151,6 +151,11 @@
     if(!cmdURL) return;
     
     cmdConnect = [standardDefaults stringForKey:@"c"];
+    
+    cmdResolution = [standardDefaults stringForKey:@"res"];
+    if(!cmdResolution)
+        cmdResolution = @"1024x768";
+    
     bCommandline = YES;
 
     // uncomment 2 lines below to check arguments in alert panel
@@ -495,7 +500,7 @@
         [[[ScoutWindowController sharedScout] tunnelButton] setTitle:@"Stop Sauce Connect"];
         if(bCommandline)
         {
-            NSMutableDictionary *sdict = [[SaucePreconnect sharedPreconnect] setOptions:cmdOS browser:cmdBrowser browserVersion:cmdVersion url:cmdURL];
+            NSMutableDictionary *sdict = [[SaucePreconnect sharedPreconnect] setOptions:cmdOS browser:cmdBrowser browserVersion:cmdVersion url:cmdURL resolution:cmdResolution];
             [self startConnecting:sdict];            
         }
     }
