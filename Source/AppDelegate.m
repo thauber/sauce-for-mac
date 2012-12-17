@@ -550,20 +550,45 @@
     NSEnumerator *ee = [barr objectEnumerator];
     NSString *jbrwsr;
     while (jbrwsr = [ee nextObject])
-    {        
-        NSMutableDictionary *bdict = [[NSMutableDictionary alloc] init];
-        NSArray *qarr = [jbrwsr componentsSeparatedByString:@"\""];
-        int qcount = [qarr count];
-        if(qcount<10)
+    {
+        if([jbrwsr length] < 4)     // skip leading left bracket
             continue;
-        int indx = 1;
+        NSMutableDictionary *bdict = [[NSMutableDictionary alloc] init];
+        NSArray *qarr = [jbrwsr componentsSeparatedByString:@":"];
+        int qcount = [qarr count];
+        int indx = 0;
+        NSString *qvalkey = [qarr objectAtIndex:indx++];     // first key
+        NSArray *valkey = [qvalkey componentsSeparatedByString:@"\""];
+        NSString *key = [valkey objectAtIndex:1];
         while(indx<qcount)
         {
-            NSString *qkey = [qarr objectAtIndex:indx];
-            indx += 2;
-            NSString *qval = [qarr objectAtIndex:indx];
-            [bdict setObject:qval forKey:qkey];
-            indx += 2;
+            NSString *qvalkey = [qarr objectAtIndex:indx++];
+            if([qvalkey hasPrefix:@" ["])     // value is an array
+            {
+                valkey = [qvalkey componentsSeparatedByString:@"\""];
+                NSMutableArray *rarr = [[NSMutableArray alloc] init];
+                int rcount = [valkey count];
+                int rindx = 1;
+                while(rindx<rcount)
+                {
+                    [rarr addObject:[valkey objectAtIndex:rindx]];
+                    if([[valkey objectAtIndex:++rindx] hasPrefix:@"]"])
+                        break;
+                     rindx++;
+                }
+                [bdict setObject:rarr forKey:key];
+                [rarr release];
+                key = [valkey objectAtIndex:++rindx];
+            }
+            else
+            {
+                valkey = [qvalkey componentsSeparatedByString:@"\""];
+                NSString *val = [valkey objectAtIndex:1];
+                [bdict setObject:val forKey:key];
+                if([valkey count]<4)
+                    break;
+                key = [valkey objectAtIndex:3];
+            }
         }
         [jarr addObject:bdict];
         [bdict release];
@@ -577,36 +602,29 @@
 {
     NSInteger bres = -1;
 
-    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@/rest/v1/info/scout' -H 'Content-Type: application/json'", kSauceLabsDomain];
+//    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@/rest/v1/info/scout' -H 'Content-Type: application/json'", kSauceLabsDomain];
+    NSString *farg = [NSString stringWithFormat:@"curl 'http://%@/rest/v1.1/info/browsers' -H 'Content-Type: application/json'", kSauceLabsDomain];
     
     NSTask *ftask = [[[NSTask alloc] init] autorelease];
     NSPipe *fpipe = [NSPipe pipe];
     [ftask setStandardOutput:fpipe];
     [ftask setLaunchPath:@"/bin/bash"];
     [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-    [ftask launch];		// fetch live id
-    [ftask waitUntilExit];
-    if([ftask terminationStatus])
+    [ftask launch];		// fetch json browser data  NB: hangs if call 'waitUntilExit'
+    NSFileHandle *fhand = [fpipe fileHandleForReading];        
+    NSData *data = [fhand readDataToEndOfFile];
+    NSArray *jsonArr = [self data2json:data];
+    if(jsonArr)
     {
-        NSLog(@"failed NSTask");
-        bres = -1;
+        [self parseBrowsers:jsonArr];
+        [jsonArr release];
+        return 1;       // get valid data
     }
-    else
-    {
-        NSFileHandle *fhand = [fpipe fileHandleForReading];        
-        NSData *data = [fhand readDataToEndOfFile];
-        NSArray *jsonArr = [self data2json:data];
-        if(jsonArr)
-        {
-            [self parseBrowsers:jsonArr];
-            [jsonArr release];
-            return 1;       // get valid data
-        }
-        else 
-            bres = 0;   // didn't get valid data
-    }    
+    else 
+        bres = 0;   // didn't get valid data
+    
     NSString *msg;
-    if(bres==-1)
+    if(bres==-1)        // NB: not getting this value anymore
         msg = @"Failed connection to server";
     else
         msg = @"Can't retrieve browser data";
@@ -620,13 +638,18 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
     NSComparisonResult res = NSOrderedSame;
     NSDictionary *dict1 = arg1;
     NSDictionary *dict2 = arg2;
-    NSString *OS1 = [dict1 objectForKey:@"os_display"];
-    NSString *OS2 = [dict2 objectForKey:@"os_display"];
+//    NSString *OS1 = [dict1 objectForKey:@"os_display"];
+//    NSString *OS2 = [dict2 objectForKey:@"os_display"];
+    NSString *OS1 = [dict1 objectForKey:@"os"];
+    NSString *OS2 = [dict2 objectForKey:@"os"];
     res = [OS1 compare:OS2];
     if(res != NSOrderedSame)
         return res;
-    NSString *name1 = [dict1 objectForKey:@"name"];
-    NSString *name2 = [dict2 objectForKey:@"name"];
+//    NSString *name1 = [dict1 objectForKey:@"name"];
+//    NSString *name2 = [dict2 objectForKey:@"name"];
+    NSString *name1 = [dict1 objectForKey:@"api_name"];
+    NSString *name2 = [dict2 objectForKey:@"api_name"];
+
     res = [name1 compare:name2];
     if(res != NSOrderedSame)
         return res;
@@ -667,14 +690,18 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
     NSString *osStr;
     NSString *browser;
     NSString *version;
+    NSString *resolutions;
     NSString *active;
     BOOL bMacgoogleVer = NO;
     
     for(NSDictionary *dict in sarr)
     {
         osStr   = [dict objectForKey:@"os"];
-        browser = [dict objectForKey:@"name"];
+//        browser = [dict objectForKey:@"name"];
+        browser = [dict objectForKey:@"api_name"];
         version = [dict objectForKey:@"short_version"];
+        resolutions = [dict objectForKey:@"resolutions"];
+        
         if(![version length])
         {
             version=@"*";
@@ -718,6 +745,8 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
         [obarr  addObject:browser];
         [obarr  addObject:version];
         [obarr  addObject:active];
+        [obarr  addObject:resolutions];
+        
         if([osStr hasPrefix:@"Windows"])
         {
             if(bDemo && bActive)

@@ -288,9 +288,15 @@
     NSString *sel_os;
     NSString *sel_browser;
     NSString *sel_version;
+    NSString *sel_resolution;
+    
+    sel_resolution = [[browserTbl selectedCellInColumn:2] stringValue];
+    if(!sel_resolution)
+        sel_resolution = [browserTbl itemAtRow:0 inColumn:2];
+    
     if(bDemo)
     {
-        NSBrowserCell *cell =  [browserTbl selectedCell];
+        NSBrowserCell *cell =  [browserTbl selectedCellInColumn:1];
         NSString *seltxt = [cell stringValue];
         NSArray *arr = [seltxt componentsSeparatedByString:@" "];
         if([[arr objectAtIndex:1] hasPrefix:@"Ie"])
@@ -422,6 +428,7 @@
             [cell setEnabled:NO];
     }
     else
+    if(column==1)
     {
         NSAttributedString *brAStr;
         NSArray *obarr;
@@ -439,10 +446,27 @@
         {
             NSString *active = [obarr objectAtIndex:3];
             BOOL enbld = [active isEqualToString:@"YES"];
-            [cell setEnabled:enbld]; 
-            [cell setLeaf:YES];
+            [cell setEnabled:enbld];
+            [cell setLeaf:NO];
             [cell setAttributedStringValue:brAStr];
         }
+    }
+    else
+    {
+        NSInteger rr = [browserTbl selectedRowInColumn:1];
+        NSArray *obarr;
+        switch(curTabIndx)
+        {
+            case tt_windows: obarr = [configWindows objectAtIndex:rr]; break;
+            case tt_linux:   obarr = [configLinux objectAtIndex:rr]; break;
+            case tt_apple:   obarr = [configOSX objectAtIndex:rr]; break;
+            case tt_mobile:;
+        }        
+        [cell setLeaf:YES];
+        // TODO: for each row take the corresponding resolution
+        NSArray *resarr = [obarr objectAtIndex:4];
+        NSString *thisRes = [resarr objectAtIndex:row];
+        [cell setStringValue:thisRes];
     }
 }
 
@@ -454,6 +478,7 @@
         return 3;
     }
     else    // size column 1 row heights
+    if(column==1)
     {
         curTabIndx = [sender selectedRowInColumn:0];    // os selected in column 0
         curNumBrowsers = 0;
@@ -466,6 +491,19 @@
         }
         lastpop1 = YES;
         return curNumBrowsers;       // num browsers for selected os
+    }
+    else    // 3rd column is resolutions
+    {
+        NSInteger rr = [browserTbl selectedRowInColumn:1];
+        NSArray *obarr;
+        switch(curTabIndx)
+        {
+            case tt_windows: obarr = [configWindows objectAtIndex:rr]; break;
+            case tt_linux:   obarr = [configLinux objectAtIndex:rr]; break;
+            case tt_apple:   obarr = [configOSX objectAtIndex:rr]; break;
+            case tt_mobile:;
+        }
+        return [[obarr objectAtIndex:4] count];
     }
 }
 
