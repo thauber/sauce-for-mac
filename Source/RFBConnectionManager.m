@@ -34,7 +34,10 @@ NSString *kSessionURL = @"sessionURL";
 NSString *kSessionIndxWin = @"sessionIndxWin";
 NSString *kSessionIndxLnx = @"sessionIndxLnx";
 NSString *kSessionIndxMac = @"sessionIndxMac";
-NSString *kSessionIndxMbl = @"sessionIndxMbl";
+NSString *kResolutionIndxWin = @"resolutionIndxWin";;
+NSString *kResolutionIndxLnx = @"resolutionnIndxLnx";
+NSString *kResolutionIndxMac = @"resolutionIndxMac";
+
 NSString *kCurTab = @"lastCurrentTab";
 NSString *kSauceLabsHost = @"tv1.saucelabs.com";    // fixed host for connection
 //NSString *kSauceLabsHost = @"admc.dev.saucelabs.com";    // fixed host for connection

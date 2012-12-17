@@ -33,7 +33,10 @@ extern NSString *kSessionURL;
 extern NSString *kSessionIndxWin;
 extern NSString *kSessionIndxLnx;
 extern NSString *kSessionIndxMac;
-extern NSString *kSessionIndxMbl;
+extern NSString *kResolutionIndxWin;
+extern NSString *kResolutionIndxLnx;
+extern NSString *kResolutionIndxMac;
+
 extern NSString *kCurTab;
 extern NSString *kSauceLabsHost;        // fixed host for connection
 extern int kPorts[3];

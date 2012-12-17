@@ -46,17 +46,20 @@
     sessionIndxs[tt_windows] = [defs integerForKey:kSessionIndxWin];
     sessionIndxs[tt_linux] =   [defs integerForKey:kSessionIndxLnx];
     sessionIndxs[tt_apple] =   [defs integerForKey:kSessionIndxMac];
-    
+    resolutionIndxs[tt_windows] = [defs integerForKey:kResolutionIndxWin];
+    resolutionIndxs[tt_linux] =   [defs integerForKey:kResolutionIndxLnx];
+    resolutionIndxs[tt_apple] =   [defs integerForKey:kResolutionIndxMac];
+        
     NSString *urlstr = [defs stringForKey:kSessionURL];
     if(urlstr)
         [self.url setStringValue:urlstr];
     else        // never connected
     {
-//        [connectBtn setEnabled:NO];
         if([[NSApp delegate] isDemoAccount])
             sessionIndxs[curTabIndx] = 0;
         else
             sessionIndxs[curTabIndx] = 6;           // default is firefox 9
+        resolutionIndxs[curTabIndx] = 0;
     }
 
     [self setupFromConfig];
@@ -84,7 +87,10 @@
     [browserTbl selectRow:curTabIndx inColumn:0];
     [self doBrowserClick:nil];      // set browser cells height
     [browserTbl selectRow:sessionIndxs[curTabIndx] inColumn:1];
+    [browserTbl selectRow:resolutionIndxs[curTabIndx] inColumn:2];
+    // NB: only remembering 1 resolution for each os
     lastpop1 = NO;
+    lastpop2 = NO;
 
 }
 
@@ -349,6 +355,9 @@
     [defaults setInteger:sessionIndxs[tt_windows] forKey:kSessionIndxWin];
     [defaults setInteger:sessionIndxs[tt_linux] forKey:kSessionIndxLnx];
     [defaults setInteger:sessionIndxs[tt_apple] forKey:kSessionIndxMac];
+    [defaults setInteger:resolutionIndxs[tt_windows] forKey:kResolutionIndxWin];
+    [defaults setInteger:resolutionIndxs[tt_linux] forKey:kResolutionIndxLnx];
+    [defaults setInteger:resolutionIndxs[tt_apple] forKey:kResolutionIndxMac];
 
     NSMutableDictionary *sdict = [[SaucePreconnect sharedPreconnect] setOptions:sel_os browser:sel_browser browserVersion:sel_version url:urlstr];
     [NSApp endSheet:panel];
@@ -469,6 +478,7 @@
     if(column==0)   // size column 0 row heights
     {
         lastpop1 = NO;
+        lastpop2 = NO;
         return 3;
     }
     else    // size column 1 row heights
@@ -483,6 +493,7 @@
             case tt_apple:   curNumBrowsers = [brAStrsApple   count]; break;
         }
         lastpop1 = YES;
+        lastpop2 = NO;
         return curNumBrowsers;       // num browsers for selected os
     }
     else    // 3rd column is resolutions
@@ -495,6 +506,8 @@
             case tt_linux:   obarr = [configLinux objectAtIndex:rr]; break;
             case tt_apple:   obarr = [configOSX objectAtIndex:rr]; break;
         }
+        lastpop1 = NO;
+        lastpop2 = YES;
         return [[obarr objectAtIndex:4] count];
     }
 }
@@ -514,13 +527,15 @@
     {
         if(lastpop1)        // repopulated -> changed os selection
             [sender selectRow:sessionIndxs[curTabIndx] inColumn:1];
-        else 
-        {
-            sessionIndxs[curTabIndx] = [sender selectedRowInColumn:1];
-        }
+        else
+            sessionIndxs[curTabIndx] = [sender selectedRowInColumn:1];      
         lastpop1 = NO;
+        if(lastpop2)
+            [sender selectRow:resolutionIndxs[curTabIndx] inColumn:2];
+        else
+            resolutionIndxs[curTabIndx] = [sender selectedRowInColumn:2];
+        lastpop2 = NO;
     }
-
 }
 
 - (IBAction)doDoubleClick:(id)sender

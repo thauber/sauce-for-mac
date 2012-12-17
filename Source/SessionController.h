@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#define kNumTabs 4
+#define kNumTabs 3
 
 enum TabType {tt_windows, tt_linux, tt_apple};
 
@@ -17,7 +17,9 @@ enum TabType {tt_windows, tt_linux, tt_apple};
     enum TabType curTabIndx;
     NSInteger curNumBrowsers;
     BOOL lastpop1;
+    BOOL lastpop2;
     NSInteger sessionIndxs[kNumTabs];
+    NSInteger resolutionIndxs[kNumTabs];
     NSTextField *url;
     NSProgressIndicator *connectIndicator;
     NSTextField *connectIndicatorText;
