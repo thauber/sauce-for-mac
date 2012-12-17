@@ -10,7 +10,7 @@
 
 #define kNumTabs 4
 
-enum TabType {tt_windows, tt_linux, tt_apple, tt_mobile};
+enum TabType {tt_windows, tt_linux, tt_apple};
 
 @interface SessionController : NSObject <NSBrowserDelegate>
 {

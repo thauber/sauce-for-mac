@@ -46,7 +46,6 @@
     sessionIndxs[tt_windows] = [defs integerForKey:kSessionIndxWin];
     sessionIndxs[tt_linux] =   [defs integerForKey:kSessionIndxLnx];
     sessionIndxs[tt_apple] =   [defs integerForKey:kSessionIndxMac];
-    sessionIndxs[tt_mobile] =  [defs integerForKey:kSessionIndxMbl];
     
     NSString *urlstr = [defs stringForKey:kSessionURL];
     if(urlstr)
@@ -182,7 +181,6 @@
                 brAStrs = brAStrsApple;
                 configArr = configOSX; 
                 break;
-            case tt_mobile: break;
         }
         NSInteger num = [configArr count];
 
@@ -336,7 +334,6 @@
             case tt_windows: brarr = [configWindows objectAtIndex:rr]; break;
             case tt_linux: brarr = [configLinux objectAtIndex:rr]; break;
             case tt_apple: brarr = [configOSX objectAtIndex:rr]; break;
-            case tt_mobile: return;     // TODO: not implemented, yet
         }
         sel_os      = [brarr objectAtIndex:0];
         sel_browser = [brarr objectAtIndex:1];
@@ -352,7 +349,6 @@
     [defaults setInteger:sessionIndxs[tt_windows] forKey:kSessionIndxWin];
     [defaults setInteger:sessionIndxs[tt_linux] forKey:kSessionIndxLnx];
     [defaults setInteger:sessionIndxs[tt_apple] forKey:kSessionIndxMac];
-    [defaults setInteger:sessionIndxs[tt_mobile] forKey:kSessionIndxMbl];
 
     NSMutableDictionary *sdict = [[SaucePreconnect sharedPreconnect] setOptions:sel_os browser:sel_browser browserVersion:sel_version url:urlstr];
     [NSApp endSheet:panel];
@@ -440,7 +436,6 @@
                 obarr = [configLinux objectAtIndex:row]; break;
             case tt_apple:  brAStr = [brAStrsApple   objectAtIndex:row]; 
                 obarr = [configOSX objectAtIndex:row]; break;
-            case tt_mobile:;
         }
         if(brAStr)
         {
@@ -460,8 +455,7 @@
             case tt_windows: obarr = [configWindows objectAtIndex:rr]; break;
             case tt_linux:   obarr = [configLinux objectAtIndex:rr]; break;
             case tt_apple:   obarr = [configOSX objectAtIndex:rr]; break;
-            case tt_mobile:;
-        }        
+        }
         [cell setLeaf:YES];
         // TODO: for each row take the corresponding resolution
         NSArray *resarr = [obarr objectAtIndex:4];
@@ -487,7 +481,6 @@
             case tt_windows: curNumBrowsers = [brAStrsWindows count]; break;
             case tt_linux:   curNumBrowsers = [brAStrsLinux   count]; break;
             case tt_apple:   curNumBrowsers = [brAStrsApple   count]; break;
-            case tt_mobile:;
         }
         lastpop1 = YES;
         return curNumBrowsers;       // num browsers for selected os
@@ -501,7 +494,6 @@
             case tt_windows: obarr = [configWindows objectAtIndex:rr]; break;
             case tt_linux:   obarr = [configLinux objectAtIndex:rr]; break;
             case tt_apple:   obarr = [configOSX objectAtIndex:rr]; break;
-            case tt_mobile:;
         }
         return [[obarr objectAtIndex:4] count];
     }
