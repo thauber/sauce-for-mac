@@ -86,7 +86,7 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
     NSString *browserVersion = [sdict objectForKey:@"browserVersion"];
     NSString *urlStr = [sdict objectForKey:@"url"];
     NSString *resolution = [sdict objectForKey:@"resolution"];
-    NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@%@/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\", \"res\":\"%@\",\"tags\":[\"sauce-for-mac\"]}'", self.user, self.ukey,kSauceLabsDomain, user, os, browser, browserVersion, urlStr, resolution];
+    NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@%@/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\", \"res\":\"%@\",\"client\":\"mac\"}'", self.user, self.ukey,kSauceLabsDomain, user, os, browser, browserVersion, urlStr, resolution];
 
     NSString *errStr = nil;
     while(1)
