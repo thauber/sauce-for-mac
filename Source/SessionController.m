@@ -280,7 +280,7 @@
 }
 
 -(IBAction)connect:(id)sender 
-{        
+{
     NSString *urlstr = [self.url stringValue];
     
     if(![urlstr length])
@@ -289,6 +289,9 @@
         return;
     }
 
+    if(![[NSApp delegate] checkaccount])
+        return;
+    
     NSInteger rr = [browserTbl selectedRowInColumn:1];
     NSArray *brarr;
     BOOL bDemo = [[NSApp delegate] isDemoAccount];

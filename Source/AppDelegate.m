@@ -219,48 +219,54 @@
     loginCtrlr = nil;
     if(!optionsCtrlr)
     {
-        
-        NSString *subscribed = [[SaucePreconnect sharedPreconnect] checkAccountOk];  // ask if user is subscribed or has enough minutes
-        if([subscribed characterAtIndex:0] == 'F')      // failed internet
-        {
-            [self internetNotOkDlg];
-            return;
-        }
-        if([subscribed characterAtIndex:0] == 'N')      // not subscribed
-        {
-             if([subscribed characterAtIndex:1] == '-') // not enough minutes
-             {
-                 [self promptForSubscribing:0];   // prompt for subscribing to get more minutes
-                 return;
-             }
-            if([[ScoutWindowController sharedScout] tabCount] > 2)      // user has to be subscribed
-            {
-                [self promptForSubscribing:1];   // prompt for subscribing to get more tabs
-                return;
-            }
-        }
-        else        // demo account says 'true' for being subscribed
-        if([self isDemoAccount])
-        {
-            if([[ScoutWindowController sharedScout] tabCount] > 1)
-            {
-                [self promptForSubscribing:1];   // prompt for subscribing to get more tabs
-                return;
-            }
-            else    // no sessions running
-            {
-                NSInteger tm = [self demoCheckTime];
-                if(tm > 0)      // still time left to wait
-                {
-                    [[waitSession alloc] init:tm];    // tell user how many minutes to wait
-                    return;
-                }
-            }
-        }
-        
-        self.optionsCtrlr = [[SessionController alloc] init];
-        [optionsCtrlr runSheet];
+       if([self checkaccount])
+       {
+           self.optionsCtrlr = [[SessionController alloc] init];
+           [optionsCtrlr runSheet];
+       }
     }
+}
+
+- (BOOL)checkaccount
+{
+    NSString *subscribed = [[SaucePreconnect sharedPreconnect] checkAccountOk];  // ask if user is subscribed or has enough minutes
+    if([subscribed characterAtIndex:0] == 'F')      // failed internet
+    {
+        [self internetNotOkDlg];
+        return NO;
+    }
+    if([subscribed characterAtIndex:0] == 'N')      // not subscribed
+    {
+        if([subscribed characterAtIndex:1] == '-') // not enough minutes
+        {
+            [self promptForSubscribing:0];   // prompt for subscribing to get more minutes
+            return NO;
+        }
+        if([[ScoutWindowController sharedScout] tabCount] > 2)      // user has to be subscribed
+        {
+            [self promptForSubscribing:1];   // prompt for subscribing to get more tabs
+            return NO;
+        }
+    }
+    else        // demo account says 'true' for being subscribed
+    if([self isDemoAccount])
+    {
+        if([[ScoutWindowController sharedScout] tabCount] > 1)
+        {
+            [self promptForSubscribing:1];   // prompt for subscribing to get more tabs
+            return NO;
+        }
+        else    // no sessions running
+        {
+            NSInteger tm = [self demoCheckTime];
+            if(tm > 0)      // still time left to wait
+            {
+                [[waitSession alloc] init:tm];    // tell user how many minutes to wait
+                return NO;
+            }
+        }
+    }
+    return YES;
 }
 
 - (void)startConnecting:(NSMutableDictionary*)sdict
@@ -534,6 +540,12 @@
 
 - (void)promptForSubscribing:(BOOL)bCause        // 0=needs more minutes; 1=to get more tabs
 {
+    if(optionsCtrlr)
+    {
+        [NSApp endSheet:[optionsCtrlr panel]];
+        [[optionsCtrlr panel] orderOut:nil];
+        self.optionsCtrlr = nil;
+    }
     if([self checkUserOk])
         subscriberCtrl = [[[Subscriber alloc] init:bCause] retain];
     

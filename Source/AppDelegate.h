@@ -102,6 +102,7 @@
 - (IBAction)showHelp: (id)sender;
 - (IBAction)refreshAllSessions:(id)sender;
 
+- (BOOL)checkaccount;
 - (BOOL)isDemoAccount;
 - (NSInteger)demoCheckTime;
 - (BOOL)checkUserOk;
