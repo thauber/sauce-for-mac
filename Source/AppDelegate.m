@@ -86,7 +86,7 @@
         else
         if(bCommandline)
         {
-            NSMutableDictionary *sdict = [[SaucePreconnect sharedPreconnect] setOptions:cmdOS browser:cmdBrowser browserVersion:cmdVersion url:cmdURL];
+            NSMutableDictionary *sdict = [[SaucePreconnect sharedPreconnect] setOptions:cmdOS browser:cmdBrowser browserVersion:cmdVersion url:cmdURL resolution:cmdResolution];
             [self startConnecting:sdict];
         }
         else
@@ -676,6 +676,17 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
     
 }
 
+- (int)numActiveBrowsers:(ttType)os
+{
+    switch (os)
+    {
+        case tt_apple: return activeOSX;
+        case tt_windows: return activeWindows;
+        case tt_linux: return activeLinux;
+    }
+    return 0;           // should not happen
+}
+
 // read data ifrom server into dictionaries
 - (void)parseBrowsers:(NSArray*)jsonArr
 {
@@ -685,6 +696,9 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
     configOSX     = [[[NSMutableArray alloc] init] retain];     // os/browsers for osx
     configWindows = [[[NSMutableArray alloc] init] retain];     // os/browsers for windows
     configLinux   = [[[NSMutableArray alloc] init] retain];     // os/browsers for linux
+    activeOSX = 0;
+    activeWindows = 0;
+    activeLinux = 0;
     
     // pull out the lines into an array
     // a sample line: {"name": "android", "os_display": "Linux", "short_version": "4", "long_name": "Android", "long_version": "4.0.3.", "os": "Linux", "backend": "selenium"}
@@ -776,6 +790,9 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
                 [configOSX addObject:obarr];
         }
     }
+    activeOSX = bDemo ? iOSX : [configOSX count];
+    activeWindows = bDemo ? iWin : [configWindows count];
+    activeLinux = bDemo ? iLin : [configLinux count];
 }
 
 

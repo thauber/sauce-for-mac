@@ -61,6 +61,10 @@
             sessionIndxs[curTabIndx] = 6;           // default is firefox 9
         resolutionIndxs[curTabIndx] = 0;
     }
+    
+    int active = [[NSApp delegate] numActiveBrowsers:curTabIndx];
+    if(sessionIndxs[curTabIndx] > active)
+        sessionIndxs[curTabIndx] = 0;
 
     [self setupFromConfig];
     

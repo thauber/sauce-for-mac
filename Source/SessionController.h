@@ -10,11 +10,11 @@
 
 #define kNumTabs 3
 
-enum TabType {tt_windows, tt_linux, tt_apple};
+typedef enum {tt_windows, tt_linux, tt_apple} ttType;
 
 @interface SessionController : NSObject <NSBrowserDelegate>
 {
-    enum TabType curTabIndx;
+    ttType curTabIndx;
     NSInteger curNumBrowsers;
     BOOL lastpop1;
     BOOL lastpop2;

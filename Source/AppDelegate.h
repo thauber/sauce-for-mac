@@ -8,11 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import "SaucePreconnect.h"
+#import "SessionController.h"
 
 #define INAPPSTORE 1
 #define kDemoAccountName @"sauce_for_mac"
 
-@class SessionController;
 @class LoginController;
 @class TunnelController;
 @class BugInfoController;
@@ -43,6 +43,10 @@
     NSMutableArray *configWindows;          // os/browsers for windows
     NSMutableArray *configLinux;            // os/browsers for linux
     NSMutableArray *configOSX;              // os/browsers for osx
+    int activeOSX;
+    int activeWindows;
+    int activeLinux;
+
     
     BOOL bCommandline;                      // running from command line
     NSString *cmdOS;                        // command line arguments
@@ -107,6 +111,7 @@
 - (NSMenuItem *)getFullScreenMenuItem;
 
 - (void)promptForSubscribing:(BOOL)bCause;        // 0=needs more minutes; 1=to get more tabs
+- (int)numActiveBrowsers:(ttType)os;
 - (NSInteger)prefetchBrowsers;
 
 @end
