@@ -363,6 +363,8 @@
     [NSApp endSheet:panel];
     [panel orderOut:nil];    
 
+    if(![urlstr hasPrefix:@"http://"])
+        urlstr = [NSString stringWithFormat:@"http://%@",urlstr];
     NSURL *uurl = [NSURL URLWithString:urlstr];
     BOOL noTunnel = [[NSApp delegate] noTunnel];
     if(uurl && noTunnel)        // check for localhost
