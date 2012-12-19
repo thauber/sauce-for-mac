@@ -25,18 +25,11 @@
 
 @implementation ScoutWindowController
 
-@synthesize statusBox;
 @synthesize tabView;
 @synthesize urlmsg;
-@synthesize osbrowserMsg;
-@synthesize vmsize;
 @synthesize tunnelImage;
 @synthesize toolbar;
 @synthesize msgBox;
-@synthesize statusMessage;
-@synthesize timeRemainingStat;
-@synthesize userStat;
-@synthesize osbrowser;
 @synthesize curSession;
 @synthesize snapProgress;
 @synthesize tunnelButton;
@@ -73,7 +66,6 @@ NSString *kHistoryTabLabel = @"Session History";
 
 - (void)awakeFromNib 
 {
-    [statusBox setHidden:YES];
     [tabView setTabViewType:NSNoTabsNoBorder];
     [tabBar setStyleNamed:@"Unified"];
     [tabBar setSizeCellsToFit:YES];
@@ -495,34 +487,20 @@ NSString *kHistoryTabLabel = @"Session History";
         if(bDemo)
             [tunnelButton setEnabled:NO];
         curSession = nil;
-        // hide text in statusbar and messagebox
-        [timeRemainingStat setStringValue:@""];
-        [vmsize setStringValue:@""];
-        [userStat setStringValue:@""];
-        [osbrowserMsg setStringValue:@""];        
+        // hide text in  messagebox
         [urlmsg  setStringValue:@" "];
         [nowscout setStringValue:@" "];
-        [timeRemainingStat setStringValue:@""];
-        [osbrowser setStringValue:@""];
         [msgBox needsDisplay];
         [[self window] display];
 
         return;
     }
     
+    NSString *str = @"";
     NSDictionary *sdict = [[SaucePreconnect sharedPreconnect] sessionInfo:[tabViewItem view]];
     if(sdict)
     {
         [[self window] setFrame:[[self window] frame] display:NO];  // get scrollbars redone
-
-        NSString *str = [sdict objectForKey:@"size"];
-        if(str)
-            [self.vmsize setStringValue:str];
-        str = [sdict objectForKey:@"user"];
-            [self.userStat setStringValue:str];
-                
-        str = [sdict objectForKey:@"osbv"];
-        [self.osbrowser setStringValue:str];
         
         NSString *s1=@"", *s2=@"", *s3=@"", *s4=@"";
         NSArray *sarr = [str componentsSeparatedByString:@" "];
@@ -583,17 +561,12 @@ NSString *kHistoryTabLabel = @"Session History";
                 s2 = [sarr objectAtIndex:1];
             str = [NSString stringWithFormat:@"%@ / %@%@",s1,s2,s3];
         }                                 
-        [self.osbrowserMsg setStringValue:str];
         
         str = [sdict objectForKey:@"url"];
         [self.urlmsg  setStringValue:str];
 
         [nowscout setStringValue:@"Now Navigating:"];        
                 
-        // use last remaining time value for this session
-        str = [sdict objectForKey:@"remainingTime"];
-        [self.timeRemainingStat setStringValue:str];
-
         RFBConnection *rfbcon = [sdict objectForKey:@"connection"];
         curSession = [rfbcon session];
         [[RFBConnectionManager sharedManager] setSessionsUpdateIntervals];

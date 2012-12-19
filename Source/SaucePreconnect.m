@@ -355,7 +355,7 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
     
 }
 
-
+#if 0
 -(void)setvmsize:(NSSize)size
 {
     NSMutableDictionary *sdict = [credArr lastObject];
@@ -363,6 +363,7 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
     [sdict setValue:str forKey:@"size"];
     [[[ScoutWindowController sharedScout] vmsize] setStringValue:str];
 }
+#endif
 
 -(NSString *)remainingTimeStr:(int)remaining
 {

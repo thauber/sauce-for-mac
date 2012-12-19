@@ -177,7 +177,6 @@ enum {
 - (void)setSize:(NSSize)aSize
 {
     _maxSize = aSize;
-    [[SaucePreconnect sharedPreconnect] setvmsize:aSize];
 }
 
 /* Returns the maximum possible size for the window. Also, determines whether or
