@@ -49,7 +49,7 @@
 
 // size of write buffer
 #define BUFFER_SIZE 2048
-#define READ_BUF_SIZE (1024*1024)
+#define READ_BUF_SIZE (1280*1024)
 
 @interface RFBConnection (Private)
 
