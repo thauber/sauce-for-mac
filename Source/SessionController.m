@@ -284,10 +284,7 @@
     NSString *urlstr = [self.url stringValue];
     
     if(![urlstr length])
-    {
-        [url becomeFirstResponder];
-        return;
-    }
+         urlstr = @"http://www.saucelabs.com/welcome";
 
     if(![[NSApp delegate] checkaccount])
         return;
