@@ -713,7 +713,6 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
     activeLinux = 0;
     
     // pull out the lines into an array
-    // a sample line: {"name": "android", "os_display": "Linux", "short_version": "4", "long_name": "Android", "long_version": "4.0.3.", "os": "Linux", "backend": "selenium"}
     NSArray *sarr = [jsonArr sortedArrayUsingFunction:dcmp context:nil];
 
     BOOL bDemo = [self isDemoAccount];
@@ -724,6 +723,7 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
     NSString *resolutions;
     NSString *active;
     BOOL bMacgoogleVer = NO;
+    BOOL bFirefox = NO;
     
     for(NSDictionary *dict in sarr)
     {
@@ -733,17 +733,34 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
         version = [dict objectForKey:@"short_version"];
         resolutions = [dict objectForKey:@"resolutions"];
         
+        if([browser rangeOfString:@"proxy"].location != NSNotFound)
+            continue;
+        if([browser isEqualToString:@"chrome"])
+            continue;
+        if([osStr hasPrefix:@"W"] && [browser hasPrefix:@"fi"])
+        {
+            if(bFirefox)    // skip duplicates
+            {
+                bFirefox = NO;
+                continue;
+            }
+            bFirefox = YES;
+        }
+        
         if(![version length])
         {
-            version=@"*";
             if([osStr hasPrefix:@"M"] && [browser hasPrefix:@"g"])
             {
                 if(!bMacgoogleVer)
+                {
                     bMacgoogleVer = YES;    // only have 1 mac google item
+                    version=@"*";
+                }
                 else
                     continue;
             }
         }
+        
         BOOL bActive = YES;
         if(bDemo)
         {
@@ -771,7 +788,7 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
         
         active  = bActive ? @"YES" : @"NO";
 
-        NSMutableArray *obarr = [NSMutableArray arrayWithCapacity:4];
+        NSMutableArray *obarr = [NSMutableArray arrayWithCapacity:5];
         [obarr  addObject:osStr];
         [obarr  addObject:browser];
         [obarr  addObject:version];

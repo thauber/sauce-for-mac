@@ -210,6 +210,8 @@
                     bimg = bimgs[0];
                 if([twoch isEqualToString:@"fi"])         // firefox
                     bimg = bimgs[1];
+                if([twoch isEqualToString:@"ch"])         // firefox named 'chrome' in selenium
+                    bimg = bimgs[1];
                 else if([twoch isEqualToString:@"sa"])    // safari
                     bimg = bimgs[2];
                 else if([twoch isEqualToString:@"op"])    // opera
@@ -237,6 +239,8 @@
                 browser = @"IPad";
             else if([browser isEqualToString:@"googlechrome"])
                 browser = @"Google Chrome";
+            else if([browser isEqualToString:@"chrome"])
+                browser = @"Firefox";
             else
                 browser = [browser capitalizedString];
             NSString *brver = @"";
