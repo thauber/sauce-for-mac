@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
 		<string key="IBDocument.SystemVersion">11G63</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2843</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
 		<string key="IBDocument.AppKitVersion">1138.51</string>
 		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">2843</string>
+			<string key="NS.object.0">2844</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSBox</string>
@@ -109,7 +109,7 @@
 												<object class="NSTextField" id="1071960909">
 													<reference key="NSNextResponder" ref="962972907"/>
 													<int key="NSvFlags">268</int>
-													<string key="NSFrame">{{101, 141}, {157, 47}}</string>
+													<string key="NSFrame">{{101, 137}, {236, 51}}</string>
 													<reference key="NSSuperview" ref="962972907"/>
 													<reference key="NSWindow"/>
 													<reference key="NSNextKeyView" ref="252795283"/>
@@ -119,7 +119,7 @@
 													<object class="NSTextFieldCell" key="NSCell" id="748468258">
 														<int key="NSCellFlags">67239424</int>
 														<int key="NSCellFlags2">272629760</int>
-														<string key="NSContents">Login using an existing saucelabs account</string>
+														<string key="NSContents">To register, login to your saucelabs account and copy your key</string>
 														<object class="NSFont" key="NSSupport">
 															<string key="NSName">LucidaGrande</string>
 															<double key="NSSize">13</double>
@@ -244,7 +244,7 @@
 													<object class="NSButtonCell" key="NSCell" id="1066671876">
 														<int key="NSCellFlags">-2080244224</int>
 														<int key="NSCellFlags2">134217728</int>
-														<string key="NSContents">Login</string>
+														<string key="NSContents">Register</string>
 														<reference key="NSSupport" ref="98796976"/>
 														<string key="NSCellIdentifier">_NS:22</string>
 														<reference key="NSControlView" ref="102064474"/>
@@ -259,7 +259,7 @@
 												<object class="NSButton" id="64303993">
 													<reference key="NSNextResponder" ref="962972907"/>
 													<int key="NSvFlags">268</int>
-													<string key="NSFrame">{{153, 46}, {111, 25}}</string>
+													<string key="NSFrame">{{183, 46}, {81, 25}}</string>
 													<reference key="NSSuperview" ref="962972907"/>
 													<reference key="NSWindow"/>
 													<reference key="NSNextKeyView" ref="102064474"/>
@@ -268,7 +268,7 @@
 													<object class="NSButtonCell" key="NSCell" id="102891666">
 														<int key="NSCellFlags">-2080244224</int>
 														<int key="NSCellFlags2">134217728</int>
-														<string key="NSContents">Forgot Key</string>
+														<string key="NSContents">Get Key</string>
 														<reference key="NSSupport" ref="98796976"/>
 														<string key="NSCellIdentifier">_NS:22</string>
 														<reference key="NSControlView" ref="64303993"/>
@@ -283,7 +283,7 @@
 												<object class="NSTextField" id="318705557">
 													<reference key="NSNextResponder" ref="962972907"/>
 													<int key="NSvFlags">268</int>
-													<string key="NSFrame">{{100, 181}, {157, 33}}</string>
+													<string key="NSFrame">{{100, 168}, {222, 46}}</string>
 													<reference key="NSSuperview" ref="962972907"/>
 													<reference key="NSWindow"/>
 													<reference key="NSNextKeyView" ref="1071960909"/>
@@ -293,7 +293,7 @@
 													<object class="NSTextFieldCell" key="NSCell" id="966109752">
 														<int key="NSCellFlags">67239424</int>
 														<int key="NSCellFlags2">272629760</int>
-														<string key="NSContents">Sign In</string>
+														<string key="NSContents">Register this copy</string>
 														<object class="NSFont" key="NSSupport" id="722648156">
 															<string key="NSName">Helvetica-Bold</string>
 															<double key="NSSize">18</double>
@@ -354,7 +354,7 @@
 													<string key="NSFrame">{{15, 190}, {272, 24}}</string>
 													<reference key="NSSuperview" ref="928514771"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="1073012149"/>
+													<reference key="NSNextKeyView" ref="776800774"/>
 													<string key="NSReuseIdentifierKey">_NS:1505</string>
 													<bool key="NSEnabled">YES</bool>
 													<object class="NSTextFieldCell" key="NSCell" id="466359063">
@@ -374,6 +374,7 @@
 													<string key="NSFrame">{{16, 140}, {251, 50}}</string>
 													<reference key="NSSuperview" ref="928514771"/>
 													<reference key="NSWindow"/>
+													<reference key="NSNextKeyView" ref="1073012149"/>
 													<string key="NSReuseIdentifierKey">_NS:1505</string>
 													<bool key="NSEnabled">YES</bool>
 													<object class="NSTextFieldCell" key="NSCell" id="717410081">
@@ -393,7 +394,7 @@
 													<string key="NSFrame">{{14, 106}, {70, 32}}</string>
 													<reference key="NSSuperview" ref="928514771"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="776800774"/>
+													<reference key="NSNextKeyView" ref="623348422"/>
 													<string key="NSReuseIdentifierKey">_NS:9</string>
 													<bool key="NSEnabled">YES</bool>
 													<object class="NSButtonCell" key="NSCell" id="920863607">
@@ -535,6 +536,7 @@
 									<string key="NSFrame">{{716, 69}, {82, 32}}</string>
 									<reference key="NSSuperview" ref="667167168"/>
 									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="890014399">
