@@ -59,7 +59,8 @@
             sessionIndxs[curTabIndx] = 0;
         else
             sessionIndxs[curTabIndx] = 6;           // default is firefox 9
-        resolutionIndxs[curTabIndx] = 0;
+        
+        resolutionIndxs[tt_windows] = 1;            // assume 1024x768 is 2nd item in windows resolution array
     }
     
     int active = [[NSApp delegate] numActiveBrowsers:curTabIndx];
@@ -67,6 +68,9 @@
         sessionIndxs[curTabIndx] = 0;
 
     [self setupFromConfig];
+    
+    if([[[configWindows objectAtIndex:sessionIndxs[curTabIndx]] objectAtIndex:4] count] <= resolutionIndxs[tt_windows])
+        resolutionIndxs[tt_windows] = 0;
     
     [browserTbl setDoubleAction:@selector(doDoubleClick:)];
     [connectBtn setTitle:@"Navigate"];
@@ -304,7 +308,7 @@
     
     sel_resolution = [[browserTbl selectedCellInColumn:2] stringValue];
     if(!sel_resolution)     // TODO: figure out which one is 1024x768
-        sel_resolution = [browserTbl itemAtRow:0 inColumn:2];
+        sel_resolution = @"1024x768";
     
     if(bDemo)
     {
@@ -536,9 +540,12 @@
     if(sender)      // a real click, not during initialization
     {
         if(lastpop1)        // repopulated -> changed os selection
+        {
             [sender selectRow:sessionIndxs[curTabIndx] inColumn:1];
+            [sender selectRow:resolutionIndxs[curTabIndx] inColumn:2];
+        }
         else
-            sessionIndxs[curTabIndx] = [sender selectedRowInColumn:1];      
+            sessionIndxs[curTabIndx] = [sender selectedRowInColumn:1];
         lastpop1 = NO;
         if(lastpop2)
             [sender selectRow:resolutionIndxs[curTabIndx] inColumn:2];
