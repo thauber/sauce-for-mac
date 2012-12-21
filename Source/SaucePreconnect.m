@@ -479,13 +479,6 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
                     {
                         NSString *str = [self remainingTimeStr:[remaining intValue]];
                         [sdict setObject:str forKey:@"remainingTime"];
-                        Session *session = [[ScoutWindowController sharedScout] curSession];
-                        id cnctn = [sdict objectForKey:@"connection"];
-                        if(cnctn == [session connection])       // this session is current tab
-                        {
-                            NSTextField *tf = [[ScoutWindowController sharedScout] timeRemainingStat];
-                            [tf setStringValue:str];
-                        }
                     }
                     break;                
                 }

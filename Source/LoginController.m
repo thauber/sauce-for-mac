@@ -136,8 +136,6 @@
             [defaults setObject:uname  forKey:kUsername];
             [defaults setObject:aaccountkey  forKey:kAccountkey];
             [[NSApp delegate] prefetchBrowsers];
-            NSTextField *tf = [[ScoutWindowController sharedScout] userStat];
-            [tf setStringValue:uname];
 
             [[NSApp delegate] setLoginCtrlr:nil];
             [[NSApp delegate] showOptionsDlg:nil];
