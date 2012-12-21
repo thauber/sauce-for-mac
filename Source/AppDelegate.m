@@ -721,9 +721,9 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
     NSString *browser;
     NSString *version;
     NSString *resolutions;
+    NSString *backend;
     NSString *active;
     BOOL bMacgoogleVer = NO;
-    BOOL bFirefox = NO;
     
     for(NSDictionary *dict in sarr)
     {
@@ -733,23 +733,13 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
         version = [dict objectForKey:@"short_version"];
         resolutions = [dict objectForKey:@"resolutions"];
         
-        if([browser rangeOfString:@"proxy"].location != NSNotFound)
+        backend = [dict objectForKey:@"automation_backend"];
+        if(![backend hasPrefix:@"web"])     // only want 'webdriver', not 'selenium'
             continue;
-        if([browser isEqualToString:@"chrome"])
-            continue;
-        if([osStr hasPrefix:@"W"] && [browser hasPrefix:@"fi"])
+                
+        if(![version length])       // only retain 1 mac chrome browser in list
         {
-            if(bFirefox)    // skip duplicates
-            {
-                bFirefox = NO;
-                continue;
-            }
-            bFirefox = YES;
-        }
-        
-        if(![version length])
-        {
-            if([osStr hasPrefix:@"M"] && [browser hasPrefix:@"g"])
+            if([osStr hasPrefix:@"M"] && ([browser hasPrefix:@"g"] || [browser hasPrefix:@"c"]))
             {
                 if(!bMacgoogleVer)
                 {
@@ -777,13 +767,11 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
                     bActive = NO;                
             }
             else
-            {
-                if([osStr hasPrefix:@"M"] && ![browser hasPrefix:@"iph"])
-                    bActive = NO;
-                else
-                if([osStr hasPrefix:@"L"])
-                    bActive = NO;
-            }
+            if([osStr hasPrefix:@"M"] && ![browser hasPrefix:@"iph"])
+                bActive = NO;
+            else
+            if([osStr hasPrefix:@"L"] && ![version isEqualToString:@"17"])
+                bActive = NO;        
         }
         
         active  = bActive ? @"YES" : @"NO";

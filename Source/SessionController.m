@@ -63,11 +63,14 @@
         resolutionIndxs[tt_windows] = 1;            // assume 1024x768 is 2nd item in windows resolution array
     }
     
-    int active = [[NSApp delegate] numActiveBrowsers:curTabIndx];
-    if(sessionIndxs[curTabIndx] > active)
-        sessionIndxs[curTabIndx] = 0;
-
     [self setupFromConfig];
+
+    if([[NSApp delegate] numActiveBrowsers:tt_windows] <= sessionIndxs[tt_windows])
+        sessionIndxs[tt_windows] = 0;
+    if([[NSApp delegate] numActiveBrowsers:tt_linux] <= sessionIndxs[tt_linux])
+        sessionIndxs[tt_linux] = 0;
+    if([[NSApp delegate] numActiveBrowsers:tt_apple] <= sessionIndxs[tt_apple])
+        sessionIndxs[tt_apple] = 0;
     
     if([[[configWindows objectAtIndex:sessionIndxs[curTabIndx]] objectAtIndex:4] count] <= resolutionIndxs[tt_windows])
         resolutionIndxs[tt_windows] = 0;
@@ -214,13 +217,13 @@
                     bimg = bimgs[0];
                 if([twoch isEqualToString:@"fi"])         // firefox
                     bimg = bimgs[1];
-                if([twoch isEqualToString:@"ch"])         // firefox named 'chrome' in selenium
-                    bimg = bimgs[1];
                 else if([twoch isEqualToString:@"sa"])    // safari
                     bimg = bimgs[2];
                 else if([twoch isEqualToString:@"op"])    // opera
                     bimg = bimgs[3];
                 else if([twoch isEqualToString:@"go"])    // google chrome
+                    bimg = bimgs[4];
+                if([twoch isEqualToString:@"ch"])         // firefox named 'chrome' in selenium
                     bimg = bimgs[4];
                 else if([twoch isEqualToString:@"an"])    // android
                     bimg = bimgs[5];
@@ -241,10 +244,8 @@
                 browser = @"IPhone";
             else if([browser isEqualToString:@"ipad"])
                 browser = @"IPad";
-            else if([browser isEqualToString:@"googlechrome"])
+            else if([browser isEqualToString:@"googlechrome"] || [browser isEqualToString:@"chrome"])
                 browser = @"Google Chrome";
-            else if([browser isEqualToString:@"chrome"])
-                browser = @"Firefox";
             else
                 browser = [browser capitalizedString];
             NSString *brver = @"";
