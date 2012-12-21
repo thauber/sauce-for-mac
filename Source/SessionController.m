@@ -316,11 +316,11 @@
         NSBrowserCell *cell =  [browserTbl selectedCellInColumn:1];
         NSString *seltxt = [cell stringValue];
         NSArray *arr = [seltxt componentsSeparatedByString:@" "];
-        if([[arr objectAtIndex:1] hasPrefix:@"Ie"])
+        if([[arr objectAtIndex:1] hasPrefix:@"In"])
         {
             sel_os = @"Windows 2003";
             sel_browser = @"iexplore";
-            sel_version = [arr objectAtIndex:2];
+            sel_version = [arr objectAtIndex:3];
         }
         else
         if([[arr objectAtIndex:1] hasPrefix:@"Fi"])
