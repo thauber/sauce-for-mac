@@ -73,7 +73,7 @@
         sessionIndxs[tt_apple] = 0;
     
     if([[[configWindows objectAtIndex:sessionIndxs[curTabIndx]] objectAtIndex:4] count] <= resolutionIndxs[tt_windows])
-        resolutionIndxs[tt_windows] = 0;
+        resolutionIndxs[tt_windows] = 0;     // assume 2nd item is 1024x768 resolution unless there is only 1
     
     [browserTbl setDoubleAction:@selector(doDoubleClick:)];
     [connectBtn setTitle:@"Navigate"];
