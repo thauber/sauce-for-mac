@@ -42,6 +42,7 @@
 - (BOOL)defaultShowWarnings;
 - (void)setNoShowWarning;
 - (BOOL)alwaysUseTunnel;
+- (void)setAlwaysUseTunnel:(BOOL)state;
 
 	// Preferences Window
 - (void)showWindow;

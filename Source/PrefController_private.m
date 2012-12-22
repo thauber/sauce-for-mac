@@ -9,6 +9,7 @@
 #import "PrefController_private.h"
 #import "NSObject_Chicken.h"
 #import "ProfileManager.h"
+#import "AppDelegate.h"
 
 
 // --- Preference Keys --- //
@@ -116,12 +117,20 @@ NSString *kPrefs_NoWarningDialogs = @"NoWarningDialogs";
 - (void)_setupWindow
 {
 	if ( mWindow )
+    {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [mAlwaysStartTunnel setState:[defaults integerForKey:kPrefs_AlwaysUseTunnel]];
+        BOOL bDemo = [[NSApp delegate] isDemoAccount];
+        [mAlwaysStartTunnel setEnabled:!bDemo];
 		return;
+    }
 	[NSBundle loadNibNamed: @"Preferences" owner: self];
 	
 	// set our controls' default values
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [mAlwaysStartTunnel setState:[defaults integerForKey:kPrefs_AlwaysUseTunnel]];
+    BOOL bDemo = [[NSApp delegate] isDemoAccount];
+    [mAlwaysStartTunnel setEnabled:!bDemo];
 }
 
 @end

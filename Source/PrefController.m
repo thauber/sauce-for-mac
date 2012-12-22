@@ -226,6 +226,12 @@ static int const kPrefsVersion = 0x00000002;
     return [[NSUserDefaults standardUserDefaults] boolForKey:kPrefs_AlwaysUseTunnel];    
 }
 
+- (void)setAlwaysUseTunnel:(BOOL)state
+{
+    [[NSUserDefaults standardUserDefaults] setBool:state forKey:kPrefs_AlwaysUseTunnel];
+    
+}
+
 #pragma mark -
 #pragma mark Preferences Window
 

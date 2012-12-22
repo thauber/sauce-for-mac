@@ -118,12 +118,12 @@
         uname = kDemoAccountName;       // defined in AppDelegate.h
         aaccountkey = kDemoAccountKey;
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kSessionURL];
+        [[[ScoutWindowController sharedScout]  tunnelButton] setEnabled:NO];
     }
     else
     {
         uname = [user stringValue];
         aaccountkey = [accountKey stringValue];
-        
     }
     [NSApp endSheet:panel];
     [panel orderOut:nil];
@@ -138,6 +138,7 @@
             [[NSApp delegate] prefetchBrowsers];
 
             [[NSApp delegate] setLoginCtrlr:nil];
+            [[NSApp delegate] toggleTunnelDisplay];
             [[NSApp delegate] showOptionsDlg:nil];
         }
         else 

@@ -70,6 +70,7 @@
     {
         [tunnelMenuItem setAction:nil];
         [[[ScoutWindowController sharedScout]  tunnelButton] setEnabled:NO];
+        [[PrefController sharedController] setAlwaysUseTunnel:NO];
     }
     
     [viewConnectMenuItem setAction:nil];
@@ -504,6 +505,7 @@
         [tunnelMenuItem setTitle:@"Stop Sauce Connect"];
         [viewConnectMenuItem setAction:@selector(viewConnect:)];
         [[[ScoutWindowController sharedScout] tunnelButton] setTitle:@"Stop Sauce Connect"];
+        [[[ScoutWindowController sharedScout]  tunnelButton] setEnabled:YES];
         if(bCommandline)
         {
             NSMutableDictionary *sdict = [[SaucePreconnect sharedPreconnect] setOptions:cmdOS browser:cmdBrowser browserVersion:cmdVersion url:cmdURL resolution:cmdResolution];
@@ -516,6 +518,7 @@
         [tunnelMenuItem setTitle:@"Start Sauce Connect"];
         [viewConnectMenuItem setAction:nil];
         [[[ScoutWindowController sharedScout] tunnelButton] setTitle:@"Start Sauce Connect"];
+        [[[ScoutWindowController sharedScout]  tunnelButton] setEnabled:YES];
     }
 }
 
