@@ -40,13 +40,8 @@
     NSTextField *versionTxt;
     NSPanel *infoPanel;
     
-    NSMutableArray *configWindows;          // os/browsers for windows
-    NSMutableArray *configLinux;            // os/browsers for linux
-    NSMutableArray *configOSX;              // os/browsers for osx
-    int activeOSX;
-    int activeWindows;
-    int activeLinux;
-
+    NSMutableArray *configsOS[kNumTabs];     // os/browsers for windows
+    int activeOS[kNumTabs];
     
     BOOL bCommandline;                      // running from command line
     NSString *cmdOS;                        // command line arguments
@@ -72,10 +67,6 @@
 @property  (assign)BOOL noTunnel;
 @property (assign) BOOL noShowCloseSession;
 @property (assign) BOOL noShowCloseConnect;
-
-@property (assign)NSMutableArray *configWindows;          // os/browsers for windows
-@property (assign)NSMutableArray *configLinux;            // os/browsers for linux
-@property (assign)NSMutableArray *configOSX;              // os/browsers for osx
 
 - (IBAction)doAbout:(id)sender;
 
@@ -114,5 +105,6 @@
 - (void)promptForSubscribing:(BOOL)bCause;        // 0=needs more minutes; 1=to get more tabs
 - (int)numActiveBrowsers:(ttType)os;
 - (NSInteger)prefetchBrowsers;
+- (NSArray*)getConfigsOS:(int)indx;
 
 @end

@@ -40,10 +40,6 @@
 @synthesize noShowCloseSession;
 @synthesize noShowCloseConnect;
 
-@synthesize configWindows;          // os/browsers for windows
-@synthesize configLinux;            // os/browsers for linux
-@synthesize configOSX;              // os/browsers for osx
-
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification
 {
 	// make sure our singleton key equivalent manager is initialized, otherwise, it won't watch the frontmost window
@@ -212,7 +208,7 @@
     
     if(![self checkUserOk])
         return;
-    if(![configWindows count] && [self prefetchBrowsers] != 1)
+    if(![configsOS[tt_winxp] count] && [self prefetchBrowsers] != 1)
         return;
     
     if(loginCtrlr)
@@ -693,33 +689,31 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
 
 - (int)numActiveBrowsers:(ttType)os
 {
-    switch (os)
-    {
-        case tt_apple: return activeOSX;
-        case tt_windows: return activeWindows;
-        case tt_linux: return activeLinux;
-    }
-    return 0;           // should not happen
+    return activeOS[os];
 }
 
 // read data ifrom server into dictionaries
 - (void)parseBrowsers:(NSArray*)jsonArr
 {
-    [configOSX release];
-    [configWindows release];
-    [configLinux release];
-    configOSX     = [[[NSMutableArray alloc] init] retain];     // os/browsers for osx
-    configWindows = [[[NSMutableArray alloc] init] retain];     // os/browsers for windows
-    configLinux   = [[[NSMutableArray alloc] init] retain];     // os/browsers for linux
-    activeOSX = 0;
-    activeWindows = 0;
-    activeLinux = 0;
+    for(int i=0;i<kNumTabs;i++)        // release old values
+    {
+        [configsOS[i] release];
+    }
+    for(int i=0;i<kNumTabs;i++)                 // create new set of arrays
+    {
+        configsOS[i] = [[[NSMutableArray alloc] init] retain];     // os/browsers for osx
+        activeOS[i] = 0;        // track active browsers for each os
+    }
     
     // pull out the lines into an array
     NSArray *sarr = [jsonArr sortedArrayUsingFunction:dcmp context:nil];
 
     BOOL bDemo = [self isDemoAccount];
-    NSInteger iWin=0, iOSX=0, iLin=0;       // insertion index
+
+    NSInteger inserts[kNumTabs];
+    for(int i=0;i<kNumTabs;i++)
+        inserts[i] = 0; 
+
     NSString *osStr;
     NSString *browser;
     NSString *version;
@@ -788,32 +782,46 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
         
         if([osStr hasPrefix:@"Windows"])
         {
-            if(bDemo && bActive)
-                [configWindows insertObject:obarr atIndex:iWin++];
+            ttType indx = tt_winxp;
+            if([osStr rangeOfString:@"8"].location != NSNotFound)
+                indx = tt_win7;
             else
-                [configWindows addObject:obarr];
+            if([osStr rangeOfString:@"12"].location != NSNotFound)
+                indx = tt_win8;
+            
+            if(bDemo && bActive)
+                [configsOS[indx] insertObject:obarr atIndex:inserts[indx]++];
+            else
+                [configsOS[indx] addObject:obarr];
         }
         else
         if([osStr hasPrefix:@"Linux"])
         {
             if(bDemo && bActive)
-                [configLinux insertObject:obarr atIndex:iLin++];
+                [configsOS[tt_linux] insertObject:obarr atIndex:inserts[tt_linux]++];
             else
-                [configLinux addObject:obarr];
+                [configsOS[tt_linux] addObject:obarr];
         }
         else
         if([osStr hasPrefix:@"Mac"])
         {
+            ttType indx = tt_macosx;
+            if([browser hasPrefix:@"i"])
+                indx = tt_macios;
+            
             if(bDemo && bActive)
-                [configOSX insertObject:obarr atIndex:iOSX++];
+                [configsOS[indx] insertObject:obarr atIndex:inserts[indx]++];
             else
-                [configOSX addObject:obarr];
+                [configsOS[indx] addObject:obarr];
         }
     }
-    activeOSX = bDemo ? iOSX : [configOSX count];
-    activeWindows = bDemo ? iWin : [configWindows count];
-    activeLinux = bDemo ? iLin : [configLinux count];
+    for(int i=0;i<kNumTabs;i++)
+        activeOS[i] = bDemo ? inserts[i] : [configsOS[i] count];
 }
 
+- (NSArray*)getConfigsOS:(int)indx
+{
+    return configsOS[indx];
+}
 
 @end

@@ -30,9 +30,13 @@
 extern NSString *kUsername;
 extern NSString *kAccountkey;
 extern NSString *kSessionURL;
-extern NSString *kSessionIndxWin;
+extern NSString *kSessionIndxWinxp;
+extern NSString *kSessionIndxWin7;
+extern NSString *kSessionIndxWin8;
 extern NSString *kSessionIndxLnx;
-extern NSString *kSessionIndxMac;
+extern NSString *kSessionIndxIOS;
+extern NSString *kSessionIndxOSX;
+
 extern NSString *kResolutionIndxWin;
 extern NSString *kResolutionIndxLnx;
 extern NSString *kResolutionIndxMac;

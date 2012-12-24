@@ -43,13 +43,19 @@
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(textDidChange:) name: NSTextDidChangeNotification object: nil];
     curTabIndx = [defs integerForKey:kCurTab];
-    sessionIndxs[tt_windows] = [defs integerForKey:kSessionIndxWin];
+    sessionIndxs[tt_winxp] = [defs integerForKey:kSessionIndxWinxp];
+    sessionIndxs[tt_win7] = [defs integerForKey:kSessionIndxWin7];
+    sessionIndxs[tt_win8] = [defs integerForKey:kSessionIndxWin8];
     sessionIndxs[tt_linux] =   [defs integerForKey:kSessionIndxLnx];
-    sessionIndxs[tt_apple] =   [defs integerForKey:kSessionIndxMac];
-    resolutionIndxs[tt_windows] = [defs integerForKey:kResolutionIndxWin];
+    sessionIndxs[tt_macios] =   [defs integerForKey:kSessionIndxIOS];
+    sessionIndxs[tt_macosx] =   [defs integerForKey:kSessionIndxOSX];
+    resolutionIndxs[tt_winxp] = [defs integerForKey:kResolutionIndxWin];
+    resolutionIndxs[tt_win7] = [defs integerForKey:kResolutionIndxWin];
+    resolutionIndxs[tt_win8] = [defs integerForKey:kResolutionIndxWin];
     resolutionIndxs[tt_linux] =   [defs integerForKey:kResolutionIndxLnx];
-    resolutionIndxs[tt_apple] =   [defs integerForKey:kResolutionIndxMac];
-        
+    resolutionIndxs[tt_macios] =   [defs integerForKey:kResolutionIndxMac];
+    resolutionIndxs[tt_macosx] =   [defs integerForKey:kResolutionIndxMac];
+    
     NSString *urlstr = [defs stringForKey:kSessionURL];
     if(urlstr)
         [self.url setStringValue:urlstr];
@@ -58,22 +64,34 @@
         if([[NSApp delegate] isDemoAccount])
             sessionIndxs[curTabIndx] = 0;
         else
-            sessionIndxs[curTabIndx] = 6;           // default is firefox 9
+            sessionIndxs[curTabIndx] = 6;       // default is ?
         
-        resolutionIndxs[tt_windows] = 1;            // assume 1024x768 is 2nd item in windows resolution array
+        resolutionIndxs[tt_winxp] = 1;          // assume 1024x768 is 2nd item in windows resolution array
+        resolutionIndxs[tt_win7] = 1;          // assume 1024x768 is 2nd item in windows resolution array
+        resolutionIndxs[tt_win8] = 1;          // assume 1024x768 is 2nd item in windows resolution array
     }
     
     [self setupFromConfig];
 
-    if([[NSApp delegate] numActiveBrowsers:tt_windows] <= sessionIndxs[tt_windows])
-        sessionIndxs[tt_windows] = 0;
+    if([[NSApp delegate] numActiveBrowsers:tt_winxp] <= sessionIndxs[tt_winxp])
+        sessionIndxs[tt_winxp] = 0;
+    if([[NSApp delegate] numActiveBrowsers:tt_win7] <= sessionIndxs[tt_win7])
+        sessionIndxs[tt_win7] = 0;
+    if([[NSApp delegate] numActiveBrowsers:tt_win8] <= sessionIndxs[tt_win8])
+        sessionIndxs[tt_win8] = 0;
     if([[NSApp delegate] numActiveBrowsers:tt_linux] <= sessionIndxs[tt_linux])
         sessionIndxs[tt_linux] = 0;
-    if([[NSApp delegate] numActiveBrowsers:tt_apple] <= sessionIndxs[tt_apple])
-        sessionIndxs[tt_apple] = 0;
+    if([[NSApp delegate] numActiveBrowsers:tt_macios] <= sessionIndxs[tt_macios])
+        sessionIndxs[tt_macios] = 0;
+    if([[NSApp delegate] numActiveBrowsers:tt_macosx] <= sessionIndxs[tt_macosx])
+        sessionIndxs[tt_macosx] = 0;
     
-    if([[[configWindows objectAtIndex:sessionIndxs[curTabIndx]] objectAtIndex:4] count] <= resolutionIndxs[tt_windows])
-        resolutionIndxs[tt_windows] = 0;     // assume 2nd item is 1024x768 resolution unless there is only 1
+    if([[[configsOS[tt_winxp] objectAtIndex:sessionIndxs[curTabIndx]] objectAtIndex:4] count] <= resolutionIndxs[tt_winxp])
+        resolutionIndxs[tt_winxp] = 0;     // assume 2nd item is 1024x768 resolution unless there is only 1
+    if([[[configsOS[tt_win7] objectAtIndex:sessionIndxs[curTabIndx]] objectAtIndex:4] count] <= resolutionIndxs[tt_win7])
+        resolutionIndxs[tt_win7] = 0;     // assume 2nd item is 1024x768 resolution unless there is only 1
+    if([[[configsOS[tt_win8] objectAtIndex:sessionIndxs[curTabIndx]] objectAtIndex:4] count] <= resolutionIndxs[tt_win8])
+        resolutionIndxs[tt_win8] = 0;     // assume 2nd item is 1024x768 resolution unless there is only 1
     
     [browserTbl setDoubleAction:@selector(doDoubleClick:)];
     [connectBtn setTitle:@"Navigate"];
@@ -108,30 +126,32 @@
 // read config to get os/browsers; create rects; store it all
 - (void)setupFromConfig
 {
-    configWindows = [[NSApp delegate] configWindows];      // os/browsers for windows
-    configLinux = [[NSApp delegate] configLinux];          // os/browsers for linux
-    configOSX = [[NSApp delegate] configOSX];              // os/browsers for osx
+    for(int i=0;i<kNumTabs;i++)
+        configsOS[i] = [[NSApp delegate] getConfigsOS:i];           // os/browsers for windows
+    for(int i=0;i<kNumTabs;i++)
+        brAStrsOs[i] = [[NSMutableArray alloc] init];
     
     // create attributed strings for os's (column 0)    
     // os images
-    NSImage *oimgs[4];
+    NSImage *oimgs[kNumTabs];
     NSSize isz = NSMakeSize(21,21);
     NSString *path = [[NSBundle mainBundle] pathForResource:@"win28" ofType:@"png"];
     oimgs[0] = [[NSImage alloc] initByReferencingFile:path];
     [oimgs[0] setSize:isz];
+    oimgs[1] = oimgs[2] = oimgs[0];    
     path = [[NSBundle mainBundle] pathForResource:@"lin28" ofType:@"png"];
-    oimgs[1] = [[NSImage alloc] initByReferencingFile:path];
-    [oimgs[1] setSize:isz];
-    path = [[NSBundle mainBundle] pathForResource:@"apple28" ofType:@"png"];
-    oimgs[2] = [[NSImage alloc] initByReferencingFile:path];
-    [oimgs[2] setSize:isz];
-    path = [[NSBundle mainBundle] pathForResource:@"ios-mobile" ofType:@"png"];
     oimgs[3] = [[NSImage alloc] initByReferencingFile:path];
     [oimgs[3] setSize:isz];
+    path = [[NSBundle mainBundle] pathForResource:@"ios-mobile" ofType:@"png"];
+    oimgs[4] = [[NSImage alloc] initByReferencingFile:path];
+    [oimgs[4] setSize:isz];
+    path = [[NSBundle mainBundle] pathForResource:@"apple28" ofType:@"png"];
+    oimgs[5] = [[NSImage alloc] initByReferencingFile:path];
+    [oimgs[5] setSize:isz];
     
-    NSString *osStr[4] = {@"  Windows", @"  Linux", @"  OSX", @"  Mobile"};
+    NSString *osStr[kNumTabs] = {@"  Windows XP", @"  Windows 7", @"  Windows 8", @"  Linux", @"  Apple IOS", @"  Apple OSX"};
 
-    for(int i=0; i < 3; i++)
+    for(int i=0; i < kNumTabs; i++)
     {
         NSTextAttachment* ta = [[NSTextAttachment alloc] init];
         NSTextAttachmentCell* tac = [[NSTextAttachmentCell alloc] init];
@@ -175,38 +195,17 @@
     path = [[NSBundle mainBundle] pathForResource:@"ios-mobile" ofType:@"png"];
     bimgs[6] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
     [bimgs[6] setSize:isz];
-        
-    NSMutableArray *configArr;
-    NSMutableArray *brAStrs;
-    
-    for(int i=0; i < 3; i++)    // setup browsers for each os (only 2 for now)
+            
+    for(int i=0; i < kNumTabs; i++)    // setup browsers for each os
     {
-        switch(i)
-        {
-            case tt_windows: 
-                brAStrsWindows = [[[NSMutableArray alloc] init] retain];     // os/browsers for windows
-                brAStrs = brAStrsWindows;
-                configArr = configWindows;
-                break;
-            case tt_linux:
-                brAStrsLinux = [[[NSMutableArray alloc] init] retain];     // os/browsers for linux
-                brAStrs = brAStrsLinux;
-                configArr = configLinux; 
-                break;
-            case tt_apple:  
-                brAStrsApple = [[[NSMutableArray alloc] init] retain];     // os/browsers for mac
-                brAStrs = brAStrsApple;
-                configArr = configOSX; 
-                break;
-        }
-        NSInteger num = [configArr count];
+        NSInteger num = [configsOS[i] count];
 
         NSString *lastBrowser = @"xx";      // initial column
         NSImage *bimg = bimgs[0];
 
         for(NSInteger j=0;j < num; j++)     // setup browsers
         {
-            NSMutableArray *llArr = [configArr objectAtIndex:j];
+            NSMutableArray *llArr = [configsOS[i] objectAtIndex:j];
             NSString *osstr = [llArr objectAtIndex:0];
             NSString *browser = [llArr objectAtIndex:1];
             NSString *version = [llArr objectAtIndex:2];
@@ -249,16 +248,16 @@
             else
                 browser = [browser capitalizedString];
             NSString *brver = @"";
-            if([osstr hasPrefix:@"Win"])
-                brver = [NSString stringWithFormat:@" %@ %@ (%@)", browser, version, osstr];
-            else
+//            if([osstr hasPrefix:@"Win"])
+//                brver = [NSString stringWithFormat:@" %@ %@ (%@)", browser, version, osstr];
+//            else
                 brver = [NSString stringWithFormat:@" %@ %@",browser, version];
             NSNumber *nn = [NSNumber numberWithInteger:2]; 
             NSDictionary *asdict = [NSDictionary dictionaryWithObjectsAndKeys:nn,NSBaselineOffsetAttributeName, nil];
             NSAttributedString *bAStr = [[NSAttributedString alloc] initWithString:brver attributes:asdict]; 
             [mas appendAttributedString:bAStr];
             [bAStr release];
-            [brAStrs addObject:mas];
+            [brAStrsOs[i] addObject:mas];
             [mas release];
         }
     }    
@@ -348,12 +347,7 @@
     }
     else
     {
-        switch(curTabIndx)
-        {
-            case tt_windows: brarr = [configWindows objectAtIndex:rr]; break;
-            case tt_linux: brarr = [configLinux objectAtIndex:rr]; break;
-            case tt_apple: brarr = [configOSX objectAtIndex:rr]; break;
-        }
+        brarr = [configsOS[curTabIndx] objectAtIndex:rr];
         sel_os      = [brarr objectAtIndex:0];
         sel_browser = [brarr objectAtIndex:1];
         sel_version = [brarr objectAtIndex:2];
@@ -365,12 +359,19 @@
     [defaults setObject:urlstr  forKey:kSessionURL];
     [defaults setInteger:curTabIndx forKey:kCurTab];
     // save selected browser for all os's
-    [defaults setInteger:sessionIndxs[tt_windows] forKey:kSessionIndxWin];
+    [defaults setInteger:sessionIndxs[tt_winxp] forKey:kSessionIndxWinxp];
+    [defaults setInteger:sessionIndxs[tt_win7] forKey:kSessionIndxWinxp];
+    [defaults setInteger:sessionIndxs[tt_win8] forKey:kSessionIndxWinxp];
     [defaults setInteger:sessionIndxs[tt_linux] forKey:kSessionIndxLnx];
-    [defaults setInteger:sessionIndxs[tt_apple] forKey:kSessionIndxMac];
-    [defaults setInteger:resolutionIndxs[tt_windows] forKey:kResolutionIndxWin];
+    [defaults setInteger:sessionIndxs[tt_macios] forKey:kSessionIndxIOS];
+    [defaults setInteger:sessionIndxs[tt_macosx] forKey:kSessionIndxOSX];
+
+    [defaults setInteger:resolutionIndxs[tt_winxp] forKey:kResolutionIndxWin];
+    [defaults setInteger:resolutionIndxs[tt_win7] forKey:kResolutionIndxWin];
+    [defaults setInteger:resolutionIndxs[tt_win8] forKey:kResolutionIndxWin];
     [defaults setInteger:resolutionIndxs[tt_linux] forKey:kResolutionIndxLnx];
-    [defaults setInteger:resolutionIndxs[tt_apple] forKey:kResolutionIndxMac];
+    [defaults setInteger:resolutionIndxs[tt_macios] forKey:kResolutionIndxMac];
+    [defaults setInteger:resolutionIndxs[tt_macosx] forKey:kResolutionIndxMac];
 
     NSMutableDictionary *sdict = [[SaucePreconnect sharedPreconnect] setOptions:sel_os browser:sel_browser browserVersion:sel_version url:urlstr resolution:sel_resolution];
     [NSApp endSheet:panel];
@@ -444,23 +445,14 @@
     if(column==0)
     {
         [cell setAttributedStringValue:osAStrs[row]];
-        if(row>2)
-            [cell setEnabled:NO];
     }
     else
     if(column==1)
     {
         NSAttributedString *brAStr;
         NSArray *obarr;
-        switch(curTabIndx)
-        {
-            case tt_windows: brAStr = [brAStrsWindows objectAtIndex:row]; 
-                obarr = [configWindows objectAtIndex:row]; break;
-            case tt_linux:   brAStr = [brAStrsLinux   objectAtIndex:row]; 
-                obarr = [configLinux objectAtIndex:row]; break;
-            case tt_apple:  brAStr = [brAStrsApple   objectAtIndex:row]; 
-                obarr = [configOSX objectAtIndex:row]; break;
-        }
+        brAStr = [brAStrsOs[curTabIndx] objectAtIndex:row];
+        obarr = [configsOS[curTabIndx] objectAtIndex:row];
         if(brAStr)
         {
             NSString *active = [obarr objectAtIndex:3];
@@ -473,13 +465,7 @@
     else
     {
         NSInteger rr = [browserTbl selectedRowInColumn:1];
-        NSArray *obarr;
-        switch(curTabIndx)
-        {
-            case tt_windows: obarr = [configWindows objectAtIndex:rr]; break;
-            case tt_linux:   obarr = [configLinux objectAtIndex:rr]; break;
-            case tt_apple:   obarr = [configOSX objectAtIndex:rr]; break;
-        }
+        NSArray *obarr = [configsOS[curTabIndx] objectAtIndex:rr];
         [cell setLeaf:YES];
         // TODO: for each row take the corresponding resolution
         NSArray *resarr = [obarr objectAtIndex:4];
@@ -494,19 +480,13 @@
     {
         lastpop1 = NO;
         lastpop2 = NO;
-        return 3;
+        return kNumTabs;
     }
-    else    // size column 1 row heights
+    else
     if(column==1)
     {
         curTabIndx = [sender selectedRowInColumn:0];    // os selected in column 0
-        curNumBrowsers = 0;
-        switch(curTabIndx)
-        {
-            case tt_windows: curNumBrowsers = [brAStrsWindows count]; break;
-            case tt_linux:   curNumBrowsers = [brAStrsLinux   count]; break;
-            case tt_apple:   curNumBrowsers = [brAStrsApple   count]; break;
-        }
+        curNumBrowsers = [brAStrsOs[curTabIndx] count];
         lastpop1 = YES;
         lastpop2 = NO;
         return curNumBrowsers;       // num browsers for selected os
@@ -514,13 +494,7 @@
     else    // 3rd column is resolutions
     {
         NSInteger rr = [browserTbl selectedRowInColumn:1];
-        NSArray *obarr;
-        switch(curTabIndx)
-        {
-            case tt_windows: obarr = [configWindows objectAtIndex:rr]; break;
-            case tt_linux:   obarr = [configLinux objectAtIndex:rr]; break;
-            case tt_apple:   obarr = [configOSX objectAtIndex:rr]; break;
-        }
+        NSArray *obarr = [configsOS[curTabIndx] objectAtIndex:rr];
         lastpop1 = NO;
         lastpop2 = YES;
         return [[obarr objectAtIndex:4] count];

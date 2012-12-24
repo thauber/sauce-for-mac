@@ -8,9 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-#define kNumTabs 3
+#define kNumTabs 6
 
-typedef enum {tt_windows, tt_linux, tt_apple} ttType;
+typedef enum {tt_winxp, tt_win7, tt_win8, tt_linux, tt_macios, tt_macosx} ttType;
 
 @interface SessionController : NSObject <NSBrowserDelegate>
 {
@@ -28,14 +28,9 @@ typedef enum {tt_windows, tt_linux, tt_apple} ttType;
     NSView *view;
     NSButton *defaultBrowser;
     IBOutlet NSBrowser *browserTbl;
-    NSMutableArray *configWindows;          // os/browsers for windows
-    NSMutableArray *configLinux;            // os/browsers for linux
-    NSMutableArray *configOSX;              // os/browsers for osx
-    NSMutableArray *brAStrsWindows;         // browser attributed strings
-    NSMutableArray *brAStrsLinux;
-    NSMutableArray *brAStrsApple;
-    NSMutableArray *brAStrsMobile;    
-    NSAttributedString* osAStrs[4];
+    NSArray *configsOS[kNumTabs];         // os/browsers for windows; pointer to appdelegate array
+    NSMutableArray *brAStrsOs[kNumTabs];         // browser attributed strings
+    NSAttributedString* osAStrs[kNumTabs];       // os attributed strings
 }
 @property (assign) IBOutlet NSButton *defaultBrowser;
 @property (assign) IBOutlet NSPanel *panel;

@@ -282,7 +282,15 @@ NSString *kHistoryTabLabel = @"Session History";
         os = @"Mac";
     else
     if([os hasPrefix:@"Windows"])
-        os = @"Windows";
+    {
+        if([os rangeOfString:@"3"].location != NSNotFound)
+            os = @"WinXP";
+        if([os rangeOfString:@"8"].location != NSNotFound)
+            os = @"Win7";
+        if([os rangeOfString:@"12"].location != NSNotFound)
+            os = @"Win8";
+        
+    }
     NSString *browser = [sdict objectForKey:@"browser"];
     NSString *bvers = [sdict objectForKey:@"browserVersion"];
     NSString *jobId = [sdict objectForKey:@"jobId"];
