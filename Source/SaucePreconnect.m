@@ -58,6 +58,7 @@ static SaucePreconnect* _sharedPreconnect = nil;
 browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSString*)resolution
 {
     NSString *osbvStr = [NSString stringWithFormat:@"%@/%@ %@",os,browser,browserVersion];
+
     NSMutableDictionary *sdict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                                   [NSNumber numberWithInt:0], @"state", user, @"user", ukey, @"ukey",
                                   osbvStr, @"osbv", urlStr, @"url", 
@@ -83,6 +84,8 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
     [sdict setObject:authTimer forKey:@"authTimer"];
     NSString *os = [sdict objectForKey:@"os"];
     NSString *browser = [sdict objectForKey:@"browser"];
+    if([browser isEqualToString:@"chrome"])        // correct for what server accepts
+        browser = @"googlechrome";
     NSString *browserVersion = [sdict objectForKey:@"browserVersion"];
     NSString *urlStr = [sdict objectForKey:@"url"];
     NSString *resolution = [sdict objectForKey:@"resolution"];
