@@ -357,8 +357,8 @@
     [defaults setInteger:curTabIndx forKey:kCurTab];
     // save selected browser for all os's
     [defaults setInteger:sessionIndxs[tt_winxp] forKey:kSessionIndxWinxp];
-    [defaults setInteger:sessionIndxs[tt_win7] forKey:kSessionIndxWinxp];
-    [defaults setInteger:sessionIndxs[tt_win8] forKey:kSessionIndxWinxp];
+    [defaults setInteger:sessionIndxs[tt_win7] forKey:kSessionIndxWin7];
+    [defaults setInteger:sessionIndxs[tt_win8] forKey:kSessionIndxWin8];
     [defaults setInteger:sessionIndxs[tt_linux] forKey:kSessionIndxLnx];
     [defaults setInteger:sessionIndxs[tt_macios] forKey:kSessionIndxIOS];
     [defaults setInteger:sessionIndxs[tt_macosx] forKey:kSessionIndxOSX];
