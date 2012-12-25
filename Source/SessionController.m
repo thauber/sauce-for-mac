@@ -248,10 +248,7 @@
             else
                 browser = [browser capitalizedString];
             NSString *brver = @"";
-//            if([osstr hasPrefix:@"Win"])
-//                brver = [NSString stringWithFormat:@" %@ %@ (%@)", browser, version, osstr];
-//            else
-                brver = [NSString stringWithFormat:@" %@ %@",browser, version];
+            brver = [NSString stringWithFormat:@" %@ %@",browser, version];
             NSNumber *nn = [NSNumber numberWithInteger:2]; 
             NSDictionary *asdict = [NSDictionary dictionaryWithObjectsAndKeys:nn,NSBaselineOffsetAttributeName, nil];
             NSAttributedString *bAStr = [[NSAttributedString alloc] initWithString:brver attributes:asdict]; 
