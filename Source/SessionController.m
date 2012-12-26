@@ -73,26 +73,15 @@
     
     [self setupFromConfig];
 
-    if([[NSApp delegate] numActiveBrowsers:tt_winxp] <= sessionIndxs[tt_winxp])
-        sessionIndxs[tt_winxp] = 0;
-    if([[NSApp delegate] numActiveBrowsers:tt_win7] <= sessionIndxs[tt_win7])
-        sessionIndxs[tt_win7] = 0;
-    if([[NSApp delegate] numActiveBrowsers:tt_win8] <= sessionIndxs[tt_win8])
-        sessionIndxs[tt_win8] = 0;
-    if([[NSApp delegate] numActiveBrowsers:tt_linux] <= sessionIndxs[tt_linux])
-        sessionIndxs[tt_linux] = 0;
-    if([[NSApp delegate] numActiveBrowsers:tt_macios] <= sessionIndxs[tt_macios])
-        sessionIndxs[tt_macios] = 0;
-    if([[NSApp delegate] numActiveBrowsers:tt_macosx] <= sessionIndxs[tt_macosx])
-        sessionIndxs[tt_macosx] = 0;
-    
-    if([[[configsOS[tt_winxp] objectAtIndex:sessionIndxs[curTabIndx]] objectAtIndex:4] count] <= resolutionIndxs[tt_winxp])
-        resolutionIndxs[tt_winxp] = 0;     // assume 2nd item is 1024x768 resolution unless there is only 1
-    if([[[configsOS[tt_win7] objectAtIndex:sessionIndxs[curTabIndx]] objectAtIndex:4] count] <= resolutionIndxs[tt_win7])
-        resolutionIndxs[tt_win7] = 0;     // assume 2nd item is 1024x768 resolution unless there is only 1
-    if([[[configsOS[tt_win8] objectAtIndex:sessionIndxs[curTabIndx]] objectAtIndex:4] count] <= resolutionIndxs[tt_win8])
-        resolutionIndxs[tt_win8] = 0;     // assume 2nd item is 1024x768 resolution unless there is only 1
-    
+    for(int i=0;i<kNumTabs;i++)
+    {
+        int nactive = [[NSApp delegate] numActiveBrowsers:i];
+        if(nactive <= sessionIndxs[i])
+            sessionIndxs[i] = 0;
+        int nres = [[[configsOS[i]  objectAtIndex:sessionIndxs[i]] objectAtIndex:4] count];
+        if( nres <= resolutionIndxs[i])
+            resolutionIndxs[i] = nres-1;     // highest res available
+    }
     [browserTbl setDoubleAction:@selector(doDoubleClick:)];
     [connectBtn setTitle:@"Navigate"];
     [connectBtn setAction: @selector(connect:)];
@@ -206,7 +195,7 @@
         for(NSInteger j=0;j < num; j++)     // setup browsers
         {
             NSMutableArray *llArr = [configsOS[i] objectAtIndex:j];
-            NSString *osstr = [llArr objectAtIndex:0];
+//            NSString *osstr = [llArr objectAtIndex:0];
             NSString *browser = [llArr objectAtIndex:1];
             NSString *version = [llArr objectAtIndex:2];
             NSString *twoch = [browser substringToIndex:2];     // 2 chars to identify browser
