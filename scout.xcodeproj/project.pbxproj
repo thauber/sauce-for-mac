@@ -404,6 +404,7 @@
 		E2F3AB0506D5B86A005EB917 /* ProfileManager_private.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F3AB0306D5B86A005EB917 /* ProfileManager_private.m */; };
 		E2F3AD7106D5E11D005EB917 /* NSObject_Chicken.h in Headers */ = {isa = PBXBuildFile; fileRef = E2F3AD6F06D5E11D005EB917 /* NSObject_Chicken.h */; };
 		E2F3AD7206D5E11D005EB917 /* NSObject_Chicken.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F3AD7006D5E11D005EB917 /* NSObject_Chicken.m */; };
+		EF30561D168B8EBB0084D406 /* demoConnect.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF30561C168B8EBB0084D406 /* demoConnect.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -754,6 +755,7 @@
 		E2F3AD6F06D5E11D005EB917 /* NSObject_Chicken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSObject_Chicken.h; sourceTree = "<group>"; };
 		E2F3AD7006D5E11D005EB917 /* NSObject_Chicken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObject_Chicken.m; sourceTree = "<group>"; };
 		E2F48D78040EDD5100BD55BA /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		EF30561C168B8EBB0084D406 /* demoConnect.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = demoConnect.xib; path = Resources/demoConnect.xib; sourceTree = "<group>"; };
 		F52128E40368AF9F01F702E0 /* GNU Public License.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "GNU Public License.txt"; sourceTree = "<group>"; };
 		F536C26603937E5301178D82 /* ZlibHexEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ZlibHexEncodingReader.h; sourceTree = "<group>"; };
 		F536C26703937E5301178D82 /* ZlibHexEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ZlibHexEncodingReader.m; sourceTree = "<group>"; };
@@ -1031,6 +1033,7 @@
 				0F4BD8C5165AF781000D61AF /* subscriber-5_demo.xib */,
 				0F3957BC15CC4EE600C04D57 /* subscriber.xib */,
 				0F3E248F163B13AF0053E6E6 /* waitSession.xib */,
+				EF30561C168B8EBB0084D406 /* demoConnect.xib */,
 				0F3A18D015617D39007BAA78 /* tunnel.xib */,
 				0FD5668F1545B17B0007C94A /* BugInfo.xib */,
 				DAC8077D12FEC38400C4ADB6 /* ssh-helper.sh */,
@@ -1729,6 +1732,7 @@
 				0FD9FF7B1640BDAF001583AD /* Sauce.entitlements in Resources */,
 				0F58FCB1164C214100494955 /* SessionController_demo.xib in Resources */,
 				0F4BD8C6165AF781000D61AF /* subscriber-5_demo.xib in Resources */,
+				EF30561D168B8EBB0084D406 /* demoConnect.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
