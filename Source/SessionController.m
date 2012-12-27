@@ -41,7 +41,6 @@
 {
     // use last used values from prefs
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(textDidChange:) name: NSTextDidChangeNotification object: nil];
     curTabIndx = [defs integerForKey:kCurTab];
     sessionIndxs[tt_winxp] = [defs integerForKey:kSessionIndxWinxp];
     sessionIndxs[tt_win7] = [defs integerForKey:kSessionIndxWin7];
@@ -61,10 +60,7 @@
         [self.url setStringValue:urlstr];
     else        // never connected
     {
-        if([[NSApp delegate] isDemoAccount])
-            sessionIndxs[curTabIndx] = 0;
-        else
-            sessionIndxs[curTabIndx] = 6;       // default is ?
+        sessionIndxs[curTabIndx] = 0;       
         
         resolutionIndxs[tt_winxp] = 1;          // assume 1024x768 is 2nd item in windows resolution array
         resolutionIndxs[tt_win7] = 1;          // assume 1024x768 is 2nd item in windows resolution array
@@ -202,6 +198,8 @@
             if(![twoch isEqualToString:lastBrowser])      // different browser than previous
             {            
                 if([twoch isEqualToString:@"ie"])         // internet explorer
+                    bimg = bimgs[0];
+                if([twoch isEqualToString:@"in"])         // internet explorer
                     bimg = bimgs[0];
                 if([twoch isEqualToString:@"fi"])         // firefox
                     bimg = bimgs[1];
