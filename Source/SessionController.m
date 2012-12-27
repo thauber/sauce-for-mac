@@ -285,7 +285,6 @@
     
     NSInteger rr = [browserTbl selectedRowInColumn:1];
     NSArray *brarr;
-    BOOL bDemo = [[NSApp delegate] isDemoAccount];
 
     NSString *sel_os;
     NSString *sel_browser;
@@ -296,50 +295,12 @@
     if(!sel_resolution)     // TODO: figure out which one is 1024x768
         sel_resolution = @"1024x768";
     
-    if(bDemo)
-    {
-        NSBrowserCell *cell =  [browserTbl selectedCellInColumn:1];
-        NSString *seltxt = [cell stringValue];
-        NSArray *arr = [seltxt componentsSeparatedByString:@" "];
-        if([[arr objectAtIndex:1] hasPrefix:@"In"])
-        {
-            sel_os = @"Windows 2003";
-            sel_browser = @"iexplore";
-            sel_version = [arr objectAtIndex:3];
-        }
-        else
-        if([[arr objectAtIndex:1] hasPrefix:@"Fi"])
-        {
-            if([seltxt rangeOfString:@"03"].location!=NSNotFound)
-                sel_os = @"Windows 2003";
-            else
-            if([seltxt rangeOfString:@"08"].location!=NSNotFound)
-                sel_os = @"Windows 2008";
-            else
-            if([seltxt rangeOfString:@"12"].location!=NSNotFound)
-                sel_os = @"Windows 2012";
-            sel_browser = @"firefox";
-            sel_version = [arr objectAtIndex:2];
-        }
-        else        // OSX
-        {
-            sel_browser = @"iphone";
-            sel_version = [arr objectAtIndex:2];
-            if([sel_version hasPrefix:@"5.1"] || [sel_version hasPrefix:@"6"])
-                sel_os = @"Mac 10.8";
-            else
-                sel_os = @"Mac 10.6";            
-        }
-    }
-    else
-    {
-        brarr = [configsOS[curTabIndx] objectAtIndex:rr];
-        sel_os      = [brarr objectAtIndex:0];
-        sel_browser = [brarr objectAtIndex:1];
-        sel_version = [brarr objectAtIndex:2];
-        if([sel_version isEqualToString:@"*"])
-            sel_version = @"";
-    }
+    brarr = [configsOS[curTabIndx] objectAtIndex:rr];
+    sel_os      = [brarr objectAtIndex:0];
+    sel_browser = [brarr objectAtIndex:1];
+    sel_version = [brarr objectAtIndex:2];
+    if([sel_version isEqualToString:@"*"])
+        sel_version = @"";
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:urlstr  forKey:kSessionURL];
