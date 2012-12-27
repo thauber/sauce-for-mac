@@ -753,19 +753,59 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
         {
             if([osStr hasPrefix:@"W"])
             {
-                if([browser hasPrefix:@"i"])
+                if([osStr rangeOfString:@"3"].location != NSNotFound)
                 {
-                    if(![version isEqualToString:@"6"]
-                       && ![version isEqualToString:@"7"]
-                       && ![version isEqualToString:@"8"])
+                    if([browser hasPrefix:@"i"])
+                    {
+                        if(![version isEqualToString:@"6"]
+                           && ![version isEqualToString:@"7"]
+                           && ![version isEqualToString:@"8"])
+                            bActive = NO;
+                    }
+                    else
                         bActive = NO;
                 }
                 else
-                    bActive = NO;                
+                if([osStr rangeOfString:@"8"].location != NSNotFound)
+                {
+                    if([browser hasPrefix:@"i"])
+                    {
+                           
+                       if(![version isEqualToString:@"9"])
+                           bActive = NO;
+                    }
+                    else
+                        bActive = NO;
+                }
+                else
+                if([osStr rangeOfString:@"12"].location != NSNotFound)
+                {
+                    if([browser hasPrefix:@"i"])
+                    {
+                       if(![version isEqualToString:@"10"])
+                           bActive = NO;
+                    }
+                    else
+                       bActive = NO;
+                }
             }
             else
-            if([osStr hasPrefix:@"M"] && ![browser hasPrefix:@"iph"])
-                bActive = NO;
+            if([osStr hasPrefix:@"M"])
+            {                   
+                if([browser hasPrefix:@"i"])
+                {
+                    if([browser hasPrefix:@"ipa"])      // only iphone for ios
+                        bActive = NO;
+                }
+                else        // assume it is osx browser
+                if([browser hasPrefix:@"s"])
+                {
+                   if(![version isEqualToString:@"5"])
+                       bActive = NO;
+                }
+                else
+                    bActive = NO;
+            }
             else
             if([osStr hasPrefix:@"L"] && ![version isEqualToString:@"17"])
                 bActive = NO;        
