@@ -94,6 +94,10 @@ NSString *kHistoryTabLabel = @"Session History";
 
 - (IBAction)doPlayStop:(id)sender
 {
+    NSString *label = [[tabView selectedTabViewItem] label];
+    if( [label isEqualToString:kHistoryTabLabel])      // history tab not a session
+        return;
+    
     if([[NSApp delegate] noShowCloseSession])
         [self closeTab:sender];
     else 
