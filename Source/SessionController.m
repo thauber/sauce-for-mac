@@ -12,6 +12,7 @@
 #import "ScoutWindowController.h"
 #import "AppDelegate.h"
 #import "RegexKitLite.h"
+#import "demoConnectController.h"
 
 @implementation SessionController
 
@@ -340,8 +341,13 @@
             NSInteger sub = [[iparr objectAtIndex:1] integerValue];
             isLocalURL = sub>= 16 && sub<=31;
         }
-        if(![[NSApp delegate] tunnelCtrlr] && isLocalURL)       // prompt for opening tunnel
+        if(isLocalURL)       // prompt for opening tunnel
         {
+            if([[NSApp delegate] isDemoAccount])
+            {
+                [[demoConnectController alloc] init:self];
+            }
+            else
                 NSBeginAlertSheet(@"Are you testing an intranet site?", @"Yes", @"No", nil, [NSApp keyWindow], self,nil, @selector(tunnelDidDismiss:returnCode:contextInfo:), sdict, @"Do you wish to use Sauce Connect, our secure tunnel for accessing your local servers?"); 
         }
         else 
