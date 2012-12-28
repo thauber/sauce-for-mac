@@ -133,6 +133,8 @@
 		0F59E7C515CDA6CB0003D541 /* StopSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59E7C315CDA6CB0003D541 /* StopSession.h */; };
 		0F59E7C615CDA6CB0003D541 /* StopSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F59E7C415CDA6CB0003D541 /* StopSession.m */; };
 		0F59E7C815CE0F5D0003D541 /* logo.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0F59E7C715CE0F5D0003D541 /* logo.icns */; };
+		0F5B22CD168E288A00F9E913 /* demoConnectController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F5B22CB168E288A00F9E913 /* demoConnectController.h */; };
+		0F5B22CE168E288A00F9E913 /* demoConnectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5B22CC168E288A00F9E913 /* demoConnectController.m */; };
 		0F7BE39E1522183800B64686 /* LoginController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F7BE39C1522183800B64686 /* LoginController.h */; };
 		0F7BE39F1522183800B64686 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7BE39D1522183800B64686 /* LoginController.m */; };
 		0F7C605D152A279A00DA9A4A /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F7C605C152A279A00DA9A4A /* Quartz.framework */; };
@@ -544,6 +546,8 @@
 		0F59E7C315CDA6CB0003D541 /* StopSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StopSession.h; sourceTree = "<group>"; };
 		0F59E7C415CDA6CB0003D541 /* StopSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StopSession.m; sourceTree = "<group>"; };
 		0F59E7C715CE0F5D0003D541 /* logo.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = logo.icns; path = Resources/logo.icns; sourceTree = "<group>"; };
+		0F5B22CB168E288A00F9E913 /* demoConnectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = demoConnectController.h; sourceTree = "<group>"; };
+		0F5B22CC168E288A00F9E913 /* demoConnectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = demoConnectController.m; sourceTree = "<group>"; };
 		0F7BE39C1522183800B64686 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
 		0F7BE39D1522183800B64686 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
 		0F7C605C152A279A00DA9A4A /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
@@ -1123,6 +1127,8 @@
 				0F7C6065152A8F8700DA9A4A /* SessionController.m */,
 				0F3DA65415F1182600831E38 /* sessionConnect.h */,
 				0F3DA65515F1182600831E38 /* sessionConnect.m */,
+				0F5B22CB168E288A00F9E913 /* demoConnectController.h */,
+				0F5B22CC168E288A00F9E913 /* demoConnectController.m */,
 				0F4D1E79164EDE7600A85404 /* SauceLinkTextField.h */,
 				0F4D1E7A164EDE7600A85404 /* SauceLinkTextField.m */,
 				0F40B2191598ED6400E6311E /* RegexKitLite.h */,
@@ -1567,6 +1573,7 @@
 				0F3DA65615F1182600831E38 /* sessionConnect.h in Headers */,
 				0F3E2494163B15220053E6E6 /* waitSession.h in Headers */,
 				0F4D1E7B164EDE7600A85404 /* SauceLinkTextField.h in Headers */,
+				0F5B22CD168E288A00F9E913 /* demoConnectController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1907,6 +1914,7 @@
 				0F3DA65715F1182600831E38 /* sessionConnect.m in Sources */,
 				0F3E2495163B15220053E6E6 /* waitSession.m in Sources */,
 				0F4D1E7C164EDE7600A85404 /* SauceLinkTextField.m in Sources */,
+				0F5B22CE168E288A00F9E913 /* demoConnectController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
