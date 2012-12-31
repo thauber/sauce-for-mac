@@ -35,6 +35,7 @@ typedef enum { login,options,session } tabType;
     IBOutlet NSTextField *nowscout;
     GradientView *msgGradient;
     StopSession *stopSessionCtl;    
+    NSToolbarItem *tunnelTBItem;
 }
 @property (assign) IBOutlet NSTabView *tabView;
 @property (assign) IBOutlet NSImageView *tunnelImage;
@@ -46,6 +47,7 @@ typedef enum { login,options,session } tabType;
 @property (assign) IBOutlet NSButton *tunnelButton;
 @property (assign) HistoryViewController *hviewCtlr;
 @property (retain) StopSession *stopSessionCtl;
+@property (assign) IBOutlet NSToolbarItem *tunnelTBItem;
 
 +(ScoutWindowController*)sharedScout;
 - (IBAction)addNewTab:(id)sender;

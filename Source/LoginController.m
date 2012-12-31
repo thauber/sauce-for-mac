@@ -151,8 +151,6 @@
         // alert for missing username or accountkey
         NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [NSApp keyWindow], self,@selector(redoLogin:returnCode:contextInfo:), NULL, NULL, @"Need valid user-name and account-key");    
     }
-    if(sender == self)      // using demo login
-        [[[ScoutWindowController sharedScout]  tunnelButton] setEnabled:NO];
 }
 
 -(void)redoLogin:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo

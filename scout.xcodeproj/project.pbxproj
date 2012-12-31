@@ -130,6 +130,8 @@
 		0F58FCB1164C214100494955 /* SessionController_demo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F58FCB0164C214100494955 /* SessionController_demo.xib */; };
 		0F59372515C83B150024AB5A /* keysymdef.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59372415C83B150024AB5A /* keysymdef.h */; };
 		0F59372815C8C18B0024AB5A /* keysym.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59372715C8C18B0024AB5A /* keysym.h */; };
+		0F597ED816920B080075E105 /* TBISub.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F597ED616920B080075E105 /* TBISub.h */; };
+		0F597ED916920B080075E105 /* TBISub.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F597ED716920B080075E105 /* TBISub.m */; };
 		0F59E7C515CDA6CB0003D541 /* StopSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F59E7C315CDA6CB0003D541 /* StopSession.h */; };
 		0F59E7C615CDA6CB0003D541 /* StopSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F59E7C415CDA6CB0003D541 /* StopSession.m */; };
 		0F59E7C815CE0F5D0003D541 /* logo.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0F59E7C715CE0F5D0003D541 /* logo.icns */; };
@@ -543,6 +545,8 @@
 		0F58FCB0164C214100494955 /* SessionController_demo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SessionController_demo.xib; path = Resources/SessionController_demo.xib; sourceTree = "<group>"; };
 		0F59372415C83B150024AB5A /* keysymdef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keysymdef.h; sourceTree = "<group>"; };
 		0F59372715C8C18B0024AB5A /* keysym.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keysym.h; sourceTree = "<group>"; };
+		0F597ED616920B080075E105 /* TBISub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBISub.h; sourceTree = "<group>"; };
+		0F597ED716920B080075E105 /* TBISub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBISub.m; sourceTree = "<group>"; };
 		0F59E7C315CDA6CB0003D541 /* StopSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StopSession.h; sourceTree = "<group>"; };
 		0F59E7C415CDA6CB0003D541 /* StopSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StopSession.m; sourceTree = "<group>"; };
 		0F59E7C715CE0F5D0003D541 /* logo.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = logo.icns; path = Resources/logo.icns; sourceTree = "<group>"; };
@@ -1149,6 +1153,8 @@
 				0F59E7C415CDA6CB0003D541 /* StopSession.m */,
 				0F3E53BC15D22AB400513767 /* StopConnect.h */,
 				0F3E53BD15D22AB400513767 /* StopConnect.m */,
+				0F597ED616920B080075E105 /* TBISub.h */,
+				0F597ED716920B080075E105 /* TBISub.m */,
 			);
 			name = "GUI Controller";
 			sourceTree = "<group>";
@@ -1574,6 +1580,7 @@
 				0F3E2494163B15220053E6E6 /* waitSession.h in Headers */,
 				0F4D1E7B164EDE7600A85404 /* SauceLinkTextField.h in Headers */,
 				0F5B22CD168E288A00F9E913 /* demoConnectController.h in Headers */,
+				0F597ED816920B080075E105 /* TBISub.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1915,6 +1922,7 @@
 				0F3E2495163B15220053E6E6 /* waitSession.m in Sources */,
 				0F4D1E7C164EDE7600A85404 /* SauceLinkTextField.m in Sources */,
 				0F5B22CE168E288A00F9E913 /* demoConnectController.m in Sources */,
+				0F597ED916920B080075E105 /* TBISub.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

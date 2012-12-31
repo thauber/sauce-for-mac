@@ -35,6 +35,7 @@
 @synthesize tunnelButton;
 @synthesize hviewCtlr;
 @synthesize stopSessionCtl;
+@synthesize tunnelTBItem;
 
 static ScoutWindowController* _sharedScout = nil;
 NSString *kHistoryTabLabel = @"Session History";
@@ -495,9 +496,6 @@ NSString *kHistoryTabLabel = @"Session History";
     {
         [playstop setEnabled:NO];
         [bugsnap setEnabled:NO];
-        BOOL bDemo = [[NSApp delegate] isDemoAccount];
-        if(bDemo)
-            [tunnelButton setEnabled:NO];
         curSession = nil;
         // hide text in  messagebox
         [urlmsg  setStringValue:@" "];
