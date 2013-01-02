@@ -617,8 +617,7 @@
 {
     NSInteger bres = -1;
 
-//    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@/rest/v1/info/scout' -H 'Content-Type: application/json'", kSauceLabsDomain];
-    NSString *farg = [NSString stringWithFormat:@"curl 'http://%@/rest/v1.1/info/browsers' -H 'Content-Type: application/json'", kSauceLabsDomain];
+    NSString *farg = [NSString stringWithFormat:@"curl 'http://%@/rest/v1.1/info/scout' -H 'Content-Type: application/json'", kSauceLabsDomain];
     
     NSTask *ftask = [[[NSTask alloc] init] autorelease];
     NSPipe *fpipe = [NSPipe pipe];
@@ -653,17 +652,13 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
     NSComparisonResult res = NSOrderedSame;
     NSDictionary *dict1 = arg1;
     NSDictionary *dict2 = arg2;
-//    NSString *OS1 = [dict1 objectForKey:@"os_display"];
-//    NSString *OS2 = [dict2 objectForKey:@"os_display"];
     NSString *OS1 = [dict1 objectForKey:@"os"];
     NSString *OS2 = [dict2 objectForKey:@"os"];
     res = [OS1 compare:OS2];
     if(res != NSOrderedSame)
         return res;
-//    NSString *name1 = [dict1 objectForKey:@"name"];
-//    NSString *name2 = [dict2 objectForKey:@"name"];
-    NSString *name1 = [dict1 objectForKey:@"api_name"];
-    NSString *name2 = [dict2 objectForKey:@"api_name"];
+    NSString *name1 = [dict1 objectForKey:@"name"];
+    NSString *name2 = [dict2 objectForKey:@"name"];
 
     res = [name1 compare:name2];
     if(res != NSOrderedSame)
@@ -717,22 +712,16 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
     NSString *browser;
     NSString *version;
     NSString *resolutions;
-    NSString *backend;
     NSString *active;
     BOOL bMacgoogleVer = NO;
     
     for(NSDictionary *dict in sarr)
     {
         osStr   = [dict objectForKey:@"os"];
-//        browser = [dict objectForKey:@"name"];
-        browser = [dict objectForKey:@"api_name"];
+        browser = [dict objectForKey:@"name"];
         version = [dict objectForKey:@"short_version"];
         resolutions = [dict objectForKey:@"resolutions"];
-        
-        backend = [dict objectForKey:@"automation_backend"];
-        if(![backend hasPrefix:@"web"])     // only want 'webdriver', not 'selenium'
-            continue;
-                
+                        
         if(![version length])       // only retain 1 mac chrome browser in list
         {
             if([osStr hasPrefix:@"M"] && ([browser hasPrefix:@"g"] || [browser hasPrefix:@"c"]))
