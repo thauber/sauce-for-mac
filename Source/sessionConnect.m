@@ -45,7 +45,7 @@
         [osImage setImage:[[[NSImage alloc] initByReferencingFile:path] autorelease]];
 
         // set Browser image
-        if([browser hasPrefix:@"ie"])             // internet explorer
+        if([browser hasPrefix:@"ie"] || [browser hasPrefix:@"in"])             // internet explorer
             pStr = @"ie28";
         else if([browser hasPrefix:@"fi"])        // firefox
             pStr = @"firefox28";
