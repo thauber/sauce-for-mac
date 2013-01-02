@@ -43,12 +43,12 @@
     // use last used values from prefs
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
     curTabIndx = [defs integerForKey:kCurTab];
-    sessionIndxs[tt_winxp] = [defs integerForKey:kSessionIndxWinxp];
-    sessionIndxs[tt_win7] = [defs integerForKey:kSessionIndxWin7];
-    sessionIndxs[tt_win8] = [defs integerForKey:kSessionIndxWin8];
-    sessionIndxs[tt_linux] =   [defs integerForKey:kSessionIndxLnx];
-    sessionIndxs[tt_macios] =   [defs integerForKey:kSessionIndxIOS];
-    sessionIndxs[tt_macosx] =   [defs integerForKey:kSessionIndxOSX];
+    sessionIndxs[tt_winxp] = MAX(0,[defs integerForKey:kSessionIndxWinxp]); // avoid '-1'
+    sessionIndxs[tt_win7] = MAX(0,[defs integerForKey:kSessionIndxWin7]);
+    sessionIndxs[tt_win8] = MAX(0,[defs integerForKey:kSessionIndxWin8]);
+    sessionIndxs[tt_linux] = MAX(0,[defs integerForKey:kSessionIndxLnx]);
+    sessionIndxs[tt_macios] = MAX(0,[defs integerForKey:kSessionIndxIOS]);
+    sessionIndxs[tt_macosx] = MAX(0,[defs integerForKey:kSessionIndxOSX]);
     resolutionIndxs[tt_winxp] = [defs integerForKey:kResolutionIndxWin];
     resolutionIndxs[tt_win7] = [defs integerForKey:kResolutionIndxWin];
     resolutionIndxs[tt_win8] = [defs integerForKey:kResolutionIndxWin];
