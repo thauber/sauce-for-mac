@@ -157,7 +157,6 @@
             causeErr = errno;
             continue;
         }
-
         [lock lock];
         if (delegate == nil) {
             [lock unlock];
@@ -316,7 +315,8 @@
 - (void)errorDidEnd:(NSWindow *)sheet returnCode:(int)returnCode
         contextInfo:(void *)info
 {
-    [delegate connectionFailed:sdict];
+    [sdict setValue:[NSNumber numberWithInt:-1] forKey:@"state"];
+    [(RFBConnectionManager*)delegate performSelectorOnMainThread:@selector(connectionFailed:) withObject:sdict  waitUntilDone:NO];
 }
 
 @end
