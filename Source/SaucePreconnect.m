@@ -487,7 +487,7 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
                 }
                 else
                 {
-                    if(![status isEqualToString:@"queued"])
+                    if(![status isEqualToString:@"queued"] && ![status isEqualToString:@"new"])
                     {
                         NSLog(@"heartbeat - not in progress:%@",jsonString);
                         [self sessionClosed:sdict];
