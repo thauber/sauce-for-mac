@@ -467,7 +467,7 @@ printf("draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
 
     start = pixels + (int)(aRect.origin.y * size.width) + (int)aRect.origin.x;        
     
-    printf("r:%.0f %.0f %.0f %.0f  %.0f  %.0f\n", r.origin.x, r.origin.y, r.size.width, r.size.height,aPoint.x, aPoint.y);
+//    printf("r:%.0f %.0f %.0f %.0f  %.0f  %.0f\n", r.origin.x, r.origin.y, r.size.width, r.size.height,aPoint.x, aPoint.y);
 //    if((aRect.size.width * aRect.size.height) > SCRATCHPAD_SIZE)
     {
         bpr = size.width * sizeof(FBColor);
