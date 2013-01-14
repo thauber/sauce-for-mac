@@ -321,7 +321,13 @@
 
     NSMutableDictionary *sdict = [[SaucePreconnect sharedPreconnect] setOptions:sel_os browser:sel_browser browserVersion:sel_version url:urlstr resolution:sel_resolution];
     [NSApp endSheet:panel];
-    [panel orderOut:nil];    
+    [panel orderOut:nil];
+    
+    if([urlstr hasPrefix:@"file"])
+    {
+        NSBeginAlertSheet(@"Static File Request", @"Ok", nil, nil, [[ScoutWindowController sharedScout] window], self, nil, @selector(endAndTryAgain:returnCode:contextInfo:), nil, @"Sauce for mac does not yet support manually testing static files.");
+        return;
+    }
 
     if(![urlstr hasPrefix:@"http://"])
         urlstr = [NSString stringWithFormat:@"http://%@",urlstr];
@@ -357,7 +363,7 @@
         [[NSApp delegate] startConnecting:sdict];
 }
 
--(void)endCantReachIP:(NSWindow*)sheet returnCode:(int)returnCode contextInfo:(void*)contextInfo
+-(void)endAndTryAgain:(NSWindow*)sheet returnCode:(int)returnCode contextInfo:(void*)contextInfo
 {
     [self runSheet];
 }
