@@ -663,6 +663,7 @@ NSString *kHistoryTabLabel = @"Session History";
 
 - (void)tunnelConnected:(BOOL)is     // tunnel is ready to use
 {    
+    [[NSApp delegate] setNoTunnel:!is];
     NSImage *img;
     if(is)
     {
