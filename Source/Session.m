@@ -87,8 +87,15 @@ enum {
     [super loadView];
     
     window = [[ScoutWindowController sharedScout] window];
-
-    NSRect rr = [rfbView frame];
+    NSRect rr;
+    if([[NSApp delegate] isScaling])
+    {
+        rr = [scrollView frame];
+    }
+    else
+    {
+        rr = [rfbView frame];
+    }
     rr.origin.x = 0;
     rr.origin.y = 0;
     [rfbView setFrame:rr];
@@ -184,23 +191,31 @@ enum {
 - (NSSize)_maxSizeForWindowSize:(NSSize)aSize;
 {
     horizontalScroll = verticalScroll = NO;
-    
-    NSSize docsz = [[scrollView documentView] frame].size;
-    docsz.height += 91;
-	if(aSize.height <  docsz.height)
+    if([[NSApp delegate] isScaling])
     {
-        verticalScroll = YES;
-        docsz.width += 18;
+        [scrollView setHasHorizontalScroller:horizontalScroll];
+        [scrollView setHasVerticalScroller:verticalScroll];        
     }
-	if(aSize.width < docsz.width)
+    else
     {
-        horizontalScroll = YES;
+        NSSize docsz = [[scrollView documentView] frame].size;
+        docsz.height += 91;
+        if(aSize.height <  docsz.height)
+        {
+            verticalScroll = YES;
+            docsz.width += 18;
+        }
+        if(aSize.width < docsz.width)
+        {
+            horizontalScroll = YES;
+        }
+        [scrollView setHasHorizontalScroller:horizontalScroll];
+        [scrollView setHasVerticalScroller:verticalScroll];
+        NSPoint pt = NSMakePoint(0.0, [[scrollView documentView] bounds].size.height);   // scroll to top
+        [[scrollView documentView] scrollPoint:pt];
     }
     
-	[scrollView setHasHorizontalScroller:horizontalScroll];
-	[scrollView setHasVerticalScroller:verticalScroll];
-    NSPoint pt = NSMakePoint(0.0, [[scrollView documentView] bounds].size.height);
-    [[scrollView documentView] scrollPoint:pt];
+    [rfbView setFrameBuffer:[rfbView fbuf]];        // get scaling set
     return aSize;
 }
 

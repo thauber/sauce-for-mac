@@ -427,6 +427,7 @@ printf("put x=%f y=%f w=%f h=%f\n", aRect.origin.x, aRect.origin.y, aRect.size.w
 	}
 }
 
+
 /* Draws an updated region of the FrameBuffer to the screen. The region of the
  * framebuffer is given by aRect and the on-screen location is aPoint. */
 - (void)drawRect:(NSRect)aRect at:(NSPoint)aPoint
@@ -443,21 +444,35 @@ printf("draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
     drawRectCount++;
     drawPixelCount += aRect.size.width * aRect.size.height;
 #endif
-
     r = aRect;
-    if(NSMaxX(r) >= size.width) {
-        r.size.width = size.width - r.origin.x;
+
+    if(mHScale == 1)        // not scaling
+    {
+        if(NSMaxX(r) >= size.width)
+            r.size.width = size.width - r.origin.x;
+        
+        if(NSMaxY(r) >= size.height)
+            r.size.height = size.height - r.origin.y;
+        
+        r.origin = aPoint;
     }
-    if(NSMaxY(r) >= size.height) {
-        r.size.height = size.height - r.origin.y;
+    else
+    {
+        aRect.size.width  *= 1/mHScale;     // scale the data back up to full size
+        aRect.size.height *= 1/mVScale;
+        r.origin.x = aPoint.x * mHScale;
+        r.origin.y = aPoint.y * mVScale;
+//        r.origin = aPoint;
     }
-    start = pixels + (int)(aRect.origin.y * size.width) + (int)aRect.origin.x;
-    r.origin = aPoint;
+
+    start = pixels + (int)(aRect.origin.y * size.width) + (int)aRect.origin.x;        
+    
+    printf("r:%.0f %.0f %.0f %.0f  %.0f  %.0f\n", r.origin.x, r.origin.y, r.size.width, r.size.height,aPoint.x, aPoint.y);
 //    if((aRect.size.width * aRect.size.height) > SCRATCHPAD_SIZE)
     {
         bpr = size.width * sizeof(FBColor);
-        NSDrawBitmap(r, r.size.width, r.size.height, bitsPerColor, samplesPerPixel, sizeof(FBColor) * 8, bpr, NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&start);
-    } 
+        NSDrawBitmap(r, aRect.size.width, aRect.size.height, bitsPerColor, samplesPerPixel, sizeof(FBColor) * 8, bpr, NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&start);
+    }
     // [rda] what is the idea with following code? how does it even work?
     /* else {
         FBColor* sp = scratchpad;

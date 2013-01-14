@@ -43,6 +43,8 @@
     NSMutableArray *configsOS[kNumTabs];     // os/browsers for windows
     int activeOS[kNumTabs];
     
+    BOOL isScaling;
+    
     BOOL bCommandline;                      // running from command line
     NSString *cmdOS;                        // command line arguments
     NSString *cmdBrowser;
@@ -67,6 +69,7 @@
 @property  (assign)BOOL noTunnel;
 @property (assign) BOOL noShowCloseSession;
 @property (assign) BOOL noShowCloseConnect;
+@property (assign) BOOL isScaling;
 
 - (IBAction)doAbout:(id)sender;
 

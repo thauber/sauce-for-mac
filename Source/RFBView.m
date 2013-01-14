@@ -22,8 +22,11 @@
 #import "FrameBuffer.h"
 #import "Profile.h"
 //#import "RectangleList.h"
+#import "AppDelegate.h"
 
 @implementation RFBView
+
+@synthesize fbuf;
 
 /* One-time initializer to read the cursors into memory. */
 + (NSCursor *)_cursorForName: (NSString *)name
@@ -72,10 +75,26 @@
 - (void)setFrameBuffer:(id)aBuffer;
 {
     NSRect f = [self frame];
+    NSRect clip = [[self superview] bounds];
     
     [fbuf release];
     fbuf = [aBuffer retain];
-    f.size = [aBuffer size];
+    NSSize bsize = [aBuffer size];
+
+    [fbuf setScale:1.0 vertical:1.0];       // default for no scaling or buf smaller than view
+    f.size = bsize;
+    
+    if([[NSApp delegate] isScaling])
+    {
+        if(clip.size.width < bsize.width || clip.size.height < bsize.height)  // clip is smaller than buf
+        {
+            // so scale
+            float h = clip.size.width/bsize.width;
+            float v = clip.size.height/bsize.height;
+            [fbuf setScale:h vertical:v];
+            f = clip;
+        }
+    }
     [self setFrame:f];
 }
 
@@ -137,7 +156,7 @@
     const NSRect    *rects;
     NSInteger       numRects;
     int             i;
-
+    
     [self getRectsBeingDrawn:&rects count:&numRects];
     for (i = 0; i < numRects; i++)
     {
@@ -153,7 +172,6 @@
         @catch(...) {
             NSLog(@"non obj-c exception in rfbview:drawRect");
         }
-
     }
 }
 

@@ -39,12 +39,14 @@
 
 @synthesize noShowCloseSession;
 @synthesize noShowCloseConnect;
+@synthesize isScaling;
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification
 {
 	// make sure our singleton key equivalent manager is initialized, otherwise, it won't watch the frontmost window
 	[KeyEquivalentManager defaultManager];
     self.noTunnel = YES;        // no tunnel connection at startup
+    self.isScaling = NO;       // TODO: set from prefs or menu item
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
     [defs setInteger:0 forKey:@"demoRunSecs"];      // #demo minutes used
 }

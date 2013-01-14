@@ -447,6 +447,16 @@
 
 - (void)requestUpdate:(NSRect)frame incremental:(BOOL)aFlag
 {
+    if([[NSApp delegate] isScaling])
+    {
+        float h = [frameBuffer getScale:0];
+        float v = [frameBuffer getScale:1];
+        frame.size.width *= 1/h;
+        frame.size.height *= 1/v;
+        frame.origin.x *= h;
+        frame.origin.y *= v;
+    }
+
     rfbFramebufferUpdateRequestMsg	msg;
 
     msg.type = rfbFramebufferUpdateRequest;
@@ -496,6 +506,14 @@
     if(thePoint.y < 0) thePoint.y = 0;
     if(thePoint.x > s.width - 1) thePoint.x = s.width - 1;
     if(thePoint.y > s.height - 1) thePoint.y = s.height - 1;
+
+    if([[NSApp delegate] isScaling])
+    {
+        float h = [frameBuffer getScale:0];
+        float v = [frameBuffer getScale:1];
+        thePoint.x = (int)(thePoint.x * (1/h));
+        thePoint.y =  (int)(thePoint.y * (1/v));
+    }
 
     msg->x = htons((CARD16) thePoint.x);
     msg->y = htons((CARD16) (b.size.height - thePoint.y));

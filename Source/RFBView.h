@@ -31,6 +31,8 @@
     BOOL            drawTint;
 }
 
+@property (assign)FrameBuffer *fbuf;
+
 - (void)setFrameBuffer:(id)aBuffer;
 - (void)setDelegate:(RFBConnection *)delegate;
 - (RFBConnection *)delegate;
