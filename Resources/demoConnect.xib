@@ -148,7 +148,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="725735008">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">Sauce Labs offers a Free private account that allows secure, private local access. Learn more:  </string>
+								<string key="NSContents">Sauce Labs offers a Free private account that allows secure, private local access. </string>
 								<reference key="NSSupport" ref="295861733"/>
 								<string key="NSCellIdentifier">_NS:1505</string>
 								<reference key="NSControlView" ref="891538004"/>
@@ -168,7 +168,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="289737765">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">All is not lost! </string>
+								<string key="NSContents">Try our free private account: </string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande-Bold</string>
 									<double key="NSSize">13</double>
@@ -183,7 +183,7 @@
 						<object class="NSTextField" id="942097944">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{30, 179}, {348, 17}}</string>
+							<string key="NSFrame">{{30, 175}, {348, 21}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<string key="NSReuseIdentifierKey">_NS:1505</string>
@@ -191,7 +191,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="482241912">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">Need to Browse Local?</string>
+								<string key="NSContents">Need to test an intranet site?</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">Helvetica-Bold</string>
 									<double key="NSSize">17</double>
@@ -209,7 +209,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="138931196"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1680, 1028}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
