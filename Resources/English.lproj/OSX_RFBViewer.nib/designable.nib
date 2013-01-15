@@ -409,7 +409,7 @@
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSMenuItem" id="553151444">
 									<reference key="NSMenu" ref="862758163"/>
-									<string key="NSTitle">Register...</string>
+									<string key="NSTitle">Authorize this copy...</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="529750286"/>
@@ -417,7 +417,7 @@
 								</object>
 								<object class="NSMenuItem" id="168759686">
 									<reference key="NSMenu" ref="862758163"/>
-									<string key="NSTitle">Unregister...</string>
+									<string key="NSTitle">Deauthorize</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="529750286"/>
@@ -715,7 +715,7 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 					<string key="NSFrameSize">{561, 398}</string>
 					<reference key="NSNextKeyView" ref="344646500"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1680, 1028}}</string>
 				<string key="NSMinSize">{246.94399999999999, 28}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<string key="NSFrameAutosaveName">about</string>
