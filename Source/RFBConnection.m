@@ -312,7 +312,17 @@
     NSRect b = [rfbView bounds];
     NSRect r = aRect;
 
-    r.origin.y = b.size.height - NSMaxY(r);
+    if([[NSApp delegate] isScaling])
+    {
+        float h = [frameBuffer getScale:0];
+        float v = [frameBuffer getScale:1];
+        r.size.width *= h;
+        r.size.height *= v;
+        r.origin.x *= h;
+        r.origin.y *= v;
+    }
+
+    r.origin.y = b.size.height - NSMaxY(r);        // flip vertical
     if(_frameBufferUpdateSeconds == 0.0)      // [rda] only update front session
         [rfbView setNeedsDisplayInRect: r];
 }
@@ -511,8 +521,9 @@
     {
         float h = [frameBuffer getScale:0];
         float v = [frameBuffer getScale:1];
-        thePoint.x = (int)(thePoint.x * (1/h));
-        thePoint.y =  (int)(thePoint.y * (1/v));
+        thePoint.x *= 1/h;
+        thePoint.y *= 1/v;
+        b.size.height *= 1/v;
     }
 
     msg->x = htons((CARD16) thePoint.x);
@@ -536,9 +547,6 @@
     else {
         [self putPosition:thePoint inPointerMessage:&msg];
     }
-
-//    if (msg.x == lastMouseX && msg.y == lastMouseY)
-//        return;
 
     if (lastBufferedIsMouseMovement)
         bufferLen -= sizeof(msg); // coalesce successive mouse movements

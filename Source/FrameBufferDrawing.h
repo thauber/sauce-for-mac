@@ -338,6 +338,8 @@ printf("copy x=%f y=%f w=%f h=%f -> x=%f y=%f\n", aRect.origin.x, aRect.origin.y
 	}
 }
 
+//#define DEBUG_DRAW
+
 /* --------------------------------------------------------------------------------- */
 #define CLUT(c,p)																\
 c = redClut[(p >> pixelFormat.redShift) & pixelFormat.redMax];					\
@@ -460,33 +462,29 @@ printf("draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
     {
         aRect.size.width  *= 1/mHScale;     // scale the data back up to full size
         aRect.size.height *= 1/mVScale;
-        r.origin.x = aPoint.x * mHScale;
-        r.origin.y = aPoint.y * mVScale;
-//        r.origin = aPoint;
+        aRect.origin.x = aPoint.x * 1/mHScale;
+        aRect.origin.y = aPoint.y * 1/mVScale;
     }
+//    printf("a:%d %d p:%d %d\n", (int)aRect.origin.x, (int)aRect.origin.y, (int)aPoint.x, (int)aPoint.y);
 
     start = pixels + (int)(aRect.origin.y * size.width) + (int)aRect.origin.x;        
     
-//    printf("r:%.0f %.0f %.0f %.0f  %.0f  %.0f\n", r.origin.x, r.origin.y, r.size.width, r.size.height,aPoint.x, aPoint.y);
-//    if((aRect.size.width * aRect.size.height) > SCRATCHPAD_SIZE)
+    if((aRect.size.width * aRect.size.height) > SCRATCHPAD_SIZE)
     {
         bpr = size.width * sizeof(FBColor);
         NSDrawBitmap(r, aRect.size.width, aRect.size.height, bitsPerColor, samplesPerPixel, sizeof(FBColor) * 8, bpr, NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&start);
     }
-    // [rda] what is the idea with following code? how does it even work?
-    /* else {
+    else {
         FBColor* sp = scratchpad;
-        int lines = r.size.height;
-        int stride = (unsigned int)size.width - (unsigned int)r.size.width;
+        int lines = aRect.size.height;
         while(lines--) {
-            memcpy(sp, start, r.size.width * sizeof(FBColor));
-            start += (NSInteger) r.size.width;
-            sp += (NSInteger) r.size.width;
-            start += stride;
+            memcpy(sp, start, aRect.size.width * sizeof(FBColor));
+            start += (int)size.width;
+            sp += (int)aRect.size.width;
         }
-        bpr = r.size.width * sizeof(FBColor);
-        NSDrawBitmap(r, r.size.width, r.size.height, bitsPerColor, samplesPerPixel, sizeof(FBColor) * 8, bpr, NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&scratchpad);
-    } */
+        bpr = aRect.size.width * sizeof(FBColor);
+        NSDrawBitmap(r, aRect.size.width, aRect.size.height, bitsPerColor, samplesPerPixel, sizeof(FBColor) * 8, bpr, NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&scratchpad);
+    }
 }
 
 /*
