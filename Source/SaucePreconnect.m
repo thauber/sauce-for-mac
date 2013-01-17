@@ -17,6 +17,7 @@
 
 NSString *kSauceLabsDomain = @"saucelabs.com";
 //NSString *kSauceLabsDomain = @"admc.dev.saucelabs.com";
+//NSString *kSauceLabsDomain = @"jlipps.dev.saucelabs.com";
 
 @implementation SaucePreconnect
 
@@ -724,17 +725,19 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
             NSString *subscribedStr = [self jsonVal:jsonString key:@"subscribed"];
             if([subscribedStr length])
             {
-                NSString *minStr = [self jsonVal:jsonString key:@"minutes"];
+                
+                NSString *minStr = [self jsonVal:jsonString key:@"can_run_manual"];
+                BOOL bMin = [minStr boolValue];
                 if([subscribedStr isEqualToString:@"true"])
                 {
-                    if([minStr length] > 1)
+                    if(bMin)
                         resStr = @"S+";     // subscribed with minutes
                     else
                         resStr = @"S-";     // subscribed without minutes
                 }
                 else
                 {
-                    if([minStr length] > 1)
+                    if(bMin)
                         resStr = @"N+";     // not subscribed with minutes
                     else
                         resStr = @"N-";     // not subscribed without minutes               
