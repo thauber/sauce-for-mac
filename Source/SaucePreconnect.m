@@ -90,7 +90,11 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
     NSString *browserVersion = [sdict objectForKey:@"browserVersion"];
     NSString *urlStr = [sdict objectForKey:@"url"];
     NSString *resolution = [sdict objectForKey:@"resolution"];
-    NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@%@/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\", \"res\":\"%@\",\"client\":\"mac\"}'", self.user, self.ukey,kSauceLabsDomain, user, os, browser, browserVersion, urlStr, resolution];
+    NSString *maxdur = @"";
+    if([[NSApp delegate] isDemoAccount])
+        maxdur = @",\"max-duration\":660";    // give code a chance to end 10 minute demo account session
+
+    NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@%@/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\", \"res\":\"%@\",\"client\":\"mac\"%@}'", self.user, self.ukey,kSauceLabsDomain, user, os, browser, browserVersion, urlStr, resolution, maxdur];
 
     NSString *errStr = nil;
     while(1)
