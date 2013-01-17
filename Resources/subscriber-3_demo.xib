@@ -424,7 +424,7 @@
 							<int key="NSTitlePosition">0</int>
 							<bool key="NSTransparent">NO</bool>
 						</object>
-						<object class="NSButton" id="861718002">
+						<object class="NSButton" id="1055351569">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{616, 40}, {82, 32}}</string>
@@ -432,13 +432,13 @@
 							<reference key="NSWindow"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
-							<object class="NSButtonCell" key="NSCell" id="684316083">
+							<object class="NSButtonCell" key="NSCell" id="448359987">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
 								<string key="NSContents">Cancel</string>
 								<reference key="NSSupport" ref="212080811"/>
 								<string key="NSCellIdentifier">_NS:9</string>
-								<reference key="NSControlView" ref="861718002"/>
+								<reference key="NSControlView" ref="1055351569"/>
 								<int key="NSButtonFlags">-2038284033</int>
 								<int key="NSButtonFlags2">129</int>
 								<string key="NSAlternateContents"/>
@@ -554,7 +554,7 @@
 							<reference ref="162083296"/>
 							<reference ref="564227218"/>
 							<reference ref="500062077"/>
-							<reference ref="861718002"/>
+							<reference ref="1055351569"/>
 						</array>
 						<reference key="parent" ref="1005"/>
 					</object>
@@ -747,16 +747,16 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1854</int>
-						<reference key="object" ref="861718002"/>
+						<reference key="object" ref="1055351569"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="684316083"/>
+							<reference ref="448359987"/>
 						</array>
 						<reference key="parent" ref="1006"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1855</int>
-						<reference key="object" ref="684316083"/>
-						<reference key="parent" ref="861718002"/>
+						<reference key="object" ref="448359987"/>
+						<reference key="parent" ref="1055351569"/>
 					</object>
 				</array>
 			</object>
