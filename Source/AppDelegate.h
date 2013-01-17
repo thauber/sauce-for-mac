@@ -33,6 +33,10 @@
     NSMenuItem *tunnelMenuItem;
     NSMenuItem *viewConnectMenuItem;
     NSMenuItem *separatorMenuItem;
+    
+    NSMenuItem *myaccountMenuItem;    
+    IBOutlet NSMenuItem *bugsMenuItem;
+    
     BOOL noTunnel;      // set true after user says no to prompt for tunnel
     NSMenuItem *subscribeMenuItem;
     BOOL noShowCloseSession;
@@ -59,6 +63,8 @@
 @property (assign) IBOutlet NSMenuItem *tunnelMenuItem;
 @property (assign) IBOutlet NSMenuItem *viewConnectMenuItem;
 @property (assign) IBOutlet NSMenuItem *separatorMenuItem;
+@property (assign) IBOutlet NSMenuItem *myaccountMenuItem;
+@property (assign) IBOutlet NSMenuItem *bugsMenuItem;
 
 @property (retain)SessionController *optionsCtrlr;
 @property (retain)LoginController *loginCtrlr;

@@ -29,6 +29,9 @@
 @synthesize tunnelMenuItem;
 @synthesize viewConnectMenuItem;
 @synthesize separatorMenuItem;
+@synthesize myaccountMenuItem;
+@synthesize bugsMenuItem;
+
 @synthesize noTunnel;
 
 @synthesize optionsCtrlr;
@@ -363,7 +366,11 @@
 {
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
     NSString *uname = [defs stringForKey:kUsername];
-    return [uname isEqualToString:kDemoAccountName];
+    BOOL bDemo = [uname isEqualToString:kDemoAccountName];
+    [myaccountMenuItem setAction:bDemo?nil:@selector(myAccount:)];
+    [bugsMenuItem setAction:bDemo?nil:@selector(bugsAccount:)];
+
+    return bDemo;
 }
     
 - (NSInteger)demoCheckTime
