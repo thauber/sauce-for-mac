@@ -169,7 +169,8 @@ enum {
 
     [self connectionProblem];
     
-    NSBeginAlertSheet(@"Connection Ended", @"Ok", nil, nil, [[ScoutWindowController sharedScout] window], self, nil, nil, nil, @"%@", aReason);
+    // the reason isn't being used, but msg below seems to be extraneous in some cases
+    //    NSBeginAlertSheet(@"Connection Ended", @"Ok", nil, nil, [[ScoutWindowController sharedScout] window], self, nil, nil, nil, @"%@", aReason);
     
 
     [[ScoutWindowController sharedScout] performSelectorOnMainThread:@selector(closeTabWithSession:) withObject:self waitUntilDone:NO];
