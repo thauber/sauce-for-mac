@@ -11,6 +11,7 @@
 			<string key="NS.object.0">2844</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
+			<string>NSBox</string>
 			<string>NSButton</string>
 			<string>NSButtonCell</string>
 			<string>NSCustomObject</string>
@@ -39,7 +40,7 @@
 			<object class="NSWindowTemplate" id="1005">
 				<int key="NSWindowStyleMask">1</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{196, 240}, {395, 207}}</string>
+				<string key="NSWindowRect">{{196, 240}, {395, 321}}</string>
 				<int key="NSWTFlags">1618478080</int>
 				<string key="NSWindowTitle">Need to Browse Local or Intranet?</string>
 				<string key="NSWindowClass">NSPanel</string>
@@ -52,9 +53,10 @@
 						<object class="NSButton" id="915634584">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{295, 12}, {69, 32}}</string>
+							<string key="NSFrame">{{295, 21}, {69, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="694407931">
@@ -79,7 +81,7 @@
 						<object class="NSButton" id="448248427">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{154, 12}, {141, 32}}</string>
+							<string key="NSFrame">{{148, 21}, {154, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="915634584"/>
@@ -88,7 +90,7 @@
 							<object class="NSButtonCell" key="NSCell" id="717266393">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Visit Sauce Labs</string>
+								<string key="NSContents">Test Intranet Sites</string>
 								<reference key="NSSupport" ref="295861733"/>
 								<string key="NSCellIdentifier">_NS:9</string>
 								<reference key="NSControlView" ref="448248427"/>
@@ -103,16 +105,16 @@
 						<object class="NSTextField" id="138931196">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{30, 132}, {348, 42}}</string>
+							<string key="NSFrame">{{30, 195}, {295, 34}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="916196637"/>
+							<reference key="NSNextKeyView" ref="891538004"/>
 							<string key="NSReuseIdentifierKey">_NS:1505</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="67513305">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">For security reasons our shared, anonymous demo account disables local access.  </string>
+								<string key="NSContents">Sauce labs has both demo and free accounts.  We know, it's confusing.</string>
 								<reference key="NSSupport" ref="295861733"/>
 								<string key="NSCellIdentifier">_NS:1505</string>
 								<reference key="NSControlView" ref="138931196"/>
@@ -139,7 +141,7 @@
 						<object class="NSTextField" id="891538004">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{30, 51}, {348, 51}}</string>
+							<string key="NSFrame">{{30, 130}, {331, 40}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="448248427"/>
@@ -148,7 +150,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="725735008">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">Sauce Labs offers a Free private account that allows secure, private local access. </string>
+								<string key="NSContents">You are in the demo now. Because its anonymous, we disable intranet testing.</string>
 								<reference key="NSSupport" ref="295861733"/>
 								<string key="NSCellIdentifier">_NS:1505</string>
 								<reference key="NSControlView" ref="891538004"/>
@@ -156,42 +158,19 @@
 								<reference key="NSTextColor" ref="291687796"/>
 							</object>
 						</object>
-						<object class="NSTextField" id="916196637">
-							<reference key="NSNextResponder" ref="1006"/>
-							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{30, 103}, {348, 17}}</string>
-							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="891538004"/>
-							<string key="NSReuseIdentifierKey">_NS:1505</string>
-							<bool key="NSEnabled">YES</bool>
-							<object class="NSTextFieldCell" key="NSCell" id="289737765">
-								<int key="NSCellFlags">67239424</int>
-								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">Try our free private account: </string>
-								<object class="NSFont" key="NSSupport">
-									<string key="NSName">LucidaGrande-Bold</string>
-									<double key="NSSize">13</double>
-									<int key="NSfFlags">2072</int>
-								</object>
-								<string key="NSCellIdentifier">_NS:1505</string>
-								<reference key="NSControlView" ref="916196637"/>
-								<reference key="NSBackgroundColor" ref="788438740"/>
-								<reference key="NSTextColor" ref="291687796"/>
-							</object>
-						</object>
 						<object class="NSTextField" id="942097944">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{30, 175}, {348, 21}}</string>
+							<string key="NSFrame">{{30, 268}, {243, 42}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="138931196"/>
 							<string key="NSReuseIdentifierKey">_NS:1505</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="482241912">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">Need to test an intranet site?</string>
+								<string key="NSContents">You need a Free account to test intranet sites</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">Helvetica-Bold</string>
 									<double key="NSSize">17</double>
@@ -203,13 +182,64 @@
 								<reference key="NSTextColor" ref="291687796"/>
 							</object>
 						</object>
+						<object class="NSTextField" id="759141761">
+							<reference key="NSNextResponder" ref="1006"/>
+							<int key="NSvFlags">268</int>
+							<string key="NSFrame">{{30, 67}, {348, 48}}</string>
+							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
+							<string key="NSReuseIdentifierKey">_NS:1505</string>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSTextFieldCell" key="NSCell" id="61044526">
+								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags2">272629760</int>
+								<string key="NSContents">The free account requires a sign up, but gives you intranet testing, and a whole lot of other features.</string>
+								<reference key="NSSupport" ref="295861733"/>
+								<string key="NSCellIdentifier">_NS:1505</string>
+								<reference key="NSControlView" ref="759141761"/>
+								<reference key="NSBackgroundColor" ref="788438740"/>
+								<reference key="NSTextColor" ref="291687796"/>
+							</object>
+						</object>
+						<object class="NSBox" id="426796627">
+							<reference key="NSNextResponder" ref="1006"/>
+							<int key="NSvFlags">12</int>
+							<string key="NSFrame">{{33, 244}, {325, 5}}</string>
+							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
+							<string key="NSReuseIdentifierKey">_NS:9</string>
+							<string key="NSOffsets">{0, 0}</string>
+							<object class="NSTextFieldCell" key="NSTitleCell">
+								<int key="NSCellFlags">67108864</int>
+								<int key="NSCellFlags2">0</int>
+								<string key="NSContents">Box</string>
+								<reference key="NSSupport" ref="295861733"/>
+								<object class="NSColor" key="NSBackgroundColor">
+									<int key="NSColorSpace">6</int>
+									<string key="NSCatalogName">System</string>
+									<string key="NSColorName">textBackgroundColor</string>
+									<object class="NSColor" key="NSColor">
+										<int key="NSColorSpace">3</int>
+										<bytes key="NSWhite">MQA</bytes>
+									</object>
+								</object>
+								<object class="NSColor" key="NSTextColor">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MCAwLjgwMDAwMDAxMTkAA</bytes>
+								</object>
+							</object>
+							<int key="NSBorderType">3</int>
+							<int key="NSBoxType">2</int>
+							<int key="NSTitlePosition">0</int>
+							<bool key="NSTransparent">NO</bool>
+						</object>
 					</array>
-					<string key="NSFrameSize">{395, 207}</string>
+					<string key="NSFrameSize">{395, 321}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
-					<reference key="NSNextKeyView" ref="138931196"/>
+					<reference key="NSNextKeyView" ref="942097944"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1680, 1028}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
@@ -287,12 +317,13 @@
 						<int key="objectID">2</int>
 						<reference key="object" ref="1006"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="138931196"/>
 							<reference ref="915634584"/>
 							<reference ref="448248427"/>
-							<reference ref="891538004"/>
-							<reference ref="916196637"/>
 							<reference ref="942097944"/>
+							<reference ref="138931196"/>
+							<reference ref="891538004"/>
+							<reference ref="759141761"/>
+							<reference ref="426796627"/>
 						</array>
 						<reference key="parent" ref="1005"/>
 					</object>
@@ -349,19 +380,6 @@
 						<reference key="parent" ref="891538004"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">241</int>
-						<reference key="object" ref="916196637"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="289737765"/>
-						</array>
-						<reference key="parent" ref="1006"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">242</int>
-						<reference key="object" ref="289737765"/>
-						<reference key="parent" ref="916196637"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">246</int>
 						<reference key="object" ref="942097944"/>
 						<array class="NSMutableArray" key="children">
@@ -373,6 +391,24 @@
 						<int key="objectID">247</int>
 						<reference key="object" ref="482241912"/>
 						<reference key="parent" ref="942097944"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">248</int>
+						<reference key="object" ref="759141761"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="61044526"/>
+						</array>
+						<reference key="parent" ref="1006"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">249</int>
+						<reference key="object" ref="61044526"/>
+						<reference key="parent" ref="759141761"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">250</int>
+						<reference key="object" ref="426796627"/>
+						<reference key="parent" ref="1006"/>
 					</object>
 				</array>
 			</object>
@@ -388,10 +424,11 @@
 				<string key="2.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="239.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="240.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="241.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="242.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="246.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="247.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="248.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="249.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="250.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -401,7 +438,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">247</int>
+			<int key="maxID">250</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
