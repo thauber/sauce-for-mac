@@ -376,7 +376,7 @@
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="229893484"/>
 					</object>
-					<int key="connectionID">1856</int>
+					<int key="connectionID">1858</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -602,7 +602,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1857</int>
+			<int key="maxID">1858</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
