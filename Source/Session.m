@@ -168,6 +168,9 @@ enum {
         return;
 
     [self connectionProblem];
+    
+    NSBeginAlertSheet(@"Connection Ended", @"Ok", nil, nil, [[ScoutWindowController sharedScout] window], self, nil, nil, nil, @"%@", aReason);
+    
 
     [[ScoutWindowController sharedScout] performSelectorOnMainThread:@selector(closeTabWithSession:) withObject:self waitUntilDone:NO];
 }
