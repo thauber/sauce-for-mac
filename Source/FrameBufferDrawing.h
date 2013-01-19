@@ -448,24 +448,21 @@ printf("draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
 #endif
     r = aRect;
 
-    if(mHScale == 1)        // not scaling
+    if(NSMaxX(r) >= size.width)
+        r.size.width = size.width - r.origin.x;
+    
+    if(NSMaxY(r) >= size.height)
+        r.size.height = size.height - r.origin.y;
+    
+    r.origin = aPoint;
+
+    if(mHScale)        // scaling
     {
-        if(NSMaxX(r) >= size.width)
-            r.size.width = size.width - r.origin.x;
-        
-        if(NSMaxY(r) >= size.height)
-            r.size.height = size.height - r.origin.y;
-        
-        r.origin = aPoint;
-    }
-    else
-    {
-        aRect.size.width  *= 1/mHScale;     // scale the data back up to full size
+        aRect.size.width  *= 1/mHScale;     // scale the source up
         aRect.size.height *= 1/mVScale;
-        aRect.origin.x = aPoint.x * 1/mHScale;
-        aRect.origin.y = aPoint.y * 1/mVScale;
     }
-//    printf("a:%d %d p:%d %d\n", (int)aRect.origin.x, (int)aRect.origin.y, (int)aPoint.x, (int)aPoint.y);
+//  printf("draw:%d %d %d %d\n", (int)r.origin.x, (int)r.origin.y, (int)r.size.width, (int)r.size.height);
+//  printf("a:%d %d %d %d\n", (int)aRect.origin.x, (int)aRect.origin.y, (int)aRect.size.width, (int)aRect.size.height);
 
     start = pixels + (int)(aRect.origin.y * size.width) + (int)aRect.origin.x;        
     

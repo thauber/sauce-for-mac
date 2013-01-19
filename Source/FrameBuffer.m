@@ -23,6 +23,9 @@
 
 @implementation FrameBuffer
 
+@synthesize mHScale;
+@synthesize mVScale;
+
 /* --------------------------------------------------------------------------------- */
 static void ns_pixel(unsigned char* v, FrameBuffer *this, float* clr)
 {

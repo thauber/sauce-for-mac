@@ -75,26 +75,23 @@
 - (void)setFrameBuffer:(id)aBuffer;
 {
     NSRect f = [self frame];
-    NSRect clip = [[self superview] bounds];
     
     [fbuf release];
     fbuf = [aBuffer retain];
     NSSize bsize = [aBuffer size];
 
-    [fbuf setScale:1.0 vertical:1.0];       // default for no scaling or buf smaller than view
     f.size = bsize;
     
     if([[NSApp delegate] isScaling])
     {
-        if(clip.size.width < bsize.width || clip.size.height < bsize.height)  // clip is smaller than buf
-        {
-            // so scale
-            float h = clip.size.width/bsize.width;
-            float v = clip.size.height/bsize.height;
-            [fbuf setScale:h vertical:v];
-            f = clip;
-        }
+        NSRect clip = [[self superview] frame];
+        float h = clip.size.width/bsize.width;
+        float v = clip.size.height/bsize.height;
+        [fbuf setScale:h vertical:v];
     }
+    else
+        [fbuf setScale:0 vertical:0];    // no scaling
+    
     [self setFrame:f];
 }
 

@@ -312,16 +312,6 @@
     NSRect b = [rfbView bounds];
     NSRect r = aRect;
 
-    if([[NSApp delegate] isScaling])
-    {
-        float h = [frameBuffer getScale:0];
-        float v = [frameBuffer getScale:1];
-        r.size.width *= h;
-        r.size.height *= v;
-        r.origin.x *= h;
-        r.origin.y *= v;
-    }
-
     r.origin.y = b.size.height - NSMaxY(r);        // flip vertical
     if(_frameBufferUpdateSeconds == 0.0)      // [rda] only update front session
         [rfbView setNeedsDisplayInRect: r];
@@ -457,16 +447,6 @@
 
 - (void)requestUpdate:(NSRect)frame incremental:(BOOL)aFlag
 {
-    if([[NSApp delegate] isScaling])
-    {
-        float h = [frameBuffer getScale:0];
-        float v = [frameBuffer getScale:1];
-        frame.size.width *= 1/h;
-        frame.size.height *= 1/v;
-        frame.origin.x *= h;
-        frame.origin.y *= v;
-    }
-
     rfbFramebufferUpdateRequestMsg	msg;
 
     msg.type = rfbFramebufferUpdateRequest;
@@ -510,21 +490,17 @@
 - (void)putPosition:(NSPoint)thePoint inPointerMessage:(rfbPointerEventMsg *)msg
 {
     NSRect b = [rfbView bounds];
+    if([frameBuffer mVScale])
+    {
+        thePoint.x *= 1/[frameBuffer mHScale];
+        thePoint.y *= 1/[frameBuffer mVScale];
+    }
     NSSize s = [frameBuffer size];
 
     if(thePoint.x < 0) thePoint.x = 0;
     if(thePoint.y < 0) thePoint.y = 0;
     if(thePoint.x > s.width - 1) thePoint.x = s.width - 1;
     if(thePoint.y > s.height - 1) thePoint.y = s.height - 1;
-
-    if([[NSApp delegate] isScaling])
-    {
-        float h = [frameBuffer getScale:0];
-        float v = [frameBuffer getScale:1];
-        thePoint.x *= 1/h;
-        thePoint.y *= 1/v;
-        b.size.height *= 1/v;
-    }
 
     msg->x = htons((CARD16) thePoint.x);
     msg->y = htons((CARD16) (b.size.height - thePoint.y));

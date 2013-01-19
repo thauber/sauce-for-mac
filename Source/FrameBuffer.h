@@ -69,9 +69,12 @@ typedef unsigned char	FrameBufferPaletteIndex;
     BOOL			forceServerBigEndian;
     BOOL            serverIsBigEndian;
     
-    float mVScale;
     float mHScale;
+    float mVScale;
 }
+
+@property float mHScale;
+@property float mVScale;
 
 + (BOOL)bigEndian;
 + (void)getPixelFormat:(rfbPixelFormat*)pf;
