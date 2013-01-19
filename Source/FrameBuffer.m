@@ -454,15 +454,6 @@ static void ns_pixel(unsigned char* v, FrameBuffer *this, float* clr)
     mHScale = h;    
 }
 
-- (float)getScale:(int)hv       // 0=horizontal 1=vertical
-{
-    if(hv)
-        return mVScale;
-    else
-        return mHScale;
-    return 1.0;                 // shouldn't happen
-}
-
 @end
 
  
