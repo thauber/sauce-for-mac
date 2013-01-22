@@ -27,6 +27,7 @@ NSString *kPrefs_IntervalBeforeReconnect_Key = @"IntervalBeforeReconnect";
 
 // keys in our sauce pref panel
 NSString *kPrefs_AlwaysUseTunnel = @"AlwaysUseTunnel";
+NSString *kPrefs_Scaling = @"scaling";
 NSString *kPrefs_NoWarningDialogs = @"NoWarningDialogs";
 
 

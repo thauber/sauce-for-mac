@@ -44,6 +44,7 @@ static int const kPrefsVersion = 0x00000002;
 		[NSNumber numberWithBool: NO],			kPrefs_AutoReconnect_Key, 
 		[NSNumber numberWithDouble: 30.0],		kPrefs_IntervalBeforeReconnect_Key,
         [NSNumber numberWithBool:NO],           kPrefs_AlwaysUseTunnel,
+        [NSNumber numberWithBool:NO],           kPrefs_Scaling,
 		nil,									nil];
 	
     Profile *defaultProfile = [[Profile alloc] init];
@@ -232,6 +233,17 @@ static int const kPrefsVersion = 0x00000002;
     
 }
 
+- (BOOL)isScaling
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kPrefs_Scaling];
+}
+
+- (void)setIsScaling:(BOOL)state
+{
+    [[NSUserDefaults standardUserDefaults] setBool:state forKey:kPrefs_Scaling];
+    
+}
+
 #pragma mark -
 #pragma mark Preferences Window
 
@@ -244,6 +256,12 @@ static int const kPrefsVersion = 0x00000002;
 #pragma mark -
 #pragma mark Action Methods
 
+
+- (IBAction)checkScale:(id)sender
+{
+	BOOL value = ([sender state] == NSOnState) ? YES : NO;
+	[[NSUserDefaults standardUserDefaults] setBool:value forKey:kPrefs_Scaling];        
+}
 
 - (IBAction)checkTunnel:(id)sender
 {

@@ -463,7 +463,6 @@ printf("draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
             aRect.size.width  = MIN((int)(aRect.size.width * 1/mHScale),size.width);
             aRect.size.height = MIN((int)(aRect.size.height * 1/mVScale),size.height);
             aRect.origin.y = 0;
-            //r.origin.y = 0;
             r = NSInsetRect(r, -r.origin.x, -r.origin.y);
         }
         start = pixels + (int)(aRect.origin.y * size.width) + (int)aRect.origin.x;

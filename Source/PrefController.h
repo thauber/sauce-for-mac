@@ -13,7 +13,9 @@
 @interface PrefController : NSObject {
 	IBOutlet NSWindow *mWindow;
     IBOutlet NSButton *mAlwaysStartTunnel;
+    IBOutlet NSButton *mScale;
 }
+- (IBAction)checkScale:(id)sender;
 - (IBAction)checkTunnel:(id)sender;
 - (IBAction)resetWarnings:(id)sender;
 
@@ -43,6 +45,8 @@
 - (void)setNoShowWarning;
 - (BOOL)alwaysUseTunnel;
 - (void)setAlwaysUseTunnel:(BOOL)state;
+- (BOOL)isScaling;
+- (void)setIsScaling:(BOOL)state;
 
 	// Preferences Window
 - (void)showWindow;

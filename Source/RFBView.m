@@ -23,6 +23,7 @@
 #import "Profile.h"
 //#import "RectangleList.h"
 #import "AppDelegate.h"
+#import "PrefController.h"
 
 @implementation RFBView
 
@@ -82,7 +83,7 @@
 
     f.size = bsize;
     
-    if([[NSApp delegate] isScaling])
+    if([[PrefController sharedController] isScaling])
     {
         NSRect clip = [[self superview] frame];
         float h = clip.size.width/bsize.width;

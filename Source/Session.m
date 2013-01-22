@@ -187,7 +187,7 @@ enum {
 - (NSSize)_maxSizeForWindowSize:(NSSize)aSize;
 {
     horizontalScroll = verticalScroll = NO;
-    if(![[NSApp delegate] isScaling])
+    if(![[PrefController sharedController] isScaling])
     {
         NSSize docsz = [[scrollView documentView] frame].size;
         docsz.height += 91;
