@@ -112,7 +112,6 @@ typedef unsigned char	FrameBufferPaletteIndex;
 - (void)putRect:(NSRect)aRect withColors:(FrameBufferPaletteIndex*)data fromPalette:(FrameBufferColor*)palette;
 - (void)putRun:(FrameBufferColor*)fbc ofLength:(int)length at:(NSRect)aRect pixelOffset:(int)offset;
 - (void)putRect:(NSRect)aRect fromRGBBytes:(unsigned char*)rgb;
-- (void)setScale:(float)h vertical:(float)v;
 
 @end
 

@@ -456,22 +456,37 @@ printf("draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
     
     r.origin = aPoint;
 
-    if(mHScale)        // scaling
-    {
-        aRect.size.width  *= 1/mHScale;     // scale the source up
-        aRect.size.height *= 1/mVScale;
-    }
-//  printf("draw:%d %d %d %d\n", (int)r.origin.x, (int)r.origin.y, (int)r.size.width, (int)r.size.height);
-//  printf("a:%d %d %d %d\n", (int)aRect.origin.x, (int)aRect.origin.y, (int)aRect.size.width, (int)aRect.size.height);
+//    printf("draw:%d %d %d %d\n", (int)r.origin.x, (int)r.origin.y, (int)r.size.width, (int)r.size.height);
+//    printf("a:%d %d %d %d\n", (int)aRect.origin.x, (int)aRect.origin.y, (int)aRect.size.width, (int)aRect.size.height);
 
     start = pixels + (int)(aRect.origin.y * size.width) + (int)aRect.origin.x;        
     
     if((aRect.size.width * aRect.size.height) > SCRATCHPAD_SIZE)
     {
+        if(mHScale)        // scale the source size up
+        {
+            aRect.size.width  = (int)(aRect.size.width * 1/mHScale);
+            aRect.size.height = (int)(aRect.size.height * 1/mVScale);
+            aRect.origin.y = 0;
+            r.origin.y = 0;
+        }
+        start = pixels + (int)(aRect.origin.y * size.width) + (int)aRect.origin.x;
         bpr = size.width * sizeof(FBColor);
+//        printf("draw2:%d %d %d %d\n", (int)r.origin.x, (int)r.origin.y, (int)r.size.width, (int)r.size.height);
+//        printf("a2:%d %d %d %d\n", (int)aRect.origin.x, (int)aRect.origin.y, (int)aRect.size.width, (int)aRect.size.height);
         NSDrawBitmap(r, aRect.size.width, aRect.size.height, bitsPerColor, samplesPerPixel, sizeof(FBColor) * 8, bpr, NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&start);
     }
-    else {
+    else
+    {
+        if(mHScale)        // scale the target size down to fit view
+        {
+            r.size.width  = (int)(r.size.width * mHScale);
+            r.size.height = (int)(r.size.height * mVScale);
+            r.origin.x = (int)(r.origin.x * mHScale);
+            r.origin.y = (int)(r.origin.y * mVScale);
+        }
+//        printf("draw2:%d %d %d %d\n", (int)r.origin.x, (int)r.origin.y, (int)r.size.width, (int)r.size.height);
+//        printf("a2:%d %d %d %d\n", (int)aRect.origin.x, (int)aRect.origin.y, (int)aRect.size.width, (int)aRect.size.height);
         FBColor* sp = scratchpad;
         int lines = aRect.size.height;
         while(lines--) {

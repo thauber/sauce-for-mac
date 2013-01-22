@@ -448,12 +448,6 @@ static void ns_pixel(unsigned char* v, FrameBuffer *this, float* clr)
 
 /* --------------------------------------------------------------------------------- */
 
-- (void)setScale:(float)h vertical:(float)v
-{
-    mVScale = v;
-    mHScale = h;    
-}
-
 @end
 
  

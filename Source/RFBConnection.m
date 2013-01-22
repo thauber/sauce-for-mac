@@ -309,12 +309,20 @@
 
 - (void)invalidateRect:(NSRect)aRect
 {
-    NSRect b = [rfbView bounds];
-    NSRect r = aRect;
 
-    r.origin.y = b.size.height - NSMaxY(r);        // flip vertical
     if(_frameBufferUpdateSeconds == 0.0)      // [rda] only update front session
+    {
+        if([[rfbView fbuf] mHScale])
+        {
+            NSRect cr = [[rfbView superview] bounds];
+            cr.origin.y = 0;
+            [[rfbView superview] setBounds:cr];
+        }
+        NSRect b = [rfbView bounds];
+        NSRect r = aRect;
+        r.origin.y = b.size.height - NSMaxY(r);        // flip vertical
         [rfbView setNeedsDisplayInRect: r];
+    }
 }
 
 - (void)frameBufferUpdateBeginning
@@ -492,7 +500,8 @@
     NSRect b = [rfbView bounds];
     if([frameBuffer mVScale])
     {
-        thePoint.x *= 1/[frameBuffer mHScale];
+//        printf("pp:%d %d\n",(int)thePoint.x,(int)thePoint.y);
+        thePoint.x *= 1/[frameBuffer mHScale];      // scale up view's point to full image size
         thePoint.y *= 1/[frameBuffer mVScale];
     }
     NSSize s = [frameBuffer size];
@@ -521,6 +530,8 @@
         msg.y = lastMouseY;
     }
     else {
+        lastMouseX = thePoint.x;
+        lastMouseY = thePoint.y;
         [self putPosition:thePoint inPointerMessage:&msg];
     }
 
@@ -535,8 +546,6 @@
         lastBufferedIsMouseMovement = NO;
     }
 
-    lastMouseX = msg.x;
-    lastMouseY = msg.y;
 }
 
 - (void)mouseClickedAt:(NSPoint)thePoint buttons:(unsigned int)mask
@@ -545,12 +554,14 @@
 	
     msg.type = rfbPointerEvent;
     msg.buttonMask = mask;
+
+    lastMouseX = thePoint.x;
+    lastMouseY = thePoint.y;
+    
     [self putPosition:thePoint inPointerMessage:&msg];
 
     [self writeBufferedBytes: (unsigned char *)&msg length:sizeof(msg)];
 
-    lastMouseX = msg.x;
-    lastMouseY = msg.y;
 }
 
 - (void)sendModifier:(unsigned int)m pressed: (BOOL)pressed
