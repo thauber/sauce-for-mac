@@ -312,7 +312,7 @@
 
     if(_frameBufferUpdateSeconds == 0.0)      // [rda] only update front session
     {
-        if([[rfbView fbuf] mHScale])
+        if([frameBuffer mHScale])
         {
             NSRect cr = [[rfbView superview] bounds];
             cr.origin.y = 0;
@@ -500,7 +500,6 @@
     NSRect b = [rfbView bounds];
     if([frameBuffer mVScale])
     {
-//        printf("pp:%d %d\n",(int)thePoint.x,(int)thePoint.y);
         thePoint.x *= 1/[frameBuffer mHScale];      // scale up view's point to full image size
         thePoint.y *= 1/[frameBuffer mVScale];
     }
@@ -521,19 +520,12 @@
 - (void)mouseAt:(NSPoint)thePoint buttons:(unsigned int)mask
 {
     rfbPointerEventMsg  msg;
-
     msg.type = rfbPointerEvent;
     msg.buttonMask = mask;
-    if (thePoint.x == lastMouseX && thePoint.y == lastMouseY)
-    {
-        msg.x = lastMouseX;
-        msg.y = lastMouseY;
-    }
-    else {
-        lastMouseX = thePoint.x;
-        lastMouseY = thePoint.y;
-        [self putPosition:thePoint inPointerMessage:&msg];
-    }
+    [self putPosition:thePoint inPointerMessage:&msg];
+
+    if (msg.x == lastMouseX && msg.y == lastMouseY)
+        return;
 
     if (lastBufferedIsMouseMovement)
         bufferLen -= sizeof(msg); // coalesce successive mouse movements
@@ -545,6 +537,8 @@
         [self writeBytes: (unsigned char *)&msg length:sizeof(msg)];
         lastBufferedIsMouseMovement = NO;
     }
+    lastMouseX = msg.x;
+    lastMouseY = msg.y;
 
 }
 
