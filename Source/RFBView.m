@@ -86,8 +86,12 @@
     if([[PrefController sharedController] isScaling])
     {
         NSRect clip = [[self superview] frame];
-        float h = clip.size.width/bsize.width;
-        float v = clip.size.height/bsize.height;
+        float h = 0;
+        if(clip.size.width < bsize.width)
+            h = clip.size.width/bsize.width;
+        float v = 0;
+        if(clip.size.height < bsize.height)
+            v = clip.size.height/bsize.height;
         [fbuf setMHScale:h];
         [fbuf setMVScale:v];
     }

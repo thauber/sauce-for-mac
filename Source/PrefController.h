@@ -18,6 +18,7 @@
 - (IBAction)checkScale:(id)sender;
 - (IBAction)checkTunnel:(id)sender;
 - (IBAction)resetWarnings:(id)sender;
+- (IBAction)hideWindow:(id)sender;
 
 	// Creation
 + (id)sharedController;

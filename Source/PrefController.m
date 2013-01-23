@@ -253,6 +253,11 @@ static int const kPrefsVersion = 0x00000002;
 	[mWindow makeKeyAndOrderFront: nil];
 }
 
+- (IBAction)hideWindow:(id)sender
+{
+    [mWindow close];
+}
+
 #pragma mark -
 #pragma mark Action Methods
 
@@ -275,4 +280,6 @@ static int const kPrefsVersion = 0x00000002;
     [[NSApp delegate] setNoShowCloseConnect:NO];
     [[NSApp delegate] setNoShowCloseSession:NO];    
 }
+
+
 @end
