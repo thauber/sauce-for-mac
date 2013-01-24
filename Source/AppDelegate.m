@@ -461,6 +461,9 @@
 
 - (IBAction)doTunnel:(id)sender
 {
+    if(!tunnelCtrlr && [self checkTunnelRunning])       // tunnel was run externally
+        return;
+    
     if(self.optionsCtrlr)       // close the options sheet
     {
         [NSApp endSheet:[optionsCtrlr panel]];
@@ -479,6 +482,21 @@
     {
         [self doStopConnect:self];
     }
+}
+
+-(BOOL)checkTunnelRunning
+{
+    NSString *farg = @"ps ax |grep Sauce-Connect.jar";
+    NSTask *ftask = [[[NSTask alloc] init] autorelease];
+    NSPipe *fpipe = [NSPipe pipe];
+    [ftask setStandardOutput:fpipe];
+    [ftask setLaunchPath:@"/bin/bash"];
+    [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+    [ftask launch];		// NB: hangs if call 'waitUntilExit'
+    NSFileHandle *fhand = [fpipe fileHandleForReading];
+    NSData *data = [fhand readDataToEndOfFile];
+    NSString *rstr = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+    return [rstr rangeOfString:@"/Sauce"].location != NSNotFound;
 }
 
 - (void)escapeDialog

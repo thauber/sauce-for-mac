@@ -87,6 +87,7 @@
 - (IBAction)toggleToolbar:(id)sender;
 - (IBAction)doTunnel:(id)sender;
 - (void)toggleTunnelDisplay;
+-(BOOL)checkTunnelRunning;
 
 - (IBAction)showOptionsDlg:(id)sender;
 - (IBAction)showLoginDlg:(id)sender;
