@@ -16,6 +16,7 @@
 #import "HighColorFrameBuffer.h"
 #import "TrueColorFrameBuffer.h"
 #import "AppDelegate.h"
+#import "ScoutWindowController.h"
 
 
 // --- Preferences Version --- //
@@ -255,7 +256,14 @@ static int const kPrefsVersion = 0x00000002;
 
 - (IBAction)hideWindow:(id)sender
 {
-    [mWindow close];
+    if(sender)
+        [mWindow close];
+    [[ScoutWindowController sharedScout] sizeWindow];
+}
+
+- (void)windowWillClose:(NSNotification *)notification
+{
+    [self hideWindow:nil];
 }
 
 #pragma mark -

@@ -10,7 +10,7 @@
 #import "rfbproto.h"
 
 
-@interface PrefController : NSObject {
+@interface PrefController : NSObject <NSWindowDelegate>{
 	IBOutlet NSWindow *mWindow;
     IBOutlet NSButton *mAlwaysStartTunnel;
     IBOutlet NSButton *mScale;

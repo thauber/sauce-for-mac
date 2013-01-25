@@ -87,6 +87,7 @@ typedef enum { login,options,session } tabType;
 - (void)windowWillClose:(NSNotification *)aNotification;
 - (void)windowDidResize:(NSNotification *)aNotification;
 - (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)proposedFrameSize;
+- (void)sizeWindow;
 
 
 @end

@@ -245,6 +245,12 @@ NSString *kHistoryTabLabel = @"Session History";
     return proposedFrameSize;
 }
 
+- (void)sizeWindow
+{
+    NSSize sz = [[self window] frame].size;
+    [self windowWillResize:[self window] toSize:sz];
+}
+
 - (void)paste:(id)sender
 {
     if(curSession)
