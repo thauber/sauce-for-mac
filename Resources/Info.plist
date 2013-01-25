@@ -9,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>Sauce</string>
 	<key>CFBundleGetInfoString</key>
-	<string>Sauce for Mac version 1.01, Copyright 2012 Sauce Labs</string>
+	<string>Sauce for Mac version 1.03, Copyright 2013 Sauce Labs</string>
 	<key>CFBundleIconFile</key>
 	<string>logo.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -37,7 +37,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>115</string>
+	<string>1.03</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.developer-tools</string>
 	<key>NSAppleScriptEnabled</key>
