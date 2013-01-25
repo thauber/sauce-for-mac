@@ -3,9 +3,7 @@
 
 ## Install
 
-<pre>
-  Download the .dmg from [http://saucelabs.com/downloads/Sauce-for-Mac.dmg](http://saucelabs.com/downloads/Sauce-for-Mac.dmg)
-</pre>
+Download the .dmg from: http://saucelabs.com/downloads/Sauce-for-Mac.dmg
 
 ## Authors
 
