@@ -140,7 +140,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="266789231">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">Feel free to run up to three sessions at once on our free account. Sauce for Mac can run more. Contact us for details. </string>
+								<string key="NSContents">Feel free to run up to three sessions at once on our free account. Sauce can run more. Contact us for details. </string>
 								<object class="NSFont" key="NSSupport" id="212080811">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -851,12 +851,13 @@
 									<string key="NSFrame">{{1, 1}, {497, 3}}</string>
 									<reference key="NSSuperview" ref="89477310"/>
 									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView" ref="234723182"/>
 								</object>
 							</array>
 							<string key="NSFrame">{{34, 532}, {499, 5}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="234723182"/>
+							<reference key="NSNextKeyView" ref="893641094"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<string key="NSOffsets">{0, 0}</string>
 							<object class="NSTextFieldCell" key="NSTitleCell">
@@ -888,6 +889,7 @@
 							<string key="NSFrame">{{438, 12}, {101, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="41514633">
