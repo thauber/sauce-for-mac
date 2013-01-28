@@ -71,10 +71,15 @@ typedef unsigned char	FrameBufferPaletteIndex;
     
     float mHScale;
     float mVScale;
+    int vwWidth;
+    int vwHeight;
 }
 
 @property float mHScale;
 @property float mVScale;
+@property int vwWidth;
+@property int vwHeight;
+
 
 + (BOOL)bigEndian;
 + (void)getPixelFormat:(rfbPixelFormat*)pf;

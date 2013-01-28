@@ -258,7 +258,7 @@ static int const kPrefsVersion = 0x00000002;
 {
     if(sender)
         [mWindow close];
-    [[ScoutWindowController sharedScout] sizeWindow];
+    [[ScoutWindowController sharedScout] performSelectorOnMainThread:@selector(sizeWindow) withObject:nil waitUntilDone:NO];
 }
 
 - (void)windowWillClose:(NSNotification *)notification

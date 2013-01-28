@@ -22,6 +22,7 @@
 #import "centerclip.h"
 #import "sessionConnect.h"
 #import "centerclip.h"
+#import "PrefController.h"
 
 @implementation ScoutWindowController
 
@@ -247,8 +248,11 @@ NSString *kHistoryTabLabel = @"Session History";
 
 - (void)sizeWindow
 {
-    NSSize sz = [[self window] frame].size;
-    [self windowWillResize:[self window] toSize:sz];
+    if(curSession)
+    {
+        [curSession resetScale];    // set up scaling factors
+        [[self window] display];
+    }
 }
 
 - (void)paste:(id)sender
@@ -528,9 +532,12 @@ NSString *kHistoryTabLabel = @"Session History";
         
         [bugsnap setEnabled:YES];
 
-        NSScrollView *svw = [curSession scrollView];
-        [(centerclip*)[svw contentView] centerView];        // make sure view is centered
-        [[self window] display];
+        if(![[PrefController sharedController] isScaling])
+        {
+            NSScrollView *svw = [curSession scrollView];
+            [(centerclip*)[svw contentView] centerView];        // make sure view is centered
+        }
+        [self sizeWindow];      // make sure scaling is set correctly and redisplay window
     }
     else    // session is in process of connecting
     {

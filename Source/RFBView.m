@@ -76,9 +76,12 @@
 - (void)setFrameBuffer:(id)aBuffer;
 {
     NSRect f = [self frame];
-    
-    [fbuf release];
-    fbuf = [aBuffer retain];
+
+    if(aBuffer != fbuf)
+    {
+        [fbuf release];
+        fbuf = [aBuffer retain];
+    }
     NSSize bsize = [aBuffer size];
 
     f.size = bsize;
@@ -100,6 +103,8 @@
         [fbuf setMHScale:0];
         [fbuf setMVScale:0];
     }
+    [fbuf setVwWidth:f.size.width];
+    [fbuf setVwHeight:f.size.height];
     
     [self setFrame:f];
 }

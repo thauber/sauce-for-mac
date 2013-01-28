@@ -60,6 +60,7 @@
 - (void)setupWindow;
 - (void)frameBufferUpdateComplete;
 - (void)resize:(NSSize)size;
+- (void)resetScale;
 
 - (void)paste:(id)sender;
 - (IBAction)sendPasteboardToServer:(id)sender;

@@ -246,6 +246,12 @@ enum {
     [self windowDidResize]; // setup scroll bars if necessary
 }
 
+- (void)resetScale
+{
+    [self _maxSizeForWindowSize:[[window contentView] frame].size];
+    [window setViewsNeedDisplay:YES];
+}
+
 - (void)requestFrameBufferUpdate:(id)sender
 {
     [connection requestFrameBufferUpdate:sender];
