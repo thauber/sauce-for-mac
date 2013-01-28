@@ -69,7 +69,7 @@
 									<object class="NSTextFieldCell" key="NSCell" id="507439029">
 										<int key="NSCellFlags">605158976</int>
 										<int key="NSCellFlags2">306222080</int>
-										<string key="NSContents">Welcome to Sauce for Mac!</string>
+										<string key="NSContents">Welcome to Sauce!</string>
 										<object class="NSFont" key="NSSupport">
 											<string key="NSName">Helvetica-Bold</string>
 											<double key="NSSize">24</double>
@@ -348,7 +348,7 @@
 													<object class="NSTextFieldCell" key="NSCell" id="466359063">
 														<int key="NSCellFlags">67239424</int>
 														<int key="NSCellFlags2">272629760</int>
-														<string key="NSContents">Try Sauce for Mac</string>
+														<string key="NSContents">Try Sauce</string>
 														<reference key="NSSupport" ref="722648156"/>
 														<string key="NSCellIdentifier">_NS:1505</string>
 														<reference key="NSControlView" ref="197704213"/>
@@ -555,7 +555,7 @@
 									<object class="NSTextFieldCell" key="NSCell" id="635245917">
 										<int key="NSCellFlags">-2080244224</int>
 										<int key="NSCellFlags2">272666624</int>
-										<string key="NSContents">Sauce for Mac lets you spotcheck your css, test browser compatibility, and even debug your web projects across every import browser and OS. To begin, please sign in or sign up for a new account.</string>
+										<string key="NSContents">Sauce lets you spotcheck your css, test browser compatibility, and even debug your web projects across every import browser and OS. To begin, please sign in or sign up for a new account.</string>
 										<object class="NSFont" key="NSSupport">
 											<string key="NSName">LucidaGrande</string>
 											<double key="NSSize">13</double>
@@ -573,7 +573,6 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{716, 69}, {82, 32}}</string>
 									<reference key="NSSuperview" ref="667167168"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="890014399">
@@ -602,7 +601,7 @@
 					<reference key="NSNextKeyView" ref="667167168"/>
 					<string key="NSReuseIdentifierKey">_NS:21</string>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
