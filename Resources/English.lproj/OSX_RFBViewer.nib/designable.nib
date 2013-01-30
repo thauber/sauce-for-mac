@@ -567,7 +567,7 @@
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<string key="NSWindowContentMinSize">{246.94399999999999, 6}</string>
 				<object class="NSView" key="NSWindowView" id="579117168">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<object class="NSMutableArray" key="NSSubviews">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -588,6 +588,7 @@
 							</object>
 							<string key="NSFrame">{{0, -30}, {576, 428}}</string>
 							<reference key="NSSuperview" ref="579117168"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="686866905"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSImageCell" key="NSCell" id="884333643">
@@ -607,16 +608,21 @@
 						<object class="NSTextField" id="851618597">
 							<reference key="NSNextResponder" ref="579117168"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{123, 69}, {430, 117}}</string>
+							<string key="NSFrame">{{123, 128}, {418, 112}}</string>
 							<reference key="NSSuperview" ref="579117168"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSAntiCompressionPriority">{250, 750}</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="56237824">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string type="base64-UTF8" key="NSContents">UGFydHMgb2YgU2F1Y2UgZm9yIE1hYyBCYXNlZCBvbjoKQ2hpY2tlbiBvZiB0aGUgVk5DIGJ5IEphc29u
-IEhhcnJpcwkJCShzdXBwb3J0IEBnZWVrc3BpZmYuY29tKQpWTkNWaWV3ZXIgYnkgSGVsbXV0IE1haWVy
-aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
+								<string type="base64-UTF8" key="NSContents">T1NYIFNhdWNlLmFwcCBkZXNpZ24gYW5kIGltcGxlbWVudGF0aW9uIGJ5OgpBZGFtIENocmlzdGlhbiAo
+YWRtY0BzYXVjZWxhYnMuY29tKSwgRHVkbGV5IEFja2VybWFuKHJkYWNrZXJAY29tY2FzdC5uZXQpLCBK
+ZXJlbXkgRXBzdGVpbihlZ2dmcmVlQGVnZ2ZyZWUubmV0KSAKClBhcnRzIG9mIHRoZSBTYXVjZS5hcHAg
+QmFzZWQgb246CkNoaWNrZW4gb2YgdGhlIFZOQyBieSBKYXNvbiBIYXJyaXMJCQkoc3VwcG9ydCBAZ2Vl
+a3NwaWZmLmNvbSkKVk5DVmlld2VyIGJ5IEhlbG11dCBNYWllcmhvZmVyCQkJKGhlbG11dC5tYWllcmhv
+ZmVyQGNoZWxsby5hdCkKA</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">11</double>
@@ -641,8 +647,9 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 						<object class="NSTextField" id="762307916">
 							<reference key="NSNextResponder" ref="579117168"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{123, 211}, {246, 42}}</string>
+							<string key="NSFrame">{{123, 236}, {246, 42}}</string>
 							<reference key="NSSuperview" ref="579117168"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="851618597"/>
 							<string key="NSAntiCompressionPriority">{250, 750}</string>
 							<bool key="NSEnabled">YES</bool>
@@ -668,6 +675,7 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{123, 313}, {183, 23}}</string>
 							<reference key="NSSuperview" ref="579117168"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="404728846"/>
 							<string key="NSAntiCompressionPriority">{250, 750}</string>
 							<bool key="NSEnabled">YES</bool>
@@ -696,15 +704,16 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 						<object class="NSTextField" id="404728846">
 							<reference key="NSNextResponder" ref="579117168"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{123, 236}, {275, 69}}</string>
+							<string key="NSFrame">{{123, 236}, {399, 69}}</string>
 							<reference key="NSSuperview" ref="579117168"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="762307916"/>
 							<string key="NSAntiCompressionPriority">{250, 750}</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="332154315">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">Brought to you by the Sauce Labs Team</string>
+								<string key="NSContents">Brought to you by Sauce Labs</string>
 								<reference key="NSSupport" ref="620089907"/>
 								<reference key="NSControlView" ref="404728846"/>
 								<reference key="NSBackgroundColor" ref="138045666"/>
@@ -713,9 +722,11 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 						</object>
 					</object>
 					<string key="NSFrameSize">{561, 398}</string>
+					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="344646500"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
 				<string key="NSMinSize">{246.94399999999999, 28}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<string key="NSFrameAutosaveName">about</string>
@@ -725,9 +736,12 @@ aG9mZXIJCQkoaGVsbXV0Lm1haWVyaG9mZXJAY2hlbGxvLmF0KQ</string>
 				<string key="NSClassName">AppDelegate</string>
 			</object>
 			<object class="NSView" id="1061574114">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">256</int>
 				<string key="NSFrameSize">{435, 1}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView"/>
 			</object>
 			<object class="NSMenuItem" id="560175149">
 				<string key="NSTitle">Item</string>
