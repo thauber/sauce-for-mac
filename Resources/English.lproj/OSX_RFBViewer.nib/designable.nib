@@ -561,7 +561,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{358, 593}, {561, 398}}</string>
 				<int key="NSWTFlags">1618477056</int>
-				<string key="NSWindowTitle">Sauce for Mac</string>
+				<string key="NSWindowTitle">About Sauce</string>
 				<string key="NSWindowClass">NSPanel</string>
 				<string key="NSViewClass">View</string>
 				<nil key="NSUserInterfaceItemIdentifier"/>
@@ -611,18 +611,13 @@
 							<string key="NSFrame">{{123, 128}, {418, 112}}</string>
 							<reference key="NSSuperview" ref="579117168"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
+							<reference key="NSNextKeyView" ref="36251370"/>
 							<string key="NSAntiCompressionPriority">{250, 750}</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="56237824">
 								<int key="NSCellFlags">67239424</int>
-								<int key="NSCellFlags2">272629760</int>
-								<string type="base64-UTF8" key="NSContents">T1NYIFNhdWNlLmFwcCBkZXNpZ24gYW5kIGltcGxlbWVudGF0aW9uIGJ5OgpBZGFtIENocmlzdGlhbiAo
-YWRtY0BzYXVjZWxhYnMuY29tKSwgRHVkbGV5IEFja2VybWFuKHJkYWNrZXJAY29tY2FzdC5uZXQpLCBK
-ZXJlbXkgRXBzdGVpbihlZ2dmcmVlQGVnZ2ZyZWUubmV0KSAKClBhcnRzIG9mIHRoZSBTYXVjZS5hcHAg
-QmFzZWQgb246CkNoaWNrZW4gb2YgdGhlIFZOQyBieSBKYXNvbiBIYXJyaXMJCQkoc3VwcG9ydCBAZ2Vl
-a3NwaWZmLmNvbSkKVk5DVmlld2VyIGJ5IEhlbG11dCBNYWllcmhvZmVyCQkJKGhlbG11dC5tYWllcmhv
-ZmVyQGNoZWxsby5hdCkKA</string>
+								<int key="NSCellFlags2">272633856</int>
+								<string type="base64-UTF8" key="NSContents">Cg</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">11</double>
@@ -704,7 +699,7 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 						<object class="NSTextField" id="404728846">
 							<reference key="NSNextResponder" ref="579117168"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{123, 236}, {399, 69}}</string>
+							<string key="NSFrame">{{123, 246}, {399, 59}}</string>
 							<reference key="NSSuperview" ref="579117168"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="762307916"/>
@@ -720,13 +715,40 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 								<reference key="NSTextColor" ref="1013384328"/>
 							</object>
 						</object>
+						<object class="NSTextField" id="36251370">
+							<reference key="NSNextResponder" ref="579117168"/>
+							<int key="NSvFlags">268</int>
+							<string key="NSFrame">{{123, 111}, {361, 127}}</string>
+							<reference key="NSSuperview" ref="579117168"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSTextFieldCell" key="NSCell" id="662540603">
+								<int key="NSCellFlags">67108864</int>
+								<int key="NSCellFlags2">272629760</int>
+								<string type="base64-UTF8" key="NSContents">T1NYIFNhdWNlLmFwcCBkZXNpZ24gYW5kIGltcGxlbWVudGF0aW9uIGJ5OgpBZGFtIENocmlzdGlhbiAo
+YWRtY0BzYXVjZWxhYnMuY29tKSwgRHVkbGV5IEFja2VybWFuKHJkYWNrZXJAY29tY2FzdC5uZXQpLCBK
+ZXJlbXkgRXBzdGVpbihlZ2dmcmVlQGVnZ2ZyZWUubmV0KSAKClBhcnRzIG9mIHRoZSBTYXVjZS5hcHAg
+QmFzZWQgb246CkNoaWNrZW4gb2YgdGhlIFZOQyBieSBKYXNvbiBIYXJyaXMJCQkoc3VwcG9ydCBAZ2Vl
+a3NwaWZmLmNvbSkKVk5DVmlld2VyIGJ5IEhlbG11dCBNYWllcmhvZmVyCQkJKGhlbG11dC5tYWllcmhv
+ZmVyQGNoZWxsby5hdCk</string>
+								<object class="NSFont" key="NSSupport">
+									<string key="NSName">LucidaGrande</string>
+									<double key="NSSize">9</double>
+									<int key="NSfFlags">3614</int>
+								</object>
+								<reference key="NSControlView" ref="36251370"/>
+								<reference key="NSBackgroundColor" ref="138045666"/>
+								<reference key="NSTextColor" ref="1013384328"/>
+							</object>
+						</object>
 					</object>
 					<string key="NSFrameSize">{561, 398}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="344646500"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMinSize">{246.94399999999999, 28}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<string key="NSFrameAutosaveName">about</string>
@@ -1396,6 +1418,7 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 							<reference ref="404728846"/>
 							<reference ref="762307916"/>
 							<reference ref="851618597"/>
+							<reference ref="36251370"/>
 						</object>
 						<reference key="parent" ref="543739902"/>
 					</object>
@@ -1595,6 +1618,20 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 						<reference key="object" ref="109550746"/>
 						<reference key="parent" ref="857574433"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1593</int>
+						<reference key="object" ref="36251370"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="662540603"/>
+						</object>
+						<reference key="parent" ref="579117168"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1594</int>
+						<reference key="object" ref="662540603"/>
+						<reference key="parent" ref="36251370"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1658,6 +1695,8 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 					<string>1582.IBPluginDependency</string>
 					<string>1583.IBPluginDependency</string>
 					<string>1586.IBPluginDependency</string>
+					<string>1593.IBPluginDependency</string>
+					<string>1594.IBPluginDependency</string>
 					<string>231.IBPluginDependency</string>
 					<string>232.IBPluginDependency</string>
 					<string>232.IBWindowTemplateEditedContentRect</string>
@@ -1680,6 +1719,8 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 				</object>
 				<object class="NSArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1770,7 +1811,7 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1592</int>
+			<int key="maxID">1594</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
