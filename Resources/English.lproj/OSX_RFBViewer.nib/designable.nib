@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
 		<string key="IBDocument.SystemVersion">11G63</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2843</string>
 		<string key="IBDocument.AppKitVersion">1138.51</string>
 		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">2844</string>
+			<string key="NS.object.0">2843</string>
 		</object>
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -561,7 +561,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{358, 593}, {561, 398}}</string>
 				<int key="NSWTFlags">1618477056</int>
-				<string key="NSWindowTitle">Sauce for Mac</string>
+				<string key="NSWindowTitle">Sauce</string>
 				<string key="NSWindowClass">NSPanel</string>
 				<string key="NSViewClass">View</string>
 				<nil key="NSUserInterfaceItemIdentifier"/>
@@ -611,7 +611,6 @@
 							<string key="NSFrame">{{123, 128}, {418, 112}}</string>
 							<reference key="NSSuperview" ref="579117168"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSAntiCompressionPriority">{250, 750}</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="56237824">
@@ -726,7 +725,7 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="344646500"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMinSize">{246.94399999999999, 28}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<string key="NSFrameAutosaveName">about</string>
@@ -741,7 +740,6 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 				<string key="NSFrameSize">{435, 1}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView"/>
 			</object>
 			<object class="NSMenuItem" id="560175149">
 				<string key="NSTitle">Item</string>
