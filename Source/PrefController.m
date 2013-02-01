@@ -236,8 +236,7 @@ static int const kPrefsVersion = 0x00000002;
 
 - (BOOL)isScaling
 {
-//    return [[NSUserDefaults standardUserDefaults] boolForKey:kPrefs_Scaling];
-    return NO;
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kPrefs_Scaling];
 }
 
 - (void)setIsScaling:(BOOL)state

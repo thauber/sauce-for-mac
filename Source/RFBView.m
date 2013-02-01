@@ -89,22 +89,30 @@
     if([[PrefController sharedController] isScaling])
     {
         NSRect clip = [[self superview] frame];
-        float h = 0;
+        float w = 1;
         if(clip.size.width < bsize.width)
-            h = clip.size.width/bsize.width;
-        float v = 0;
+            w = clip.size.width/bsize.width;
+        float h = 1;
         if(clip.size.height < bsize.height)
-            v = clip.size.height/bsize.height;
-        [fbuf setMHScale:h];
-        [fbuf setMVScale:v];
+            h = clip.size.height/bsize.height;
+        if(w>h)     // keep aspect ratio for vert/horz scaling
+            w = h;
+        else
+            h = w;
+        [fbuf setMHScale:w];
+        [fbuf setMVScale:h];
+        [fbuf setVwWidth:f.size.width];
+        [fbuf setVwHeight:f.size.height];
+        NSPoint oo;
+        oo.x = (clip.size.width - (bsize.width*w))/2;
+        oo.y = (clip.size.height - (bsize.height*h))/2;
+        [fbuf setOrigin:oo];
     }
     else
     {
         [fbuf setMHScale:0];
         [fbuf setMVScale:0];
     }
-    [fbuf setVwWidth:f.size.width];
-    [fbuf setVwHeight:f.size.height];
     
     [self setFrame:f];
 }
@@ -174,9 +182,15 @@
     printf("rf:%d %d %d %d\n", (int)rf.origin.x, (int)rf.origin.y, (int)rf.size.width, (int)rf.size.height);
     NSRect cf = [[self superview] frame];
     printf("cf:%d %d %d %d\n", (int)cf.origin.x, (int)cf.origin.y, (int)cf.size.width, (int)cf.size.height);
-    NSRect cb = [[self superview] bounds];
-    printf("cb:%d %d %d %d\n", (int)cb.origin.x, (int)cb.origin.y, (int)cb.size.width, (int)cb.size.height);
 #endif
+    if([[PrefController sharedController] isScaling])
+    {
+        NSRect cb = [[self superview] bounds];
+        cb.origin.x = 0;
+        cb.origin.y = 0;
+        [[self superview] setBounds:cb];
+    }
+    
     
     [self getRectsBeingDrawn:&rects count:&numRects];
     for (i = 0; i < numRects; i++)

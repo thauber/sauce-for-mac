@@ -125,9 +125,7 @@ NSString *kPrefs_NoWarningDialogs = @"NoWarningDialogs";
     [mAlwaysStartTunnel setState:[defaults integerForKey:kPrefs_AlwaysUseTunnel]];
     BOOL bDemo = [[NSApp delegate] isDemoAccount];
     [mAlwaysStartTunnel setEnabled:!bDemo];
-
-//    [mScale setState:[defaults integerForKey:kPrefs_Scaling]];
-    [mScale setState:0];
+    [mScale setState:[defaults integerForKey:kPrefs_Scaling]];
 }
 
 @end

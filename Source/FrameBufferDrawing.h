@@ -447,7 +447,6 @@ printf("draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
     drawPixelCount += aRect.size.width * aRect.size.height;
 #endif
     r = aRect;
-
     
     r.origin = aPoint;
     
@@ -455,16 +454,13 @@ printf("draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
     {
         if(mHScale)        // scale the source size up
         {
-            if(NSMaxX(r) > vwWidth)
-                r.size.width = vwWidth;
-                
-            if(NSMaxY(r) > vwHeight)
-                r.size.height = vwHeight;
-
-            aRect.size.width  = MIN((int)(aRect.size.width * 1/mHScale),size.width);
-            aRect.size.height = MIN((int)(aRect.size.height * 1/mVScale),size.height);
+            r.size.width  = (int)(size.width * mHScale);
+            r.size.height = (int)(size.height * mVScale);
+            r.origin = origin;   // center image
+            aRect.size = size;
             aRect.origin.y = 0;
-            r = NSInsetRect(r, -r.origin.x, -r.origin.y);
+            [[NSColor colorWithCalibratedWhite:0.5 alpha:1.0] set];
+            NSRectFill(NSMakeRect(0, 0, vwWidth,vwHeight));
         }
         else
         {
@@ -484,8 +480,8 @@ printf("draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
 
         if(mHScale)        // scale the target size down to fit view
         {
-            r.size.width  = (int)(r.size.width * mHScale);
-            r.size.height = (int)(r.size.height * mVScale);
+            r.size.width  = (int)MIN(r.size.width * mHScale, size.width*mHScale);
+            r.size.height = (int)MIN(r.size.height * mVScale, size.height*mVScale);
             r.origin.x = (int)(r.origin.x * mHScale);
             r.origin.y = (int)(r.origin.y * mVScale);
         }
