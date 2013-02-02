@@ -174,7 +174,7 @@
 		NSString *thisTitle = [thisMenuItem title];
 		if ( title && thisTitle && [thisTitle isEqualToString: title] )
 //			return thisKeyEquivalentObj;
-            return [keyEqArr objectAtIndex:i];
+            return [mEquivalentToEntryMapping objectForKey: [keyEqArr objectAtIndex:i]];
 
 	}
 	return nil;
