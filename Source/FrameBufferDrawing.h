@@ -458,6 +458,7 @@ printf("draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
             r.size.height = (int)(size.height * mVScale);
             r.origin = origin;   // center image
             aRect.size = size;
+            aRect.origin.x = 0;
             aRect.origin.y = 0;
             [[NSColor colorWithCalibratedWhite:0.5 alpha:1.0] set];
             NSRectFill(NSMakeRect(0, 0, vwWidth,vwHeight));
