@@ -14,10 +14,13 @@
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
     NSTableView *tv = (NSTableView*)controlView;
-    NSTableColumn *aCol = [[tv tableColumns] 
-                           objectAtIndex:[tv columnAtPoint:
-                                          [tv convertPoint:cellFrame.origin
-                                                    fromView:nil]]];
+    int indx = [tv columnAtPoint:[tv convertPoint:cellFrame.origin fromView:nil]];
+    if(indx == -1)
+    {
+        NSLog(@"history draw");
+        return;
+    }
+    NSTableColumn *aCol = [[tv tableColumns] objectAtIndex:indx];
 
     // underline the url in the 2nd column
     NSDictionary *asdict = nil;
