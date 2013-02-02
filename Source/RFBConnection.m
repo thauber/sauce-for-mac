@@ -312,10 +312,10 @@
 
     if(_frameBufferUpdateSeconds == 0.0)      // [rda] only update front session
     {
-        if([frameBuffer mHScale])
+        if([[PrefController sharedController] isScaling])
         {
             NSRect cr = [[rfbView superview] bounds];
-            cr.origin.y = 0;
+            cr.origin.y = cr.origin.x = 0;
             [[rfbView superview] setBounds:cr];
         }
         NSRect b = [rfbView bounds];
