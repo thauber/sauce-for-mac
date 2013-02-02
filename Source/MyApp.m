@@ -69,6 +69,11 @@
 				unsigned int modifiers = [anEvent modifierFlags] & 0xFFFF0000;
 				[lastCharacters release];
 				lastCharacters = nil;
+                if([characters isEqualToString:@"q"] && modifiers == 1048576)
+                {
+                    [self terminate:self];
+                    return;
+                }
 				if ( [keyManager performEquivalentWithCharacters: characters modifiers: modifiers] )
 				{
 					lastCharacters = [characters retain];
