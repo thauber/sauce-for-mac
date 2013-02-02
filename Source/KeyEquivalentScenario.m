@@ -162,15 +162,20 @@
 - (KeyEquivalent *)keyEquivalentForMenuItem: (NSMenuItem *)menuItem
 {
 	NSString *title = [menuItem title];	
-	NSEnumerator *keyEquivalentEnumerator = [mEquivalentToEntryMapping keyEnumerator];
-	KeyEquivalent *thisKeyEquivalentObj;
-	
-	while ( thisKeyEquivalentObj = [keyEquivalentEnumerator nextObject] )
+//	NSEnumerator *keyEquivalentEnumerator = [mEquivalentToEntryMapping keyEnumerator];
+	NSArray *keyEqArr = [mEquivalentToEntryMapping allKeys];
+//	KeyEquivalent *thisKeyEquivalentObj;
+
+//	while ( thisKeyEquivalentObj = [keyEquivalentEnumerator nextObject] )
+    for(int i=[keyEqArr count]-1;i>=0;i--)
 	{
-		NSMenuItem *thisMenuItem = [[mEquivalentToEntryMapping objectForKey: thisKeyEquivalentObj] menuItem];
+//		NSMenuItem *thisMenuItem = [[mEquivalentToEntryMapping objectForKey: thisKeyEquivalentObj] menuItem];
+        NSMenuItem *thisMenuItem = [[mEquivalentToEntryMapping objectForKey: [keyEqArr objectAtIndex:i]] menuItem];
 		NSString *thisTitle = [thisMenuItem title];
 		if ( title && thisTitle && [thisTitle isEqualToString: title] )
-			return thisKeyEquivalentObj;
+//			return thisKeyEquivalentObj;
+            return [keyEqArr objectAtIndex:i];
+
 	}
 	return nil;
 }
@@ -178,15 +183,18 @@
 
 - (void)removeEntry: (KeyEquivalentEntry *)entry
 {
-	NSEnumerator *keyEquivalentEnumerator = [mEquivalentToEntryMapping keyEnumerator];
-	KeyEquivalent *thisKeyEquivalent;
+//	NSEnumerator *keyEquivalentEnumerator = [mEquivalentToEntryMapping keyEnumerator];
+    NSArray *keyEquArr = [mEquivalentToEntryMapping allKeys];
+//	KeyEquivalent *thisKeyEquivalent;
 	
-	while ( thisKeyEquivalent = [keyEquivalentEnumerator nextObject] )
+//	while ( thisKeyEquivalent = [keyEquivalentEnumerator nextObject] )
+    for(int i=[keyEquArr count]-1;i>=0;i--)
 	{
-		KeyEquivalentEntry *thisEntry = [mEquivalentToEntryMapping objectForKey: thisKeyEquivalent];
+//		KeyEquivalentEntry *thisEntry = [mEquivalentToEntryMapping objectForKey: thisKeyEquivalent];
+		KeyEquivalentEntry *thisEntry = [mEquivalentToEntryMapping objectForKey: [keyEquArr objectAtIndex:i]];
 		if ( entry && [entry isEqualToEntry: thisEntry] )
 		{
-			[mEquivalentToEntryMapping removeObjectForKey: thisKeyEquivalent];
+			[mEquivalentToEntryMapping removeObjectForKey: [keyEquArr objectAtIndex:i]];
 		}
 	}
 }
