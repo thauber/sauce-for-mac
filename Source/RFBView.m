@@ -107,6 +107,9 @@
         oo.x = (clip.size.width - (bsize.width*w))/2;
         oo.y = (clip.size.height - (bsize.height*h))/2;
         [fbuf setOrigin:oo];
+        clip.origin.x = 0;
+        clip.origin.y = 0;
+        [[self superview] setBounds:clip];
     }
     else
     {
@@ -174,23 +177,7 @@
     NSRect          b = [self bounds];
     const NSRect    *rects;
     NSInteger       numRects;
-    int             i;
-
-#if 0
-    printf("rb:%d %d %d %d\n", (int)b.origin.x, (int)b.origin.y, (int)b.size.width, (int)b.size.height);
-    NSRect rf = [self frame];
-    printf("rf:%d %d %d %d\n", (int)rf.origin.x, (int)rf.origin.y, (int)rf.size.width, (int)rf.size.height);
-    NSRect cf = [[self superview] frame];
-    printf("cf:%d %d %d %d\n", (int)cf.origin.x, (int)cf.origin.y, (int)cf.size.width, (int)cf.size.height);
-#endif
-    if([[PrefController sharedController] isScaling])
-    {
-        NSRect cb = [[self superview] bounds];
-        cb.origin.x = 0;
-        cb.origin.y = 0;
-        [[self superview] setBounds:cb];
-    }
-    
+    int             i;    
     
     [self getRectsBeingDrawn:&rects count:&numRects];
     for (i = 0; i < numRects; i++)
@@ -199,7 +186,6 @@
         r.origin.y = b.size.height - NSMaxY(r);
         @try 
         {
-//            printf("r:%d %d %d %d\n", (int)r.origin.x, (int)r.origin.y, (int)r.size.width, (int)r.size.height);
             [fbuf drawRect:r at:rects[i].origin];
         }
         @catch(id ue) {

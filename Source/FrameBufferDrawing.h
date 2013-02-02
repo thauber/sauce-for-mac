@@ -452,7 +452,7 @@ printf("draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
     
     if((aRect.size.width * aRect.size.height) > SCRATCHPAD_SIZE)
     {
-        if(mHScale)        // scale the source size up
+        if(mHScale)        // scale the source size down to fit
         {
             r.size.width  = (int)(size.width * mHScale);
             r.size.height = (int)(size.height * mVScale);
