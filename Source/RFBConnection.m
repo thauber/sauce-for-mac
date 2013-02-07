@@ -314,9 +314,12 @@
     {
         if([[PrefController sharedController] isScaling])
         {
-            NSRect cr = [[rfbView superview] bounds];
-            cr.origin.y = cr.origin.x = 0;
-            [[rfbView superview] setBounds:cr];
+            if([[rfbView fbuf] mHScale] != 1)
+            {
+                NSRect cr = [[rfbView superview] bounds];
+                cr.origin.y = cr.origin.x = 0;
+                [[rfbView superview] setBounds:cr];
+            }
         }
         NSRect b = [rfbView bounds];
         NSRect r = aRect;
