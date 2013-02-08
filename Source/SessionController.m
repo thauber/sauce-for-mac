@@ -313,11 +313,11 @@
     [defaults setInteger:sessionIndxs[tt_macosx] forKey:kSessionIndxOSX];
 
     [defaults setInteger:resolutionIndxs[tt_winxp] forKey:kResolutionIndxWin];
-    [defaults setInteger:resolutionIndxs[tt_win7] forKey:kResolutionIndxWin];
-    [defaults setInteger:resolutionIndxs[tt_win8] forKey:kResolutionIndxWin];
+//    [defaults setInteger:resolutionIndxs[tt_win7] forKey:kResolutionIndxWin];
+//    [defaults setInteger:resolutionIndxs[tt_win8] forKey:kResolutionIndxWin];
     [defaults setInteger:resolutionIndxs[tt_linux] forKey:kResolutionIndxLnx];
     [defaults setInteger:resolutionIndxs[tt_macios] forKey:kResolutionIndxMac];
-    [defaults setInteger:resolutionIndxs[tt_macosx] forKey:kResolutionIndxMac];
+//    [defaults setInteger:resolutionIndxs[tt_macosx] forKey:kResolutionIndxMac];
 
     NSMutableDictionary *sdict = [[SaucePreconnect sharedPreconnect] setOptions:sel_os browser:sel_browser browserVersion:sel_version url:urlstr resolution:sel_resolution];
     [NSApp endSheet:panel];
@@ -482,7 +482,22 @@
         if(lastpop2)
             [sender selectRow:resolutionIndxs[curTabIndx] inColumn:2];
         else
-            resolutionIndxs[curTabIndx] = [sender selectedRowInColumn:2];
+        {
+            if(curTabIndx<=tt_win8)        // Win
+            {
+                resolutionIndxs[tt_winxp] = [sender selectedRowInColumn:2];
+                resolutionIndxs[tt_win7] = [sender selectedRowInColumn:2];
+                resolutionIndxs[tt_win8] = [sender selectedRowInColumn:2];
+            }
+            else
+            if(curTabIndx == tt_linux)
+                resolutionIndxs[tt_linux] = [sender selectedRowInColumn:2];
+            else
+            {
+                resolutionIndxs[tt_macios] = [sender selectedRowInColumn:2];
+                resolutionIndxs[tt_macosx] = [sender selectedRowInColumn:2];                
+            }            
+        }
         lastpop2 = NO;
     }
 }
