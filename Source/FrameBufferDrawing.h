@@ -457,7 +457,7 @@ printf("draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
             r.size.width  = (int)(size.width * mHScale);
             r.size.height = (int)(size.height * mVScale);
             if(mHScale != 1)
-                r.origin = origin;   // center image                
+                r.origin.x = r.origin.y = 0;
             aRect.size = size;
             aRect.origin.x = 0;
             aRect.origin.y = 0;
