@@ -7,6 +7,8 @@
 //
 
 #import "centerclip.h"
+#import "PrefController.h"
+#import "RFBView.h"
 
 @implementation centerclip
 
@@ -44,6 +46,13 @@
     NSRect clipRect = [self bounds];
     CGFloat maxX = docRect.size.width - clipRect.size.width;
     CGFloat maxY = docRect.size.height - clipRect.size.height;
+    if([[PrefController sharedController] isScaling])
+    {
+        RFBView *rfbvw = [self documentView];
+        float scale = [[rfbvw fbuf] mHScale];
+        maxX = docRect.size.width*scale - clipRect.size.width;
+        maxY = docRect.size.height*scale - clipRect.size.height;
+    }
     clipRect.origin = proposedNewOrigin;
     
     if (docRect.size.width < clipRect.size.width)
