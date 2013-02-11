@@ -27,8 +27,6 @@
 #import "SessionController.h"
 #import "ScoutWindowController.h"
 
-#define kDemoAccountKey @"2c2d1793-1f84-4092-a115-0b9cc64264c6"
-
 @implementation LoginController
 @synthesize panel;
 @synthesize cancelLogin;

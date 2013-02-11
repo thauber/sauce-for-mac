@@ -12,6 +12,7 @@
 
 #define INAPPSTORE 1
 #define kDemoAccountName @"sauce_for_mac"
+#define kDemoAccountKey @"2c2d1793-1f84-4092-a115-0b9cc64264c6"
 
 @class LoginController;
 @class TunnelController;
