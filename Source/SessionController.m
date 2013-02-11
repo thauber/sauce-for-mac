@@ -30,7 +30,7 @@
     if(self)
     {
         BOOL bDemo = [[NSApp delegate] isDemoAccount];
-        if(bDemo)
+        if(bDemo && !INAPPSTORE)
             [NSBundle loadNibNamed:@"SessionController_demo"  owner:self];
         else
             [NSBundle loadNibNamed:@"SessionController"  owner:self];

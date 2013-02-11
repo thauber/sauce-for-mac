@@ -584,7 +584,7 @@
     {
         if([self isDemoAccount])
         {
-            // TODO: alert for need to sign-up for free account
+            // alert for need to sign-up for free account
             NSString *header = @"Register for more features";
             NSString *okayButton = @"Not now";
             NSString *otherButton = @"Register";
@@ -598,7 +598,7 @@
 - (void)subscribeDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
     if(returnCode == NSAlertOtherReturn)      // go to subscribe page
-        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.saucelabs.com/pricing"]];
+        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://saucelabs.com/signup/plan/free?s4m"]];
 
 }
 
