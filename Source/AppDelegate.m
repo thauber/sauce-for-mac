@@ -177,7 +177,7 @@
     NSUserDefaults* user = [NSUserDefaults standardUserDefaults];
     NSString *uname = [user stringForKey:kUsername];
     NSString *akey = [user stringForKey:kAccountkey];
-
+//    uname=nil;  // testing
     if([uname length] && [akey length])
     {
         NSString *userOk = [[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:akey];
@@ -598,7 +598,7 @@
 - (void)subscribeDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
     if(returnCode == NSAlertOtherReturn)      // go to subscribe page
-        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://saucelabs.com/signup/plan/free?s4m"]];
+        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://saucelabs.com/signup?s4m"]];
 
 }
 
