@@ -79,8 +79,6 @@ typedef unsigned char	FrameBufferPaletteIndex;
 @property float mVScale;
 @property int vwWidth;
 @property int vwHeight;
-@property NSPoint origin;
-
 
 + (BOOL)bigEndian;
 + (void)getPixelFormat:(rfbPixelFormat*)pf;
