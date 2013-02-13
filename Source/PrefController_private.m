@@ -125,11 +125,14 @@ NSString *kPrefs_NoWarningDialogs = @"NoWarningDialogs";
     [mAlwaysStartTunnel setState:[defaults integerForKey:kPrefs_AlwaysUseTunnel]];
     BOOL bDemo = [[NSApp delegate] isDemoAccount];
     [mAlwaysStartTunnel setEnabled:!bDemo];
-//    BOOL scale = [defaults integerForKey:kPrefs_Scaling];
-//    [mScale setState:bDemo?0:scale];
-//    [mScale setEnabled:!bDemo];
+#if 1       // set to '0' for uploading to appstore (until it is bugfree)
+    BOOL scale = [defaults integerForKey:kPrefs_Scaling];
+    [mScale setState:bDemo?0:scale];
+    [mScale setEnabled:!bDemo];
+#else
     [mScale setState:0];
     [mScale setEnabled:NO];
+#endif
 }
 
 @end
