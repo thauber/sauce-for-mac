@@ -313,6 +313,16 @@
     if(_frameBufferUpdateSeconds == 0.0)      // [rda] only update front session
     {
         NSRect b = [rfbView bounds];
+        if([[PrefController sharedController] isScaling])
+        {
+            float scale = [[rfbView fbuf] mHScale];
+            NSRect cr = [[rfbView superview] bounds];
+            if(cr.size.width<(b.size.width*scale))
+                cr.origin.x = 0;
+            if(cr.size.height<(b.size.height*scale))
+                cr.origin.y = 0;
+            [[rfbView superview] setBounds:cr];
+        }
         NSRect r = aRect;
         r.origin.y = b.size.height - NSMaxY(r);        // flip vertical
         [rfbView setNeedsDisplayInRect: r];
