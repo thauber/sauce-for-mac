@@ -56,7 +56,6 @@
 							<string key="NSFrame">{{295, 21}, {69, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="694407931">
@@ -102,22 +101,22 @@
 								<int key="NSPeriodicInterval">25</int>
 							</object>
 						</object>
-						<object class="NSTextField" id="138931196">
+						<object class="NSTextField" id="891538004">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{30, 195}, {295, 34}}</string>
+							<string key="NSFrame">{{30, 128}, {331, 102}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="891538004"/>
+							<reference key="NSNextKeyView" ref="448248427"/>
 							<string key="NSReuseIdentifierKey">_NS:1505</string>
 							<bool key="NSEnabled">YES</bool>
-							<object class="NSTextFieldCell" key="NSCell" id="67513305">
+							<object class="NSTextFieldCell" key="NSCell" id="725735008">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">Sauce labs has both demo and free accounts.  We know, it's confusing.</string>
+								<string key="NSContents">Currently this copy of sauce isn't associated with a Sauce Labs account. That makes it anonymous, so we disable intranet testing as a precaution to insure developers never expose any secret stuff on corporate intranets. You can still test and use all the features of Sauce. </string>
 								<reference key="NSSupport" ref="295861733"/>
 								<string key="NSCellIdentifier">_NS:1505</string>
-								<reference key="NSControlView" ref="138931196"/>
+								<reference key="NSControlView" ref="891538004"/>
 								<object class="NSColor" key="NSBackgroundColor" id="788438740">
 									<int key="NSColorSpace">6</int>
 									<string key="NSCatalogName">System</string>
@@ -138,39 +137,19 @@
 								</object>
 							</object>
 						</object>
-						<object class="NSTextField" id="891538004">
-							<reference key="NSNextResponder" ref="1006"/>
-							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{30, 130}, {331, 40}}</string>
-							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="448248427"/>
-							<string key="NSReuseIdentifierKey">_NS:1505</string>
-							<bool key="NSEnabled">YES</bool>
-							<object class="NSTextFieldCell" key="NSCell" id="725735008">
-								<int key="NSCellFlags">67239424</int>
-								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">You are in the demo now. Because its anonymous, we disable intranet testing.</string>
-								<reference key="NSSupport" ref="295861733"/>
-								<string key="NSCellIdentifier">_NS:1505</string>
-								<reference key="NSControlView" ref="891538004"/>
-								<reference key="NSBackgroundColor" ref="788438740"/>
-								<reference key="NSTextColor" ref="291687796"/>
-							</object>
-						</object>
 						<object class="NSTextField" id="942097944">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{30, 268}, {243, 42}}</string>
+							<string key="NSFrame">{{30, 247}, {331, 63}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="138931196"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:1505</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="482241912">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">You need a Free account to test intranet sites</string>
+								<string key="NSContents">Forget to sign in?                                  You need to link to a Sauce Labs account to test intranet sites</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">Helvetica-Bold</string>
 									<double key="NSSize">17</double>
@@ -193,7 +172,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="61044526">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">The free account requires a sign up, but gives you intranet testing, and a whole lot of other features.</string>
+								<string key="NSContents">If you want to test intranet sites, contact us so we can set you up.</string>
 								<reference key="NSSupport" ref="295861733"/>
 								<string key="NSCellIdentifier">_NS:1505</string>
 								<reference key="NSControlView" ref="759141761"/>
@@ -204,7 +183,7 @@
 						<object class="NSBox" id="426796627">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">12</int>
-							<string key="NSFrame">{{33, 244}, {325, 5}}</string>
+							<string key="NSFrame">{{33, 236}, {325, 5}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -239,21 +218,13 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="942097944"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">waitText</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="138931196"/>
-					</object>
-					<int key="connectionID">235</int>
-				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">visitDemoConnect:</string>
@@ -320,9 +291,8 @@
 							<reference ref="915634584"/>
 							<reference ref="448248427"/>
 							<reference ref="942097944"/>
-							<reference ref="138931196"/>
-							<reference ref="891538004"/>
 							<reference ref="759141761"/>
+							<reference ref="891538004"/>
 							<reference ref="426796627"/>
 						</array>
 						<reference key="parent" ref="1005"/>
@@ -352,19 +322,6 @@
 						<int key="objectID">8</int>
 						<reference key="object" ref="717266393"/>
 						<reference key="parent" ref="448248427"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">13</int>
-						<reference key="object" ref="138931196"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="67513305"/>
-						</array>
-						<reference key="parent" ref="1006"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">14</int>
-						<reference key="object" ref="67513305"/>
-						<reference key="parent" ref="138931196"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">239</int>
@@ -419,8 +376,6 @@
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1.IBWindowTemplateEditedContentRect">{{357, 418}, {480, 270}}</string>
 				<boolean value="NO" key="1.NSWindowTemplate.visibleAtLaunch"/>
-				<string key="13.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="14.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="239.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="240.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>

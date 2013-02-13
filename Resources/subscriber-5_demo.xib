@@ -127,12 +127,13 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{125, 360}, {356, 43}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSNextKeyView" ref="529055566"/>
 							<string key="NSReuseIdentifierKey">_NS:1505</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="266789231">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">Feel free to run one session at a time in our demo. Sauce can run more. Contact us for details. </string>
+								<string key="NSContents">Feel free to run one session at a time. </string>
 								<object class="NSFont" key="NSSupport" id="212080811">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -149,6 +150,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{467, 12}, {82, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="928961678">
@@ -171,13 +173,13 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{125, 305}, {272, 24}}</string>
 							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSNextKeyView" ref="686458135"/>
+							<reference key="NSNextKeyView" ref="150097761"/>
 							<string key="NSReuseIdentifierKey">_NS:1505</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="318542313">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">Visit Sauce Labs</string>
+								<string key="NSContents">Forget to Sign In?</string>
 								<object class="NSFont" key="NSSupport" id="980273926">
 									<string key="NSName">Helvetica-Bold</string>
 									<double key="NSSize">18</double>
@@ -192,15 +194,15 @@
 						<object class="NSButton" id="686458135">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{122, 226}, {183, 32}}</string>
+							<string key="NSFrame">{{122, 216}, {103, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSNextKeyView" ref="150097761"/>
+							<reference key="NSNextKeyView" ref="727263673"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="1003379302">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Visit Sauce Labs Website</string>
+								<string key="NSContents">Sign In</string>
 								<reference key="NSSupport" ref="212080811"/>
 								<string key="NSCellIdentifier">_NS:9</string>
 								<reference key="NSControlView" ref="686458135"/>
@@ -215,15 +217,15 @@
 						<object class="NSTextField" id="150097761">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{126, 255}, {251, 50}}</string>
+							<string key="NSFrame">{{126, 254}, {339, 51}}</string>
 							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSNextKeyView" ref="727263673"/>
+							<reference key="NSNextKeyView" ref="686458135"/>
 							<string key="NSReuseIdentifierKey">_NS:1505</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="839027093">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">View all our products for web-based and desktop based automated testing.</string>
+								<string key="NSContents">If you or your company already use sauce for automated testing, link to your sauce account and use more tabs.</string>
 								<reference key="NSSupport" ref="212080811"/>
 								<string key="NSCellIdentifier">_NS:1505</string>
 								<reference key="NSControlView" ref="150097761"/>
@@ -255,6 +257,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{126, 102}, {264, 68}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSNextKeyView" ref="229893484"/>
 							<string key="NSReuseIdentifierKey">_NS:1505</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="937248015">
@@ -296,6 +299,7 @@
 							<int key="NSvFlags">12</int>
 							<string key="NSFrame">{{15, 342}, {536, 5}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSNextKeyView" ref="828642598"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<string key="NSOffsets">{0, 0}</string>
 							<object class="NSTextFieldCell" key="NSTitleCell">
