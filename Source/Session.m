@@ -203,8 +203,11 @@ enum {
     }
     [scrollView setHasHorizontalScroller:horizontalScroll];
     [scrollView setHasVerticalScroller:verticalScroll];
-    NSPoint pt = NSMakePoint(0.0, [[scrollView documentView] bounds].size.height);   // scroll to top
-    [[scrollView documentView] scrollPoint:pt];
+    if(![[PrefController sharedController] isScaling])
+    {
+        NSPoint pt = NSMakePoint(0.0, [[scrollView documentView] bounds].size.height);   // scroll to top
+        [[scrollView documentView] scrollPoint:pt];
+    }
     
     [rfbView setFrameBuffer:[rfbView fbuf]];        // get scaling set
     return aSize;
