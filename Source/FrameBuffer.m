@@ -27,7 +27,6 @@
 @synthesize mVScale;
 @synthesize vwWidth;
 @synthesize vwHeight;
-@synthesize origin;
 
 /* --------------------------------------------------------------------------------- */
 static void ns_pixel(unsigned char* v, FrameBuffer *this, float* clr)

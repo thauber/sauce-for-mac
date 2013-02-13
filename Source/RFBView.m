@@ -103,13 +103,6 @@
         [fbuf setMVScale:h];
         [fbuf setVwWidth:f.size.width];
         [fbuf setVwHeight:f.size.height];
-        NSPoint oo;
-        oo.x = (clip.size.width - (bsize.width*w))/2;
-        oo.y = (clip.size.height - (bsize.height*h))/2;
-        [fbuf setOrigin:oo];
-        clip.origin.x = 0;
-        clip.origin.y = 0;
-        [[self superview] setBounds:clip];
     }
     else
     {
@@ -178,7 +171,7 @@
     const NSRect    *rects;
     NSInteger       numRects;
     int             i;    
-    
+
     [self getRectsBeingDrawn:&rects count:&numRects];
     for (i = 0; i < numRects; i++)
     {

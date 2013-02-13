@@ -456,8 +456,7 @@ printf("draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
         {
             r.size.width  = (int)(size.width * mHScale);
             r.size.height = (int)(size.height * mVScale);
-            if(mHScale != 1)
-                r.origin.x = r.origin.y = 0;
+
             aRect.size = size;
             aRect.origin.x = 0;
             aRect.origin.y = 0;
@@ -480,10 +479,10 @@ printf("draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
     {
         start = pixels + (int)(aRect.origin.y * size.width) + (int)aRect.origin.x;
 
-        if(mHScale)        // scale the target size down to fit view
+        if(mHScale<1.0)        // scale the target size down to fit view
         {
-            r.size.width  = (int)MIN(r.size.width * mHScale, size.width*mHScale);
-            r.size.height = (int)MIN(r.size.height * mVScale, size.height*mVScale);
+            r.size.width  = MAX(1,(int)(r.size.width * mHScale));
+            r.size.height = MAX(1,(int)(r.size.height * mVScale));
             r.origin.x = (int)(r.origin.x * mHScale);
             r.origin.y = (int)(r.origin.y * mVScale);
         }

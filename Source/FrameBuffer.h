@@ -73,7 +73,6 @@ typedef unsigned char	FrameBufferPaletteIndex;
     float mVScale;
     int vwWidth;
     int vwHeight;
-    NSPoint origin;      // for centering a scaled view
 }
 
 @property float mHScale;
