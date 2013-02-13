@@ -581,18 +581,7 @@
         self.optionsCtrlr = nil;
     }
     if([self checkUserOk])
-    {
-        if([self isDemoAccount])
-        {
-            // alert for need to sign-up for free account
-            NSString *header = @"Register for more features";
-            NSString *okayButton = @"Not now";
-            NSString *otherButton = @"Register";
-            NSBeginAlertSheet(header, okayButton, nil, otherButton, [[ScoutWindowController sharedScout] window], self, nil, @selector(subscribeDidDismiss:returnCode:contextInfo:), nil, @"%@", @"Register for more tabs, browsers and minutes with Sauce Labs free account");
-        }
-        else
             subscriberCtrl = [[[Subscriber alloc] init:bCause] retain];
-    }    
 }
 
 - (void)subscribeDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
