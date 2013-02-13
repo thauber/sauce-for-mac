@@ -152,12 +152,16 @@
 - (IBAction)doSubscribe:(id)sender
 {
     [self quitSheet];
-    NSLog(@"do subscribe");
 }
 
 - (IBAction)viewSite:(id)sender 
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://saucelabs.com"]];
+    NSString *str;
+    if(INAPPSTORE)
+        str = @"https://saucelabs.com/signup?s4m";
+    else
+        str = @"http://saucelabs.com";
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:str]];
     [self doSubscribe:self];
 }
 
