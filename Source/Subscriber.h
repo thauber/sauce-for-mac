@@ -41,6 +41,8 @@
 - (IBAction)viewSite:(id)sender;
 - (IBAction)contactSauce:(id)sender;
 - (IBAction)cancel:(id)sender;
+- (IBAction)signin:(id)sender;
+- (IBAction)learnmore:(id)sender;
 
 - (void)quitSheet;
 

@@ -177,7 +177,7 @@
     NSUserDefaults* user = [NSUserDefaults standardUserDefaults];
     NSString *uname = [user stringForKey:kUsername];
     NSString *akey = [user stringForKey:kAccountkey];
-//    uname=nil;  // testing
+    uname=nil;  // testing
     if([uname length] && [akey length])
     {
         NSString *userOk = [[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:akey];
@@ -338,6 +338,11 @@
 
 - (IBAction)showLoginDlg:(id)sender 
 {
+    if(subscriberCtrl)
+    {
+        [subscriberCtrl quitSheet];
+    }
+    else
     if(optionsCtrlr)
     {
         [NSApp endSheet:[optionsCtrlr panel]];

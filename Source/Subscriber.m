@@ -146,7 +146,8 @@
 -(void)quitSheet
 {
     [NSApp endSheet:panel];
-    [panel orderOut:nil];    
+    [panel orderOut:nil];
+    [[NSApp delegate] setSubscriberCtrl:nil];
 }
 
 - (IBAction)doSubscribe:(id)sender
@@ -175,6 +176,17 @@
 {
     [self quitSheet];
     [[NSApp delegate] showLoginDlg:nil];
+}
+
+- (IBAction)signin:(id)sender
+{
+    [self quitSheet];
+    [[NSApp delegate] showLoginDlg:nil];
+}
+
+- (IBAction)learnmore:(id)sender
+{
+    [self viewSite:self];
 }
 
 @end
