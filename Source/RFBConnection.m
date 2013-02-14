@@ -46,6 +46,7 @@
 #include <netinet/ip.h>
 #include <netinet/tcp.h>
 #include "ScoutWindowController.h"
+#include "centerclip.h"
 
 // size of write buffer
 #define BUFFER_SIZE 2048
@@ -338,7 +339,9 @@
 	if (! _hasManualFrameBufferUpdates)
 		[self queueUpdateRequest];
     [self writeBuffer]; // flush buffered mouse movement, if any
-    [rfbView displayIfNeededIgnoringOpacity];
+//    [rfbView displayIfNeededIgnoringOpacity];
+    centerclip *cc = (centerclip*)[rfbView superview];
+    [cc centerView];
     [session frameBufferUpdateComplete];
     isReceivingUpdate = NO;
 }
