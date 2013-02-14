@@ -177,7 +177,9 @@
     NSUserDefaults* user = [NSUserDefaults standardUserDefaults];
     NSString *uname = [user stringForKey:kUsername];
     NSString *akey = [user stringForKey:kAccountkey];
-    uname=nil;  // testing
+#if 0
+    uname=nil;  // testing - force demo account
+#endif
     if([uname length] && [akey length])
     {
         NSString *userOk = [[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:akey];
