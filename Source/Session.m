@@ -187,7 +187,14 @@ enum {
 - (NSSize)_maxSizeForWindowSize:(NSSize)aSize;
 {
     horizontalScroll = verticalScroll = NO;
-    if(![[PrefController sharedController] isScaling])
+    if([[PrefController sharedController] isScaling])
+    {
+        if(aSize.width < 520)
+            aSize.width = 520;
+        if(aSize.height < 484)
+            aSize.height = 484;
+    }
+    else
     {
         NSSize docsz = [[scrollView documentView] frame].size;
         docsz.height += 91;
@@ -367,8 +374,11 @@ enum {
 {
     NSSize max = [self _maxSizeForWindowSize:proposedFrameSize];
 
-    max.width = (proposedFrameSize.width > max.width) ? max.width : proposedFrameSize.width;
-    max.height = (proposedFrameSize.height > max.height) ? max.height : proposedFrameSize.height;
+    if(![[PrefController sharedController] isScaling])
+    {
+        max.width = (proposedFrameSize.width > max.width) ? max.width : proposedFrameSize.width;
+        max.height = (proposedFrameSize.height > max.height) ? max.height : proposedFrameSize.height;
+    }
     return max;
 }
 
