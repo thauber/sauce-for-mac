@@ -39,7 +39,7 @@
 
 - (IBAction)visitSauceLabs:(id)sender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://saucelabs.com"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://saucelabs.com/mac/connect-demo"]];
     [self quitSheet];
 }
 
