@@ -40,10 +40,6 @@
             rsrc = @"LoginControllerAS";
         else
             rsrc = @"LoginController";
-
-#if 1       // set '0' for appstore upload until server is ready to accept password
-        [accountKeyLabel setStringValue:@"Password"];
-#endif
         
         [NSBundle loadNibNamed:rsrc owner:self];
         NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
@@ -57,6 +53,8 @@
         }
         if(!uname)
             uname=@"";
+        if(!upass)
+            upass=@"";
         [user setStringValue:uname];
         if(!akey)
         {
@@ -100,23 +98,27 @@
 {
     NSString *uname = [user stringValue];
     NSString *pswd = [accountKey stringValue];
-    if(![uname length] || ![pswd length])
+    [self terminateApp];
+    if(![uname length] || ![pswd length])       // set demo account if no user or password on cancel
     {
         uname = kDemoAccountName;       // defined in AppDelegate.h
         pswd = kDemoAccountKey;
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setObject:uname  forKey:kUsername];
         [defaults setObject:pswd  forKey:kAccountkey];
+        [defaults setObject:@"" forKey:kUserPassword];
+        [[NSApp delegate] prefetchBrowsers];
+        [[NSApp delegate] toggleTunnelDisplay];
+        [[NSApp delegate] showOptionsDlg:nil];
     }
-    [self terminateApp];
 }
 
 - (IBAction)login:(id)sender
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *uname = nil;
+    NSString *uname = @"";
     NSString *aaccountkey = [defaults stringForKey:kAccountkey];
-    NSString *pswd = nil;
+    NSString *pswd = @"";
     if(sender == self)      // using demo login when user cancelled 
     {
         uname = kDemoAccountName;       // defined in AppDelegate.h
@@ -130,6 +132,8 @@
     }
     [NSApp endSheet:panel];
     [panel orderOut:nil];
+    if(!aaccountkey)
+        aaccountkey = @"";
     if([uname length] && [pswd length])
     {
         aaccountkey = [[SaucePreconnect sharedPreconnect] accountkeyFromPassword:uname pswd:pswd];

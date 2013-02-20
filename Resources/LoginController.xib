@@ -160,7 +160,7 @@
 												<object class="NSTextField" id="240464512">
 													<reference key="NSNextResponder" ref="962972907"/>
 													<int key="NSvFlags">268</int>
-													<string key="NSFrame">{{8, 84}, {87, 17}}</string>
+													<string key="NSFrame">{{27, 84}, {68, 17}}</string>
 													<reference key="NSSuperview" ref="962972907"/>
 													<reference key="NSWindow"/>
 													<reference key="NSNextKeyView" ref="282608006"/>
@@ -169,7 +169,7 @@
 													<object class="NSTextFieldCell" key="NSCell" id="442461630">
 														<int key="NSCellFlags">68288064</int>
 														<int key="NSCellFlags2">71304192</int>
-														<string key="NSContents">Account Key:</string>
+														<string key="NSContents">Password:</string>
 														<reference key="NSSupport" ref="98796976"/>
 														<string key="NSCellIdentifier">_NS:1505</string>
 														<reference key="NSControlView" ref="240464512"/>
@@ -261,7 +261,7 @@
 												<object class="NSButton" id="64303993">
 													<reference key="NSNextResponder" ref="962972907"/>
 													<int key="NSvFlags">268</int>
-													<string key="NSFrame">{{153, 46}, {100, 25}}</string>
+													<string key="NSFrame">{{133, 46}, {113, 25}}</string>
 													<reference key="NSSuperview" ref="962972907"/>
 													<reference key="NSWindow"/>
 													<reference key="NSNextKeyView" ref="102064474"/>
@@ -270,7 +270,7 @@
 													<object class="NSButtonCell" key="NSCell" id="102891666">
 														<int key="NSCellFlags">-2080244224</int>
 														<int key="NSCellFlags2">134217728</int>
-														<string key="NSContents">Get Key</string>
+														<string key="NSContents">Forgot Password</string>
 														<reference key="NSSupport" ref="98796976"/>
 														<string key="NSCellIdentifier">_NS:22</string>
 														<reference key="NSControlView" ref="64303993"/>
@@ -669,6 +669,7 @@
 									<string key="NSFrame">{{716, 69}, {82, 32}}</string>
 									<reference key="NSSuperview" ref="667167168"/>
 									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="890014399">
@@ -1260,6 +1261,7 @@
 				<string key="1610.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1611.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1612.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1613.CustomClassName">NSSecureTextField</string>
 				<string key="1613.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1614.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1615.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
