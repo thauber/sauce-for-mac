@@ -41,9 +41,14 @@
         else
             rsrc = @"LoginController";
 
+#if 1       // set '0' for appstore upload until server is ready to accept password
+        [accountKeyLabel setStringValue:@"Password"];
+#endif
+        
         [NSBundle loadNibNamed:rsrc owner:self];
         NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
         NSString *uname = [defs stringForKey:kUsername];
+        NSString *upass = [defs stringForKey:kUserPassword];
         NSString *akey = [defs stringForKey:kAccountkey];
         if([uname isEqualToString:kDemoAccountName])        // don't display demo account info
         {
@@ -54,10 +59,15 @@
             uname=@"";
         [user setStringValue:uname];
         if(!akey)
-            akey = @"";
-        [accountKey setStringValue:akey];
-        if(!uname || !akey)     // can't cancel login if we don't have username/acctkey
-            [cancelLogin setHidden:YES];
+        {
+            if(upass)
+            {
+                akey = [[SaucePreconnect sharedPreconnect] accountkeyFromPassword:uname pswd:upass];
+            }
+            else
+                akey = @"";
+        }
+        [accountKey setStringValue:upass];
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(textDidChange:) name:NSControlTextDidChangeNotification object:user];
         [center addObserver:self selector:@selector(textDidChange:) name:NSControlTextDidChangeNotification object:accountKey];
@@ -88,50 +98,50 @@
 }
 - (IBAction)doCancelLogin:(id)sender 
 {
-/*
-    if([[SaucePreconnect sharedPreconnect] user])
+    NSString *uname = [user stringValue];
+    NSString *pswd = [accountKey stringValue];
+    if(![uname length] || ![pswd length])
     {
-
-        NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
-        NSString *uname = [defs stringForKey:kUsername];
-        NSString *akey = [defs stringForKey:kAccountkey];
-        if([[SaucePreconnect sharedPreconnect] checkUserLogin:uname key:akey])
-        {
-            [NSApp endSheet:panel];
-            [panel orderOut:nil];
-            [[NSApp delegate] setLoginCtrlr:nil];
-        }
-
+        uname = kDemoAccountName;       // defined in AppDelegate.h
+        pswd = kDemoAccountKey;
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:uname  forKey:kUsername];
+        [defaults setObject:pswd  forKey:kAccountkey];
     }
- */
     [self terminateApp];
 }
 
 - (IBAction)login:(id)sender
 {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *uname = nil;
-    NSString *aaccountkey = nil;
-    if(sender == self)      // using demo login
+    NSString *aaccountkey = [defaults stringForKey:kAccountkey];
+    NSString *pswd = nil;
+    if(sender == self)      // using demo login when user cancelled 
     {
         uname = kDemoAccountName;       // defined in AppDelegate.h
         aaccountkey = kDemoAccountKey;
-        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kSessionURL];
+//        [defaults setObject:nil forKey:kSessionURL];  // why blank the url?
     }
     else
     {
         uname = [user stringValue];
-        aaccountkey = [accountKey stringValue];
+        pswd = [accountKey stringValue];
     }
     [NSApp endSheet:panel];
     [panel orderOut:nil];
+    if([uname length] && [pswd length])
+    {
+        aaccountkey = [[SaucePreconnect sharedPreconnect] accountkeyFromPassword:uname pswd:pswd];
+    }
     if([uname length] && [aaccountkey length])
     {
         NSString *errStr = [[SaucePreconnect sharedPreconnect] checkUserLogin:uname key:aaccountkey];
         if(!errStr)
         {
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setObject:uname  forKey:kUsername];
             [defaults setObject:aaccountkey  forKey:kAccountkey];
+            [defaults setObject:pswd forKey:kUserPassword];
             [[NSApp delegate] prefetchBrowsers];
 
             [[NSApp delegate] setLoginCtrlr:nil];
@@ -147,7 +157,12 @@
     else
     {
         // alert for missing username or accountkey
-        NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [NSApp keyWindow], self,@selector(redoLogin:returnCode:contextInfo:), NULL, NULL, @"Need valid user-name and account-key");    
+#if 1   // NB: set to '0' for appstore upload until server is ready to accept password
+        NSString *msg = @"password";
+#else
+        NSString *msg = @"account-key";
+#endif
+        NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [NSApp keyWindow], self,@selector(redoLogin:returnCode:contextInfo:), NULL, NULL, @"Need valid user-name and %@",msg);
     }
 }
 
@@ -156,7 +171,7 @@
     [[NSApp delegate] performSelectorOnMainThread:@selector(showLoginDlg:) withObject:nil  waitUntilDone:NO];    
 }
 
-- (IBAction)forgotKey:(id)sender
+- (IBAction)forgotKey:(id)sender   // TODO: need a 'forget password' page when server is ready
 {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://saucelabs.com/account/key"]];    
 }
@@ -198,5 +213,6 @@
 {
     [self login:self];
 }
+
 
 @end

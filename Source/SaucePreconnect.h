@@ -48,5 +48,6 @@ extern NSString *kSauceLabsDomain;
 - (NSString*)snapshotBug:(NSString *)title desc:(NSString *)desc;
 - (NSString*)checkAccountOk;
 - (void)sendDemoVersion:(NSString*)job version:(NSString*)version;
+- (NSString*)accountkeyFromPassword:(NSString*)uname pswd:(NSString*)pass;
 
 @end

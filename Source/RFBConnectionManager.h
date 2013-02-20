@@ -28,6 +28,7 @@
 
 // stored in prefs, but not editable in the pref dlg
 extern NSString *kUsername;
+extern NSString *kUserPassword;
 extern NSString *kAccountkey;
 extern NSString *kSessionURL;
 extern NSString *kSessionIndxWinxp;

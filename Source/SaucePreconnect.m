@@ -771,4 +771,34 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
     }
 }
 
+- (NSString*)accountkeyFromPassword:(NSString*)uname pswd:(NSString*)pass
+{
+    NSString *key = @"";
+    NSString *farg = [NSString stringWithFormat:@"curl 'http://%@:%@@%@/rest/v1/users/%@'", uname, pass, kSauceLabsDomain, uname];       // TODO: change when available on our servers
+    
+    NSTask *ftask = [[[NSTask alloc] init] autorelease];
+    NSPipe *fpipe = [NSPipe pipe];
+    [ftask setStandardOutput:fpipe];
+    [ftask setLaunchPath:@"/bin/bash"];
+    [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
+    [ftask launch];		// fetch accountkey
+    [ftask waitUntilExit];
+    if([ftask terminationStatus])
+    {
+        NSLog(@"Failed to get accountkey");
+    }
+    else
+    {
+        NSFileHandle *fhand = [fpipe fileHandleForReading];
+        NSData *data = [fhand readDataToEndOfFile];
+        NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        key = [self jsonVal:jsonString key:@"access_key"];
+        [jsonString release];
+        if(!key.length)
+            key = @"";
+    }
+    return key;
+}
+
+
 @end

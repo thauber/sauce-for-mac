@@ -30,6 +30,7 @@
 
 NSString *kUsername = @"username";
 NSString *kAccountkey = @"accountkey";
+NSString *kUserPassword = @"password";
 NSString *kSessionURL = @"sessionURL";
 NSString *kSessionIndxWinxp = @"sessionIndxWinxp";
 NSString *kSessionIndxWin7 = @"sessionIndxWin7";

@@ -26,6 +26,7 @@
 {
     IBOutlet NSTextField *user;
     IBOutlet NSTextField *accountKey;
+    IBOutlet NSTextField *accountKeyLabel;
     IBOutlet NSTextField *aNewUsername;
     IBOutlet NSSecureTextField *aNewPassword;
     IBOutlet NSTextField *aNewEmail;
