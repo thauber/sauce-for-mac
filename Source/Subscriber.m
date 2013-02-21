@@ -82,8 +82,9 @@
         }
         else if(bDemo)
         {
-            NSInteger minutes = [[NSApp delegate] demoCheckTime];
-            NSString *txt = [NSString stringWithFormat:@"Restart in %ld minutes",minutes];
+//            NSInteger minutes = [[NSApp delegate] demoCheckTime];
+//            NSString *txt = [NSString stringWithFormat:@"Restart in %ld minutes",minutes];
+            NSString *txt = @"Restart ok";
             [restartTxt setStringValue:txt];
         }
         

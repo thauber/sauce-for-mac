@@ -177,9 +177,7 @@
     NSUserDefaults* user = [NSUserDefaults standardUserDefaults];
     NSString *uname = [user stringForKey:kUsername];
     NSString *akey = [user stringForKey:kAccountkey];
-#if 0
-    uname=nil;  // testing - force demo account
-#endif
+
     if([uname length] && [akey length])
     {
         NSString *userOk = [[SaucePreconnect sharedPreconnect] checkUserLogin:uname  key:akey];
@@ -267,6 +265,7 @@
             [self promptForSubscribing:1];   // prompt for subscribing to get more tabs
             return NO;
         }
+#if 0
         else    // no sessions running
         {
             NSInteger tm = [self demoCheckTime];
@@ -276,6 +275,7 @@
                 return NO;
             }
         }
+#endif
     }
     return YES;
 }
