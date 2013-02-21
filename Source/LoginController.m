@@ -75,6 +75,8 @@
             [center addObserver:self selector:@selector(textDidChange:) name:NSControlTextDidChangeNotification object:aNewPassword];
         }
     
+        [loginButton setEnabled:NO];
+        
         [NSApp beginSheet:panel modalForWindow:[[ScoutWindowController sharedScout] window] modalDelegate:self  didEndSelector:nil   contextInfo:nil];
     }
     return self;
@@ -83,9 +85,13 @@
 - (void)textDidChange:(NSNotification *)aNotification
 {
     BOOL bEmpty = [[user stringValue] isEqualToString: @""] || [[accountKey stringValue] isEqualToString: @""];
-    [loginButton setEnabled: !bEmpty];
-    bEmpty = [[aNewUsername stringValue] isEqualToString: @""] || [[aNewPassword stringValue] isEqualToString: @""];
-    [signupButton setEnabled: !bEmpty];
+//    [loginButton setEnabled: !bEmpty];
+    [loginButton setEnabled: YES];
+    if(!INAPPSTORE)              // has provision for creating a new user
+    {
+        bEmpty = [[aNewUsername stringValue] isEqualToString: @""] || [[aNewPassword stringValue] isEqualToString: @""];
+        [signupButton setEnabled: !bEmpty];
+    }
 }
 
 -(void)terminateApp
