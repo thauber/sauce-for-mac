@@ -244,7 +244,7 @@
 													<object class="NSButtonCell" key="NSCell" id="1066671876">
 														<int key="NSCellFlags">-2080244224</int>
 														<int key="NSCellFlags2">134217728</int>
-														<string key="NSContents">Link</string>
+														<string key="NSContents">Login</string>
 														<reference key="NSSupport" ref="98796976"/>
 														<string key="NSCellIdentifier">_NS:22</string>
 														<reference key="NSControlView" ref="102064474"/>
@@ -293,7 +293,7 @@
 													<object class="NSTextFieldCell" key="NSCell" id="966109752">
 														<int key="NSCellFlags">67239424</int>
 														<int key="NSCellFlags2">272629760</int>
-														<string key="NSContents"> Link to your account</string>
+														<string key="NSContents"> Login to your account</string>
 														<object class="NSFont" key="NSSupport">
 															<string key="NSName">Helvetica-Bold</string>
 															<double key="NSSize">18</double>

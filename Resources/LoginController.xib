@@ -295,7 +295,7 @@
 													<object class="NSTextFieldCell" key="NSCell" id="966109752">
 														<int key="NSCellFlags">67239424</int>
 														<int key="NSCellFlags2">272629760</int>
-														<string key="NSContents">Enter Your Key</string>
+														<string key="NSContents">Enter Your Password</string>
 														<object class="NSFont" key="NSSupport" id="722648156">
 															<string key="NSName">Helvetica-Bold</string>
 															<double key="NSSize">18</double>
