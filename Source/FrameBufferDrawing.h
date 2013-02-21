@@ -479,7 +479,7 @@ printf("draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
     {
         start = pixels + (int)(aRect.origin.y * size.width) + (int)aRect.origin.x;
 
-        if(mHScale<1.0)        // scale the target size down to fit view
+        if(mHScale > 0 && mHScale<1.0)        // scale the target size down to fit view
         {
             r.size.width  = MAX(1,(int)(r.size.width * mHScale));
             r.size.height = MAX(1,(int)(r.size.height * mVScale));
