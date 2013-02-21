@@ -109,7 +109,6 @@
         [defaults setObject:@"" forKey:kUserPassword];
         [[NSApp delegate] prefetchBrowsers];
         [[NSApp delegate] toggleTunnelDisplay];
-        [[NSApp delegate] showOptionsDlg:nil];
     }
 }
 
