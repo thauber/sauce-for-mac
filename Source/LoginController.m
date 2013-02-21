@@ -128,22 +128,16 @@
     else
     {
         uname = [user stringValue];
-#if 1       // set to '0' for appstore upload for now
         pswd = [accountKey stringValue];
-#else
-        aaccountkey = [accountKey stringValue];
-#endif
     }
     [NSApp endSheet:panel];
     [panel orderOut:nil];
     if(!aaccountkey)
         aaccountkey = @"";
-#if 1   // set to '0' for appstore upload for now
     if([uname length] && [pswd length])
     {
         aaccountkey = [[SaucePreconnect sharedPreconnect] accountkeyFromPassword:uname pswd:pswd];
     }
-#endif
     if([uname length] && [aaccountkey length])
     {
         NSString *errStr = [[SaucePreconnect sharedPreconnect] checkUserLogin:uname key:aaccountkey];
