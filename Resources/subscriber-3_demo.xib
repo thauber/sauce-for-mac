@@ -136,7 +136,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="266789231">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">Restart in 30 minutes for another 10 minutes</string>
+								<string key="NSContents">Restart for another 10 minutes</string>
 								<object class="NSFont" key="NSSupport" id="212080811">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -174,6 +174,7 @@
 							<string key="NSFrame">{{122, 287}, {337, 69}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="564227218"/>
 							<string key="NSReuseIdentifierKey">_NS:1505</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="248781775">
@@ -221,7 +222,7 @@
 							<string key="NSFrame">{{122, 258}, {284, 50}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="789350992"/>
+							<reference key="NSNextKeyView" ref="1039130947"/>
 							<string key="NSReuseIdentifierKey">_NS:1505</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="868913455">
@@ -261,6 +262,7 @@
 							<string key="NSFrame">{{122, 129}, {264, 68}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="1055351569"/>
 							<string key="NSReuseIdentifierKey">_NS:1505</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="195137385">
@@ -334,15 +336,16 @@
 						<object class="NSButton" id="1055351569">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{369, 17}, {82, 32}}</string>
+							<string key="NSFrame">{{381, 17}, {58, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="448359987">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Cancel</string>
+								<string key="NSContents">Ok</string>
 								<reference key="NSSupport" ref="212080811"/>
 								<string key="NSCellIdentifier">_NS:9</string>
 								<reference key="NSControlView" ref="1055351569"/>
@@ -360,6 +363,7 @@
 							<string key="NSFrame">{{209, 234}, {111, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="789350992"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="742956571">
