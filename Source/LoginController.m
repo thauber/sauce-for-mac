@@ -87,6 +87,7 @@
     BOOL bEmpty = [[user stringValue] isEqualToString: @""] || [[accountKey stringValue] isEqualToString: @""];
 //    [loginButton setEnabled: !bEmpty];
     [loginButton setEnabled: YES];
+    [loginButton setKeyEquivalent:@"\r"];
     if(!INAPPSTORE)              // has provision for creating a new user
     {
         bEmpty = [[aNewUsername stringValue] isEqualToString: @""] || [[aNewPassword stringValue] isEqualToString: @""];
@@ -175,7 +176,7 @@
     [[NSApp delegate] performSelectorOnMainThread:@selector(showLoginDlg:) withObject:nil  waitUntilDone:NO];    
 }
 
-- (IBAction)forgotKey:(id)sender   // TODO: need a 'forget password' page when server is ready
+- (IBAction)forgotKey:(id)sender
 {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://saucelabs.com/send-password-reset"]];    
 }
