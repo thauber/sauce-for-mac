@@ -342,8 +342,8 @@
 								</object>
 								<object class="NSBox" id="503407238">
 									<reference key="NSNextResponder" ref="667167168"/>
-									<int key="NSvFlags">12</int>
-									<string key="NSFrame">{{31, 371}, {761, 5}}</string>
+									<int key="NSvFlags">14</int>
+									<string key="NSFrame">{{31, 371}, {544, 5}}</string>
 									<reference key="NSSuperview" ref="667167168"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="971323462"/>
