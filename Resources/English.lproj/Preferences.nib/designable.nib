@@ -197,7 +197,7 @@
 							<reference key="NSNextKeyView" ref="69599018"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="599080289">
-								<int key="NSCellFlags">603979776</int>
+								<int key="NSCellFlags">67108864</int>
 								<int key="NSCellFlags2">268435456</int>
 								<string key="NSContents">Scale Session to fit view</string>
 								<reference key="NSSupport" ref="471331509"/>
