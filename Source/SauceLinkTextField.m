@@ -10,19 +10,7 @@
 
 @implementation SauceLinkTextField
 
-#if 0
-- (id)initWithFrame:(NSRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code here.
-    }
-    
-    return self;
-}
-#endif
-
--(void)mouseDown:(NSEvent *)theEvent
+-(void)mouseUp:(NSEvent *)theEvent
 {
     [self sendAction:[self action] to:[self target]];    
 }
