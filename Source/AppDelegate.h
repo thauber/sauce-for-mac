@@ -46,6 +46,8 @@
     NSPanel *infoPanel;
     
     NSMutableArray *configsOS[kNumTabs];     // os/browsers for windows
+    NSMutableArray *brAStrsOs[kNumTabs];         // browser attributed strings
+    NSAttributedString* osAStrs[kNumTabs];       // os attributed strings
     int activeOS[kNumTabs];
         
     BOOL bCommandline;                      // running from command line
@@ -115,5 +117,8 @@
 - (int)numActiveBrowsers:(ttType)os;
 - (NSInteger)prefetchBrowsers;
 - (NSArray*)getConfigsOS:(int)indx;
+- (NSArray*)getBrAStrsOs:(int)indx;
+- (NSAttributedString*)getOsAStrs:(int)indx;
+- (void)setupFromConfig;
 
 @end

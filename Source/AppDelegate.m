@@ -897,11 +897,161 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
     }
     for(int i=0;i<kNumTabs;i++)
         activeOS[i] = bDemo ? inserts[i] : [configsOS[i] count];
+    [self setupFromConfig];
 }
 
 - (NSArray*)getConfigsOS:(int)indx
 {
     return configsOS[indx];
+}
+
+- (NSArray*)getBrAStrsOs:(int)indx
+{
+    return brAStrsOs[indx];
+}
+
+- (NSAttributedString*)getOsAStrs:(int)indx
+{
+    return osAStrs[indx];
+}
+
+// read config to get os/browsers; create rects; store it all
+- (void)setupFromConfig
+{
+    for(int i=0;i<kNumTabs;i++)
+        brAStrsOs[i] = [[[NSMutableArray alloc] init] retain];
+    for(int i=0;i<kNumTabs;i++)
+        osAStrs[i] = [[[NSAttributedString alloc] init] retain];
+    
+    // create attributed strings for os's (column 0)
+    // os images
+    NSImage *oimgs[kNumTabs];
+    NSSize isz = NSMakeSize(21,21);
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"win28" ofType:@"png"];
+    oimgs[0] = [[NSImage alloc] initByReferencingFile:path];
+    [oimgs[0] setSize:isz];
+    oimgs[1] = oimgs[2] = oimgs[0];
+    path = [[NSBundle mainBundle] pathForResource:@"lin28" ofType:@"png"];
+    oimgs[3] = [[NSImage alloc] initByReferencingFile:path];
+    [oimgs[3] setSize:isz];
+    path = [[NSBundle mainBundle] pathForResource:@"ios-mobile" ofType:@"png"];
+    oimgs[4] = [[NSImage alloc] initByReferencingFile:path];
+    [oimgs[4] setSize:isz];
+    path = [[NSBundle mainBundle] pathForResource:@"apple28" ofType:@"png"];
+    oimgs[5] = [[NSImage alloc] initByReferencingFile:path];
+    [oimgs[5] setSize:isz];
+    
+    NSString *osStr[kNumTabs] = {@"  Windows XP", @"  Windows 7", @"  Windows 8", @"  Linux", @"  Apple IOS", @"  Apple OSX"};
+    
+    for(int i=0; i < kNumTabs; i++)
+    {
+        NSTextAttachment* ta = [[NSTextAttachment alloc] init];
+        NSTextAttachmentCell* tac = [[NSTextAttachmentCell alloc] init];
+        [tac setImage: oimgs[i]];
+        [oimgs[i] release];
+        [ta setAttachmentCell: tac];
+        NSAttributedString* as = [NSAttributedString attributedStringWithAttachment: ta];
+        [ta release];
+        [tac release];
+        // NSBaselineOffsetAttributeName
+        NSNumber *nn = [NSNumber numberWithInteger:6];
+        NSDictionary *asdict = [NSDictionary dictionaryWithObjectsAndKeys:nn,NSBaselineOffsetAttributeName, nil];
+        NSMutableAttributedString* mas = [[[NSMutableAttributedString alloc] initWithAttributedString:as ] retain];
+        NSAttributedString *osAStr = [[NSAttributedString alloc] initWithString:osStr[i] attributes:asdict];
+        [mas appendAttributedString: osAStr];
+        [osAStr release];
+        osAStrs[i] = mas;
+    }
+    
+    // browser images for column 1
+    NSImage *bimgs[7];
+    isz = NSMakeSize(14,14);
+    path = [[NSBundle mainBundle] pathForResource:@"ie28" ofType:@"png"];
+    bimgs[0] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
+    [bimgs[0] setSize:isz];
+    path = [[NSBundle mainBundle] pathForResource:@"firefox28" ofType:@"png"];
+    bimgs[1] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
+    [bimgs[1] setSize:isz];
+    path = [[NSBundle mainBundle] pathForResource:@"safari28" ofType:@"png"];
+    bimgs[2] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
+    [bimgs[2] setSize:isz];
+    path = [[NSBundle mainBundle] pathForResource:@"opera28" ofType:@"png"];
+    bimgs[3] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
+    [bimgs[3] setSize:isz];
+    path = [[NSBundle mainBundle] pathForResource:@"chrome28" ofType:@"png"];
+    bimgs[4] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
+    [bimgs[4] setSize:isz];
+    path = [[NSBundle mainBundle] pathForResource:@"an28" ofType:@"png"];
+    bimgs[5] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
+    [bimgs[5] setSize:isz];
+    path = [[NSBundle mainBundle] pathForResource:@"ios-mobile" ofType:@"png"];
+    bimgs[6] = [[[NSImage alloc] initByReferencingFile:path] autorelease];
+    [bimgs[6] setSize:isz];
+    
+    for(int i=0; i < kNumTabs; i++)    // setup browsers for each os
+    {
+        NSInteger num = [configsOS[i] count];
+        
+        NSString *lastBrowser = @"xx";      // initial column
+        NSImage *bimg = bimgs[0];
+        
+        for(NSInteger j=0;j < num; j++)     // setup browsers
+        {
+            NSMutableArray *llArr = [configsOS[i] objectAtIndex:j];
+            //            NSString *osstr = [llArr objectAtIndex:0];
+            NSString *browser = [llArr objectAtIndex:1];
+            NSString *version = [llArr objectAtIndex:2];
+            NSString *twoch = [browser substringToIndex:2];     // 2 chars to identify browser
+            if(![twoch isEqualToString:lastBrowser])      // different browser than previous
+            {
+                if([twoch isEqualToString:@"ie"])         // internet explorer
+                    bimg = bimgs[0];
+                if([twoch isEqualToString:@"in"])         // internet explorer
+                    bimg = bimgs[0];
+                if([twoch isEqualToString:@"fi"])         // firefox
+                    bimg = bimgs[1];
+                else if([twoch isEqualToString:@"sa"])    // safari
+                    bimg = bimgs[2];
+                else if([twoch isEqualToString:@"op"])    // opera
+                    bimg = bimgs[3];
+                else if([twoch isEqualToString:@"go"])    // google chrome
+                    bimg = bimgs[4];
+                if([twoch isEqualToString:@"ch"])         // firefox named 'chrome' in selenium
+                    bimg = bimgs[4];
+                else if([twoch isEqualToString:@"an"])    // android
+                    bimg = bimgs[5];
+                else if([twoch isEqualToString:@"ip"])    // iphone/ipad
+                    bimg = bimgs[6];
+                lastBrowser = [browser substringToIndex:2];
+            }
+            
+            NSTextAttachment* ta = [[NSTextAttachment alloc] init];
+            NSTextAttachmentCell* tac = [[NSTextAttachmentCell alloc] init];
+            [tac setImage: bimg];
+            [ta setAttachmentCell: tac];
+            NSAttributedString* as = [NSAttributedString attributedStringWithAttachment: ta];
+            [ta release];
+            [tac release];
+            NSMutableAttributedString* mas = [[NSMutableAttributedString alloc] initWithAttributedString: as];
+            if([browser isEqualToString:@"iphone"])
+                browser = @"IPhone";
+            else if([browser isEqualToString:@"ipad"])
+                browser = @"IPad";
+            else if([browser isEqualToString:@"googlechrome"] || [browser isEqualToString:@"chrome"])
+                browser = @"Google Chrome";
+            else
+                browser = [browser capitalizedString];
+            NSString *brver = @"";
+            brver = [NSString stringWithFormat:@" %@ %@",browser, version];
+            NSNumber *nn = [NSNumber numberWithInteger:2];
+            NSDictionary *asdict = [NSDictionary dictionaryWithObjectsAndKeys:nn,NSBaselineOffsetAttributeName, nil];
+            NSAttributedString *bAStr = [[NSAttributedString alloc] initWithString:brver attributes:asdict];
+            [mas appendAttributedString:bAStr];
+            [bAStr release];
+            [brAStrsOs[i] addObject:mas];
+            [mas release];
+        }
+    }    
 }
 
 @end

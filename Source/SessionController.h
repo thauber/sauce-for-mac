@@ -29,7 +29,7 @@ typedef enum {tt_winxp, tt_win7, tt_win8, tt_linux, tt_macios, tt_macosx} ttType
     NSButton *defaultBrowser;
     IBOutlet NSBrowser *browserTbl;
     NSArray *configsOS[kNumTabs];         // os/browsers for windows; pointer to appdelegate array
-    NSMutableArray *brAStrsOs[kNumTabs];         // browser attributed strings
+    NSArray *brAStrsOs[kNumTabs];         // browser attributed strings
     NSAttributedString* osAStrs[kNumTabs];       // os attributed strings
 }
 @property (assign) IBOutlet NSButton *defaultBrowser;
