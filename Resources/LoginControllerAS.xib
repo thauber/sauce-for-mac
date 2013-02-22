@@ -216,7 +216,7 @@
 													<string key="NSFrame">{{104, 71}, {258, 22}}</string>
 													<reference key="NSSuperview" ref="962972907"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="943883685"/>
+													<reference key="NSNextKeyView" ref="623348422"/>
 													<string key="NSReuseIdentifierKey">_NS:9</string>
 													<int key="NSTag">2</int>
 													<bool key="NSEnabled">YES</bool>
@@ -235,10 +235,10 @@
 												<object class="NSButton" id="102064474">
 													<reference key="NSNextResponder" ref="962972907"/>
 													<int key="NSvFlags">268</int>
-													<string key="NSFrame">{{278, 36}, {84, 25}}</string>
+													<string key="NSFrame">{{250, 34}, {84, 25}}</string>
 													<reference key="NSSuperview" ref="962972907"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="623348422"/>
+													<reference key="NSNextKeyView" ref="943883685"/>
 													<string key="NSReuseIdentifierKey">_NS:22</string>
 													<bool key="NSEnabled">YES</bool>
 													<object class="NSButtonCell" key="NSCell" id="1066671876">
@@ -284,16 +284,16 @@
 												<object class="NSTextField" id="943883685">
 													<reference key="NSNextResponder" ref="962972907"/>
 													<int key="NSvFlags">12</int>
-													<string key="NSFrame">{{116, 38}, {108, 22}}</string>
+													<string key="NSFrame">{{250, 8}, {108, 22}}</string>
 													<reference key="NSSuperview" ref="962972907"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="102064474"/>
+													<reference key="NSNextKeyView"/>
 													<string key="NSReuseIdentifierKey">_NS:9</string>
 													<bool key="NSEnabled">YES</bool>
 													<object class="NSTextFieldCell" key="NSCell" id="344401064">
 														<int key="NSCellFlags">-2079326144</int>
 														<int key="NSCellFlags2">272634880</int>
-														<string key="NSContents">Forgot password</string>
+														<string key="NSContents">Forgot Password</string>
 														<reference key="NSSupport" ref="98796976"/>
 														<string key="NSCellIdentifier">_NS:9</string>
 														<reference key="NSControlView" ref="943883685"/>
@@ -312,9 +312,10 @@
 												<object class="NSButton" id="623348422">
 													<reference key="NSNextResponder" ref="962972907"/>
 													<int key="NSvFlags">268</int>
-													<string key="NSFrame">{{426, 30}, {82, 32}}</string>
+													<string key="NSFrame">{{119, 30}, {82, 32}}</string>
 													<reference key="NSSuperview" ref="962972907"/>
 													<reference key="NSWindow"/>
+													<reference key="NSNextKeyView" ref="102064474"/>
 													<string key="NSReuseIdentifierKey">_NS:9</string>
 													<bool key="NSEnabled">YES</bool>
 													<object class="NSButtonCell" key="NSCell" id="890014399">
@@ -340,7 +341,7 @@
 											<string key="NSReuseIdentifierKey">_NS:11</string>
 										</object>
 									</array>
-									<string key="NSFrame">{{28, 113}, {554, 238}}</string>
+									<string key="NSFrame">{{17, 109}, {554, 238}}</string>
 									<reference key="NSSuperview" ref="667167168"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="962972907"/>
@@ -624,8 +625,8 @@
 							<reference ref="136680115"/>
 							<reference ref="978983790"/>
 							<reference ref="713585312"/>
-							<reference ref="971323462"/>
 							<reference ref="503407238"/>
+							<reference ref="971323462"/>
 						</array>
 						<reference key="parent" ref="700714718"/>
 					</object>
@@ -674,13 +675,13 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="673497330"/>
 							<reference ref="1071960909"/>
-							<reference ref="102064474"/>
 							<reference ref="282608006"/>
 							<reference ref="240464512"/>
 							<reference ref="252795283"/>
 							<reference ref="318705557"/>
 							<reference ref="943883685"/>
 							<reference ref="623348422"/>
+							<reference ref="102064474"/>
 						</array>
 						<reference key="parent" ref="667167168"/>
 					</object>
