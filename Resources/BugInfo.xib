@@ -268,7 +268,7 @@
 										<object class="NSTextView" id="975910102">
 											<reference key="NSNextResponder" ref="582666531"/>
 											<int key="NSvFlags">2322</int>
-											<string key="NSFrameSize">{538, 249}</string>
+											<string key="NSFrameSize">{553, 249}</string>
 											<reference key="NSSuperview" ref="582666531"/>
 											<reference key="NSNextKeyView" ref="156903158"/>
 											<string key="NSReuseIdentifierKey">_NS:13</string>
@@ -287,7 +287,7 @@
 													<nil key="NSDelegate"/>
 												</object>
 												<reference key="NSTextView" ref="975910102"/>
-												<double key="NSWidth">538</double>
+												<double key="NSWidth">553</double>
 												<int key="NSTCFlags">1</int>
 											</object>
 											<object class="NSTextViewSharedData" key="NSSharedData">
@@ -331,7 +331,7 @@
 											<nil key="NSDelegate"/>
 										</object>
 									</array>
-									<string key="NSFrame">{{1, 0.5}, {538, 247}}</string>
+									<string key="NSFrame">{{1, 0.5}, {553, 247}}</string>
 									<reference key="NSSuperview" ref="756617273"/>
 									<reference key="NSNextKeyView" ref="975910102"/>
 									<string key="NSReuseIdentifierKey">_NS:11</string>
