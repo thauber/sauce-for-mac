@@ -95,28 +95,16 @@
     }
 }
 
--(void)terminateApp
+-(void)quitSheet
 {
     [NSApp endSheet:panel];
     [panel orderOut:nil];
     [[NSApp delegate] setLoginCtrlr:nil];
 }
+
 - (IBAction)doCancelLogin:(id)sender 
 {
-    NSString *uname = [user stringValue];
-    NSString *pswd = [accountKey stringValue];
-    [self terminateApp];
-    if(![uname length] || ![pswd length])       // set demo account if no user or password on cancel
-    {
-        uname = kDemoAccountName;       // defined in AppDelegate.h
-        pswd = kDemoAccountKey;
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:uname  forKey:kUsername];
-        [defaults setObject:pswd  forKey:kAccountkey];
-        [defaults setObject:@"" forKey:kUserPassword];
-        [[NSApp delegate] prefetchBrowsers];
-        [[NSApp delegate] toggleTunnelDisplay];
-    }
+    [self quitSheet];
 }
 
 - (IBAction)login:(id)sender
@@ -125,19 +113,9 @@
     NSString *uname = @"";
     NSString *aaccountkey = [defaults stringForKey:kAccountkey];
     NSString *pswd = @"";
-    if(sender == self)      // using demo login when user cancelled 
-    {
-        uname = kDemoAccountName;       // defined in AppDelegate.h
-        aaccountkey = kDemoAccountKey;
-//        [defaults setObject:nil forKey:kSessionURL];  // why blank the url?
-    }
-    else
-    {
-        uname = [user stringValue];
-        pswd = [accountKey stringValue];
-    }
-    [NSApp endSheet:panel];
-    [panel orderOut:nil];
+    uname = [user stringValue];
+    pswd = [accountKey stringValue];
+    [self quitSheet];
     if(!aaccountkey)
         aaccountkey = @"";
     if([uname length] && [pswd length])

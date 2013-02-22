@@ -248,22 +248,16 @@
     }    
 }
 
--(void)terminateApp
-{
-    [self cancel:self];
-}
-
 -(void)quitSheet
 {
     [NSApp endSheet:panel];
     [panel orderOut:nil];    
+    [[NSApp delegate] setOptionsCtrlr:nil];
 }
 
 - (IBAction)cancel:(id)sender 
 {
-    [NSApp endSheet:panel];
-    [panel orderOut:nil];
-    [[NSApp delegate] setOptionsCtrlr:nil];
+    [self quitSheet];
 }
 
 - (void)textDidChange:(NSNotification *)aNotification

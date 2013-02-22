@@ -100,6 +100,7 @@
 - (IBAction)showProfileManager: (id)sender;
 - (IBAction)showHelp: (id)sender;
 - (IBAction)refreshAllSessions:(id)sender;
+- (IBAction)resetSauce:(id)sender;
 
 - (BOOL)checkaccount;
 - (BOOL)isDemoAccount;

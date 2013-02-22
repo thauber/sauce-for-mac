@@ -38,7 +38,7 @@
 @property (assign) IBOutlet NSPanel *panel;
 @property (assign) IBOutlet NSButton *cancelLogin;
 - (IBAction)doCancelLogin:(id)sender;
--(void)terminateApp;
+- (void)quitSheet;
 - (IBAction)login:(id)sender;
 - (IBAction)forgotKey:(id)sender;
 - (IBAction)signUp:(id)sender;

@@ -44,7 +44,6 @@ typedef enum {tt_winxp, tt_win7, tt_win8, tt_linux, tt_macios, tt_macosx} ttType
 - (IBAction)doBrowserClick:(NSBrowser *)sender;
 - (IBAction)doDoubleClick:(id)sender;
 - (void)quitSheet;
-- (void)terminateApp;
 - (void)runSheet;
 - (IBAction)connect:(id)sender;
 - (IBAction)cancel:(id)sender;

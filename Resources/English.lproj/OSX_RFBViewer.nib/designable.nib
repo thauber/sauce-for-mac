@@ -101,6 +101,24 @@
 									<reference key="NSOnImage" ref="529750286"/>
 									<reference key="NSMixedImage" ref="368837609"/>
 								</object>
+								<object class="NSMenuItem" id="305691781">
+									<reference key="NSMenu" ref="1056163985"/>
+									<string key="NSTitle">Reset Sauce...</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="529750286"/>
+									<reference key="NSMixedImage" ref="368837609"/>
+								</object>
+								<object class="NSMenuItem" id="665612782">
+									<reference key="NSMenu" ref="1056163985"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsSeparator">YES</bool>
+									<string key="NSTitle"/>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="529750286"/>
+									<reference key="NSMixedImage" ref="368837609"/>
+								</object>
 								<object class="NSMenuItem" id="952588105">
 									<reference key="NSMenu" ref="1056163985"/>
 									<string key="NSTitle">Services</string>
@@ -136,6 +154,16 @@
 									<string key="NSTitle">Hide Sauce</string>
 									<string key="NSKeyEquiv">h</string>
 									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="529750286"/>
+									<reference key="NSMixedImage" ref="368837609"/>
+								</object>
+								<object class="NSMenuItem" id="684827234">
+									<reference key="NSMenu" ref="1056163985"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsSeparator">YES</bool>
+									<string key="NSTitle"/>
+									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="529750286"/>
 									<reference key="NSMixedImage" ref="368837609"/>
@@ -611,7 +639,6 @@
 							<string key="NSFrame">{{123, 128}, {418, 112}}</string>
 							<reference key="NSSuperview" ref="579117168"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSAntiCompressionPriority">{250, 750}</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="56237824">
@@ -734,14 +761,6 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 			</object>
 			<object class="NSCustomObject" id="569964129">
 				<string key="NSClassName">AppDelegate</string>
-			</object>
-			<object class="NSView" id="1061574114">
-				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">256</int>
-				<string key="NSFrameSize">{435, 1}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView"/>
 			</object>
 			<object class="NSMenuItem" id="560175149">
 				<string key="NSTitle">Item</string>
@@ -1066,6 +1085,14 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 					</object>
 					<int key="connectionID">1592</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">resetSauce:</string>
+						<reference key="source" ref="569964129"/>
+						<reference key="destination" ref="305691781"/>
+					</object>
+					<int key="connectionID">1596</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1158,6 +1185,9 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 							<reference ref="611205423"/>
 							<reference ref="730733349"/>
 							<reference ref="926676420"/>
+							<reference ref="684827234"/>
+							<reference ref="665612782"/>
+							<reference ref="305691781"/>
 						</object>
 						<reference key="parent" ref="81055041"/>
 					</object>
@@ -1417,11 +1447,6 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 						<reference key="parent" ref="208347917"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">910</int>
-						<reference key="object" ref="1061574114"/>
-						<reference key="parent" ref="0"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">1522</int>
 						<reference key="object" ref="134679870"/>
 						<reference key="parent" ref="857574433"/>
@@ -1595,6 +1620,21 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 						<reference key="object" ref="109550746"/>
 						<reference key="parent" ref="857574433"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1593</int>
+						<reference key="object" ref="684827234"/>
+						<reference key="parent" ref="1056163985"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1594</int>
+						<reference key="object" ref="665612782"/>
+						<reference key="parent" ref="1056163985"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1595</int>
+						<reference key="object" ref="305691781"/>
+						<reference key="parent" ref="1056163985"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1658,6 +1698,9 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 					<string>1582.IBPluginDependency</string>
 					<string>1583.IBPluginDependency</string>
 					<string>1586.IBPluginDependency</string>
+					<string>1593.IBPluginDependency</string>
+					<string>1594.IBPluginDependency</string>
+					<string>1595.IBPluginDependency</string>
 					<string>231.IBPluginDependency</string>
 					<string>232.IBPluginDependency</string>
 					<string>232.IBWindowTemplateEditedContentRect</string>
@@ -1675,11 +1718,13 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 					<string>618.IBPluginDependency</string>
 					<string>619.IBPluginDependency</string>
 					<string>621.IBPluginDependency</string>
-					<string>910.IBPluginDependency</string>
 					<string>981.IBPluginDependency</string>
 				</object>
 				<object class="NSArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1755,7 +1800,6 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -1770,7 +1814,7 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1592</int>
+			<int key="maxID">1596</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1789,6 +1833,7 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 							<string>doTunnel:</string>
 							<string>myAccount:</string>
 							<string>refreshAllSessions:</string>
+							<string>resetSauce:</string>
 							<string>showConnectionDialog:</string>
 							<string>showHelp:</string>
 							<string>showLoginDlg:</string>
@@ -1819,6 +1864,7 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
+							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
@@ -1832,6 +1878,7 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 							<string>doTunnel:</string>
 							<string>myAccount:</string>
 							<string>refreshAllSessions:</string>
+							<string>resetSauce:</string>
 							<string>showConnectionDialog:</string>
 							<string>showHelp:</string>
 							<string>showLoginDlg:</string>
@@ -1871,6 +1918,10 @@ ZmVyQGNoZWxsby5hdCkKA</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">refreshAllSessions:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">resetSauce:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">

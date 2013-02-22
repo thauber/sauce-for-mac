@@ -121,10 +121,10 @@
     // First close the sheet (if it's active), using whatever method
     // you have set up to do this...
     if([[NSApp delegate] optionsCtrlr])
-        [[[NSApp delegate] optionsCtrlr] terminateApp];
+        [[[NSApp delegate] optionsCtrlr] quitSheet];
     else
     if([[NSApp delegate] loginCtrlr])
-        [[[NSApp delegate] loginCtrlr] terminateApp];
+        [[[NSApp delegate] loginCtrlr] quitSheet];
     else
     if([[NSApp delegate] subscriberCtrl])
         [[[NSApp delegate] subscriberCtrl] quitSheet];
