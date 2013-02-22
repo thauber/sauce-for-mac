@@ -439,12 +439,32 @@
 
 - (IBAction)resetSauce:(id)sender
 {
+    NSBeginAlertSheet(@"Reset Sauce", @"OK", @"Cancel", nil, [NSApp keyWindow], self, nil, @selector(doReset:returnCode:contextInfo:), nil, @"%@",@"Do you want to remove all your data and send the app back to it's original state");
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:kDemoAccountName  forKey:kUsername];
     [defaults setObject:kDemoAccountKey  forKey:kAccountkey];
     [defaults setObject:@"" forKey:kUserPassword];
     [[NSApp delegate] prefetchBrowsers];
     [[NSApp delegate] toggleTunnelDisplay];
+}
+
+-(void)doReset:(NSWindow*)sheet returnCode:(int)returnCode contextInfo:(void*)contextInfo
+{
+    if(returnCode==NSOKButton)
+    {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:kDemoAccountName  forKey:kUsername];
+        [defaults setObject:kDemoAccountKey  forKey:kAccountkey];
+        [defaults setObject:@"" forKey:kUserPassword];
+        [[NSApp delegate] prefetchBrowsers];
+        [[NSApp delegate] toggleTunnelDisplay];
+        if(optionsCtrlr)
+        {
+            [optionsCtrlr quitSheet];
+            [self showOptionsDlg:self];
+        }
+    }
 }
 
 - (NSMenuItem *)getFullScreenMenuItem
