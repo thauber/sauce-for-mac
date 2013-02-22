@@ -42,7 +42,7 @@
 			<object class="NSWindowTemplate" id="518066887">
 				<int key="NSWindowStyleMask">1</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{139, 81}, {599, 459}}</string>
+				<string key="NSWindowRect">{{139, 81}, {599, 414}}</string>
 				<int key="NSWTFlags">1685586944</int>
 				<string key="NSWindowTitle">Login</string>
 				<string key="NSWindowClass">NSPanel</string>
@@ -309,6 +309,29 @@
 														</object>
 													</object>
 												</object>
+												<object class="NSButton" id="623348422">
+													<reference key="NSNextResponder" ref="962972907"/>
+													<int key="NSvFlags">268</int>
+													<string key="NSFrame">{{426, 30}, {82, 32}}</string>
+													<reference key="NSSuperview" ref="962972907"/>
+													<reference key="NSWindow"/>
+													<string key="NSReuseIdentifierKey">_NS:9</string>
+													<bool key="NSEnabled">YES</bool>
+													<object class="NSButtonCell" key="NSCell" id="890014399">
+														<int key="NSCellFlags">67239424</int>
+														<int key="NSCellFlags2">134217728</int>
+														<string key="NSContents">Cancel</string>
+														<reference key="NSSupport" ref="98796976"/>
+														<string key="NSCellIdentifier">_NS:9</string>
+														<reference key="NSControlView" ref="623348422"/>
+														<int key="NSButtonFlags">-2038284033</int>
+														<int key="NSButtonFlags2">129</int>
+														<string key="NSAlternateContents"/>
+														<string type="base64-UTF8" key="NSKeyEquivalent">Gw</string>
+														<int key="NSPeriodicDelay">200</int>
+														<int key="NSPeriodicInterval">25</int>
+													</object>
+												</object>
 											</array>
 											<string key="NSFrame">{{2, 2}, {550, 234}}</string>
 											<reference key="NSSuperview" ref="971323462"/>
@@ -427,38 +450,14 @@
 										<reference key="NSTextColor" ref="488424903"/>
 									</object>
 								</object>
-								<object class="NSButton" id="623348422">
-									<reference key="NSNextResponder" ref="667167168"/>
-									<int key="NSvFlags">268</int>
-									<string key="NSFrame">{{503, 69}, {82, 32}}</string>
-									<reference key="NSSuperview" ref="667167168"/>
-									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
-									<string key="NSReuseIdentifierKey">_NS:9</string>
-									<bool key="NSEnabled">YES</bool>
-									<object class="NSButtonCell" key="NSCell" id="890014399">
-										<int key="NSCellFlags">67239424</int>
-										<int key="NSCellFlags2">134217728</int>
-										<string key="NSContents">Cancel</string>
-										<reference key="NSSupport" ref="98796976"/>
-										<string key="NSCellIdentifier">_NS:9</string>
-										<reference key="NSControlView" ref="623348422"/>
-										<int key="NSButtonFlags">-2038284033</int>
-										<int key="NSButtonFlags2">129</int>
-										<string key="NSAlternateContents"/>
-										<string type="base64-UTF8" key="NSKeyEquivalent">Gw</string>
-										<int key="NSPeriodicDelay">200</int>
-										<int key="NSPeriodicInterval">25</int>
-									</object>
-								</object>
 							</array>
-							<string key="NSFrame">{{-11, -50}, {818, 509}}</string>
+							<string key="NSFrame">{{-11, -95}, {818, 509}}</string>
 							<reference key="NSSuperview" ref="700714718"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="978983790"/>
 						</object>
 					</array>
-					<string key="NSFrameSize">{599, 459}</string>
+					<string key="NSFrameSize">{599, 414}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="667167168"/>
@@ -520,22 +519,6 @@
 					<int key="connectionID">1734</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">doCancelLogin:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="623348422"/>
-					</object>
-					<int key="connectionID">1717</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">cancelLogin</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="623348422"/>
-					</object>
-					<int key="connectionID">1716</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">accountKeyLabel</string>
 						<reference key="source" ref="1001"/>
@@ -550,6 +533,22 @@
 						<reference key="destination" ref="943883685"/>
 					</object>
 					<int key="connectionID">1770</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">cancelLogin</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="623348422"/>
+					</object>
+					<int key="connectionID">1716</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">doCancelLogin:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="623348422"/>
+					</object>
+					<int key="connectionID">1717</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -626,7 +625,6 @@
 							<reference ref="978983790"/>
 							<reference ref="713585312"/>
 							<reference ref="971323462"/>
-							<reference ref="623348422"/>
 							<reference ref="503407238"/>
 						</array>
 						<reference key="parent" ref="700714718"/>
@@ -682,6 +680,7 @@
 							<reference ref="252795283"/>
 							<reference ref="318705557"/>
 							<reference ref="943883685"/>
+							<reference ref="623348422"/>
 						</array>
 						<reference key="parent" ref="667167168"/>
 					</object>
@@ -777,19 +776,6 @@
 						<reference key="parent" ref="318705557"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">1714</int>
-						<reference key="object" ref="623348422"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="890014399"/>
-						</array>
-						<reference key="parent" ref="667167168"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1715</int>
-						<reference key="object" ref="890014399"/>
-						<reference key="parent" ref="623348422"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">1743</int>
 						<reference key="object" ref="503407238"/>
 						<reference key="parent" ref="667167168"/>
@@ -806,6 +792,19 @@
 						<int key="objectID">1767</int>
 						<reference key="object" ref="344401064"/>
 						<reference key="parent" ref="943883685"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1714</int>
+						<reference key="object" ref="623348422"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="890014399"/>
+						</array>
+						<reference key="parent" ref="971323462"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1715</int>
+						<reference key="object" ref="890014399"/>
+						<reference key="parent" ref="623348422"/>
 					</object>
 				</array>
 			</object>
