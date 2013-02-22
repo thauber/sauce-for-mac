@@ -278,9 +278,6 @@
         obarr = [configsOS[curTabIndx] objectAtIndex:row];
         if(brAStr)
         {
-            NSString *active = [obarr objectAtIndex:3];
-            BOOL enbld = [active isEqualToString:@"YES"];
-            [cell setEnabled:enbld];
             [cell setLeaf:NO];
             [cell setAttributedStringValue:brAStr];
         }
@@ -343,7 +340,18 @@
             [sender selectRow:resolutionIndxs[curTabIndx] inColumn:2];
         }
         else
-            sessionIndxs[curTabIndx] = [sender selectedRowInColumn:1];
+        {
+            int j = [sender selectedRowInColumn:1];
+            NSMutableArray *llArr = [configsOS[curTabIndx] objectAtIndex:j];
+            NSString *enabled = [llArr objectAtIndex:3];
+            if([enabled hasPrefix:@"Y"])
+                sessionIndxs[curTabIndx] = [sender selectedRowInColumn:1];
+            else
+            {
+                NSBeginAlertSheet(@"Browser Unavailable", @"OK", @"Sign up", nil, [NSApp keyWindow], self, nil, @selector(doSignup:returnCode:contextInfo:), nil, @"%@", @"This browser is available to free account users.");
+                return;
+            }
+        }
         lastpop1 = NO;
         if(lastpop2)
             [sender selectRow:resolutionIndxs[curTabIndx] inColumn:2];
@@ -368,10 +376,21 @@
     }
 }
 
+- (void)doSignup:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+    if(returnCode != NSOKButton)
+        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://saucelabs.com/signup?s4m"]];
+}
+
 - (IBAction)doDoubleClick:(id)sender
 {
-   if([browserTbl selectedRowInColumn:1] != -1)
-    [self connect:self];
+    int j = [browserTbl selectedRowInColumn:1];
+    if(j==-1)
+        return;
+    NSMutableArray *llArr = [configsOS[curTabIndx] objectAtIndex:j];
+    NSString *enabled = [llArr objectAtIndex:3];
+    if([enabled hasPrefix:@"Y"])
+        [self connect:self];
 }
 
 @end

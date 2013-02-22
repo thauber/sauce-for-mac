@@ -1021,6 +1021,7 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
             //            NSString *osstr = [llArr objectAtIndex:0];
             NSString *browser = [llArr objectAtIndex:1];
             NSString *version = [llArr objectAtIndex:2];
+            NSString *enabled = [llArr objectAtIndex:3];
             NSString *twoch = [browser substringToIndex:2];     // 2 chars to identify browser
             if(![twoch isEqualToString:lastBrowser])      // different browser than previous
             {
@@ -1064,7 +1065,8 @@ NSComparisonResult dcmp(id arg1, id arg2, void *dummy)
             NSString *brver = @"";
             brver = [NSString stringWithFormat:@" %@ %@",browser, version];
             NSNumber *nn = [NSNumber numberWithInteger:2];
-            NSDictionary *asdict = [NSDictionary dictionaryWithObjectsAndKeys:nn,NSBaselineOffsetAttributeName, nil];
+            NSColor *clr = [enabled hasPrefix:@"Y"] ? [NSColor blackColor] : [NSColor grayColor];
+            NSDictionary *asdict = [NSDictionary dictionaryWithObjectsAndKeys:nn,NSBaselineOffsetAttributeName, clr, NSForegroundColorAttributeName, nil];
             NSAttributedString *bAStr = [[NSAttributedString alloc] initWithString:brver attributes:asdict];
             [mas appendAttributedString:bAStr];
             [bAStr release];
