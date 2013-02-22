@@ -130,7 +130,7 @@
         [[[NSApp delegate] subscriberCtrl] quitSheet];
 
     // Now call the normal implementation
-    NSBeginAlertSheet(@"Quit Sauce?", @"Ok", @"Cancel", nil, [[ScoutWindowController sharedScout] window], self, @selector(quitDidDismiss:returnCode:contextInfo:),nil, nil, @"Do you really want to quit Sauce?");    
+    NSBeginAlertSheet(@"Quit Sauce?", @"OK", @"Cancel", nil, [[ScoutWindowController sharedScout] window], self, @selector(quitDidDismiss:returnCode:contextInfo:),nil, nil, @"Do you really want to quit Sauce?");    
 }
 
 - (void)quitDidDismiss:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo

@@ -209,7 +209,7 @@
 - (void)internetNotOkDlg
 {
     NSString *header = NSLocalizedString( @"Connection Status", nil );
-    NSString *okayButton = NSLocalizedString( @"Ok", nil );
+    NSString *okayButton = NSLocalizedString( @"OK", nil );
     NSBeginAlertSheet(header, okayButton, nil, nil, [[ScoutWindowController sharedScout] window], self, nil, nil, nil, @"%@",@"Check your internet connection - or Sauce Labs server may be down");
     
 }
@@ -333,7 +333,7 @@
     if(errMsg)
     {
         NSString *header = NSLocalizedString( @"Connection Status", nil );
-        NSString *okayButton = NSLocalizedString( @"Ok", nil );
+        NSString *okayButton = NSLocalizedString( @"OK", nil );
         NSBeginAlertSheet(header, okayButton, nil, nil, [[ScoutWindowController sharedScout] window], self, nil, nil, nil, @"%@",errMsg);
     }
 }

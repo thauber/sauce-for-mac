@@ -325,7 +325,7 @@
     
     if([urlstr hasPrefix:@"file"])
     {
-        NSBeginAlertSheet(@"Static File Request", @"Ok", nil, nil, [[ScoutWindowController sharedScout] window], self, nil, @selector(endAndTryAgain:returnCode:contextInfo:), nil, @"Sauce does not yet support manually testing files on disk. However, you can test files by putting them in your 'sites' directory and then turn on sharing in finder > system preferences > sharing");
+        NSBeginAlertSheet(@"Static File Request", @"OK", nil, nil, [[ScoutWindowController sharedScout] window], self, nil, @selector(endAndTryAgain:returnCode:contextInfo:), nil, @"Sauce does not yet support manually testing files on disk. However, you can test files by putting them in your 'sites' directory and then turn on sharing in finder > system preferences > sharing");
         return;
     }
 

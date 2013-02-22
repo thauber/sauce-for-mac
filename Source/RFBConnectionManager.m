@@ -101,7 +101,7 @@ static NSString *kPrefs_LastHost_Key = @"RFBLastHost";
     [[SaucePreconnect sharedPreconnect] cancelPreAuthorize:sdict];
     [[ScoutWindowController sharedScout] closeTab:sdict];
     if(![[sdict valueForKey:@"state"] intValue] == -1)
-        NSBeginAlertSheet(@"Failed Connection", @"Ok", nil, nil, [[ScoutWindowController sharedScout] window], self, nil, nil, nil, @"Check your internet connection - or Sauce Labs server may be down");
+        NSBeginAlertSheet(@"Failed Connection", @"OK", nil, nil, [[ScoutWindowController sharedScout] window], self, nil, nil, nil, @"Check your internet connection - or Sauce Labs server may be down");
 }
 
 - (void)cancelConnection:(NSMutableDictionary*)sdict
