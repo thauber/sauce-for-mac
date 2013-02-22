@@ -27,4 +27,11 @@
     [self sendAction:[self action] to:[self target]];    
 }
 
+- (void)drawRect:(NSRect)dirtyRect
+{
+    NSColor *txtclr = [NSColor blueColor];
+    NSDictionary *asdict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:NSUnderlineStyleSingle], NSUnderlineStyleAttributeName,txtclr,NSForegroundColorAttributeName,nil];
+    [[self stringValue] drawInRect:dirtyRect withAttributes:asdict];
+}
+
 @end
