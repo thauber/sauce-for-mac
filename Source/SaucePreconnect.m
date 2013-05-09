@@ -14,10 +14,9 @@
 #import "Session.h"
 #import "TunnelController.h"
 #import "AppDelegate.h"
+#import "MF_Base64Additions.h"
 
 NSString *kSauceLabsDomain = @"saucelabs.com";
-//NSString *kSauceLabsDomain = @"admc.dev.saucelabs.com";
-//NSString *kSauceLabsDomain = @"jlipps.dev.saucelabs.com";
 
 @implementation SaucePreconnect
 
@@ -559,7 +558,7 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
 - (NSString*)signupNew:(NSString*)userNew passNew:(NSString*)passNew 
          emailNew:(NSString*)emailNew
 {        
-    NSString *farg = [NSString stringWithFormat:@"curl -X POST http://%@/rest/v1/users -H 'Content-Type: application/json' -d '{\"username\":\"%@\", \"password\":\"%@\",\"name\":\"\",\"email\":\"%@\",\"token\":\"0E44EF6E-B170-4CA0-8264-78FD9E49E5CD\"}'",kSauceLabsDomain, userNew, passNew, emailNew];
+    NSString *farg = [NSString stringWithFormat:@"curl -X POST https://%@/rest/v1/users -H 'Content-Type: application/json' -d '{\"username\":\"%@\", \"password\":\"%@\",\"name\":\"\",\"email\":\"%@\",\"token\":\"0E44EF6E-B170-4CA0-8264-78FD9E49E5CD\"}'",kSauceLabsDomain, userNew, passNew, emailNew];
      
     NSString *errStr = nil;
     // TODO: put a timer on it
@@ -773,31 +772,21 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
 
 - (NSString*)accountkeyFromPassword:(NSString*)uname pswd:(NSString*)pass
 {
-    NSString *key = @"";
-    NSString *farg = [NSString stringWithFormat:@"curl 'http://%@:%@@%@/rest/v1/users/%@'", uname, pass, kSauceLabsDomain, uname];       // TODO: change when available on our servers
-    
-    NSTask *ftask = [[[NSTask alloc] init] autorelease];
-    NSPipe *fpipe = [NSPipe pipe];
-    [ftask setStandardOutput:fpipe];
-    [ftask setLaunchPath:@"/bin/bash"];
-    [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-    [ftask launch];		// fetch accountkey
-    [ftask waitUntilExit];
-    if([ftask terminationStatus])
-    {
-        NSLog(@"Failed to get accountkey");
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/rest/v1/users/%@", kSauceLabsDomain, uname]];
+    NSString *auth = [[NSString stringWithFormat:@"%@:%@", uname, pass] base64String];
+
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request addValue:[NSString stringWithFormat:@"Basic %@", auth] forHTTPHeaderField:@"Authorization"];
+
+    NSData *response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    NSError *error = nil;
+    NSDictionary *data = [NSJSONSerialization JSONObjectWithData:response options:0 error:&error];
+
+    if (!error) {
+        return [data objectForKey:@"access_key"];
     }
-    else
-    {
-        NSFileHandle *fhand = [fpipe fileHandleForReading];
-        NSData *data = [fhand readDataToEndOfFile];
-        NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        key = [self jsonVal:jsonString key:@"access_key"];
-        [jsonString release];
-        if(!key.length)
-            key = @"";
-    }
-    return key;
+
+    return @"";
 }
 
 

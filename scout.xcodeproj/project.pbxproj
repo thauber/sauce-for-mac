@@ -172,6 +172,8 @@
 		0FDB429F1511459A00841EE9 /* SaucePreconnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FDB429D1511459A00841EE9 /* SaucePreconnect.m */; };
 		0FEDFA0D15C31B7900D61166 /* bugsnap.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FEDFA0C15C31B7900D61166 /* bugsnap.png */; };
 		0FEDFA1215C31F5C00D61166 /* new.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FEDFA1115C31F5C00D61166 /* new.png */; };
+		1E0E009A173B257F00562649 /* MF_Base64Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E0E0098173B257F00562649 /* MF_Base64Additions.h */; };
+		1E0E009B173B257F00562649 /* MF_Base64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0E0099173B257F00562649 /* MF_Base64Additions.m */; };
 		7F7A93E505E71B5C00E20416 /* ByteBlockReader.h in Headers */ = {isa = PBXBuildFile; fileRef = F5DC719B033DB4A801A8010C /* ByteBlockReader.h */; };
 		7F7A93E605E71B5C00E20416 /* ByteReader.h in Headers */ = {isa = PBXBuildFile; fileRef = F5DC719D033DB4A801A8010C /* ByteReader.h */; };
 		7F7A93E705E71B5C00E20416 /* CARD16Reader.h in Headers */ = {isa = PBXBuildFile; fileRef = F5DC719F033DB4A801A8010C /* CARD16Reader.h */; };
@@ -588,6 +590,8 @@
 		0FEDFA0C15C31B7900D61166 /* bugsnap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bugsnap.png; path = Resources/bugsnap.png; sourceTree = "<group>"; };
 		0FEDFA1115C31F5C00D61166 /* new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = new.png; path = Resources/new.png; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		1E0E0098173B257F00562649 /* MF_Base64Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MF_Base64Additions.h; sourceTree = "<group>"; };
+		1E0E0099173B257F00562649 /* MF_Base64Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MF_Base64Additions.m; sourceTree = "<group>"; };
 		7F088F2405E1D81100336456 /* ServerDataManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ServerDataManager.h; sourceTree = "<group>"; };
 		7F088F2505E1D81100336456 /* ServerDataManager.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ServerDataManager.m; sourceTree = "<group>"; };
 		7F7DE7D4080F39DF006BF1DF /* ServerStandAlone.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ServerStandAlone.h; sourceTree = "<group>"; };
@@ -1401,6 +1405,8 @@
 				F5DC71C0033DB4A801A8010C /* HighColorFrameBuffer.m */,
 				F5DC71CE033DB4A801A8010C /* LowColorFrameBuffer.h */,
 				F5DC71CF033DB4A801A8010C /* LowColorFrameBuffer.m */,
+				1E0E0098173B257F00562649 /* MF_Base64Additions.h */,
+				1E0E0099173B257F00562649 /* MF_Base64Additions.m */,
 				E2929DD307675DE800190669 /* MyApp.h */,
 				E2929DD407675DE800190669 /* MyApp.m */,
 				E2F3AD6F06D5E11D005EB917 /* NSObject_Chicken.h */,
@@ -1581,6 +1587,7 @@
 				0F4D1E7B164EDE7600A85404 /* SauceLinkTextField.h in Headers */,
 				0F5B22CD168E288A00F9E913 /* demoConnectController.h in Headers */,
 				0F597ED816920B080075E105 /* TBISub.h in Headers */,
+				1E0E009A173B257F00562649 /* MF_Base64Additions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1923,6 +1930,7 @@
 				0F4D1E7C164EDE7600A85404 /* SauceLinkTextField.m in Sources */,
 				0F5B22CE168E288A00F9E913 /* demoConnectController.m in Sources */,
 				0F597ED916920B080075E105 /* TBISub.m in Sources */,
+				1E0E009B173B257F00562649 /* MF_Base64Additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
