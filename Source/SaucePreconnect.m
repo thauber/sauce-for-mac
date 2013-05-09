@@ -772,6 +772,8 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
 
 - (NSString*)accountkeyFromPassword:(NSString*)uname pswd:(NSString*)pass
 {
+    NSString *key = @"";
+
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/rest/v1/users/%@", kSauceLabsDomain, uname]];
     NSString *auth = [[NSString stringWithFormat:@"%@:%@", uname, pass] base64String];
 
@@ -779,14 +781,17 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
     [request addValue:[NSString stringWithFormat:@"Basic %@", auth] forHTTPHeaderField:@"Authorization"];
 
     NSData *response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    NSError *error = nil;
-    NSDictionary *data = [NSJSONSerialization JSONObjectWithData:response options:0 error:&error];
-
-    if (!error) {
-        return [data objectForKey:@"access_key"];
+    
+    if (response) {
+        NSError *error = nil;
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:response options:0 error:&error];
+    
+        if (!error) {
+            key = [data objectForKey:@"access_key"];
+        }
     }
-
-    return @"";
+        
+    return key != nil ? key : @"";
 }
 
 
