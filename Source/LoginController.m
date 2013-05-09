@@ -145,7 +145,7 @@
     else
     {
         // alert for missing username or accountkey
-        NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [NSApp keyWindow], self,@selector(redoLogin:returnCode:contextInfo:), NULL, NULL, @"%@",@"Need valid user-name and password");
+        NSBeginAlertSheet(@"Login Error", @"Okay", nil, nil, [NSApp keyWindow], self,@selector(redoLogin:returnCode:contextInfo:), NULL, NULL, @"%@",@"Invalid username or password");
     }
 }
 
