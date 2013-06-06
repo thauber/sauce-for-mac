@@ -16,6 +16,10 @@
 #import "AppDelegate.h"
 #import "MF_Base64Additions.h"
 
+NSObject* Nullify(NSObject *obj){
+    return obj?obj:NULL;
+}
+
 NSString *kSauceLabsDomain = @"saucelabs.com";
 
 @implementation SaucePreconnect
@@ -52,6 +56,53 @@ static SaucePreconnect* _sharedPreconnect = nil;
     
 	return nil;
 }
+
+#pragma mark - Utils
+
+- (NSString*) baseDomain {
+    return [NSString stringWithFormat:@"https://%@", kSauceLabsDomain];
+}
+
+- (NSMutableURLRequest*) restRequestWithPath:(NSString*)path {
+    return [self requestWithPath:path withApi:@"/rest/v1/" withUserName:self.user andPassword:self.ukey];
+}
+- (NSMutableURLRequest*) scoutRequestWithPath:(NSString*)path {
+    return [self requestWithPath:path withApi:@"/scout/live/" withUserName:self.user andPassword:self.ukey];
+}
+- (NSMutableURLRequest*) restRequestWithPath:(NSString*)path withUserName:(NSString*)uname andPassword:(NSString*)pwd{
+    return [self requestWithPath:path withApi:@"/rest/v1/" withUserName:uname andPassword:pwd];
+}
+- (NSMutableURLRequest*) requestWithPath:(NSString*)path withApi:(NSString*)api withUserName:(NSString*)uname andPassword:(NSString*)pwd{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [self baseDomain], api, path]];
+    NSString *auth = [[NSString stringWithFormat:@"%@:%@", uname, pwd] base64String];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request addValue:[NSString stringWithFormat:@"Basic %@", auth] forHTTPHeaderField:@"Authorization"];
+    return request;
+}
+
+- (NSObject*) jsonFromSynchronousRequest:(NSURLRequest*)request error:(NSError**)error {
+    NSError *responseError= nil;
+    NSError *decodeError = nil;
+    NSData *response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&responseError];
+    if (! responseError) {
+        NSObject *data = [NSJSONSerialization JSONObjectWithData:response options:0 error:&decodeError];
+        if (!decodeError) {
+            return data;
+        } else {
+            NSLog(@"Error decoding: %@", [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]);
+            error = &decodeError;
+        }
+        
+    } else {
+        error = &responseError;
+    }
+    return nil;
+}
+
+
+
+#pragma mark - Rest Calls
 
 // sdict state: 0=os/browser/url; -1=secret/liveId; 1=connected
 - (NSMutableDictionary*)setOptions:(NSString*)os browser:(NSString*)browser 
@@ -93,37 +144,41 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
     if([[NSApp delegate] isDemoAccount])
         maxdur = @",\"max-duration\":660";    // give code a chance to end 10 minute demo account session
 
-    NSString *farg = [NSString stringWithFormat:@"curl -X POST 'https://%@:%@@%@/rest/v1/users/%@/scout' -H 'Content-Type: application/json' -d '{\"os\":\"%@\", \"browser\":\"%@\", \"browser-version\":\"%@\", \"url\":\"%@\", \"res\":\"%@\",\"client\":\"mac\"%@}'", self.user, self.ukey,kSauceLabsDomain, user, os, browser, browserVersion, urlStr, resolution, maxdur];
-
     NSString *errStr = nil;
     while(1)
     {
         if([sdict objectForKey:@"errorString"])
             break;
+//[data objectForKey:
+        
+        NSString *path = [NSString stringWithFormat:@"users/%@/scout", self.user];
+        NSMutableURLRequest *request = [self restRequestWithPath:path];
+        [request setHTTPMethod:@"POST"];
+        NSDictionary *bodyData = @{@"os": Nullify(os),
+                               @"browser": Nullify(browser),
+                               @"browser-version": Nullify(browserVersion),
+                               @"url": Nullify(urlStr),
+                               @"res": Nullify(resolution),
+                               @"mac": Nullify(maxdur)
+                               };
+        
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:bodyData
+                                                           options:NSJSONWritingPrettyPrinted
+                                                             error:nil];
+        [request setHTTPBody:jsonData];
+        NSError *error = nil;
+        NSDictionary *data = (NSDictionary*)[self jsonFromSynchronousRequest:request error:&error];
+        
+        if (error) {
 
-        NSTask *ftask = [[[NSTask alloc] init] autorelease];
-        NSPipe *fpipe = [NSPipe pipe];
-        [ftask setStandardOutput:fpipe];
-        [ftask setLaunchPath:@"/bin/bash"];
-        [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-        [ftask launch];		// fetch live id
-        [ftask waitUntilExit];
-        if([ftask terminationStatus])
-        {
             NSLog(@"failed NSTask");
             errStr = @"Failed to send user options to server";
             internetOk = NO;
-            break;;
-        }
-        else
-        {
+            break;
+        } else {
             internetOk = YES;
-            NSFileHandle *fhand = [fpipe fileHandleForReading];
             
-            NSData *data = [fhand readDataToEndOfFile];	
-            NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            NSString *liveId = [self jsonVal:jsonString key:@"live-id"];
-            [jsonString release];
+            NSString *liveId = [data objectForKey:@"live-id"];
             if(liveId.length)
             {
                 [sdict setObject:liveId forKey:@"liveId"];
@@ -151,56 +206,7 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
     [pool release];
 }
 
-// retrieve value for a key out of json formatted data
--(NSString *)jsonVal:(NSString *)json key:(NSString *)key
-{
-    if([json hasPrefix:@"<html>"])
-        return @"";
-    int klen = [key length];
-    const char *kk = [key UTF8String];
-    const char *kstr = [json UTF8String];
-    bool kfound = false;
-    while((kstr = strstr(kstr,kk)))     // avoid match on part of a key
-    {
-        if( *(kstr + klen) == '"')
-        {
-           kfound = true;
-           break;
-        }
-        kstr++; 
-    }
-    if(!kfound || !kstr)
-        return @"";
-    
-    kstr += klen + 2;   // skip over the key, end quote and colon
-    if(*kstr == ' ')            // skip possible space
-        kstr++;
-    char *cstr = malloc(100);
-    int indx=0;
-    if(*kstr == '"')
-    {
-        // gather chars up to end quote
-        kstr++;     // skip leading quote
-        while(*kstr != '"')
-        {
-            cstr[indx] = *kstr;
-            indx++; kstr++;
-        }
-    }
-    else    // value is an int or boolean (true/false)
-    {
-        // gather chars up to end comma or right brace
-        while(*kstr != ',' && *kstr != '}')
-        {
-            cstr[indx] = *kstr;
-            indx++; kstr++;
-        }
-    }
-    cstr[indx] = 0;
-    NSString *ret = [NSString stringWithCString:cstr encoding:NSUTF8StringEncoding];
-    free(cstr);
-    return ret;
-}
+
 
 -(void)cancelPreAuthorize:(id)tm      // if timer, userinfo is sdict; or it is sdict
 {
@@ -242,21 +248,18 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
 -(void)curlGetauth:(NSMutableDictionary*)sdict
 {
     NSString *liveId = [sdict objectForKey:@"liveId"];
-	NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@%@/scout/live/%@/status?secret&'", self.user, self.ukey, kSauceLabsDomain, liveId];
 
     while(1)    // use live-id to get job-id
     {
         if([sdict objectForKey:@"errorString"])
             break;
-        NSTask *ftask = [[[NSTask alloc] init] autorelease];
-        NSPipe *fpipe = [NSPipe pipe];
-        [ftask setStandardOutput:fpipe];
-        [ftask setLaunchPath:@"/bin/bash"];
-        [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-        [ftask launch];		// fetch job-id and secret server
-        [ftask waitUntilExit];
-        if([ftask terminationStatus])
-        {
+        
+        NSString *path = [NSString stringWithFormat:@"%@/status?secret&", liveId];
+        NSMutableURLRequest *request = [self scoutRequestWithPath:path];
+        NSError *error = nil;
+        NSDictionary *data = (NSDictionary *)[self jsonFromSynchronousRequest:request error:&error];
+        
+        if(error) {
             NSLog(@"failed NSTask");
             [sdict setObject:@"Failed to request job-id" forKey:@"errorString"];
             internetOk = NO;
@@ -269,12 +272,8 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
                 break;
             else
             {
-                NSFileHandle *fhand = [fpipe fileHandleForReading];
-                
-                NSData *data = [fhand readDataToEndOfFile];		 
-                NSString *jsonString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-                NSString *secret = [self jsonVal:jsonString key:@"video-secret"];
-                NSString *jobId  = [self jsonVal:jsonString key:@"job-id"];
+                NSString *secret = [data objectForKey:@"video-secret"];
+                NSString *jobId  = [data objectForKey:@"job-id"];
                 if(secret.length)
                 {
                     [sdict setObject:secret forKey:@"secret"];
@@ -284,7 +283,7 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
                 }
                 else
                 {
-                    NSString *err = [self jsonVal:jsonString key:@"status"];
+                    NSString *err = [data objectForKey:@"status"];
                     if([err isEqualToString:@"error"])
                     {
                         [sdict setObject:@"Error getting job id" forKey:@"errorString"];
@@ -308,20 +307,17 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
         {
 // do we need this?
 //            if(![sdict objectForKey:@"view"])
-//                return;
+            //                return;
             NSString *aliveId = [sdict objectForKey:@"liveId"];
-            NSString *farg = [NSString stringWithFormat:@"curl -X DELETE 'https://%@:%@@%@/rest/v1/users/%@/scout/%@'", self.user, self.ukey, kSauceLabsDomain, self.user, aliveId];
+            NSString *path = [NSString stringWithFormat:@"users/%@/scout/%@", self.user, aliveId];
+            NSMutableURLRequest *request = [self restRequestWithPath:path];
             [credArr removeObjectAtIndex:i];
-            NSTask *ftask = [[[NSTask alloc] init] autorelease];
-            NSPipe *fpipe = [NSPipe pipe];
-            [ftask setStandardOutput:fpipe];
-            [ftask setLaunchPath:@"/bin/bash"];
-            [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-            [ftask launch];
-            // no need to check for success
-            [ftask waitUntilExit];
-            if([ftask terminationStatus])
+            request.HTTPMethod = @"DELETE";
+            NSError *error = nil;
+            [self jsonFromSynchronousRequest:request error:&error];
+            if(error) {
                 NSLog(@"failed to close job");
+            }
             break;
         }
     }
@@ -448,7 +444,6 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
             indx++;
             continue;
         }
-        NSString *farg = [NSString stringWithFormat:@"curl 'https://%@/scout/live/%@/status?auth_username=%@&auth_access_key=%@' 2>/dev/null", kSauceLabsDomain, aliveid, self.user, self.ukey];
 
         while(1)    
         {
@@ -457,30 +452,21 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
                 [self cancelHeartbeat:nil];
                 return;        
             }
-            NSTask *ftask = [[[NSTask alloc] init] autorelease];
-            NSPipe *fpipe = [NSPipe pipe];
-            [ftask setStandardOutput:fpipe];
-            [ftask setLaunchPath:@"/bin/bash"];
-            [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-            [ftask launch];		// fetch job-id and secret server
-            [ftask waitUntilExit];
-            if([ftask terminationStatus])
-            {
+            NSString *path = [NSString stringWithFormat:@"%@/status?auth_username=%@&auth_access_key=%@", aliveid, self.user, self.ukey];
+            NSMutableURLRequest *request = [self scoutRequestWithPath:path];
+            NSError *error = nil;
+            NSDictionary *data = (NSDictionary *)[self jsonFromSynchronousRequest:request error:&error];
+            
+            if(error) {
                 internetOk = NO;
                 [self cancelHeartbeat:@"failed NSTask in heartbeat"];
                 return;
-            }
-            else
-            {
+            } else {
                 internetOk = YES;
-                NSFileHandle *fhand = [fpipe fileHandleForReading];
-                
-                NSData *data = [fhand readDataToEndOfFile];		 
-                NSString *jsonString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-                NSString *status = [self jsonVal:jsonString key:@"status"];
+                NSString *status = [data objectForKey:@"status"];
                 if([status isEqualToString:@"in progress"])
                 {
-                    NSString *remaining = [self jsonVal:jsonString key:@"remaining-time"];
+                    NSString *remaining = [[data objectForKey:@"remaining-time"] stringValue];
                     // show in status
                     if([remaining length] && [credArr count] == credArrSz)
                     {
@@ -493,7 +479,7 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
                 {
                     if(![status isEqualToString:@"queued"] && ![status isEqualToString:@"new"])
                     {
-                        NSLog(@"heartbeat - not in progress:%@",jsonString);
+                        NSLog(@"heartbeat - not in progress:%@",data);
                         [self sessionClosed:sdict];
                         credArrSz = [credArr count];
                         removedObj = YES;
@@ -521,71 +507,54 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
 // return: 'N'->failed login; nil->good user;  'F'->bad internet connection
 - (NSString*)checkUserLogin:(NSString *)uuser  key:(NSString*)kkey
 {
-    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@%@/rest/v1/%@/jobs'", uuser, kkey, kSauceLabsDomain, uuser];
-    
     NSString *resStr = nil;
-    NSTask *ftask = [[[NSTask alloc] init] autorelease];
-    NSPipe *fpipe = [NSPipe pipe];
-    [ftask setStandardOutput:fpipe];
-    [ftask setLaunchPath:@"/bin/bash"];
-    [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-    [ftask launch];		// fetch live id
-    [ftask waitUntilExit];
-    if([ftask terminationStatus])
-    {
+    
+    NSString *path = [NSString stringWithFormat:@"%@/jobs", uuser];
+    NSMutableURLRequest *request = [self restRequestWithPath:path withUserName:uuser andPassword:kkey];
+    
+    NSError *error = nil;
+    NSArray *data = (NSArray*)[self jsonFromSynchronousRequest:request error:&error];
+    
+    if (error) {
         resStr = @"Failed login check";
         internetOk = NO;
-    }
-    else
-    {
+    } else {
         internetOk = YES;
-        NSFileHandle *fhand = [fpipe fileHandleForReading];
         
-        NSData *data = [fhand readDataToEndOfFile];		 
-        NSString *jsonString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-        NSRange range = [jsonString rangeOfString:@"error"];
-        if(!range.length)
+        if([data isKindOfClass:[NSArray class]])
         {
             self.user = uuser;
             self.ukey = kkey;
-        }
-        else 
+        } else {
             resStr = @"User account login error";
+        }
     }
     return resStr;
 }
 
 - (NSString*)signupNew:(NSString*)userNew passNew:(NSString*)passNew 
          emailNew:(NSString*)emailNew
-{        
-    NSString *farg = [NSString stringWithFormat:@"curl -X POST https://%@/rest/v1/users -H 'Content-Type: application/json' -d '{\"username\":\"%@\", \"password\":\"%@\",\"name\":\"\",\"email\":\"%@\",\"token\":\"0E44EF6E-B170-4CA0-8264-78FD9E49E5CD\"}'",kSauceLabsDomain, userNew, passNew, emailNew];
+{
      
     NSString *errStr = nil;
     // TODO: put a timer on it
     while(1)
-    {
-        NSTask *ftask = [[[NSTask alloc] init] autorelease];
-        NSPipe *fpipe = [NSPipe pipe];
-        [ftask setStandardOutput:fpipe];
-        [ftask setLaunchPath:@"/bin/bash"];
-        [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-        [ftask launch];		// fetch live id
-        [ftask waitUntilExit];
-        if([ftask terminationStatus])
-        {
+    {  
+        NSMutableURLRequest *request = [self restRequestWithPath:@"users"];
+        [request setHTTPMethod:@"POST"];
+        NSString *postString = [NSString stringWithFormat:@"username=%@&password=%@&name=\\&email=%@&token=0E44EF6E-B170-4CA0-8264-78FD9E49E5CD", userNew, passNew, emailNew];
+        [request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
+        NSError *error = nil;
+        NSDictionary *data = (NSDictionary *)[self jsonFromSynchronousRequest:request error:&error];
+        
+        if(error) {
             errStr = @"Failed NSTask in signupNew";
             internetOk = NO;
             break;
-        }
-        else
-        {
+        } else {
             internetOk = YES;
-            NSFileHandle *fhand = [fpipe fileHandleForReading];
-            
-            NSData *data = [fhand readDataToEndOfFile];		 
-            NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            NSString *akey = [self jsonVal:jsonString key:@"access_key"];
-            [jsonString release];
+
+            NSString *akey = [data objectForKey:@"access_key"];
             if(akey.length)
             {
                 self.user = userNew;
@@ -605,48 +574,36 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
 - (NSString*)postSnapshotBug:(NSString *)snapName title:(NSString *)title desc:(NSString *)desc
 { 
     NSView *view = [[[ScoutWindowController sharedScout] curSession] view];
-
+    
+    NSString *surl = nil;
+    NSString *errStr = nil;
+    
     NSDictionary *sdict = [self sessionInfo:view];
     NSString *aliveid = [sdict objectForKey:@"liveId"];
-    NSString *auser = [sdict objectForKey:@"user"];
-    NSString *akey = [sdict objectForKey:@"ukey"];
     NSString *ajobid = [sdict objectForKey:@"jobId"];
 
     NSString* escTitle = [title stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
     NSString* escDesc  = [desc stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
 
-    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@%@/scout/live/%@/reportbug?&ssname=%@&title=%@&description=%@'", auser, akey, kSauceLabsDomain, aliveid, snapName, escTitle, escDesc];
+    NSString *path = [NSString stringWithFormat:@"%@/reportbug?&ssname=%@&title=%@&description=%@",  aliveid, snapName, escTitle, escDesc];
+    NSMutableURLRequest *request = [self scoutRequestWithPath:path];
+    NSError *error = nil;
+    NSDictionary *data = (NSDictionary *)[self jsonFromSynchronousRequest:request error:&error];
     
-    NSString *surl;
-    NSString *errStr = nil;
-    
-    SnapProgress *sp = [[ScoutWindowController sharedScout] snapProgress];
-    // TODO: ?can this be cancelled
-        
-    NSTask *ftask = [[[NSTask alloc] init] autorelease];
-    NSPipe *fpipe = [NSPipe pipe];
-    [ftask setStandardOutput:fpipe];
-    [ftask setLaunchPath:@"/bin/bash"];
-    [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-    [ftask launch];		// fetch live id
-    [ftask waitUntilExit];
-    if([ftask terminationStatus])
-    {
+    if(error) {
         internetOk = NO;
         return @"Failed to report snapshot/bug to server";
     }
     internetOk = YES;
-    NSFileHandle *fhand = [fpipe fileHandleForReading];
     
-    NSData *data = [fhand readDataToEndOfFile];		 
-    NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSString *snapId = [self jsonVal:jsonString key:@"c"];
-    [jsonString release];
+    SnapProgress *sp = [[ScoutWindowController sharedScout] snapProgress];
+    NSString *snapId = [data objectForKey:@"c"];
+    
     if(snapId)  // ?what is the id for?
         surl = [NSString stringWithFormat:@"https://%@/jobs/%@/%@",kSauceLabsDomain, ajobid,snapName];
-    else 
+    else
         errStr = @"Failed to retrieve snapshot id";
-
+    
     if(surl)
         [sp setServerURL:surl];
     else
@@ -659,35 +616,23 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
     NSView *view = [[[[ScoutWindowController sharedScout] tabView] selectedTabViewItem] view];
     NSDictionary *sdict = [self sessionInfo:view];
     NSString *aliveid = [sdict objectForKey:@"liveId"];
-    NSString *auser = [sdict objectForKey:@"user"];
-    NSString *akey = [sdict objectForKey:@"ukey"];
     NSString *ajobid = [sdict objectForKey:@"jobId"];
     
-    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@%@/scout/live/%@/sendcommand?&1=getScreenshotName&sessionId=%@&cmd=captureScreenshot'", 
-                      auser, akey, kSauceLabsDomain, aliveid, ajobid];
+    NSString *path = [NSString stringWithFormat:@"%@/sendcommand?&1=getScreenshotName&sessionId=%@&cmd=captureScreenshot",  aliveid, ajobid];
+    NSMutableURLRequest *request = [self scoutRequestWithPath:path];
+    NSError *error = nil;
+    NSDictionary *data = (NSDictionary *)[self jsonFromSynchronousRequest:request error:&error];
 
-    NSTask *ftask = [[[NSTask alloc] init] autorelease];
-    NSPipe *fpipe = [NSPipe pipe];
-    [ftask setStandardOutput:fpipe];
-    [ftask setLaunchPath:@"/bin/bash"];
-    [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-    [ftask launch];		// fetch live id
-    [ftask waitUntilExit];
-    if([ftask terminationStatus])
-    {
+    if(error) {
+        internetOk = NO; 
         return @"Failed NSTask in snapshotBug";
-        internetOk = NO;
     }
     internetOk = YES;
-    NSFileHandle *fhand = [fpipe fileHandleForReading];
     
-    NSData *data = [fhand readDataToEndOfFile];		 
-    NSString *jsonString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-    NSString *rstr = [self jsonVal:jsonString key:@"success"];            
-    BOOL res = [rstr boolValue];
-    if(res)
+    NSNumber *rstr = [data objectForKey:@"success"];
+    if([rstr boolValue])
     {
-        NSString *snapName = [self jsonVal:jsonString key:@"message"];            
+        NSString *snapName = [data objectForKey:@"message"];            
         return [self postSnapshotBug:snapName title:title desc:desc];
     }
     else
@@ -698,73 +643,48 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
 }
 
 // 'S'->subscribed; nil->good user;  'F'->bad internet connection
-- (NSString*)checkAccountOk
-{
-    NSString *farg = [NSString stringWithFormat:@"curl 'https://%@:%@@%@/rest/v1/users/%@'",self.user, self.ukey, kSauceLabsDomain, self.user];
-
+- (NSString*)checkAccountOk {
     NSString *resStr = nil;
-    while(1)
-    {
-        NSTask *ftask = [[[NSTask alloc] init] autorelease];
-        NSPipe *fpipe = [NSPipe pipe];
-        [ftask setStandardOutput:fpipe];
-        [ftask setLaunchPath:@"/bin/bash"];
-        [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-        [ftask launch];
-        [ftask waitUntilExit];
-        if([ftask terminationStatus])
-        {
-            NSLog(@"failed NSTask");
-            internetOk = NO;
-            return @"Failed to request accountOk";
-        }
-        else
-        {
-            internetOk = YES;
-            NSFileHandle *fhand = [fpipe fileHandleForReading];
-            
-            NSData *data = [fhand readDataToEndOfFile];		 
-            NSString *jsonString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-            NSString *subscribedStr = [self jsonVal:jsonString key:@"subscribed"];
-            if([subscribedStr length])
-            {
-                
-                NSString *minStr = [self jsonVal:jsonString key:@"can_run_manual"];
-                BOOL bMin = [minStr boolValue];
-                if([subscribedStr isEqualToString:@"true"])
-                {
-                    if(bMin)
-                        resStr = @"S+";     // subscribed with minutes
-                    else
-                        resStr = @"S-";     // subscribed without minutes
-                }
-                else
-                {
-                    if(bMin)
-                        resStr = @"N+";     // not subscribed with minutes
-                    else
-                        resStr = @"N-";     // not subscribed without minutes               
-                }
-                break;
-            }            
+    NSString *path = [NSString stringWithFormat:@"users/%@", self.user];
+    NSMutableURLRequest *request = [self restRequestWithPath:path];
+    NSError *error = nil;
+    NSDictionary *data = (NSDictionary *)[self jsonFromSynchronousRequest:request error:&error];
+    if (error) {
+        NSLog(@"failed NSTask");
+        internetOk = NO;
+        return @"Failed to request accountOk";
+    } else {
+        internetOk = YES;
+        NSNumber *subscribed = [data objectForKey:@"subscribed"];
+        NSString *minStr = [data objectForKey:@"can_run_manual"];
+        BOOL bMin = [minStr boolValue];
+        if([subscribed intValue]) {
+            if(bMin)
+                resStr = @"S+";     // subscribed with minutes
+            else
+                resStr = @"S-";     // subscribed without minutes
+        } else {
+            if(bMin)
+                resStr = @"N+";     // not subscribed with minutes
+            else
+                resStr = @"N-";     // not subscribed without minutes
         }
     }
+    
     return resStr;
 }
 
 // called on connection for a demo account session
 - (void)sendDemoVersion:(NSString*)job version:(NSString*)version
 {
-    NSString *farg = [NSString stringWithFormat:@"curl https://%@:%@@%@/rest/v1/%@/jobs/%@ -H 'Content-Type: application/json' -d '{\"tags\":[\"desktop\", \"version:%@\"]}'",self.user, self.ukey, kSauceLabsDomain, self.user, job,version];
-
-    NSTask *ftask = [[[NSTask alloc] init] autorelease];
-    NSPipe *fpipe = [NSPipe pipe];
-    [ftask setStandardOutput:fpipe];
-    [ftask setLaunchPath:@"/bin/bash"];
-    [ftask setArguments:[NSArray arrayWithObjects:@"-c", farg, nil]];
-    [ftask launch];
-    [ftask waitUntilExit];
-    if([ftask terminationStatus])
+    NSString *path = [NSString stringWithFormat:@"%@/jobs/%@", self.user, job];
+    NSMutableURLRequest *request = [self restRequestWithPath:path];
+    request.HTTPMethod = @"POST";
+    NSString *postString = [NSString stringWithFormat:@"tags=desktop&tags=version:%@", version];
+    request.HTTPBody = [postString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error = nil;
+    [self jsonFromSynchronousRequest:request error:&error];
+    if(error)
     {
         NSLog(@"failed NSTask in sendDemoVersion");
     }
@@ -772,25 +692,16 @@ browserVersion:(NSString*)browserVersion url:(NSString*)urlStr resolution:(NSStr
 
 - (NSString*)accountkeyFromPassword:(NSString*)uname pswd:(NSString*)pass
 {
-    NSString *key = @"";
-
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/rest/v1/users/%@", kSauceLabsDomain, uname]];
-    NSString *auth = [[NSString stringWithFormat:@"%@:%@", uname, pass] base64String];
-
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request addValue:[NSString stringWithFormat:@"Basic %@", auth] forHTTPHeaderField:@"Authorization"];
-
-    NSData *response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    NSString *key = nil;
+    NSString *path = [NSString stringWithFormat:@"users/%@", uname];
+    NSMutableURLRequest *request = [self restRequestWithPath:path withUserName:uname andPassword:pass];
     
-    if (response) {
-        NSError *error = nil;
-        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:response options:0 error:&error];
+    NSError *error = nil;
+    NSDictionary *data = (NSDictionary*)[self jsonFromSynchronousRequest:request error:&error];
     
-        if (!error) {
-            key = [data objectForKey:@"access_key"];
-        }
+    if (!error) {
+        key = [data objectForKey:@"access_key"];
     }
-        
     return key != nil ? key : @"";
 }
 
