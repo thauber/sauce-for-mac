@@ -90,6 +90,16 @@
         else
             [self showOptionsDlg:self];
     }
+    [NSEvent addLocalMonitorForEventsMatchingMask:NSKeyDownMask handler:^NSEvent *(NSEvent *evt) {
+        bool isRightEvent = [evt type] == NSKeyDown;
+        bool isRightKey = [evt keyCode] == 43;
+        bool isRightModifier = [evt modifierFlags] & NSCommandKeyMask;
+        if (isRightEvent && isRightModifier && isRightKey) {
+            [self showPreferences:nil];
+            return nil;
+        }
+        return evt;
+    }];
 }
 
 - (void)processCommandLine
